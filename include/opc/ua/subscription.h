@@ -24,8 +24,9 @@
 #include <opc/ua/node.h>
 
 #include <boost/asio.hpp>
-#include <sstream>
+#include <boost/thread/shared_mutex.hpp>
 #include <map>
+#include <sstream>
 
 
 namespace OpcUa
@@ -84,7 +85,7 @@ namespace OpcUa
       void PublishCallback(PublishResult); //Not sure it needs to be public
 
     private:
-      //void Publish();
+      boost::shared_mutex DbMutex; //to protect our data, only SimpleAttributeOperandMap currently
 
       Remote::Server::SharedPtr Server;
       SubscriptionData Data;

@@ -46,6 +46,9 @@ namespace OpcUa
 
   void Subscription::PublishCallback(PublishResult result)
   {
+    //We read our data so we use shared lock
+    boost::shared_lock<boost::shared_mutex> lock(DbMutex); 
+
     std::cout << "Suscription::PublishCallback called" << std::endl;
     for (const NotificationData& data: result.Message.Data )
     {
@@ -102,6 +105,9 @@ namespace OpcUa
 
   std::vector<uint32_t> Subscription::SubscribeDataChange(const std::vector<AttributeValueID>& attributes)
   {
+    //We modify our data so we use unique lock
+    boost::unique_lock<boost::shared_mutex> lock(DbMutex); 
+
     MonitoredItemsParameters itemsParams;
     itemsParams.SubscriptionID = Data.ID;
 
@@ -146,11 +152,15 @@ namespace OpcUa
 
   void Subscription::UnSubscribe(std::vector<uint32_t> handles) 
   {
+    //We modify our data so we use unique lock
+    boost::unique_lock<boost::shared_mutex> lock(DbMutex); 
+
     DeleteMonitoredItemsParameters params;
     params.SubscriptionId = Data.ID;
     std::vector<IntegerID> newhandles;
     for (auto id : handles)
     {
+      AttributeValueMap.erase(IntegerID(id));
       newhandles.push_back(IntegerID(id));
     }
     params.MonitoredItemsIds = newhandles;

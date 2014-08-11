@@ -13,7 +13,6 @@ namespace OpcUa
         , timer(io, boost::posix_time::milliseconds(data.RevisedPublishingInterval))
         , LifeTimeCount(data.RevisedLifetimeCount)
     {
-      std::cout << "Should now sleep for " << Data.RevisedPublishingInterval << " milliseonds" << std::endl;
       timer.async_wait([&](const boost::system::error_code& error){ this->PublishResults(error); });
     }
     
@@ -58,7 +57,6 @@ namespace OpcUa
         }
       }
       timer.expires_at(timer.expires_at() + boost::posix_time::milliseconds(Data.RevisedPublishingInterval));
-      std::cout << "Should now sleep for " << Data.RevisedPublishingInterval << " milliseonds" << std::endl;
       timer.async_wait([&](const boost::system::error_code& error){ this->PublishResults(error); });
     }
 
@@ -66,7 +64,7 @@ namespace OpcUa
     {
       boost::unique_lock<boost::shared_mutex> lock(DbMutex);
 
-      std::cout << "PopPublishresult for subscription: " << Data.ID << " with " << MonitoredItemsTriggered.size() << " triggered items in queue" << std::endl;
+      //std::cout << "PopPublishresult for subscription: " << Data.ID << " with " << MonitoredItemsTriggered.size() << " triggered items in queue" << std::endl;
       PublishResult result;
       result.SubscriptionID = Data.ID;
       result.Message.PublishTime = CurrentDateTime();
@@ -82,7 +80,7 @@ namespace OpcUa
       
       if ( (! Startup ) && result.Statuses.size() == 0 && (  Data.RevizedMaxKeepAliveCount > KeepAliveCount ) ) 
       {
-        std::cout << "No event and not need to send keep-alive notification" << std::endl;
+        //std::cout << "No event and not need to send keep-alive notification" << std::endl;
         ++KeepAliveCount;
         return  std::vector<PublishResult>(); //No event and we do not need to send keepalive notification yet so return empty list
       }

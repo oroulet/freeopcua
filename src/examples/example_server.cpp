@@ -28,7 +28,7 @@ class SubClient : public SubscriptionClient
 {
   void DataChange(uint32_t handle, const Node& node, const Variant& val, AttributeID attr) override
   {
-    std::cout << "Received DataChange event for Node " << node << std::endl;
+    std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  Received DataChange event for Node " << node << std::endl;
   }
 };
 
@@ -60,14 +60,15 @@ int main(int argc, char** argv)
     Node myvar = newobject.AddVariable(NodeID(999, 0), QualifiedName("MyVariable", 2), Variant(8));
    
     SubClient clt; 
-    Subscription sub = server.CreateSubscription(100, clt);
-    sub.SubscribeDataChange(myvar);
+    std::unique_ptr<Subscription> sub = server.CreateSubscription(100, clt);
+    sub->SubscribeDataChange(myvar);
     myvar.SetValue(Variant(10)); //will change value and trigger datachange event
 
     std::cout << "Ctrl-C to exit" << std::endl;
     for(;;)
     {
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      myvar.SetValue(Variant(10)); //will change value and trigger datachange event
     }
 
   //}
