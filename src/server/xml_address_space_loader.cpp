@@ -15,8 +15,8 @@
 
 #include <opc/ua/server/address_space.h>
 
-#include <libxml2/libxml/xmlmemory.h>
-#include <libxml2/libxml/parser.h>
+#include <libxml/xmlmemory.h>
+#include <libxml/parser.h>
 
 #include <iostream>
 #include <map>
@@ -492,7 +492,7 @@ namespace
   bool GetBool(xmlNode& node)
   {
     const std::string nodeValue = GetNodeValue(node);
-    return ::GetBool(nodeValue);
+    return GetBool(nodeValue);
   }
 
   Variant GetVariantValue(OpcUa::VariantType type, xmlNode& node)

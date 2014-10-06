@@ -15,7 +15,8 @@
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
-#include <sys/time.h>
+//#include <sys/time.h>
+#include <chrono>
 
 namespace OpcUa
 {
@@ -142,9 +143,15 @@ namespace OpcUa
   // TODO move to separate file with time utils.
   DateTime CurrentDateTime()
   {
+	  /*
     timeval tv;
     gettimeofday(&tv, 0);
     return ToDateTime(tv.tv_sec, tv.tv_usec);
+	*/
+	std::chrono::duration<double> now = std::chrono::system_clock::now().time_since_epoch();
+	auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
+	const int64_t secsFrom1600To1970 = 11676096000LL;
+	return DateTime( secsFrom1600To1970 * 10000000LL + millis*10000);
   }
 
   time_t ToTimeT(DateTime dateTime)

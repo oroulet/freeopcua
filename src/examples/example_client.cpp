@@ -16,7 +16,11 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <thread>
+#ifdef _WIN32
+#else
 #include <unistd.h>
+#endif
 
 
 using namespace OpcUa;
@@ -83,7 +87,7 @@ int main(int argc, char** argv)
       std::unique_ptr<Subscription> sub = client.CreateSubscription(100, sclt);
       uint32_t handle = sub->SubscribeDataChange(myvar);
       std::cout << "Got sub handle: " << handle << ", sleeping Xs" << std::endl;
-      sleep(10);
+	  std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
 
       std::cout << "Disconnecting" << std::endl;
