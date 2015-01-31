@@ -9,6 +9,8 @@ from IPython import embed
 
 
 IgnoredStructs = ["Variant", "QualifiedName", "DataValue"]
+#by default we split requests and respons in header and parameters, but some are so simple we do not split them
+NoSplitStruct = ["GetEndpointsResponse"]
 
 class Bit(object):
     def __init__(self):
@@ -26,6 +28,7 @@ class Struct(object):
         self.doc = None
         self.fields = []
         self.bits = {}
+        self.constructor = None
 
 class Field(object):
     def __init__(self):
@@ -51,30 +54,38 @@ class EnumValue(object):
         self.value = None
 
 class CodeGenerator(object):
-    def __init__(self, input_path, h_path, cpp_path):
+    def __init__(self, input_path, h_path, ser_path, deser_path, const_path):
         self.input_path = input_path
         self.h_path = h_path
-        self.cpp_path = cpp_path
+        self.serialize_path = ser_path
+        self.deserialize_path = deser_path
+        self.constructors_path = const_path
         self.h_file = None
         self.cpp_file = None
 
     def run(self):
-        sys.stderr.write("Generating header file {} and C++ file {} for XML file {}".format(self.h_path, self.cpp_path, self.input_path) + "\n")
+        sys.stderr.write("Generating header file {} and C++ files for XML file {}".format(self.h_path, self.input_path) + "\n")
         self.h_file = open(self.h_path, "w")
-        self.cpp_file = open(self.cpp_path, "w")
+        self.serialize_file = open(self.serialize_path, "w")
+        self.deserialize_file = open(self.deserialize_path, "w")
+        self.constructors_file = open(self.constructors_path, "w")
 
         self.make_header_h()
-        self.make_header_cpp()
+        self.make_header_serialize()
+        self.make_header_deserialize()
+        self.make_header_constructors()
 
         tree = ET.parse(xmlpath)
         root = tree.getroot()
         for child in root:
             tag = child.tag[40:]
             if tag == "StructuredType":
-                struct = self.parse_struct(child)
-                if not struct.name.endswith("Node") and not struct.name in IgnoredStructs:
-                    self.make_struct_h(struct)
-                    self.make_struct_cpp(struct)
+                structs = self.parse_struct(child)
+                for struct in structs:
+                    if not struct.name.endswith("Node") and not struct.name.endswith("NodeId") and not struct.name in IgnoredStructs:
+                        self.make_struct_h(struct)
+                        self.make_struct_ser(struct)
+                        self.make_constructors(struct)
             elif tag == "EnumeratedType":
                 enum = self.parse_enum(child)
                 self.make_enum_h(enum)
@@ -82,7 +93,9 @@ class CodeGenerator(object):
                 print("Not implemented node type: " + tag + "\n")
 
         self.make_footer_h()
-        self.make_footer_cpp()
+        self.make_footer_serialize()
+        self.make_footer_deserialize()
+        self.make_footer_constructors()
 
     def parse_struct(self, child):
         tag = child.tag[40:]
@@ -120,8 +133,14 @@ class CodeGenerator(object):
                 struct.doc = val
             else:
                 print("Uknown tag: ", tag)
+
+        #Changes specific to our C++ implementation
         struct = self.add_encoding_field(struct)
-        return struct
+        struct = self.remove_vector_length(struct)
+
+        structs = self.fix_request(struct)
+
+        return structs
     
     def add_encoding_field(self, struct):
         newfields = []
@@ -153,32 +172,80 @@ class CodeGenerator(object):
         struct.fields = newfields
         return struct
 
+    def remove_vector_length(self, struct):
+        new = []
+        for field in struct.fields:
+            if not field.name.startswith("NoOf"):
+                new.append(field)
+        struct.fields = new
+        return struct
+
+    def fix_request(self, struct):
+        structs = []
+        structs.append(struct)
+        structtype = None
+        if struct.name.endswith("Request"):
+            structtype = "Request"
+        elif struct.name.endswith("Response"):
+            structtype = "Response"
+        if structtype:
+            struct.constructor = True
+        if structtype and not struct.name in NoSplitStruct:
+            newfields = []
+            typeid = Field()
+            typeid.name = "TypeId"
+            typeid.type = "ua:NodeId"
+            struct.fields.insert(0, typeid)
+
+            paramstruct = Struct()
+            if structtype == "Request":
+                basename = struct.name.replace("Request", "") + "Parameters"
+                paramstruct.name = basename 
+            else:
+                basename = struct.name.replace("Response", "") + "Data"
+                paramstruct.name = basename 
+            paramstruct.fields = struct.fields[2:]
+            paramstruct.bits = struct.bits
+
+            struct.fields = struct.fields[:2]
+            struct.bits = {}
+            structs.insert(0, paramstruct)
+
+            typeid = Field()
+            typeid.name = "Parameters" 
+            typeid.type = "ua:" + paramstruct.name 
+            struct.fields.append(typeid)
+
+        return structs
+
+
     def make_struct_h(self, struct):
-        self.writecode_h("")
-        if struct.doc: self.writecode_h("    //", struct.doc)
-        self.writecode_h("    struct %s \n    {""" % struct.name)
+        self.write_h("")
+        if struct.doc: self.write_h("    //", struct.doc)
+        self.write_h("    struct %s \n    {""" % struct.name)
         for field in struct.fields: 
-            self.writecode_h("        ", self.to_cpp_type(field), field.name + ";" )
-        self.writecode_h("    };")
+            self.write_h("        ", self.to_cpp_type(field), field.name + ";" )
+        if struct.constructor:
+            self.write_h("\n        ", struct.name + "();" )
+        self.write_h("    };")
 
     def make_raw_size(self, struct):
-        self.writecode_cpp("")
-        self.writecode_cpp("    template<>")
-        self.writecode_cpp("    std::size_t RawSize(const {}& data)".format(struct.name))
-        self.writecode_cpp("    {")
+        self.write_ser("")
+        self.write_ser("    template<>")
+        self.write_ser("    std::size_t RawSize(const {}& data)".format(struct.name))
+        self.write_ser("    {")
         tmp = ["RawSizeContainer(data.{})".format(field.name) if field.length else  "RawSize(data.{})".format(field.name) for field in struct.fields]
         tmp = " + ".join(tmp)
-        self.writecode_cpp("        return " + tmp + ";")
-        self.writecode_cpp("    }")
-        self.writecode_cpp("")
+        self.write_ser("        return " + tmp + ";")
+        self.write_ser("    }")
+        self.write_ser("")
+
 
     def make_serialize(self, struct):
-        #FIXME: handle encoding
-        #FIXME: handle containers
-        self.writecode_cpp("")
-        self.writecode_cpp("    template<>")
-        self.writecode_cpp("    void DataSerializer::Serialize<{}>(const {}& data)".format(struct.name, struct.name))
-        self.writecode_cpp("    {")
+        self.write_ser("")
+        self.write_ser("    template<>")
+        self.write_ser("    void DataSerializer::Serialize<{}>(const {}& data)".format(struct.name, struct.name))
+        self.write_ser("    {")
         for field in struct.fields:
             switch = ""
             if field.switchfield:
@@ -189,16 +256,46 @@ class CodeGenerator(object):
                     idx = struct.bits[field.switchfield].idx
                     switch = "if (data.{}) & (1<<({})) ".format(container, idx)
             if field.length:
-                self.writecode_cpp("        {}SerializeContainer(*this, data.{});".format(switch, field.name))
+                self.write_ser("        {}SerializeContainer(*this, data.{});".format(switch, field.name))
             else:
-                self.writecode_cpp("        {}*this << data.{};".format(switch, field.name))
-        self.writecode_cpp("    }")
-        self.writecode_cpp("")
- 
+                self.write_ser("        {}*this << data.{};".format(switch, field.name))
+        self.write_ser("    }")
+        self.write_ser("")
 
-    def make_struct_cpp(self, struct):
+    def make_deserialize(self, struct):
+        self.write_deser("")
+        self.write_deser("    template<>")
+        self.write_deser("    void DataDeserializer::Deserialize<{}>({}& data)".format(struct.name, struct.name))
+        self.write_deser("    {")
+        for field in struct.fields:
+            switch = ""
+            if field.switchfield:
+                if field.switchvalue:
+                    switch = "if (data.{}) & (1>>({})) ".format(field.switchfield, field.switchvalue)
+                else:
+                    container = struct.bits[field.switchfield].container
+                    idx = struct.bits[field.switchfield].idx
+                    switch = "if (data.{}) & (1>>({})) ".format(container, idx)
+            if field.length:
+                self.write_deser("        {}DeserializeContainer(*this, data.{});".format(switch, field.name))
+            else:
+                self.write_deser("        {}*this >> data.{};".format(switch, field.name))
+        self.write_deser("    }")
+        self.write_deser("")
+    
+    def make_constructors(self, struct):
+        if not struct.constructor:
+            return
+        self.write_const("")
+        self.write_const("    ", struct.name + "::" + struct.name + "()")
+        self.write_const("        : TypeId(ObjectId::" + struct.name +"_Encoding_DefaultBinary)")
+        self.write_const("    {")
+        self.write_const("    }")
+
+    def make_struct_ser(self, struct):
         self.make_raw_size(struct)
         self.make_serialize(struct)
+        self.make_deserialize(struct)
  
 
 
@@ -231,12 +328,12 @@ class CodeGenerator(object):
         return enum
 
     def make_enum_h(self, enum):
-        self.writecode_h("\n")
-        if enum.doc: self.writecode_h("    //", enum.doc)
-        self.writecode_h("    enum %s : %s\n    {" % (enum.name, self.to_enum_type(enum.ctype)))
+        self.write_h("\n")
+        if enum.doc: self.write_h("    //", enum.doc)
+        self.write_h("    enum %s : %s\n    {" % (enum.name, self.to_enum_type(enum.ctype)))
         for val in enum.values:
-            self.writecode_h("        ", val.name, "=", val.value + ",")
-        self.writecode_h("    };")
+            self.write_h("        ", val.name, "=", val.value + ",")
+        self.write_h("    };")
 
 
 
@@ -295,14 +392,20 @@ class CodeGenerator(object):
             val = "8"
         return "uint{}_t".format(val)
 
-    def writecode_h(self, *args):
+    def write_h(self, *args):
         self.h_file.write(" ".join(args) + "\n")
 
-    def writecode_cpp(self, *args):
-        self.cpp_file.write(" ".join(args) + "\n")
+    def write_ser(self, *args):
+        self.serialize_file.write(" ".join(args) + "\n")
+
+    def write_deser(self, *args):
+        self.deserialize_file.write(" ".join(args) + "\n")
+
+    def write_const(self, *args):
+        self.constructors_file.write(" ".join(args) + "\n")
 
     def make_header_h(self, ):
-        self.writecode_h('''
+        self.write_h('''
 // DO NOT EDIT THIS FILE!
 // It is automatically generated from opcfoundation.org schemas.
 //
@@ -320,6 +423,9 @@ class CodeGenerator(object):
 #include <opc/ua/protocol/attribute_ids.h>
 #include <opc/ua/protocol/data_value.h>
 #include <opc/ua/protocol/types.h>
+#include <opc/ua/protocol/datetime.h>
+#include <opc/ua/protocol/status_codes.h>
+#include <opc/ua/protocol/nodeid.h>
 #include <opc/ua/protocol/variant.h>
 #include <opc/ua/protocol/strings.h>
 #include <opc/ua/protocol/node_classes.h>
@@ -332,14 +438,14 @@ namespace OcpUa
     ''' )
 
     def make_footer_h(self):
-        self.writecode_h('''
+        self.write_h('''
    }
 
 } // namespace
     ''')
 
-    def make_header_cpp(self, ):
-        self.writecode_h('''
+    def make_header_serialize(self, ):
+        self.write_ser('''
 /// @author Olivier Roulet-Dubonnet 
 /// @email olivier@sintef.no 
 /// @brief Opc Ua Binary. 
@@ -351,28 +457,85 @@ namespace OcpUa
 ///
 
 #include "binary_serialization.h"
+#include <opc/ua/protocol/protocol_auto.h>
 
 #include <opc/ua/protocol/binary/stream.h>
-#include <opc/ua/protocol/subscriptions.h>
-#include <opc/ua/protocol/monitored_items.h>
 
 namespace OpcUa
-{   ''')
+{   
+    namespace Binary
+    {''')
 
-    def make_footer_cpp(self):
-        self.writecode_h('''
+    def make_footer_serialize(self):
+        self.write_ser('''
+   }
+
+} // namespace
+    ''')
+
+    def make_header_deserialize(self, ):
+        self.write_deser('''
+/// @author Olivier Roulet-Dubonnet 
+/// @email olivier@sintef.no 
+/// @brief Opc Ua Binary. 
+/// @license GNU LGPL
+///
+/// Distributed under the GNU LGPL License
+/// (See accompanying file LICENSE or copy at
+/// http://www.gnu.org/licenses/lgpl.html)
+///
+
+#include "binary_serialization.h"
+#include <opc/ua/protocol/protocol_auto.h>
+
+#include <opc/ua/protocol/binary/stream.h>
+
+namespace OpcUa
+{   
+    namespace Binary
+    {''')
+
+    def make_footer_deserialize(self):
+        self.write_deser('''
    }
 
 } // namespace
     ''')
 
 
+    def make_header_constructors(self, ):
+        self.write_const('''
+/// @author Olivier Roulet-Dubonnet 
+/// @email olivier@sintef.no 
+/// @brief Opc Ua Binary. 
+/// @license GNU LGPL
+///
+/// Distributed under the GNU LGPL License
+/// (See accompanying file LICENSE or copy at
+/// http://www.gnu.org/licenses/lgpl.html)
+///
+
+#include <opc/ua/protocol/protocol_auto.h>
+#include <opc/ua/protocol/object_ids.h>
+
+namespace OpcUa
+{   ''')
+
+    def make_footer_constructors(self):
+        self.write_const('''
+} // namespace
+    ''')
+
+
+
 
 if __name__ == "__main__":
     xmlpath = "Opc.Ua.Types.bsd"
-    hpath = "test_protocol.h"
-    cpppath = "test_protocol.cpp"
-    c = CodeGenerator(xmlpath, hpath, cpppath)
+    hpath = "../include/opc/ua/protocol/protocol_auto.h"
+    serializerpath = "../src/protocol/serialize_auto.cpp"
+    deserializerpath = "../src/protocol/deserialize_auto.cpp"
+    constructorspath = "../src/protocol/construtors_auto.cpp"
+    c = CodeGenerator(xmlpath, hpath, serializerpath, deserializerpath, constructorspath)
     c.run()
 
 

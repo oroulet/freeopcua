@@ -1,5 +1,5 @@
-/// @author Alexander Rykovanov 2012
-/// @email rykovanov.as@gmail.com
+/// @author Olivier Roulet-Dubonnet 
+/// @email olivier@sintef.no 
 /// @brief Opc Ua Binary. Subscription services structs.
 /// @license GNU LGPL
 ///
