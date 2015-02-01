@@ -68,7 +68,7 @@ TEST_F(Attribute, Read)
   ASSERT_TRUE(static_cast<bool>(Service));
 
 
-  AttributeValueID id;
+  ReadValueId id;
   id.Node.Encoding = EV_TWO_BYTE;
   id.Node.TwoByteData.Identifier = static_cast<uint8_t>(ObjectId::ObjectsFolder);
   id.Attribute = AttributeID::BrowseName;

@@ -87,7 +87,7 @@ TEST_F(AddressSpace, GeneratesIfNodeIdDuplicated)
 TEST_F(AddressSpace, ReadAttributes)
 {
   OpcUa::ReadParameters readParams;
-  OpcUa::AttributeValueID value(OpcUa::ObjectId::RootFolder, OpcUa::AttributeID::BrowseName);
+  OpcUa::ReadValueId value(OpcUa::ObjectId::RootFolder, OpcUa::AttributeID::BrowseName);
   readParams.AttributesToRead.push_back(value);
   std::vector<OpcUa::DataValue> results = NameSpace->Read(readParams);
   ASSERT_EQ(results.size(), 1);
@@ -141,7 +141,7 @@ TEST_F(AddressSpace, ValueCallbackIsCalled)
   ASSERT_EQ(code, OpcUa::StatusCode::Good);
 
   OpcUa::ReadParameters readParams;
-  readParams.AttributesToRead.push_back(OpcUa::AttributeValueID(valueId, OpcUa::AttributeID::Value));
+  readParams.AttributesToRead.push_back(OpcUa::ReadValueId(valueId, OpcUa::AttributeID::Value));
   std::vector<OpcUa::DataValue> result = NameSpace->Read(readParams);
   ASSERT_EQ(result.size(), 1);
   EXPECT_TRUE(result[0].Encoding & OpcUa::DATA_VALUE);

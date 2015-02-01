@@ -192,23 +192,23 @@ namespace OpcUa
 
   uint32_t Subscription::SubscribeDataChange(const Node& node, AttributeID attr)
   {
-    AttributeValueID avid;
+    ReadValueId avid;
     avid.Node = node.GetId();
     avid.Attribute = attr;
     //avid.IndexRange //We leave it null, then the entire array is returned
-    std::vector<uint32_t> results = SubscribeDataChange(std::vector<AttributeValueID>({avid}));
+    std::vector<uint32_t> results = SubscribeDataChange(std::vector<ReadValueId>({avid}));
     if (results.size() != 1) { throw std::runtime_error("Subscription | Server error, SubscribeDataChange should have returned exactly one result"); }
     return results.front();
   }
 
-  std::vector<uint32_t> Subscription::SubscribeDataChange(const std::vector<AttributeValueID>& attributes)
+  std::vector<uint32_t> Subscription::SubscribeDataChange(const std::vector<ReadValueId>& attributes)
   {
     std::unique_lock<std::mutex> lock(Mutex); 
 
     MonitoredItemsParameters itemsParams;
     itemsParams.SubscriptionID = Data.ID;
 
-    for (AttributeValueID attr : attributes)
+    for (ReadValueId attr : attributes)
     {
       MonitoredItemRequest req;
       req.ItemToMonitor = attr;
@@ -308,7 +308,7 @@ namespace OpcUa
     MonitoredItemsParameters itemsParams;
     itemsParams.SubscriptionID = Data.ID;
 
-    AttributeValueID avid;
+    ReadValueId avid;
     avid.Node = node.GetId();
     avid.Attribute = AttributeID::EventNotifier;
 

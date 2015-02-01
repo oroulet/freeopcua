@@ -131,7 +131,7 @@ namespace OpcUa
       boost::shared_lock<boost::shared_mutex> lock(DbMutex);
 
       std::vector<DataValue> values;
-      for (const AttributeValueID& attribute : params.AttributesToRead)
+      for (const ReadValueId& attribute : params.AttributesToRead)
       {
         values.push_back(GetValue(attribute.Node, attribute.Attribute));
       }

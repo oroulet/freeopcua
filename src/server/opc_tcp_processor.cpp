@@ -328,7 +328,7 @@ namespace OpcUa
           if (Debug)
           {
             std::clog << "opc_tcp_processor| Processing read request for Node:";
-            for (AttributeValueID id : params.AttributesToRead)
+            for (ReadValueId id : params.AttributesToRead)
             {
               std::clog << "opc_tcp_processor|  " << id.Node;
             }

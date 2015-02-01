@@ -99,17 +99,17 @@ TEST_F(OpcUaBinaryDeserialization, TimetampsToReturn)
 }
 
 //-------------------------------------------------------
-// AttributeValueID
+// ReadValueId
 //-------------------------------------------------------
 
-TEST_F(OpcUaBinarySerialization, AttributeValueID)
+TEST_F(OpcUaBinarySerialization, ReadValueId)
 {
 
   using namespace OpcUa;
   using namespace OpcUa::Binary;
   using OpcUa::AttributeID;
 
-  AttributeValueID attr;
+  ReadValueId attr;
 
   attr.Node.Encoding = EV_TWO_BYTE;
   attr.Node.TwoByteData.Identifier = 1;
@@ -132,7 +132,7 @@ TEST_F(OpcUaBinarySerialization, AttributeValueID)
   ASSERT_EQ(expectedData, GetChannel().SerializedData) << PrintData(GetChannel().SerializedData) << std::endl << PrintData(expectedData);
 }
 
-TEST_F(OpcUaBinaryDeserialization, AttributeValueID)
+TEST_F(OpcUaBinaryDeserialization, ReadValueId)
 {
   using namespace OpcUa;
   using namespace OpcUa::Binary;
@@ -148,7 +148,7 @@ TEST_F(OpcUaBinaryDeserialization, AttributeValueID)
 
   GetChannel().SetData(expectedData);
 
-  AttributeValueID attr;
+  ReadValueId attr;
   GetStream() >> attr;
   
   ASSERT_EQ(attr.Node.Encoding, EV_TWO_BYTE);
@@ -162,10 +162,10 @@ TEST_F(OpcUaBinaryDeserialization, AttributeValueID)
 // ReadRequest
 //-------------------------------------------------------
 
-OpcUa::AttributeValueID CreateAttributeValueID()
+OpcUa::ReadValueId CreateReadValueId()
 {
   using namespace OpcUa;
-  OpcUa::AttributeValueID attr;
+  OpcUa::ReadValueId attr;
 
   attr.Node.Encoding = OpcUa::EV_TWO_BYTE;
   attr.Node.TwoByteData.Identifier = 1;
@@ -193,7 +193,7 @@ TEST_F(OpcUaBinarySerialization, ReadRequest)
   request.Parameters.MaxAge = 1200000;
   request.Parameters.TimestampsType = TimestampsToReturn::NEITHER;
 
-  request.Parameters.AttributesToRead.push_back(CreateAttributeValueID());
+  request.Parameters.AttributesToRead.push_back(CreateReadValueId());
 
   GetStream() << request << flush;
 
@@ -256,7 +256,7 @@ TEST_F(OpcUaBinaryDeserialization, ReadRequest)
   
   ASSERT_EQ(request.Parameters.AttributesToRead.size(), 1);
 
-  AttributeValueID attr = CreateAttributeValueID();
+  ReadValueId attr = CreateReadValueId();
 
   ASSERT_EQ(request.Parameters.AttributesToRead[0].Node.Encoding, EV_TWO_BYTE);
   ASSERT_EQ(request.Parameters.AttributesToRead[0].Node.TwoByteData.Identifier, 1);

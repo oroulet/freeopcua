@@ -18,6 +18,7 @@
 #include <opc/ua/protocol/datetime.h>
 #include <opc/ua/protocol/status_codes.h>
 #include <opc/ua/protocol/reference_ids.h>
+#include <opc/ua/protocol/protocol_auto.h>
 
 #include <memory>
 #include <stdint.h>
@@ -30,14 +31,6 @@ namespace OpcUa
 {
 
   typedef std::string LocaleID;
-
-  enum class TimestampsToReturn
-  {
-    SOURCE = 0,
-    SERVER = 1,
-    BOTH   = 2,
-    NEITHER = 3
-  };
 
   struct ByteString
   {
@@ -115,19 +108,6 @@ namespace OpcUa
     }
   };
 
-  struct RelativePathElement
-  {
-    NodeId ReferenceTypeID;
-    bool IsInverse = false;
-    bool IncludeSubtypes = false;
-    QualifiedName TargetName;
-  };
-
-  struct RelativePath
-  {
-    std::vector<RelativePathElement> Elements;
-  };
-
   // LocalizedText encoding mask
   const uint8_t HAS_LOCALE = 1;
   const uint8_t HAS_TEXT = 2;
@@ -200,60 +180,6 @@ namespace OpcUa
   };
 
 
-  enum DiagnosticInfoMask : uint8_t
-  {
-    DIM_NONE                  = 0,
-    DIM_SYMBOLIC_ID           = 0x1,
-    DIM_NAMESPACE             = 0x2,
-    DIM_LOCALIZED_TEXT        = 0x4,
-    DIM_LOCALE                = 0x8,
-    DIM_ADDITIONAL_INFO       = 0x10,
-    DIM_INNER_STATUS_CODE     = 0x20,
-    DIM_INNER_DIAGNOSTIC_INFO = 0x40
-  };
-
-  struct DiagnosticInfo
-  {
-    DiagnosticInfoMask EncodingMask;
-    int32_t SymbolicID;
-    int32_t NamespaceURI;
-    int32_t LocalizedText;
-    int32_t Locale;
-    std::string AdditionalInfo;
-    StatusCode InnerStatusCode;
-    std::shared_ptr<DiagnosticInfo> InnerDiagnostics;
-
-    DiagnosticInfo()
-      : EncodingMask(DiagnosticInfoMask::DIM_NONE)
-      , SymbolicID(0)
-      , NamespaceURI(0)
-      , LocalizedText(0)
-      , Locale(0)
-      , InnerStatusCode(StatusCode::Good)
-    {
-    }
-
-    bool operator== (const DiagnosticInfo& info) const
-    {
-      if (
-        EncodingMask == info.EncodingMask &&
-        SymbolicID == info.SymbolicID &&
-        NamespaceURI == info.NamespaceURI &&
-        LocalizedText == info.LocalizedText &&
-        Locale == info.Locale &&
-        InnerStatusCode == info.InnerStatusCode)
-      {
-        if (InnerDiagnostics && info.InnerDiagnostics)
-          return *InnerDiagnostics == *info.InnerDiagnostics;
-
-        return !InnerDiagnostics && !info.InnerDiagnostics;
-      }
-      return false;
-    }
-  };
-
-  typedef std::vector<DiagnosticInfo> DiagnosticInfoList;
-
   struct ResponseHeader
   {
     DateTime Timestamp;
@@ -265,80 +191,6 @@ namespace OpcUa
 
     ResponseHeader();
   };
-
-  enum SecurityTokenRequestType : uint32_t
-  {
-    STR_ISSUE = 0,
-    STR_RENEW = 1,
-  };
-
-  enum MessageSecurityMode : uint32_t
-  {
-    MSM_INVALID = 0,
-    MSM_NONE = 1,
-    MSM_SIGN = 2,
-    MSM_SIGN_AND_ENCRYPT = 3,
-  };
-
-  typedef std::vector<uint8_t> CertificateData;
-
-  // TODO Serialization, RawSize
-  struct SignatureData
-  {
-    std::vector<uint8_t> Signature;
-    std::string Algorithm;
-  };
-
-  enum class ApplicationType : uint32_t
-  {
-    SERVER = 0,
-    CLIENT = 1,
-    CLIENT_AND_SERVER = 2,
-    DISCOVERY_SERVER = 3,
-  };
-
-  struct ApplicationDescription
-  {
-    std::string URI;
-    std::string ProductURI;
-    LocalizedText Name;
-    ApplicationType Type = ApplicationType::CLIENT;
-    std::string GatewayServerURI;
-    std::string DiscoveryProfileURI;
-    std::vector<std::string> DiscoveryURLs;
-
-    ApplicationDescription();
-  };
-
-  enum class UserIdentifyTokenType : uint32_t
-  {
-    ANONYMOUS    = 0, // no token required
-    USERNAME     = 1, // username/password
-    CERTIFICATE  = 2, // x509v3 certificate
-    ISSUED_TOKEN = 3, // WS_Security token
-  };
-
-  struct UserTokenPolicy
-  {
-    std::string PolicyID;
-    UserIdentifyTokenType TokenType = UserIdentifyTokenType::ANONYMOUS;
-    std::string IssuedTokenType;
-    std::string IssuerEndpointURL;
-    std::string SecurityPolicyURI;
-  };
-
-  struct EndpointDescription
-  {
-    std::string EndpointURL;
-    ApplicationDescription ServerDescription;
-    CertificateData ServerCertificate;
-    MessageSecurityMode SecurityMode = MessageSecurityMode::MSM_NONE;
-    std::string SecurityPolicyURI;
-    std::vector<UserTokenPolicy> UserIdentifyTokens;
-    std::string TransportProfileURI;
-    uint8_t SecurityLevel = 0;
-  };
-
 
   enum ExtensionObjectEncoding : uint8_t
   {

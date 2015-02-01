@@ -406,14 +406,14 @@ BOOST_PYTHON_MODULE(opcua)
 
   to_python_converter<std::vector<ReferenceDescription>, vector_to_python_converter<ReferenceDescription>>();
 
-  class_<AttributeValueID>("AttributeValueID")
-  .def_readwrite("node", &AttributeValueID::Node)
-  .def_readwrite("attribute", &AttributeValueID::Attribute)
-  .def_readwrite("index_range", &AttributeValueID::IndexRange)
-  .def_readwrite("data_encoding", &AttributeValueID::DataEncoding)
+  class_<ReadValueId>("ReadValueId")
+  .def_readwrite("node", &ReadValueId::Node)
+  .def_readwrite("attribute", &ReadValueId::Attribute)
+  .def_readwrite("index_range", &ReadValueId::IndexRange)
+  .def_readwrite("data_encoding", &ReadValueId::DataEncoding)
   ;
 
-  to_python_converter<std::vector<AttributeValueID>, vector_to_python_converter<AttributeValueID>>();
+  to_python_converter<std::vector<ReadValueId>, vector_to_python_converter<ReadValueId>>();
 
   class_<WriteValue>("WriteValue")
   .def_readwrite("node", &WriteValue::Node)

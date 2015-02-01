@@ -101,7 +101,7 @@ namespace
       Assert(params.TimestampsType == TimestampsToReturn::BOTH, "Invalid value of TimestampsToReturn.");
       Assert(params.AttributesToRead.size() == 1, "Invalid size of AttributesToRead.");
 
-      OpcUa::AttributeValueID id = params.AttributesToRead[0];
+      OpcUa::ReadValueId id = params.AttributesToRead[0];
       Assert(id.Attribute == AttributeID::Value, "Invalid value of Attribute ID.");
       Assert(id.DataEncoding.NamespaceIndex == 3, "Invalid namespace index in DataEncoding.");
       Assert(id.DataEncoding.Name == "binary", "Invalid name in DataEncoding.");

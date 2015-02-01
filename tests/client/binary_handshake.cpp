@@ -376,7 +376,7 @@ TEST_F(OpcBinaryHandshake, Read)
 
 
 
-  AttributeValueID value;
+  ReadValueId value;
   value.Node.Encoding = EV_FOUR_BYTE;
   value.Node.FourByteData.Identifier = static_cast<uint8_t>(ObjectId::RootFolder);
   value.Attribute = AttributeID::DisplayName;

@@ -139,7 +139,7 @@ class Unit(unittest.TestCase):
         self.assertEqual(rd.target_node_type_definition,opcua.NodeId())
 
     def test_attribute_valueid(self):
-        avid=opcua.AttributeValueID()
+        avid=opcua.ReadValueId()
         self.assertEqual(avid.node,opcua.NodeId())
         self.assertEqual(avid.attribute,opcua.AttributeID.Value)
         self.assertEqual(avid.index_range,'')

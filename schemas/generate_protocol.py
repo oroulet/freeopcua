@@ -7,8 +7,9 @@ import xml.etree.ElementTree as ET
 
 from IPython import embed
 
-
-IgnoredStructs = ["Variant", "QualifiedName", "DataValue"]
+NeedConstructor = ["RelativePathElement", "ReadValueId"]
+IgnoredEnums = ["IdType"]
+IgnoredStructs = ["Variant", "QualifiedName", "DataValue", "LocalizedText", "RequestHeader", "AdditionalHeader", "ResponseHeader"]
 #by default we split requests and respons in header and parameters, but some are so simple we do not split them
 NoSplitStruct = ["GetEndpointsResponse"]
 
@@ -82,13 +83,16 @@ class CodeGenerator(object):
             if tag == "StructuredType":
                 structs = self.parse_struct(child)
                 for struct in structs:
+                    if struct.name in NeedConstructors:
+                        struct.constructor = True
                     if not struct.name.endswith("Node") and not struct.name.endswith("NodeId") and not struct.name in IgnoredStructs:
                         self.make_struct_h(struct)
                         self.make_struct_ser(struct)
                         self.make_constructors(struct)
             elif tag == "EnumeratedType":
                 enum = self.parse_enum(child)
-                self.make_enum_h(enum)
+                if not enum.name in IgnoredEnums:
+                    self.make_enum_h(enum)
             else:
                 print("Not implemented node type: " + tag + "\n")
 
@@ -428,12 +432,9 @@ class CodeGenerator(object):
 #include <opc/ua/protocol/nodeid.h>
 #include <opc/ua/protocol/variant.h>
 #include <opc/ua/protocol/strings.h>
-#include <opc/ua/protocol/node_classes.h>
 #include <opc/ua/protocol/variable_access_level.h>
-#include <map>
-#include <bitset>
 
-namespace OcpUa
+namespace OpcUa
 {
     ''' )
 

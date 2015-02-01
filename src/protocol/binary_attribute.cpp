@@ -25,7 +25,7 @@
 namespace OpcUa
 {
   // TODO move to appropriate file
-  AttributeValueID::AttributeValueID()
+  ReadValueId::ReadValueId()
     : Attribute(AttributeID::Value)
   {
   }
@@ -109,17 +109,17 @@ namespace OpcUa
       t = static_cast<TimestampsToReturn>(tmp);
     }
     //---------------------------------------------------
-    // AttributeValueID
+    // ReadValueId
     //---------------------------------------------------
 
     template<>
-    std::size_t RawSize<AttributeValueID>(const AttributeValueID& attr)
+    std::size_t RawSize<ReadValueId>(const ReadValueId& attr)
     {
       return RawSize(attr.Node) + RawSize(attr.Attribute) + RawSize(attr.IndexRange) + RawSize(attr.DataEncoding);
     }
 
     template<>
-    void DataSerializer::Serialize<AttributeValueID>(const AttributeValueID& attr)
+    void DataSerializer::Serialize<ReadValueId>(const ReadValueId& attr)
     {
       *this << attr.Node;
       *this << attr.Attribute;
@@ -128,7 +128,7 @@ namespace OpcUa
     }
 
     template<>
-    void DataDeserializer::Deserialize<AttributeValueID>(AttributeValueID& attr)
+    void DataDeserializer::Deserialize<ReadValueId>(ReadValueId& attr)
     {
       *this >> attr.Node;
       *this >> attr.Attribute;

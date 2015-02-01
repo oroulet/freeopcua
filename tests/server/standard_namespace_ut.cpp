@@ -74,7 +74,7 @@ protected:
   bool HasAttribute(OpcUa::ObjectId object, OpcUa::AttributeID attribute)
   {
     ReadParameters params;
-    AttributeValueID id;
+    ReadValueId id;
     id.Node = object;
     id.Attribute = attribute;
     params.AttributesToRead.push_back(id);

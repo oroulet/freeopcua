@@ -65,7 +65,7 @@ namespace OpcUa
   Variant Node::GetAttribute(const AttributeID attr) const
   {
     ReadParameters params;
-    AttributeValueID attribute;
+    ReadValueId attribute;
     attribute.Node = Id;
     attribute.Attribute = attr;
     params.AttributesToRead.push_back(attribute);

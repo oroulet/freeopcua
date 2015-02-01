@@ -258,7 +258,7 @@ namespace OpcUa
       return result;
     }
 
-    void InternalSubscription::TriggerDataChangeEvent(MonitoredDataChange monitoreditems, AttributeValueID attrval)
+    void InternalSubscription::TriggerDataChangeEvent(MonitoredDataChange monitoreditems, ReadValueId attrval)
     {
       if (Debug) { std::cout << "InternalSubcsription | Manual Trigger of DataChangeEvent for sub: " << Data.ID << " and clienthandle: " << monitoreditems.ClientHandle << std::endl; }
       ReadParameters params;

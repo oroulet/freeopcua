@@ -569,7 +569,7 @@ namespace
   void Read(OpcUa::AttributeServices& attributes, OpcUa::NodeId nodeID, OpcUa::AttributeID attributeID)
   {
     ReadParameters params;
-    AttributeValueID attribute;
+    ReadValueId attribute;
     attribute.Node = nodeID;
     attribute.Attribute = attributeID;
     params.AttributesToRead.push_back(attribute);

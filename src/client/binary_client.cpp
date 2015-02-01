@@ -416,7 +416,7 @@ namespace
     {
       if (Debug)  { 
         std::cout << "binary_client| Read -->" << std::endl; 
-        for ( AttributeValueID attr : params.AttributesToRead )
+        for ( ReadValueId attr : params.AttributesToRead )
         {
           std::cout << attr.Node << "  " << (uint32_t)attr.Attribute;
         }
