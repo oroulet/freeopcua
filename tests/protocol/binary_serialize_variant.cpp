@@ -1584,7 +1584,7 @@ TEST_F(OpcUaBinaryDeserialization, Variant_NODE_ID)
   GetStream() >> var;
 
   ASSERT_EQ(var.Type(), VariantType::NODE_ID);
-  ASSERT_EQ(var.As<NodeID>(), OpcUa::FourByteNodeID(449));
+  ASSERT_EQ(var.As<NodeId>(), OpcUa::FourByteNodeId(449));
   ASSERT_FALSE(var.IsNul());
   ASSERT_FALSE(var.IsArray());
   ASSERT_TRUE(var.Dimensions.empty());
@@ -1610,11 +1610,11 @@ TEST_F(OpcUaBinaryDeserialization, Variant_NODE_ID_Array)
   GetStream() >> var;
 
   ASSERT_EQ(var.Type(), VariantType::NODE_ID);
-  std::vector<NodeID> vals;
-  ASSERT_NO_THROW(vals = var.As<std::vector<NodeID>>());
+  std::vector<NodeId> vals;
+  ASSERT_NO_THROW(vals = var.As<std::vector<NodeId>>());
   ASSERT_EQ(vals.size(), 2);
-  ASSERT_EQ(vals[0], OpcUa::FourByteNodeID(449));
-  ASSERT_EQ(vals[1], OpcUa::FourByteNodeID(449));
+  ASSERT_EQ(vals[0], OpcUa::FourByteNodeId(449));
+  ASSERT_EQ(vals[1], OpcUa::FourByteNodeId(449));
   ASSERT_FALSE(var.IsNul());
   ASSERT_TRUE(var.IsArray());
   ASSERT_TRUE(var.Dimensions.empty());
@@ -1640,7 +1640,7 @@ TEST_F(OpcUaBinaryDeserialization, Variant_NODE_ID_DIMENSIONS)
   GetStream() >> var;
 
   ASSERT_EQ(var.Type(), VariantType::NODE_ID);
-  ASSERT_EQ(var.As<NodeID>(), OpcUa::FourByteNodeID(449));
+  ASSERT_EQ(var.As<NodeId>(), OpcUa::FourByteNodeId(449));
   ASSERT_FALSE(var.IsNul());
   ASSERT_FALSE(var.IsArray());
   ASSERT_EQ(var.Dimensions.size(), 1);
@@ -1701,11 +1701,11 @@ TEST(Variant, InitializeWithVariant)
   ASSERT_FALSE(var.IsNul());
 }
 
-TEST(Variant, InitializeObjectID)
+TEST(Variant, InitializeObjectId)
 {
-  const OpcUa::Variant var = OpcUa::ObjectID::RootFolder;
+  const OpcUa::Variant var = OpcUa::ObjectId::RootFolder;
   ASSERT_EQ(var.Type(), OpcUa::VariantType::NODE_ID);
-  ASSERT_EQ(var, OpcUa::ObjectID::RootFolder);
+  ASSERT_EQ(var, OpcUa::ObjectId::RootFolder);
   ASSERT_FALSE(var.IsArray());
   ASSERT_FALSE(var.IsNul());
 }

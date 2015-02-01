@@ -174,9 +174,9 @@ namespace OpcUa
     }
 
 
-    bool SubscriptionServiceInternal::PopPublishRequest(NodeID node)
+    bool SubscriptionServiceInternal::PopPublishRequest(NodeId node)
     {
-      std::map<NodeID, uint32_t>::iterator queue_it = PublishRequestQueues.find(node);
+      std::map<NodeId, uint32_t>::iterator queue_it = PublishRequestQueues.find(node);
       if ( queue_it == PublishRequestQueues.end() )
       {
         std::cout << "SubscriptionService | Error request for publish queue for unknown session: " << node << " queue are available for: ";
@@ -201,7 +201,7 @@ namespace OpcUa
       }
     }
 
-    void SubscriptionServiceInternal::TriggerEvent(NodeID node, Event event)
+    void SubscriptionServiceInternal::TriggerEvent(NodeId node, Event event)
     {
       boost::shared_lock<boost::shared_mutex> lock(DbMutex);
 

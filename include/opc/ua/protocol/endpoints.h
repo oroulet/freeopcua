@@ -29,7 +29,7 @@ namespace OpcUa
 
   struct GetEndpointsRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     EndpointsFilter Filter;
 
@@ -39,7 +39,7 @@ namespace OpcUa
 
   struct GetEndpointsResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
 
     std::vector<EndpointDescription> Endpoints;
@@ -59,7 +59,7 @@ namespace OpcUa
 
   struct FindServersRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     FindServersParameters Parameters;
 
@@ -73,7 +73,7 @@ namespace OpcUa
 
   struct FindServersResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     FindServersData Data;
 

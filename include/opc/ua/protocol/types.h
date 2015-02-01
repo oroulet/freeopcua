@@ -117,7 +117,7 @@ namespace OpcUa
 
   struct RelativePathElement
   {
-    NodeID ReferenceTypeID;
+    NodeId ReferenceTypeID;
     bool IsInverse = false;
     bool IncludeSubtypes = false;
     QualifiedName TargetName;
@@ -177,7 +177,7 @@ namespace OpcUa
 
   struct AdditionalHeader
   {
-    ExpandedNodeID TypeID;
+    ExpandedNodeId TypeID;
     uint8_t Encoding;
 
     AdditionalHeader()
@@ -188,7 +188,7 @@ namespace OpcUa
 
   struct RequestHeader
   {
-    ExpandedNodeID SessionAuthenticationToken;
+    ExpandedNodeId SessionAuthenticationToken;
     DateTime UtcTime;
     uint32_t RequestHandle = 0;
     uint32_t ReturnDiagnostics = 0;
@@ -350,11 +350,11 @@ namespace OpcUa
   //TODO serialization tests
   struct ExtensionObjectHeader
   {
-    ExpandedNodeID TypeID;
+    ExpandedNodeId TypeID;
     ExtensionObjectEncoding Encoding;
 
     ExtensionObjectHeader();
-    ExtensionObjectHeader(ExtensionObjectID objectID, ExtensionObjectEncoding encoding);
+    ExtensionObjectHeader(ExtensionObjectId objectID, ExtensionObjectEncoding encoding);
   };
 
 } // namespace OpcUa

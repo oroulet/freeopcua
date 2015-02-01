@@ -53,7 +53,7 @@ int main(int argc, char** argv)
 
     //get a node from standard namespace using objectID
     std::cout << "NamespaceArray is: " << std::endl;
-    OpcUa::Node nsnode = client.GetNode(ObjectID::Server_NamespaceArray); 
+    OpcUa::Node nsnode = client.GetNode(ObjectId::Server_NamespaceArray); 
     OpcUa::Variant ns  = nsnode.GetValue();
 
     for (std::string d : ns.As<std::vector<std::string>>())

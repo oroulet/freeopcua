@@ -38,7 +38,7 @@ namespace OpcUa
 
   struct DeleteSubscriptionRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     std::vector<IntegerID> SubscriptionsIds;
 
@@ -47,7 +47,7 @@ namespace OpcUa
 
   struct DeleteSubscriptionResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     std::vector<StatusCode> Results;
     DiagnosticInfoList Diagnostic;
@@ -61,7 +61,7 @@ namespace OpcUa
 
   struct CreateSubscriptionRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     SubscriptionParameters Parameters;
 
@@ -88,7 +88,7 @@ namespace OpcUa
 
   struct CreateSubscriptionResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     SubscriptionData Data;
 
@@ -129,7 +129,7 @@ namespace OpcUa
 
   struct PublishRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     PublishParameters Parameters;
 
@@ -138,7 +138,7 @@ namespace OpcUa
 
   struct RepublishRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     RepublishParameters Parameters;
 
@@ -229,7 +229,7 @@ namespace OpcUa
 
   struct PublishResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     PublishResult Result;
 
@@ -238,7 +238,7 @@ namespace OpcUa
 
   struct RepublishResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     NotificationMessage Message;
 
@@ -256,7 +256,7 @@ namespace OpcUa
 
   struct SetPublishingModeRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     PublishingModeParameters Parameters;
 
@@ -271,7 +271,7 @@ namespace OpcUa
 
   struct SetPublishingModeResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     PublishingModeResult Result;
 

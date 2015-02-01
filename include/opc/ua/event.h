@@ -28,18 +28,18 @@ namespace OpcUa
       //Other attributes must be set using SetValue and accessed using GetValue
       // This API is a draft, it WILL change
       Event(const Node& type);
-      Event(const NodeID& type);
+      Event(const NodeId& type);
       Event();
       
       //Attributes of an BaseEventType
       ByteString EventId;     //unique id
-      NodeID EventType;       //The type of event, defines attribues, connections, ...
+      NodeId EventType;       //The type of event, defines attribues, connections, ...
       DateTime LocalTime;     //Time zone information
       DateTime ReceiveTime;   //Time at which the server received the event
       DateTime Time;          //Time at which the event occured, should come from underlying system
       LocalizedText Message;  //human readable event description
       uint16_t Severity = 1;  //Priority, from 1 to 1000. 1 is lowest priority
-      NodeID SourceNode;      //The node that has generated the event
+      NodeId SourceNode;      //The node that has generated the event
       std::string SourceName; //Description of the source
 
 

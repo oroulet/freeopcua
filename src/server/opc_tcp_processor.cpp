@@ -247,7 +247,7 @@ namespace OpcUa
       SequenceHeader sequence;
       istream >> sequence;
 
-      NodeID typeID;
+      NodeId typeID;
       istream >> typeID;
 
       RequestHeader requestHeader;
@@ -424,7 +424,7 @@ namespace OpcUa
             }
           }
 
-          TranslateBrowsePathsToNodeIDsResponse response;
+          TranslateBrowsePathsToNodeIdsResponse response;
           FillResponseHeader(requestHeader, response.Header);
           response.Result.Paths = result;
           SecureHeader secureHeader(MT_SECURE_MESSAGE, CHT_SINGLE, ChannelID);

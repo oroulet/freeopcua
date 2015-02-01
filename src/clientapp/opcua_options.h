@@ -28,7 +28,7 @@ namespace OpcUa
       return ServerURI;
     }
 
-    NodeID GetNodeID() const
+    NodeId GetNodeId() const
     {
       return Node;
     }
@@ -110,7 +110,7 @@ namespace OpcUa
 
   private:
     std::string ServerURI;
-    NodeID Node;
+    NodeId Node;
     uint16_t NamespaceIndex;
     Variant Value;
     AttributeID Attribute;

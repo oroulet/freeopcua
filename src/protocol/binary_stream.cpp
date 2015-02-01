@@ -146,7 +146,7 @@ namespace OpcUa
   }
 
   /// TODO move to apropriate file
-  ExtensionObjectHeader::ExtensionObjectHeader(ExtensionObjectID objectID, ExtensionObjectEncoding encoding)
+  ExtensionObjectHeader::ExtensionObjectHeader(ExtensionObjectId objectID, ExtensionObjectEncoding encoding)
     : Encoding(encoding)
   {
     TypeID.Encoding = EV_FOUR_BYTE;
@@ -652,13 +652,13 @@ namespace OpcUa
     }
 
     template<>
-    void DataSerializer::Serialize<std::vector<NodeID>>(const std::vector<NodeID>& value)
+    void DataSerializer::Serialize<std::vector<NodeId>>(const std::vector<NodeId>& value)
     {
       SerializeContainer(*this, value);
     }
 
     template<>
-    void DataDeserializer::Deserialize<std::vector<NodeID>>(std::vector<NodeID>& value)
+    void DataDeserializer::Deserialize<std::vector<NodeId>>(std::vector<NodeId>& value)
     {
       DeserializeContainer(*this, value);
     }

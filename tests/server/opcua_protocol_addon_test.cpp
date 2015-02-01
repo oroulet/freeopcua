@@ -102,7 +102,7 @@ TEST_F(OpcUaProtocolAddonTest, CanBrowseRootFolder)
   std::shared_ptr<OpcUa::ViewServices> views = computer->Views();
 
   OpcUa::BrowseDescription description;
-  description.NodeToBrowse = OpcUa::ObjectID::RootFolder;
+  description.NodeToBrowse = OpcUa::ObjectId::RootFolder;
   description.Direction = OpcUa::BrowseDirection::Forward;
   description.ReferenceTypeID = OpcUa::ReferenceID::Organizes;
   description.IncludeSubtypes = true;
@@ -170,7 +170,7 @@ TEST_F(OpcUaProtocolAddonTest, CanReadAttributes)
   std::shared_ptr<OpcUa::AttributeServices> attributes = computer->Attributes();
 
   OpcUa::ReadParameters params;
-  params.AttributesToRead.push_back(OpcUa::AttributeValueID(OpcUa::ObjectID::RootFolder, OpcUa::AttributeID::BrowseName));
+  params.AttributesToRead.push_back(OpcUa::AttributeValueID(OpcUa::ObjectId::RootFolder, OpcUa::AttributeID::BrowseName));
 
   std::vector<OpcUa::DataValue> values = attributes->Read(params);
   ASSERT_EQ(values.size(), 1);

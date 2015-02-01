@@ -26,7 +26,7 @@ namespace OpcUa
   namespace Model
   {
 
-    Object::Object(NodeID objectId, Services::SharedPtr services)
+    Object::Object(NodeId objectId, Services::SharedPtr services)
       : Node(services)
     {
       Id = objectId;
@@ -61,7 +61,7 @@ namespace OpcUa
 
     ObjectType Object::GetType() const
     {
-      return ObjectType(ObjectID::Null, GetServices());
+      return ObjectType(ObjectId::Null, GetServices());
     }
 
     std::vector<Variable> Object::GetVariables() const
@@ -72,7 +72,7 @@ namespace OpcUa
     Variable Object::GetVariable(const QualifiedName& name) const
     {
       OpcUa::RelativePathElement element;
-      element.ReferenceTypeID = OpcUa::ObjectID::HierarchicalReferences;
+      element.ReferenceTypeID = OpcUa::ObjectId::HierarchicalReferences;
       element.IncludeSubtypes = true;
       element.TargetName = name;
 
@@ -108,48 +108,48 @@ namespace OpcUa
 
     Object Object::GetObject(const QualifiedName& name) const
     {
-      return Object(ObjectID::Null, GetServices());
+      return Object(ObjectId::Null, GetServices());
     }
 
     Object Object::GetObject(const RelativePath& name) const
     {
-      return Object(ObjectID::Null, GetServices());
+      return Object(ObjectId::Null, GetServices());
     }
 
     Object Object::CreateObject(const ObjectType& type, const QualifiedName& browseName)
     {
-      return CreateObject(NodeID(), type, browseName);
+      return CreateObject(NodeId(), type, browseName);
     }
 
-    Object Object::CreateObject(const NodeID& newNodeId, const ObjectType& nodeType, const QualifiedName& browseName)
+    Object Object::CreateObject(const NodeId& newNodeId, const ObjectType& nodeType, const QualifiedName& browseName)
     {
       return CreateObject(newNodeId, GetID(), nodeType.GetID(), browseName, browseName.Name);
     }
 
     Object Object::CreateObject(const ObjectType& type, const QualifiedName& browseName, const std::string& displayName)
     {
-      return CreateObject(NodeID(), GetID(), type.GetID(), browseName, displayName);
+      return CreateObject(NodeId(), GetID(), type.GetID(), browseName, displayName);
     }
 
-    Object Object::CreateObject(const NodeID& newNodeID, const NodeID& parentNode, const NodeID& typeID, const QualifiedName& browseName, const std::string& displayName)
+    Object Object::CreateObject(const NodeId& newNodeId, const NodeId& parentNode, const NodeId& typeID, const QualifiedName& browseName, const std::string& displayName)
     {
       Object object(GetServices());
-      object.Id = InstantiateType(newNodeID, parentNode, typeID, NodeClass::Object, browseName, displayName);
+      object.Id = InstantiateType(newNodeId, parentNode, typeID, NodeClass::Object, browseName, displayName);
       object.BrowseName = browseName;
       object.DisplayName = LocalizedText(displayName);
       return object;
 
     }
 
-    NodeID Object::InstantiateType(const NodeID& newNodeID, const NodeID& parentNode, const NodeID& typeID, NodeClass nodeClass, const QualifiedName& browseName, const std::string& displayName)
+    NodeId Object::InstantiateType(const NodeId& newNodeId, const NodeId& parentNode, const NodeId& typeID, NodeClass nodeClass, const QualifiedName& browseName, const std::string& displayName)
     {
       // Creating new node for object
       AddNodesItem newNodeRequest;
       newNodeRequest.BrowseName = browseName;
-      newNodeRequest.RequestedNewNodeID = newNodeID;
+      newNodeRequest.RequestedNewNodeId = newNodeId;
       newNodeRequest.Class = nodeClass;
       newNodeRequest.ParentNodeId = parentNode;
-      newNodeRequest.ReferenceTypeId = nodeClass == NodeClass::Object ? ObjectID::HasComponent : ObjectID::HasProperty;
+      newNodeRequest.ReferenceTypeId = nodeClass == NodeClass::Object ? ObjectId::HasComponent : ObjectId::HasProperty;
       newNodeRequest.TypeDefinition = typeID;
       ObjectAttributes attrs;
       attrs.Description = LocalizedText(displayName);
@@ -165,29 +165,29 @@ namespace OpcUa
 
       OpcUa::CheckStatusCode(newObjectNode[0].Status);
 
-      std::map<NodeID, std::vector<ReferenceDescription>> nextRefs;
-      nextRefs.insert({newObjectNode[0].AddedNodeID, BrowseObjectsAndVariables(typeID)});
+      std::map<NodeId, std::vector<ReferenceDescription>> nextRefs;
+      nextRefs.insert({newObjectNode[0].AddedNodeId, BrowseObjectsAndVariables(typeID)});
       while(!nextRefs.empty())
       {
-        std::map<NodeID, std::vector<ReferenceDescription>> newRefs;
+        std::map<NodeId, std::vector<ReferenceDescription>> newRefs;
         for (auto idRefs : nextRefs)
         {
-          std::map<NodeID, std::vector<ReferenceDescription>> tmpRefs = CopyObjectsAndVariables(idRefs.first, idRefs.second);
+          std::map<NodeId, std::vector<ReferenceDescription>> tmpRefs = CopyObjectsAndVariables(idRefs.first, idRefs.second);
           newRefs.insert(tmpRefs.begin(), tmpRefs.end());
         }
         nextRefs = std::move(newRefs);
       }
-      return newObjectNode[0].AddedNodeID;
+      return newObjectNode[0].AddedNodeId;
     }
 
-    std::vector<ReferenceDescription> Object::BrowseObjectsAndVariables(const NodeID& id)
+    std::vector<ReferenceDescription> Object::BrowseObjectsAndVariables(const NodeId& id)
     {
       // ID of the new node.
       BrowseDescription desc;
       desc.Direction = BrowseDirection::Forward;
       desc.IncludeSubtypes = true;
       desc.NodeClasses =   NODE_CLASS_OBJECT | NODE_CLASS_VARIABLE | NODE_CLASS_METHOD;
-      desc.ReferenceTypeID = ObjectID::HierarchicalReferences;
+      desc.ReferenceTypeID = ObjectId::HierarchicalReferences;
       desc.NodeToBrowse = id;
       desc.ResultMask = REFERENCE_NODE_CLASS | REFERENCE_TYPE_DEFINITION | REFERENCE_BROWSE_NAME | REFERENCE_DISPLAY_NAME;
 
@@ -198,9 +198,9 @@ namespace OpcUa
       return views->Browse(query)[0].Referencies; //FIME: this method should return BrowseResults
     }
 
-    std::map<NodeID, std::vector<ReferenceDescription>> Object::CopyObjectsAndVariables(const NodeID& targetNode, const std::vector<ReferenceDescription>& refs)
+    std::map<NodeId, std::vector<ReferenceDescription>> Object::CopyObjectsAndVariables(const NodeId& targetNode, const std::vector<ReferenceDescription>& refs)
     {
-      std::map<NodeID, std::vector<ReferenceDescription>> nextCopyData;
+      std::map<NodeId, std::vector<ReferenceDescription>> nextCopyData;
       for (const ReferenceDescription& ref : refs)
       {
         std::vector<AddNodesResult> result;
@@ -209,9 +209,9 @@ namespace OpcUa
         {
           case NodeClass::Object:
           {
-            if (ref.TargetNodeTypeDefinition !=ObjectID::Null)
+            if (ref.TargetNodeTypeDefinition !=ObjectId::Null)
             {
-              InstantiateType(NodeID(), targetNode, ref.TargetNodeTypeDefinition, NodeClass::Object, ref.BrowseName, ref.DisplayName.Text);
+              InstantiateType(NodeId(), targetNode, ref.TargetNodeTypeDefinition, NodeClass::Object, ref.BrowseName, ref.DisplayName.Text);
             }
             else
             {
@@ -234,27 +234,27 @@ namespace OpcUa
           continue;
         }
         result = GetServices()->NodeManagement()->AddNodes(newNodeRequest);
-        std::vector<ReferenceDescription> newRefs = BrowseObjectsAndVariables(ref.TargetNodeID);
-        nextCopyData.insert({result[0].AddedNodeID, newRefs});
+        std::vector<ReferenceDescription> newRefs = BrowseObjectsAndVariables(ref.TargetNodeId);
+        nextCopyData.insert({result[0].AddedNodeId, newRefs});
       }
       return nextCopyData;
     }
 
     Variable Object::CreateVariable(const QualifiedName& browseName, const Variant& value)
     {
-      return CreateVariable(NodeID(), browseName, value);
+      return CreateVariable(NodeId(), browseName, value);
     }
 
-    Variable Object::CreateVariable(const NodeID& newVariableID, const QualifiedName& browseName, const Variant& value)
+    Variable Object::CreateVariable(const NodeId& newVariableID, const QualifiedName& browseName, const Variant& value)
     {
       // Creating new node for object
       AddNodesItem newNodeRequest;
       newNodeRequest.BrowseName = browseName;
-      newNodeRequest.RequestedNewNodeID = newVariableID;
+      newNodeRequest.RequestedNewNodeId = newVariableID;
       newNodeRequest.Class = NodeClass::Variable;
       newNodeRequest.ParentNodeId = GetID();
-      newNodeRequest.ReferenceTypeId = ObjectID::HasProperty;
-      newNodeRequest.TypeDefinition = NodeID();
+      newNodeRequest.ReferenceTypeId = ObjectId::HasProperty;
+      newNodeRequest.TypeDefinition = NodeId();
       VariableAttributes attrs;
       attrs.Description = LocalizedText(browseName.Name);
       attrs.DisplayName = LocalizedText(browseName.Name);
@@ -271,7 +271,7 @@ namespace OpcUa
 
       OpcUa::CheckStatusCode(newNode[0].Status);
       Variable newVariable(GetServices());
-      newVariable.Id = newNode[0].AddedNodeID;
+      newVariable.Id = newNode[0].AddedNodeId;
       newVariable.BrowseName = browseName;
       newVariable.DisplayName = attrs.Description;
       newVariable.DataType = value.Type();
@@ -284,14 +284,14 @@ namespace OpcUa
       return Variable(GetServices());
     }
 
-    Variable Object::CreateVariable(const NodeID& newVariableID, const QualifiedName& browseName, const VariableType& type)
+    Variable Object::CreateVariable(const NodeId& newVariableID, const QualifiedName& browseName, const VariableType& type)
     {
       return Variable(GetServices());
     }
 
-    AddNodesItem Object::CreateVariableCopy(const NodeID& parentID, const ReferenceDescription& ref)
+    AddNodesItem Object::CreateVariableCopy(const NodeId& parentID, const ReferenceDescription& ref)
     {
-      const NodeID& nodeID = ref.TargetNodeID;
+      const NodeId& nodeID = ref.TargetNodeId;
 
       ReadParameters readParams;
       readParams.AttributesToRead.push_back({nodeID, AttributeID::DisplayName});
@@ -313,7 +313,7 @@ namespace OpcUa
       attrs.DisplayName = values[0].Value.As<LocalizedText>();
       attrs.Description = values[1].Value.As<LocalizedText>();
       attrs.Value = values[2].Value;
-      attrs.Type = values[3].Value.As<NodeID>();
+      attrs.Type = values[3].Value.As<NodeId>();
       attrs.Rank = values[4].Value.As<int32_t>();
       attrs.Dimensions = values[5].Value.As<std::vector<uint32_t>>();
       attrs.AccessLevel = static_cast<VariableAccessLevel>(values[6].Value.As<uint8_t>());
@@ -333,9 +333,9 @@ namespace OpcUa
       return newNode;
     }
 
-    AddNodesItem Object::CreateObjectCopy(const NodeID& parentID, const ReferenceDescription& ref)
+    AddNodesItem Object::CreateObjectCopy(const NodeId& parentID, const ReferenceDescription& ref)
     {
-      const NodeID& nodeID = ref.TargetNodeID;
+      const NodeId& nodeID = ref.TargetNodeId;
 
       ReadParameters readParams;
       readParams.AttributesToRead.push_back({nodeID, AttributeID::DisplayName});

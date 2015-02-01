@@ -14,7 +14,7 @@
 
 namespace OpcUa
 {
-  enum class ExpandedObjectID : uint32_t
+  enum class ExpandedObjectId : uint32_t
   {
     Null           = 0,
     ObjectAttribute = 354,

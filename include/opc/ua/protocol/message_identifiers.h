@@ -95,9 +95,9 @@ namespace OpcUa
     SERVICE_FAULT = 0x18d, //397;
   };
 
-  struct NodeID;
+  struct NodeId;
 
-  MessageID GetMessageID(const NodeID& id);
+  MessageID GetMessageID(const NodeId& id);
 
 }
 

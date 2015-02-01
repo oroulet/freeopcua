@@ -36,7 +36,7 @@ def cxx_object_ids(fname):
 
 namespace OpcUa
 {
-  enum class ObjectID : uint32_t
+  enum class ObjectId : uint32_t
   {
     Null = 0,''')
 
@@ -183,10 +183,10 @@ def py_object_ids(fname):
 using namespace boost::python;
 using namespace OpcUa;
 
-void py_opcua_enums_ObjectID()
+void py_opcua_enums_ObjectId()
 {
-  enum_<ObjectID>("ObjectID")
-#define _value(X) value(#X, ObjectID:: X)''')
+  enum_<ObjectId>("ObjectId")
+#define _value(X) value(#X, ObjectId:: X)''')
 
   with open(fname) as fd:
     for e in csv.reader(fd, delimiter=','):

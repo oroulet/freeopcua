@@ -37,8 +37,8 @@ namespace OpcUa
       AddNodesItem rootNode;
       rootNode.BrowseName = QualifiedName(0, OpcUa::Names::Root);
       rootNode.Class = NodeClass::Object;
-      rootNode.RequestedNewNodeID = ObjectID::RootFolder;
-      rootNode.TypeDefinition = ObjectID::FolderType;
+      rootNode.RequestedNewNodeId = ObjectId::RootFolder;
+      rootNode.TypeDefinition = ObjectId::FolderType;
       rootNode.Attributes = attrs;
       AddNode(rootNode);
       */
@@ -97,7 +97,7 @@ namespace OpcUa
         if(Debug)
         {
           std::cout << "AddressSpaceInternal | Browsing ";
-          std::cout << " NodeID: '" << browseDescription.NodeToBrowse << "'";
+          std::cout << " NodeId: '" << browseDescription.NodeToBrowse << "'";
           std::cout << ", ReferenceID: '" << browseDescription.ReferenceTypeID << "'";
           std::cout << ", Direction: " << browseDescription.Direction;
           std::cout << ", NodeClasses: 0x" << std::hex << (unsigned)browseDescription.NodeClasses;
@@ -155,7 +155,7 @@ namespace OpcUa
       return statuses;
     }
 
-    std::tuple<bool, NodeID> AddressSpaceInMemory::FindElementInNode(const NodeID& nodeid, const RelativePathElement& element) const
+    std::tuple<bool, NodeId> AddressSpaceInMemory::FindElementInNode(const NodeId& nodeid, const RelativePathElement& element) const
     {
       NodesMap::const_iterator nodeit = Nodes.find(nodeid);
       if ( nodeit != Nodes.end() )
@@ -165,16 +165,16 @@ namespace OpcUa
           //if (reference.first == current) { std::cout <<   reference.second.BrowseName.NamespaceIndex << reference.second.BrowseName.Name << " to " << element.TargetName.NamespaceIndex << element.TargetName.Name <<std::endl; }
           if (reference.BrowseName == element.TargetName)
           {
-            return std::make_tuple(true, reference.TargetNodeID);
+            return std::make_tuple(true, reference.TargetNodeId);
           }
         }
       }
-      return std::make_tuple(false, NodeID());
+      return std::make_tuple(false, NodeId());
     }
 
     BrowsePathResult AddressSpaceInMemory::TranslateBrowsePath(const BrowsePath& browsepath) const
     {
-      NodeID current = browsepath.StartingNode;
+      NodeId current = browsepath.StartingNode;
       BrowsePathResult result;
 
       for (RelativePathElement element : browsepath.Path.Elements)
@@ -198,7 +198,7 @@ namespace OpcUa
       return result;
     }
 
-    DataValue AddressSpaceInMemory::GetValue(const NodeID& node, AttributeID attribute) const
+    DataValue AddressSpaceInMemory::GetValue(const NodeId& node, AttributeID attribute) const
     {
       NodesMap::const_iterator nodeit = Nodes.find(node);
       if ( nodeit == Nodes.end() )
@@ -229,7 +229,7 @@ namespace OpcUa
       return value;
     }
 
-    uint32_t AddressSpaceInMemory::AddDataChangeCallback(const NodeID& node, AttributeID attribute, std::function<Server::DataChangeCallback> callback)
+    uint32_t AddressSpaceInMemory::AddDataChangeCallback(const NodeId& node, AttributeID attribute, std::function<Server::DataChangeCallback> callback)
     {
       if (Debug) std::cout << "AddressSpaceInternal| Set data changes callback for node " << node
          << " and attribute " << (unsigned)attribute <<  std::endl;
@@ -237,7 +237,7 @@ namespace OpcUa
       if ( it == Nodes.end() )
       {
         if (Debug) std::cout << "AddressSpaceInternal| Node '" << node << "' not found." << std::endl;
-        throw std::runtime_error("AddressSpaceInternal | NodeID not found");
+        throw std::runtime_error("AddressSpaceInternal | NodeId not found");
       }
       AttributesMap::iterator ait = it->second.Attributes.find(attribute);
       if ( ait == it->second.Attributes.end() )
@@ -277,10 +277,10 @@ namespace OpcUa
           return;
         }
       }
-      throw std::runtime_error("AddressSpaceInternal | NodeID or attribute nor found");
+      throw std::runtime_error("AddressSpaceInternal | NodeId or attribute nor found");
     }
 
-    StatusCode AddressSpaceInMemory::SetValueCallback(const NodeID& node, AttributeID attribute, std::function<DataValue(void)> callback)
+    StatusCode AddressSpaceInMemory::SetValueCallback(const NodeId& node, AttributeID attribute, std::function<DataValue(void)> callback)
     {
       NodesMap::iterator it = Nodes.find(node);
       if ( it != Nodes.end() )
@@ -295,7 +295,7 @@ namespace OpcUa
       return StatusCode::BadAttributeIdInvalid;
     }
 
-    StatusCode AddressSpaceInMemory::SetValue(const NodeID& node, AttributeID attribute, const DataValue& data)
+    StatusCode AddressSpaceInMemory::SetValue(const NodeId& node, AttributeID attribute, const DataValue& data)
     {
       NodesMap::iterator it = Nodes.find(node);
       if ( it != Nodes.end() )
@@ -319,14 +319,14 @@ namespace OpcUa
 
     bool AddressSpaceInMemory::IsSuitableReference(const BrowseDescription& desc, const ReferenceDescription& reference) const
     {
-      if (Debug) std::cout << "AddressSpaceInternal | Checking reference '" << reference.ReferenceTypeID << "' to the node '" << reference.TargetNodeID << "' (" << reference.BrowseName << ") which must fit ref: " << desc.ReferenceTypeID << " with include subtype: " << desc.IncludeSubtypes << std::endl;
+      if (Debug) std::cout << "AddressSpaceInternal | Checking reference '" << reference.ReferenceTypeID << "' to the node '" << reference.TargetNodeId << "' (" << reference.BrowseName << ") which must fit ref: " << desc.ReferenceTypeID << " with include subtype: " << desc.IncludeSubtypes << std::endl;
 
       if ((desc.Direction == BrowseDirection::Forward && !reference.IsForward) || (desc.Direction == BrowseDirection::Inverse && reference.IsForward))
       {
         if (Debug) std::cout << "AddressSpaceInternal | Reference in different direction." << std::endl;
         return false;
       }
-      if (desc.ReferenceTypeID != ObjectID::Null && !IsSuitableReferenceType(reference, desc.ReferenceTypeID, desc.IncludeSubtypes))
+      if (desc.ReferenceTypeID != ObjectId::Null && !IsSuitableReferenceType(reference, desc.ReferenceTypeID, desc.IncludeSubtypes))
       {
         if (Debug) std::cout << "AddressSpaceInternal | Reference has wrong type." << std::endl;
         return false;
@@ -340,28 +340,28 @@ namespace OpcUa
       return true;
     }
 
-    bool AddressSpaceInMemory::IsSuitableReferenceType(const ReferenceDescription& reference, const NodeID& typeID, bool includeSubtypes) const
+    bool AddressSpaceInMemory::IsSuitableReferenceType(const ReferenceDescription& reference, const NodeId& typeID, bool includeSubtypes) const
     {
       if (!includeSubtypes)
       {
         return reference.ReferenceTypeID == typeID;
       }
-      const std::vector<NodeID> suitableTypes = SelectNodesHierarchy(std::vector<NodeID>(1, typeID));
+      const std::vector<NodeId> suitableTypes = SelectNodesHierarchy(std::vector<NodeId>(1, typeID));
       const auto resultIt = std::find(suitableTypes.begin(), suitableTypes.end(), reference.ReferenceTypeID);\
       return resultIt != suitableTypes.end();
     }
 
-    std::vector<NodeID> AddressSpaceInMemory::SelectNodesHierarchy(std::vector<NodeID> sourceNodes) const
+    std::vector<NodeId> AddressSpaceInMemory::SelectNodesHierarchy(std::vector<NodeId> sourceNodes) const
     {
-      std::vector<NodeID> subNodes;
-      for ( NodeID nodeid: sourceNodes )
+      std::vector<NodeId> subNodes;
+      for ( NodeId nodeid: sourceNodes )
       {
           NodesMap::const_iterator node_it = Nodes.find(nodeid);
           if ( node_it != Nodes.end() )
           {
             for (auto& ref:  node_it->second.References )
             {
-              subNodes.push_back(ref.TargetNodeID);
+              subNodes.push_back(ref.TargetNodeId);
           }
         }
       }
@@ -370,7 +370,7 @@ namespace OpcUa
         return sourceNodes;
       }
 
-      const std::vector<NodeID> allChilds = SelectNodesHierarchy(subNodes);
+      const std::vector<NodeId> allChilds = SelectNodesHierarchy(subNodes);
       sourceNodes.insert(sourceNodes.end(), allChilds.begin(), allChilds.end());
       return sourceNodes;
     }
@@ -378,17 +378,17 @@ namespace OpcUa
     AddNodesResult AddressSpaceInMemory::AddNode( const AddNodesItem& item )
     {
       AddNodesResult result;
-      if (Debug) std::cout << "AddressSpaceInternal | address_space| Adding new node id='" << item.RequestedNewNodeID << "' name=" << item.BrowseName.Name << std::endl;
+      if (Debug) std::cout << "AddressSpaceInternal | address_space| Adding new node id='" << item.RequestedNewNodeId << "' name=" << item.BrowseName.Name << std::endl;
 
-      if (!Nodes.empty() && item.RequestedNewNodeID != ObjectID::Null && Nodes.find(item.RequestedNewNodeID) != Nodes.end())
+      if (!Nodes.empty() && item.RequestedNewNodeId != ObjectId::Null && Nodes.find(item.RequestedNewNodeId) != Nodes.end())
       {
-        std::cerr << "AddressSpaceInternal | Error: NodeID '"<< item.RequestedNewNodeID << "' allready exist: " << std::endl;
+        std::cerr << "AddressSpaceInternal | Error: NodeId '"<< item.RequestedNewNodeId << "' allready exist: " << std::endl;
         result.Status = StatusCode::BadNodeIdExists;
         return result;
       }
 
       NodesMap::iterator parent_node_it = Nodes.end();
-      if (item.ParentNodeId != NodeID())
+      if (item.ParentNodeId != NodeId())
       {
         parent_node_it = Nodes.find(item.ParentNodeId);
         if ( parent_node_it == Nodes.end() )
@@ -399,7 +399,7 @@ namespace OpcUa
         }
       }
 
-      const NodeID resultID = GetNewNodeID(item.RequestedNewNodeID);
+      const NodeId resultID = GetNewNodeId(item.RequestedNewNodeId);
       NodeStruct nodestruct;
       //Add Common attributes
       nodestruct.Attributes[AttributeID::NodeId].Value = resultID;
@@ -422,7 +422,7 @@ namespace OpcUa
         // Link to parent
         ReferenceDescription desc;
         desc.ReferenceTypeID = item.ReferenceTypeId;
-        desc.TargetNodeID = resultID;
+        desc.TargetNodeId = resultID;
         desc.TargetNodeClass = item.Class;
         desc.BrowseName = item.BrowseName;
         desc.DisplayName = LocalizedText(item.BrowseName.Name);
@@ -432,32 +432,32 @@ namespace OpcUa
         parent_node_it->second.References.push_back(desc);
       }
 
-      if (item.TypeDefinition != ObjectID::Null)
+      if (item.TypeDefinition != ObjectId::Null)
       {
         // Link to parent
         AddReferencesItem typeRef;
-        typeRef.SourceNodeID = resultID;
+        typeRef.SourceNodeId = resultID;
         typeRef.IsForward = true;
-        typeRef.ReferenceTypeId = ObjectID::HasTypeDefinition;
-        typeRef.TargetNodeID = item.TypeDefinition;
+        typeRef.ReferenceTypeId = ObjectId::HasTypeDefinition;
+        typeRef.TargetNodeId = item.TypeDefinition;
         typeRef.TargetNodeClass = NodeClass::DataType;
         AddReference(typeRef);
       }
 
       result.Status = StatusCode::Good;
-      result.AddedNodeID = resultID;
+      result.AddedNodeId = resultID;
       if (Debug) std::cout << "AddressSpaceInternal | node added." << std::endl;
       return result;
     }
 
     StatusCode AddressSpaceInMemory::AddReference(const AddReferencesItem& item)
     {
-      NodesMap::iterator node_it = Nodes.find(item.SourceNodeID);
+      NodesMap::iterator node_it = Nodes.find(item.SourceNodeId);
       if ( node_it == Nodes.end() )
       {
         return StatusCode::BadSourceNodeIdInvalid;
       }
-      NodesMap::iterator targetnode_it = Nodes.find(item.TargetNodeID);
+      NodesMap::iterator targetnode_it = Nodes.find(item.TargetNodeId);
       if ( targetnode_it == Nodes.end() )
       {
         return StatusCode::BadTargetNodeIdInvalid;
@@ -465,9 +465,9 @@ namespace OpcUa
       ReferenceDescription desc;
       desc.ReferenceTypeID = item.ReferenceTypeId;
       desc.IsForward = item.IsForward;
-      desc.TargetNodeID = item.TargetNodeID;
+      desc.TargetNodeId = item.TargetNodeId;
       desc.TargetNodeClass = item.TargetNodeClass;
-      DataValue dv = GetValue(item.TargetNodeID, AttributeID::BrowseName);
+      DataValue dv = GetValue(item.TargetNodeId, AttributeID::BrowseName);
       if (dv.Status == StatusCode::Good)
       {
         desc.BrowseName = dv.Value.As<QualifiedName>();
@@ -476,7 +476,7 @@ namespace OpcUa
       {
         desc.BrowseName = QualifiedName("NONAME", 0);
       }
-      dv = GetValue(item.TargetNodeID, AttributeID::DisplayName);
+      dv = GetValue(item.TargetNodeId, AttributeID::DisplayName);
       if (dv.Status == StatusCode::Good)
       {
         desc.DisplayName = dv.Value.As<LocalizedText>();
@@ -489,19 +489,19 @@ namespace OpcUa
       return StatusCode::Good;
     }
 
-    NodeID AddressSpaceInMemory::GetNewNodeID(const NodeID& id)
+    NodeId AddressSpaceInMemory::GetNewNodeId(const NodeId& id)
     {
-      if (id == ObjectID::Null)
+      if (id == ObjectId::Null)
       {
-        return OpcUa::NumericNodeID(++MaxNodeIDNum);
+        return OpcUa::NumericNodeId(++MaxNodeIdNum);
       }
 
       if (id.GetNamespaceIndex() == 0)
       {
         const uint32_t number = id.GetIntegerIdentifier();
-        if (MaxNodeIDNum < number)
+        if (MaxNodeIdNum < number)
         {
-          MaxNodeIDNum = number;
+          MaxNodeIdNum = number;
         }
       }
 

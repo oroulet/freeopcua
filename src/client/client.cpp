@@ -190,7 +190,7 @@ namespace OpcUa
     {
       DefaultTimeout = response.Session.RevisedSessionTimeout;
     }
-    KeepAlive.Start(Server, Node(Server, ObjectID::Server_ServerStatus_State), DefaultTimeout);
+    KeepAlive.Start(Server, Node(Server, ObjectId::Server_ServerStatus_State), DefaultTimeout);
   }
 
   void UaClient::OpenSecureChannel()
@@ -239,14 +239,14 @@ namespace OpcUa
   std::vector<std::string>  UaClient::GetServerNamespaces()
   {
     if ( ! Server ) { throw std::runtime_error("Not connected");}
-    Node namespacearray(Server, ObjectID::Server_NamespaceArray);
+    Node namespacearray(Server, ObjectId::Server_NamespaceArray);
     return namespacearray.GetValue().As<std::vector<std::string>>();;
   }
 
   uint32_t UaClient::GetNamespaceIndex(std::string uri)
   {
     if ( ! Server ) { throw std::runtime_error("Not connected");}
-    Node namespacearray(Server, ObjectID::Server_NamespaceArray);
+    Node namespacearray(Server, ObjectId::Server_NamespaceArray);
     std::vector<std::string> uris = namespacearray.GetValue().As<std::vector<std::string>>();;
     for ( uint32_t i=0; i<uris.size(); ++i)
     {
@@ -262,10 +262,10 @@ namespace OpcUa
 
   Node UaClient::GetNode(const std::string& nodeId) const
   {
-    return Node(Server, ToNodeID(nodeId));
+    return Node(Server, ToNodeId(nodeId));
   }
 
-  Node UaClient::GetNode(const NodeID& nodeId) const
+  Node UaClient::GetNode(const NodeId& nodeId) const
   {
     if ( ! Server ) { throw std::runtime_error("Not connected");}
     return Node(Server, nodeId);
@@ -274,19 +274,19 @@ namespace OpcUa
   Node UaClient::GetRootNode() const
   {
     if ( ! Server ) { throw std::runtime_error("Not connected");}
-    return Node(Server, OpcUa::ObjectID::RootFolder);
+    return Node(Server, OpcUa::ObjectId::RootFolder);
   }
 
   Node UaClient::GetObjectsNode() const
   {
     if ( ! Server ) { throw std::runtime_error("Not connected");}
-    return Node(Server, OpcUa::ObjectID::ObjectsFolder);
+    return Node(Server, OpcUa::ObjectId::ObjectsFolder);
   }
 
   Node UaClient::GetServerNode() const
   {
     if ( ! Server ) { throw std::runtime_error("Not connected");}
-    return Node(Server, OpcUa::ObjectID::Server);
+    return Node(Server, OpcUa::ObjectId::Server);
   }
 
   std::unique_ptr<Subscription> UaClient::CreateSubscription(unsigned int period, SubscriptionHandler& callback)

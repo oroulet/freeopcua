@@ -7,11 +7,11 @@
 namespace OpcUa
 {
 
-  Event::Event() : EventType(ObjectID::BaseEventType) 
+  Event::Event() : EventType(ObjectId::BaseEventType) 
   {
   }
 
-  Event::Event(const NodeID& type) : EventType(type) {}
+  Event::Event(const NodeId& type) : EventType(type) {}
 
   Event::Event(const Node& type) : EventType(type.GetId()) {}
 

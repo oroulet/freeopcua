@@ -75,7 +75,7 @@ TEST_F(ModelVariable, CanSetVariableValue_ByVariant)
   OpcUa::Variant value = 8;
   OpcUa::Model::Variable variable = rootObject.CreateVariable(name, value);
 
-  ASSERT_NE(variable.GetID(), OpcUa::ObjectID::Null);
+  ASSERT_NE(variable.GetID(), OpcUa::ObjectId::Null);
   ASSERT_EQ(variable.GetBrowseName(), name);
   ASSERT_EQ(variable.GetDisplayName(), OpcUa::LocalizedText(name.Name));
   ASSERT_EQ(variable.GetValue(), value);
@@ -96,7 +96,7 @@ TEST_F(ModelVariable, CanSetVariableValue_DataValue)
   OpcUa::Variant value = 8;
   OpcUa::Model::Variable variable = rootObject.CreateVariable(name, value);
 
-  ASSERT_NE(variable.GetID(), OpcUa::ObjectID::Null);
+  ASSERT_NE(variable.GetID(), OpcUa::ObjectId::Null);
   ASSERT_EQ(variable.GetBrowseName(), name);
   ASSERT_EQ(variable.GetDisplayName(), OpcUa::LocalizedText(name.Name));
   ASSERT_EQ(variable.GetValue(), value);
@@ -113,7 +113,7 @@ TEST_F(ModelVariable, CanSetVariableValue_DataValue)
 
 TEST_F(ModelVariable, CanSetListSubVariables)
 {
-  OpcUa::Model::Variable variable(OpcUa::ObjectID::Server_ServerStatus_BuildInfo, Services);
+  OpcUa::Model::Variable variable(OpcUa::ObjectId::Server_ServerStatus_BuildInfo, Services);
   std::vector<OpcUa::Model::Variable> vars = variable.Variables();
   EXPECT_FALSE(vars.empty());
 }

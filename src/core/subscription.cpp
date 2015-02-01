@@ -53,17 +53,17 @@ namespace OpcUa
     if (Debug){ std::cout << "Subscription | Suscription::PublishCallback called with " <<result.Message.Data.size() << " notifications " << std::endl; }
     for (const NotificationData& data: result.Message.Data )
     {
-      if (data.Header.TypeID == ExpandedObjectID::DataChangeNotification)
+      if (data.Header.TypeID == ExpandedObjectId::DataChangeNotification)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type DataChange\n"; }
         CallDataChangeCallback(data);
       }
-      else if (data.Header.TypeID == ExpandedObjectID::EventNotificationList)
+      else if (data.Header.TypeID == ExpandedObjectId::EventNotificationList)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type Event\n"; }
         CallEventCallback(data);
       }
-      else if (data.Header.TypeID == ExpandedObjectID::StatusChangeNotification)
+      else if (data.Header.TypeID == ExpandedObjectId::StatusChangeNotification)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type StatusChange\n"; }
         CallStatusChangeCallback(data);
@@ -138,11 +138,11 @@ namespace OpcUa
             }
             else if ( op.BrowsePath[0] == QualifiedName("EventType", 0) )
             {
-              ev.EventType = ef.EventFields[count].As<NodeID>();
+              ev.EventType = ef.EventFields[count].As<NodeId>();
             }
             else if ( op.BrowsePath[0] == QualifiedName("SourceNode", 0) )
             {
-              ev.SourceNode = ef.EventFields[count].As<NodeID>();
+              ev.SourceNode = ef.EventFields[count].As<NodeId>();
             }
             else if ( op.BrowsePath[0] == QualifiedName("SourceName", 0) )
             {
@@ -282,7 +282,7 @@ namespace OpcUa
 
   uint32_t Subscription::SubscribeEvents()
   {
-    return SubscribeEvents(Node(Server, ObjectID::Server), Node(Server, ObjectID::BaseEventType));
+    return SubscribeEvents(Node(Server, ObjectId::Server), Node(Server, ObjectId::BaseEventType));
   }
 
   uint32_t Subscription::SubscribeEvents(const Node& node, const Node& eventtype)  

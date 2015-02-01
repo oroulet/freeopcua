@@ -13,9 +13,9 @@
 
 namespace Common
 {
-  typedef unsigned ObjectID; 
+  typedef unsigned ObjectId; 
 
-  ObjectID GenerateNewID();
+  ObjectId GenerateNewID();
 }
 
 

@@ -13,9 +13,9 @@
 using namespace testing;
 using namespace OpcUa;
 
-TEST(MessageIDFromNodeID, CanBeConvertedFromValidNodeID)
+TEST(MessageIDFromNodeId, CanBeConvertedFromValidNodeId)
 {
-  NodeID id(OPEN_SECURE_CHANNEL_REQUEST);
+  NodeId id(OPEN_SECURE_CHANNEL_REQUEST);
   ASSERT_EQ(GetMessageID(id), OPEN_SECURE_CHANNEL_REQUEST);
 }
 

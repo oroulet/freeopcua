@@ -47,7 +47,7 @@ namespace OpcUa
 
   struct SimpleAttributeOperand
   {
-    NodeID TypeID;
+    NodeId TypeID;
     std::vector<QualifiedName> BrowsePath;
     AttributeID Attribute;
     std::vector<std::string> IndexRange; 
@@ -85,7 +85,7 @@ namespace OpcUa
 
   struct AttributeOperand
   {
-    NodeID Node;
+    NodeId Node;
     std::string Alias;
     RelativePath Path;
     IntegerID AttributeID;
@@ -116,7 +116,7 @@ namespace OpcUa
   struct AggregateFilter
   {
     DateTime StartTime;
-    NodeID AggregateType;
+    NodeId AggregateType;
     Duration ProcessingInterval;
     //AggregateConfiguration Configuration; //aggregate conf is in fact the following parameters
     bool UseServerCapabilitiesDefaults;
@@ -165,7 +165,7 @@ namespace OpcUa
 
   struct CreateMonitoredItemsRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     MonitoredItemsParameters Parameters;
 
@@ -181,7 +181,7 @@ namespace OpcUa
 
   struct DeleteMonitoredItemsRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     DeleteMonitoredItemsParameters Parameters;
 
@@ -190,7 +190,7 @@ namespace OpcUa
 
   struct DeleteMonitoredItemsResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     std::vector<StatusCode> Results;
     DiagnosticInfoList Diagnostics;
@@ -221,7 +221,7 @@ namespace OpcUa
 
   struct CreateMonitoredItemsResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     MonitoredItemsData Data;
 

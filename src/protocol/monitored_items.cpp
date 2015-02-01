@@ -60,19 +60,19 @@ namespace OpcUa
 
   MonitoringFilter::MonitoringFilter(DataChangeFilter filter) : DataChange(filter)
   {
-    Header.TypeID  = ExpandedObjectID::DataChangeFilter;
+    Header.TypeID  = ExpandedObjectId::DataChangeFilter;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
   }
 
   MonitoringFilter::MonitoringFilter(EventFilter filter) : Event(filter)
   {
-    Header.TypeID  = ExpandedObjectID::EventFilter;
+    Header.TypeID  = ExpandedObjectId::EventFilter;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
   }
 
   MonitoringFilter:: MonitoringFilter(AggregateFilter filter) : Aggregate(filter)
   {
-    Header.TypeID  = ExpandedObjectID::DataChangeFilter;
+    Header.TypeID  = ExpandedObjectId::DataChangeFilter;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
   }
 
@@ -423,22 +423,22 @@ namespace OpcUa
     std::size_t RawSize<FilterOperand>(const OpcUa::FilterOperand& params)
     {
       size_t total = RawSize(params.Header);
-      if (params.Header.TypeID == ExpandedObjectID::ElementOperand )
+      if (params.Header.TypeID == ExpandedObjectId::ElementOperand )
       {
         total += 4;
         total += RawSize(params.Element);
       }
-      else if (params.Header.TypeID == ExpandedObjectID::LiteralOperand )
+      else if (params.Header.TypeID == ExpandedObjectId::LiteralOperand )
       {
         total += 4;
         total += RawSize(params.Literal);
       }
-      else if (params.Header.TypeID == ExpandedObjectID::AttributeOperand )
+      else if (params.Header.TypeID == ExpandedObjectId::AttributeOperand )
       {
         total += 4;
         total += RawSize(params.Attribute);
       }
-      else if (params.Header.TypeID == ExpandedObjectID::SimpleAttributeOperand )
+      else if (params.Header.TypeID == ExpandedObjectId::SimpleAttributeOperand )
       {
         total += 4;
         total += RawSize(params.SimpleAttribute);
@@ -453,19 +453,19 @@ namespace OpcUa
       *this >> params.Header;
       uint32_t size;
       *this >> size;
-      if ( params.Header.TypeID == ExpandedObjectID::ElementOperand )
+      if ( params.Header.TypeID == ExpandedObjectId::ElementOperand )
       {
         *this >> params.Element;
       }
-      else if ( params.Header.TypeID == ExpandedObjectID::LiteralOperand )
+      else if ( params.Header.TypeID == ExpandedObjectId::LiteralOperand )
       {
         *this >> params.Literal;
       }
-      else if ( params.Header.TypeID == ExpandedObjectID::AttributeOperand )
+      else if ( params.Header.TypeID == ExpandedObjectId::AttributeOperand )
       {
         *this >> params.Attribute;
       }
-      else if ( params.Header.TypeID == ExpandedObjectID::SimpleAttributeOperand )
+      else if ( params.Header.TypeID == ExpandedObjectId::SimpleAttributeOperand )
       {
         *this >> params.SimpleAttribute;
       }
@@ -475,25 +475,25 @@ namespace OpcUa
     void DataSerializer::Serialize<FilterOperand>(const FilterOperand& params)
     {
       *this << params.Header;
-      if ( params.Header.TypeID == ExpandedObjectID::ElementOperand )
+      if ( params.Header.TypeID == ExpandedObjectId::ElementOperand )
       {
         uint32_t size = RawSize(params.Element);
         *this << size;
         *this << params.Element;
       }
-      else if ( params.Header.TypeID == ExpandedObjectID::LiteralOperand )
+      else if ( params.Header.TypeID == ExpandedObjectId::LiteralOperand )
       {
         uint32_t size = RawSize(params.Literal);
         *this << size;
         *this << params.Literal;
       }
-      else if ( params.Header.TypeID == ExpandedObjectID::AttributeOperand )
+      else if ( params.Header.TypeID == ExpandedObjectId::AttributeOperand )
       {
         uint32_t size = RawSize(params.Attribute);
         *this << size;
         *this << params.Attribute;
       }
-      else if ( params.Header.TypeID == ExpandedObjectID::SimpleAttributeOperand )
+      else if ( params.Header.TypeID == ExpandedObjectId::SimpleAttributeOperand )
       {
         uint32_t size = RawSize(params.SimpleAttribute);
         *this << size;
@@ -654,22 +654,22 @@ namespace OpcUa
     {
       size_t total = 0;
       total += RawSize(data.Header);
-      if ( data.Header.TypeID == ExpandedObjectID::DataChangeFilter) 
+      if ( data.Header.TypeID == ExpandedObjectId::DataChangeFilter) 
       {
         total += 4;
         total += RawSize(data.DataChange);
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::EventFilter) 
+      else if ( data.Header.TypeID == ExpandedObjectId::EventFilter) 
       {
         total += 4;
         total += RawSize(data.Event);
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::AggregateFilter) 
+      else if ( data.Header.TypeID == ExpandedObjectId::AggregateFilter) 
       {
         total += 4;
         total += RawSize(data.Aggregate);
       }
-      else if ( data.Header.TypeID == NodeID(0, 0) ) 
+      else if ( data.Header.TypeID == NodeId(0, 0) ) 
       {
         //No filter is used
       }
@@ -687,22 +687,22 @@ namespace OpcUa
     {
       *this >> data.Header;
       int32_t size;
-      if ( data.Header.TypeID == ExpandedObjectID::DataChangeFilter ) 
+      if ( data.Header.TypeID == ExpandedObjectId::DataChangeFilter ) 
       {
         *this >> size; //not used yet
         *this >> data.DataChange;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::EventFilter ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::EventFilter ) 
       {
         *this >> size; //not used yet
         *this >> data.Event;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::AggregateFilter ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::AggregateFilter ) 
       {
         *this >> size; //not used yet
         *this >> data.Aggregate;
       }
-      else if ( data.Header.TypeID == NodeID(0, 0) ) 
+      else if ( data.Header.TypeID == NodeId(0, 0) ) 
       {
         //No filter is used
       }
@@ -716,22 +716,22 @@ namespace OpcUa
     void DataSerializer::Serialize<MonitoringFilter>(const MonitoringFilter& data)
     {
       *this << data.Header;
-      if ( data.Header.TypeID == ExpandedObjectID::DataChangeFilter ) 
+      if ( data.Header.TypeID == ExpandedObjectId::DataChangeFilter ) 
       {
         *this << (uint32_t) RawSize(data.DataChange);
         *this << data.DataChange;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::EventFilter ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::EventFilter ) 
       {
         *this << (uint32_t) RawSize(data.Event);
         *this << data.Event;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::AggregateFilter ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::AggregateFilter ) 
       {
         *this << (uint32_t) RawSize(data.Aggregate);
         *this << data.Aggregate;
       }
-      else if ( data.Header.TypeID == NodeID(0, 0) ) 
+      else if ( data.Header.TypeID == NodeId(0, 0) ) 
       {
         //No filter is used
       }

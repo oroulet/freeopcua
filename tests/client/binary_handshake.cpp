@@ -378,7 +378,7 @@ TEST_F(OpcBinaryHandshake, Read)
 
   AttributeValueID value;
   value.Node.Encoding = EV_FOUR_BYTE;
-  value.Node.FourByteData.Identifier = static_cast<uint8_t>(ObjectID::RootFolder);
+  value.Node.FourByteData.Identifier = static_cast<uint8_t>(ObjectId::RootFolder);
   value.Attribute = AttributeID::DisplayName;
 
 
@@ -424,7 +424,7 @@ TEST_F(OpcBinaryHandshake, Write)
 
   WriteValue value;
   value.Node.Encoding = EV_FOUR_BYTE;
-  value.Node.FourByteData.Identifier = static_cast<uint8_t>(ObjectID::RootFolder); 
+  value.Node.FourByteData.Identifier = static_cast<uint8_t>(ObjectId::RootFolder); 
   value.Attribute = AttributeID::DisplayName;
   value.Data.Encoding = DATA_VALUE;
   value.Data.Value.Type = VariantType::STRING;

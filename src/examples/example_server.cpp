@@ -45,7 +45,7 @@ void RunServer()
   Node objects = server.GetObjectsNode();
   
   //Add a custom object with specific nodeid
-  NodeID nid(99, idx);
+  NodeId nid(99, idx);
   QualifiedName qn("NewObject", idx);
   Node newobject = objects.AddObject(nid, qn);
 
@@ -78,9 +78,9 @@ void RunServer()
 
   //Create event
   server.EnableEventNotification();
-  Event ev(ObjectID::BaseEventType); //you should create your own type
+  Event ev(ObjectId::BaseEventType); //you should create your own type
   ev.Severity = 2;
-  ev.SourceNode = ObjectID::Server;
+  ev.SourceNode = ObjectId::Server;
   ev.SourceName = "Event from FreeOpcUA";
   ev.Time = DateTime::Current();
 

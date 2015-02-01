@@ -176,21 +176,21 @@ namespace
 
 
 
-  void Print(const OpcUa::NodeID& nodeID, const Tabs& tabs)
+  void Print(const OpcUa::NodeId& nodeID, const Tabs& tabs)
   {
-    OpcUa::NodeIDEncoding encoding = static_cast<OpcUa::NodeIDEncoding>(nodeID.Encoding & OpcUa::NodeIDEncoding::EV_VALUE_MASK);
+    OpcUa::NodeIdEncoding encoding = static_cast<OpcUa::NodeIdEncoding>(nodeID.Encoding & OpcUa::NodeIdEncoding::EV_VALUE_MASK);
 
     const Tabs dataTabs(tabs.Num + 2);
     switch (encoding)
     {
-      case OpcUa::NodeIDEncoding::EV_TWO_BYTE:
+      case OpcUa::NodeIdEncoding::EV_TWO_BYTE:
       {
         std::cout << tabs << "Two byte:" << std::endl;
         std::cout << dataTabs << "Identifier:" << (unsigned)nodeID.TwoByteData.Identifier << std::endl;
         break;
       }
 
-      case OpcUa::NodeIDEncoding::EV_FOUR_BYTE:
+      case OpcUa::NodeIdEncoding::EV_FOUR_BYTE:
       {
         std::cout << tabs << "Four byte:" << std::endl;
         std::cout << dataTabs << "NamespaceIndex:" << (unsigned)nodeID.FourByteData.NamespaceIndex << std::endl;
@@ -198,7 +198,7 @@ namespace
         break;
       }
 
-      case OpcUa::NodeIDEncoding::EV_NUMERIC:
+      case OpcUa::NodeIdEncoding::EV_NUMERIC:
       {
         std::cout << tabs << "Numeric:" << std::endl;
         std::cout << dataTabs << "NamespaceIndex" << (unsigned)nodeID.NumericData.NamespaceIndex << std::endl;
@@ -206,7 +206,7 @@ namespace
         break;
       }
 
-      case OpcUa::NodeIDEncoding::EV_STRING:
+      case OpcUa::NodeIdEncoding::EV_STRING:
       {
         std::cout << tabs << "String: " << std::endl;
         std::cout << dataTabs << "NamespaceIndex: " << (unsigned)nodeID.StringData.NamespaceIndex << std::endl;
@@ -214,7 +214,7 @@ namespace
         break;
       }
 
-      case OpcUa::NodeIDEncoding::EV_BYTE_STRING:
+      case OpcUa::NodeIdEncoding::EV_BYTE_STRING:
       {
         std::cout << tabs << "Binary: " << std::endl;
         std::cout << dataTabs << "NamespaceIndex: " << (unsigned)nodeID.BinaryData.NamespaceIndex << std::endl;
@@ -224,7 +224,7 @@ namespace
         break;
       }
 
-      case OpcUa::NodeIDEncoding::EV_GUID:
+      case OpcUa::NodeIdEncoding::EV_GUID:
       {
         std::cout << tabs << "Guid: " << std::endl;
         std::cout << dataTabs << "Namespace Index: " << (unsigned)nodeID.GuidData.NamespaceIndex << std::endl;
@@ -240,12 +240,12 @@ namespace
       }
     }
 
-    if (nodeID.Encoding & OpcUa::NodeIDEncoding::EV_NAMESPACE_URI_FLAG)
+    if (nodeID.Encoding & OpcUa::NodeIdEncoding::EV_NAMESPACE_URI_FLAG)
     {
       std::cout << tabs << "Namespace URI: " << nodeID.NamespaceURI << std::endl;
     }
 
-    if (nodeID.Encoding & OpcUa::NodeIDEncoding::EV_SERVER_INDEX_FLAG)
+    if (nodeID.Encoding & OpcUa::NodeIdEncoding::EV_SERVER_INDEX_FLAG)
     {
       std::cout << tabs << "Server index: " << nodeID.ServerIndex << std::endl;
     }
@@ -336,8 +336,8 @@ namespace
     std::cout << tabs << "Is Forward: " << desc.IsForward << std::endl;
 
     std::cout << tabs << "Target Node class: " << GetNodeClassName(static_cast<unsigned>(desc.TargetNodeClass))  << std::endl;
-    std::cout << tabs << "Target NodeID:" << std::endl;
-    Print(desc.TargetNodeID, tabs1);
+    std::cout << tabs << "Target NodeId:" << std::endl;
+    Print(desc.TargetNodeId, tabs1);
 
     std::cout << tabs << "TypeID:" << std::endl;
     Print(desc.ReferenceTypeID, tabs1);
@@ -346,7 +346,7 @@ namespace
     Print(desc.TargetNodeTypeDefinition, tabs1);
   }
 
-  void Browse(OpcUa::ViewServices& view, OpcUa::NodeID nodeID)
+  void Browse(OpcUa::ViewServices& view, OpcUa::NodeId nodeID)
   {
     OpcUa::BrowseDescription description;
     description.NodeToBrowse = nodeID;
@@ -511,7 +511,7 @@ namespace
       case VariantType::EXPANDED_NODE_ID:
       case VariantType::NODE_ID:
       {
-        std::cout << tabs << "NodeID: " << std::endl;
+        std::cout << tabs << "NodeId: " << std::endl;
         break;
       }
 
@@ -566,7 +566,7 @@ namespace
   }
 
 
-  void Read(OpcUa::AttributeServices& attributes, OpcUa::NodeID nodeID, OpcUa::AttributeID attributeID)
+  void Read(OpcUa::AttributeServices& attributes, OpcUa::NodeId nodeID, OpcUa::AttributeID attributeID)
   {
     ReadParameters params;
     AttributeValueID attribute;
@@ -583,7 +583,7 @@ namespace
     Print(values.front(), Tabs(2));
   }
 
-  void Write(OpcUa::AttributeServices& attributes, OpcUa::NodeID nodeID, OpcUa::AttributeID attributeID, const OpcUa::Variant& value)
+  void Write(OpcUa::AttributeServices& attributes, OpcUa::NodeId nodeID, OpcUa::AttributeID attributeID, const OpcUa::Variant& value)
   {
     OpcUa::WriteValue attribute;
     attribute.Node = nodeID;
@@ -643,19 +643,19 @@ namespace
 
     if (cmd.IsBrowseOperation())
     {
-      const OpcUa::NodeID nodeID = cmd.GetNodeID();
+      const OpcUa::NodeId nodeID = cmd.GetNodeId();
       Print(nodeID, Tabs(0));
       Browse(*computer->Views(), nodeID);
     }
     else if (cmd.IsReadOperation())
     {
-      const OpcUa::NodeID nodeID = cmd.GetNodeID();
+      const OpcUa::NodeId nodeID = cmd.GetNodeId();
       const OpcUa::AttributeID attributeID = cmd.GetAttribute();
       Read(*computer->Attributes(), nodeID, attributeID);
     }
     else if (cmd.IsWriteOperation())
     {
-      const OpcUa::NodeID nodeID = cmd.GetNodeID();
+      const OpcUa::NodeId nodeID = cmd.GetNodeId();
       const OpcUa::AttributeID attributeID = cmd.GetAttribute();
       const OpcUa::Variant value = cmd.GetValue();
       Write(*computer->Attributes(), nodeID, attributeID, value);

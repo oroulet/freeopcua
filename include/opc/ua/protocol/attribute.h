@@ -22,14 +22,14 @@ namespace OpcUa
 
   struct AttributeValueID
   {
-    NodeID Node;
+    NodeId Node;
     AttributeID Attribute;
     std::string IndexRange;
     QualifiedName DataEncoding;
 
     AttributeValueID();
 
-    AttributeValueID(const NodeID& id, AttributeID attr)
+    AttributeValueID(const NodeId& id, AttributeID attr)
       : Node(id)
       , Attribute(attr)
     {
@@ -47,7 +47,7 @@ namespace OpcUa
 
   struct ReadRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     ReadParameters Parameters;
 
@@ -63,7 +63,7 @@ namespace OpcUa
 
   struct ReadResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     ReadResult Result;
 
@@ -73,7 +73,7 @@ namespace OpcUa
 
   struct WriteValue
   {
-    NodeID Node;
+    NodeId Node;
     AttributeID Attribute;
     std::string NumericRange;
     DataValue Data;
@@ -86,7 +86,7 @@ namespace OpcUa
 
   struct WriteRequest
   {
-    NodeID TypeID;
+    NodeId TypeID;
     RequestHeader Header;
     WriteParameters Parameters;
 
@@ -101,7 +101,7 @@ namespace OpcUa
 
   struct WriteResponse
   {
-    NodeID TypeID;
+    NodeId TypeID;
     ResponseHeader Header;
     WriteResult Result;
 

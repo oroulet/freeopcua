@@ -320,10 +320,10 @@ namespace
     virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const
     {
       if (Debug)  { std::cout << "binary_client| TranslateBrowsePathsToNodeIds -->" << std::endl; }
-      TranslateBrowsePathsToNodeIDsRequest request;
+      TranslateBrowsePathsToNodeIdsRequest request;
       request.Header = CreateRequestHeader();
       request.Parameters = params;
-      const TranslateBrowsePathsToNodeIDsResponse response = Send<TranslateBrowsePathsToNodeIDsResponse>(request);
+      const TranslateBrowsePathsToNodeIdsResponse response = Send<TranslateBrowsePathsToNodeIdsResponse>(request);
       if (Debug)  { std::cout << "binary_client| TranslateBrowsePathsToNodeIds <--" << std::endl; }
       return response.Result.Paths;
     }
@@ -664,7 +664,7 @@ private:
       Stream >> raw;
 
       IStreamBinary in(bufferInput);
-      NodeID id;
+      NodeId id;
       in >> id;
       ResponseHeader header;
       in >> header;
@@ -751,7 +751,7 @@ private:
     SecurityToken ChannelSecurityToken;
     mutable std::atomic<uint32_t> SequenceNumber;
     mutable std::atomic<uint32_t> RequestNumber;
-    ExpandedNodeID AuthenticationToken;
+    ExpandedNodeId AuthenticationToken;
     mutable std::atomic<uint32_t> RequestHandle;
     mutable std::vector<std::vector<uint8_t>> ContinuationPoints;
     mutable CallbackMap Callbacks;

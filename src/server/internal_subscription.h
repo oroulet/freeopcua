@@ -50,9 +50,9 @@ namespace OpcUa
       EventFieldList Data;
     };
 
-    //typedef std::pair<NodeID, AttributeID> MonitoredItemsIndex;
+    //typedef std::pair<NodeId, AttributeID> MonitoredItemsIndex;
     typedef std::map<IntegerID, MonitoredDataChange> MonitoredDataChangeMap;
-    typedef std::map<NodeID, IntegerID> MonitoredEventsMap;
+    typedef std::map<NodeId, IntegerID> MonitoredEventsMap;
 
     class AddressSpaceInMemory; //pre-declaration
 
@@ -60,7 +60,7 @@ namespace OpcUa
     class InternalSubscription : public std::enable_shared_from_this<InternalSubscription>
     {
       public:
-        InternalSubscription(SubscriptionServiceInternal& service, const SubscriptionData& data, const NodeID& SessionAuthenticationToken, std::function<void (PublishResult)> Callback, bool debug=false);
+        InternalSubscription(SubscriptionServiceInternal& service, const SubscriptionData& data, const NodeId& SessionAuthenticationToken, std::function<void (PublishResult)> Callback, bool debug=false);
         ~InternalSubscription();
         void Start();
         void Stop();
@@ -72,7 +72,7 @@ namespace OpcUa
         CreateMonitoredItemsResult CreateMonitoredItem(const MonitoredItemRequest& request);
         void DataChangeCallback(const IntegerID&, const DataValue& value);
         bool HasExpired();
-        void TriggerEvent(NodeID node, Event event);
+        void TriggerEvent(NodeId node, Event event);
         RepublishResponse Republish(const RepublishParameters& params);
 
       private:
@@ -91,7 +91,7 @@ namespace OpcUa
         Server::AddressSpace& AddressSpace;
         mutable boost::shared_mutex DbMutex;
         SubscriptionData Data;
-        const NodeID CurrentSession;
+        const NodeId CurrentSession;
         std::function<void (PublishResult)> Callback;
 
         uint32_t NotificationSequence = 1; //NotificationSequence start at 1! not 0

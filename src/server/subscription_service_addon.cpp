@@ -44,7 +44,7 @@ namespace
     }
 
   public:
-    void TriggerEvent(OpcUa::NodeID node, OpcUa::Event event)
+    void TriggerEvent(OpcUa::NodeId node, OpcUa::Event event)
     {
       Subscriptions->TriggerEvent(node, event);
     }

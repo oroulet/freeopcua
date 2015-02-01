@@ -28,7 +28,7 @@ namespace OpcUa
 
   NodeAttributes::NodeAttributes(const ObjectAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::ObjectAttribute;
+    Header.TypeID = ExpandedObjectId::ObjectAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -48,7 +48,7 @@ namespace OpcUa
 
   NodeAttributes::NodeAttributes(const VariableAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::VariableAttribute;
+    Header.TypeID = ExpandedObjectId::VariableAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -82,7 +82,7 @@ namespace OpcUa
 
   NodeAttributes::NodeAttributes(const MethodAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::MethodAttribute;
+    Header.TypeID = ExpandedObjectId::MethodAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -103,7 +103,7 @@ namespace OpcUa
   }
   NodeAttributes::NodeAttributes(const ObjectTypeAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::ObjectTypeAttribute;
+    Header.TypeID = ExpandedObjectId::ObjectTypeAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -123,7 +123,7 @@ namespace OpcUa
 
   NodeAttributes::NodeAttributes(const VariableTypeAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::VariableTypeAttribute;
+    Header.TypeID = ExpandedObjectId::VariableTypeAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -151,7 +151,7 @@ namespace OpcUa
 
   NodeAttributes::NodeAttributes(const ReferenceTypeAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::ReferenceTypeAttribute;
+    Header.TypeID = ExpandedObjectId::ReferenceTypeAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -177,7 +177,7 @@ namespace OpcUa
 
   NodeAttributes::NodeAttributes(const DataTypeAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::DataTypeAttribute;
+    Header.TypeID = ExpandedObjectId::DataTypeAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -197,7 +197,7 @@ namespace OpcUa
 
   NodeAttributes::NodeAttributes(const ViewAttributes& attr)
   {
-    Header.TypeID = ExpandedObjectID::ViewAttribute;
+    Header.TypeID = ExpandedObjectId::ViewAttribute;
     Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
 
     std::bitset<32> specattr;
@@ -589,7 +589,7 @@ namespace OpcUa
       }
       if (std::bitset<32>(val.SpecifiedAttributes).test(SpecifiedAttributesEncoding::DataType))
       {
-        total += RawSize(val.Attributes.find(AttributeID::DataType)->second.As<NodeID>());
+        total += RawSize(val.Attributes.find(AttributeID::DataType)->second.As<NodeId>());
       }
       if (std::bitset<32>(val.SpecifiedAttributes).test(SpecifiedAttributesEncoding::ValueRank))
       {
@@ -691,7 +691,7 @@ namespace OpcUa
       }
       if (std::bitset<32>(val.SpecifiedAttributes).test(SpecifiedAttributesEncoding::DataType))
       {
-        *this << val.Attributes.find(AttributeID::DataType)->second.As<NodeID>();
+        *this << val.Attributes.find(AttributeID::DataType)->second.As<NodeId>();
       }
       if (std::bitset<32>(val.SpecifiedAttributes).test(SpecifiedAttributesEncoding::ValueRank))
       {
@@ -790,7 +790,7 @@ namespace OpcUa
       }
       if (std::bitset<32>(val.SpecifiedAttributes).test(SpecifiedAttributesEncoding::DataType))
       {
-        NodeID tmp;
+        NodeId tmp;
         *this >> tmp;
         val.Attributes[AttributeID::DataType] = tmp;
       }
@@ -856,7 +856,7 @@ namespace OpcUa
     {
       return RawSize(resp.ParentNodeId) + 
         RawSize(resp.ReferenceTypeId) +
-        RawSize(resp.RequestedNewNodeID) +
+        RawSize(resp.RequestedNewNodeId) +
         RawSize(resp.BrowseName) +
         RawSize(resp.Class) +
         RawSize(resp.Attributes) +
@@ -868,7 +868,7 @@ namespace OpcUa
     {
       *this << resp.ParentNodeId;
       *this << resp.ReferenceTypeId;
-      *this << resp.RequestedNewNodeID;
+      *this << resp.RequestedNewNodeId;
       *this << resp.BrowseName;
       *this << resp.Class;
       *this << resp.Attributes;
@@ -880,7 +880,7 @@ namespace OpcUa
     {
       *this >> resp.ParentNodeId;
       *this >> resp.ReferenceTypeId;
-      *this >> resp.RequestedNewNodeID;
+      *this >> resp.RequestedNewNodeId;
       *this >> resp.BrowseName;
       *this >> resp.Class;
       *this >> resp.Attributes;
@@ -951,21 +951,21 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AddNodesResult>(const AddNodesResult& resp)
     {
-      return RawSize(resp.Status) + RawSize(resp.AddedNodeID);
+      return RawSize(resp.Status) + RawSize(resp.AddedNodeId);
     }
 
     template<>
     void DataSerializer::Serialize<AddNodesResult>(const AddNodesResult& resp)
     {
       *this << resp.Status;
-      *this << resp.AddedNodeID;
+      *this << resp.AddedNodeId;
     }
 
     template<>
     void DataDeserializer::Deserialize<AddNodesResult>(AddNodesResult& resp)
     {
       *this >> resp.Status;
-      *this >> resp.AddedNodeID;
+      *this >> resp.AddedNodeId;
     }
 
 
@@ -1045,11 +1045,11 @@ namespace OpcUa
      template<>
     std::size_t RawSize<AddReferencesItem>(const AddReferencesItem& val)
     {
-      return RawSize(val.SourceNodeID) + 
+      return RawSize(val.SourceNodeId) + 
         RawSize(val.ReferenceTypeId) + 
         RawSize(val.IsForward) + 
         RawSize(val.TargetServerUri) + 
-        RawSize(val.TargetNodeID) + 
+        RawSize(val.TargetNodeId) + 
         RawSize(val.TargetNodeClass)
         ;
     }
@@ -1057,22 +1057,22 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<AddReferencesItem>(const AddReferencesItem& val)
     {
-      *this << val.SourceNodeID;
+      *this << val.SourceNodeId;
       *this << val.ReferenceTypeId;
       *this << val.IsForward;
       *this << val.TargetServerUri;
-      *this << val.TargetNodeID;
+      *this << val.TargetNodeId;
       *this << val.TargetNodeClass;
     }
 
     template<>
     void DataDeserializer::Deserialize<AddReferencesItem>(AddReferencesItem& val)
     {
-      *this >> val.SourceNodeID;
+      *this >> val.SourceNodeId;
       *this >> val.ReferenceTypeId;
       *this >> val.IsForward;
       *this >> val.TargetServerUri;
-      *this >> val.TargetNodeID;
+      *this >> val.TargetNodeId;
       *this >> val.TargetNodeClass;
     }
 
@@ -1147,33 +1147,33 @@ namespace OpcUa
 
   } // namespace Binary
 
-  const char* GetObjectIdName(const NodeID& id)
+  const char* GetObjectIdName(const NodeId& id)
   {
-    if ( id == ObjectID::FolderType )
+    if ( id == ObjectId::FolderType )
     {
       return Names::FolderType;
     }
-    else if ( id == ObjectID::BaseVariableType )
+    else if ( id == ObjectId::BaseVariableType )
     {
       return Names::BaseVariableType;
     }
-    else if ( id == ObjectID::BaseDataVariableType )
+    else if ( id == ObjectId::BaseDataVariableType )
     {
       return Names::BaseDataVariableType;
     }
-    else if ( id == ObjectID::PropertyType )
+    else if ( id == ObjectId::PropertyType )
     {
       return Names::PropertyType;
     }
-    else if ( id == ObjectID::BaseObjectType )
+    else if ( id == ObjectId::BaseObjectType )
     {
       return Names::BaseObjectType;
     }
-    else if (id == ObjectID::ModellingRule_Mandatory)
+    else if (id == ObjectId::ModellingRule_Mandatory)
     {
       return Names::ModellingRule_Mandatory;
     }
-    else if ( id == ObjectID::ServerType )
+    else if ( id == ObjectId::ServerType )
     {
       return Names::ServerType;
     }

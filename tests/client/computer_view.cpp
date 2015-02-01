@@ -24,7 +24,7 @@ protected:
   View()
   {
     Query.Description.NodeToBrowse.Encoding = EV_TWO_BYTE;
-    Query.Description.NodeToBrowse.TwoByteData.Identifier = static_cast<uint8_t>(ObjectID::RootFolder); // TODO automatic cast
+    Query.Description.NodeToBrowse.TwoByteData.Identifier = static_cast<uint8_t>(ObjectId::RootFolder); // TODO automatic cast
     Query.Description.Direction = BrowseDirection::Forward;
     Query.Description.ReferenceTypeID.Encoding = EV_TWO_BYTE;
 //    Params.Description.ReferenceTypeID.TwoByteData.Identifier = 33;

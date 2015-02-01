@@ -23,7 +23,7 @@ namespace OpcUa
 {
   namespace Model
   {
-    Node::Node(NodeID id, Services::SharedPtr services)
+    Node::Node(NodeId id, Services::SharedPtr services)
       : Id(id)
       , OpcUaServices(services)
     {
@@ -40,7 +40,7 @@ namespace OpcUa
     {
     }
 
-    NodeID Node::GetID() const
+    NodeId Node::GetID() const
     {
       return Id;
     }

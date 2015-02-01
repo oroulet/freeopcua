@@ -127,20 +127,20 @@ namespace OpcUa
 
     NotificationData::NotificationData(DataChangeNotification notification) : DataChange(notification)
     {
-      //Header.TypeID  = ObjectID::DataChangeNotification; 
-      Header.TypeID  = ExpandedObjectID::DataChangeNotification;
+      //Header.TypeID  = ObjectId::DataChangeNotification; 
+      Header.TypeID  = ExpandedObjectId::DataChangeNotification;
       Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
     }
 
     NotificationData::NotificationData(EventNotificationList notification) : Events(notification)
     {
-      Header.TypeID  = ExpandedObjectID::EventNotificationList; 
+      Header.TypeID  = ExpandedObjectId::EventNotificationList; 
       Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
     }
 
     NotificationData::NotificationData(StatusChangeNotification notification) : StatusChange(notification)
     {
-      Header.TypeID  = ExpandedObjectID::StatusChangeNotification; 
+      Header.TypeID  = ExpandedObjectId::StatusChangeNotification; 
       Header.Encoding  = static_cast<ExtensionObjectEncoding>(Header.Encoding | ExtensionObjectEncoding::HAS_BINARY_BODY);
     }
 
@@ -667,15 +667,15 @@ namespace OpcUa
     {
       size_t total = 0;
       total += RawSize(data.Header);
-      if ( data.Header.TypeID == ExpandedObjectID::DataChangeNotification) 
+      if ( data.Header.TypeID == ExpandedObjectId::DataChangeNotification) 
       {
         total += RawSize(data.DataChange);
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::EventNotificationList) 
+      else if ( data.Header.TypeID == ExpandedObjectId::EventNotificationList) 
       {
         total += RawSize(data.Events);
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::StatusChangeNotification) 
+      else if ( data.Header.TypeID == ExpandedObjectId::StatusChangeNotification) 
       {
         total += RawSize(data.StatusChange);
       }
@@ -691,15 +691,15 @@ namespace OpcUa
     void DataDeserializer::Deserialize<NotificationData>(NotificationData& data)
     {
       *this >> data.Header;
-      if ( data.Header.TypeID == ExpandedObjectID::DataChangeNotification ) 
+      if ( data.Header.TypeID == ExpandedObjectId::DataChangeNotification ) 
       {
           *this >> data.DataChange;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::EventNotificationList ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::EventNotificationList ) 
       {
           *this >> data.Events;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::StatusChangeNotification ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::StatusChangeNotification ) 
       {
           *this >> data.StatusChange;
       }
@@ -714,15 +714,15 @@ namespace OpcUa
     void DataSerializer::Serialize<NotificationData>(const NotificationData& data)
     {
       *this << data.Header;
-      if ( data.Header.TypeID == ExpandedObjectID::DataChangeNotification ) 
+      if ( data.Header.TypeID == ExpandedObjectId::DataChangeNotification ) 
       {
         *this << data.DataChange;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::EventNotificationList ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::EventNotificationList ) 
       {
         *this << data.Events;
       }
-      else if ( data.Header.TypeID == ExpandedObjectID::StatusChangeNotification ) 
+      else if ( data.Header.TypeID == ExpandedObjectId::StatusChangeNotification ) 
       {
         *this << data.StatusChange;
       }

@@ -20,7 +20,7 @@
 using namespace boost::python;
 using namespace OpcUa;
 
-extern void py_opcua_enums_ObjectID();
+extern void py_opcua_enums_ObjectId();
 extern void py_opcua_enums_StatusCode();
 extern void py_opcua_enums_AttributeID();
 
@@ -28,7 +28,7 @@ void py_opcua_enums()
 {
 
   // codegen
-  py_opcua_enums_ObjectID();
+  py_opcua_enums_ObjectId();
   py_opcua_enums_StatusCode();
   py_opcua_enums_AttributeID();
 

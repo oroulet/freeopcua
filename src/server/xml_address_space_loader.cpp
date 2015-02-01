@@ -105,12 +105,12 @@ namespace
   struct Reference
   {
     ReferenceID ID;
-    NodeID TargetNode;
+    NodeId TargetNode;
     bool IsForward;
     NodeClass TargetClass;
     QualifiedName TargetBrowseName;
     LocalizedText TargetDisplayName;
-    NodeID TargetType;
+    NodeId TargetType;
 
     Reference()
       : ID(ReferenceID::Unknown)
@@ -138,7 +138,7 @@ namespace
 
   struct INode
   {
-    NodeID ID;
+    NodeId ID;
     std::map<AttributeID, Variant> Attributes;
     std::vector<Reference> References;
     bool IsExternal;
@@ -225,59 +225,59 @@ namespace
     return (const char*)content.get();
   }
 
-  ObjectID GetObjectIdOfType(const std::string& nodeValue)
+  ObjectId GetObjectIdOfType(const std::string& nodeValue)
   {
     if (nodeValue == "bool")
     {
-      return ObjectID::Boolean;
+      return ObjectId::Boolean;
     }
     if (nodeValue == "sbyte")
     {
-      return ObjectID::SByte;
+      return ObjectId::SByte;
     }
     if (nodeValue == "byte")
     {
-      return ObjectID::Byte;
+      return ObjectId::Byte;
     }
     if (nodeValue == "int16")
     {
-      return ObjectID::Int16;
+      return ObjectId::Int16;
     }
     if (nodeValue == "uint16")
     {
-      return ObjectID::UInt16;
+      return ObjectId::UInt16;
     }
     if (nodeValue == "int32")
     {
-      return ObjectID::Int32;
+      return ObjectId::Int32;
     }
     if (nodeValue == "uint32")
     {
-      return ObjectID::UInt32;
+      return ObjectId::UInt32;
     }
     if (nodeValue == "string")
     {
-      return ObjectID::String;
+      return ObjectId::String;
     }
     if (nodeValue == "enum")
     {
-      return ObjectID::Enumeration;
+      return ObjectId::Enumeration;
     }
     if (nodeValue == "int")
     {
-      return ObjectID::Integer;
+      return ObjectId::Integer;
     }
     if (nodeValue == "byte_string")
     {
-      return ObjectID::ByteString;
+      return ObjectId::ByteString;
     }
     if (nodeValue == "guid")
     {
-      return ObjectID::Guid;
+      return ObjectId::Guid;
     }
     if (nodeValue == "date_time")
     {
-      return ObjectID::DateTime;
+      return ObjectId::DateTime;
     }
 
     std::stringstream stream;
@@ -285,74 +285,74 @@ namespace
     throw std::logic_error(stream.str());
   }
 
-  inline ObjectID GetObjectIdOfType(xmlNode& node)
+  inline ObjectId GetObjectIdOfType(xmlNode& node)
   {
     return GetObjectIdOfType(GetNodeValue(node));
   }
 
-  inline VariantType ConvertToVariantType(ObjectID id)
+  inline VariantType ConvertToVariantType(ObjectId id)
   {
     switch (id)
     {
-      case ObjectID::Null:        return VariantType::NUL;
-      case ObjectID::Boolean:     return VariantType::BOOLEAN;
-      case ObjectID::SByte:       return VariantType::SBYTE;
-      case ObjectID::Byte:        return VariantType::BYTE;
-      case ObjectID::Int16:       return VariantType::INT16;
-      case ObjectID::UInt16:      return VariantType::UINT16;
+      case ObjectId::Null:        return VariantType::NUL;
+      case ObjectId::Boolean:     return VariantType::BOOLEAN;
+      case ObjectId::SByte:       return VariantType::SBYTE;
+      case ObjectId::Byte:        return VariantType::BYTE;
+      case ObjectId::Int16:       return VariantType::INT16;
+      case ObjectId::UInt16:      return VariantType::UINT16;
 
-      case ObjectID::Integer:
-      case ObjectID::Enumeration:
-      case ObjectID::Int32:       return VariantType::INT32;
+      case ObjectId::Integer:
+      case ObjectId::Enumeration:
+      case ObjectId::Int32:       return VariantType::INT32;
 
-      case ObjectID::UInt32:      return VariantType::UINT32;
-      case ObjectID::Int64:       return VariantType::INT64;
-      case ObjectID::UInt64:      return VariantType::UINT64;
-      case ObjectID::Float:       return VariantType::FLOAT;
-      case ObjectID::Double:      return VariantType::DOUBLE;
-      case ObjectID::String:      return VariantType::STRING;
-      case ObjectID::ByteString:  return VariantType::BYTE_STRING;
-      case ObjectID::DateTime:    return VariantType::DATE_TIME;
-      case ObjectID::Guid:        return VariantType::GUID;
+      case ObjectId::UInt32:      return VariantType::UINT32;
+      case ObjectId::Int64:       return VariantType::INT64;
+      case ObjectId::UInt64:      return VariantType::UINT64;
+      case ObjectId::Float:       return VariantType::FLOAT;
+      case ObjectId::Double:      return VariantType::DOUBLE;
+      case ObjectId::String:      return VariantType::STRING;
+      case ObjectId::ByteString:  return VariantType::BYTE_STRING;
+      case ObjectId::DateTime:    return VariantType::DATE_TIME;
+      case ObjectId::Guid:        return VariantType::GUID;
 
       default:
         std::stringstream stream;
-        stream << "Cannot convert ObjectID '" << (unsigned)id << "' to VariantType.";
+        stream << "Cannot convert ObjectId '" << (unsigned)id << "' to VariantType.";
         throw std::logic_error(stream.str());
     }
   }
 
-  inline ObjectID ConvertToObjectID(VariantType type)
+  inline ObjectId ConvertToObjectId(VariantType type)
   {
     switch (type)
     {
-      case VariantType::NUL:         return ObjectID::Null;
-      case VariantType::BOOLEAN:     return ObjectID::Boolean;
-      case VariantType::SBYTE:       return ObjectID::SByte;
-      case VariantType::BYTE:        return ObjectID::Byte;
-      case VariantType::INT16:       return ObjectID::Int16;
-      case VariantType::UINT16:      return ObjectID::UInt16;
-      case VariantType::INT32:       return ObjectID::Int32;
-      case VariantType::UINT32:      return ObjectID::UInt32;
-      case VariantType::INT64:       return ObjectID::Int64;
-      case VariantType::UINT64:      return ObjectID::UInt64;
-      case VariantType::FLOAT:       return ObjectID::Float;
-      case VariantType::DOUBLE:      return ObjectID::Double;
-      case VariantType::STRING:      return ObjectID::String;
-      case VariantType::BYTE_STRING: return ObjectID::ByteString;
-      case VariantType::DATE_TIME:   return ObjectID::DateTime;
-      case VariantType::GUID:        return ObjectID::Guid;
+      case VariantType::NUL:         return ObjectId::Null;
+      case VariantType::BOOLEAN:     return ObjectId::Boolean;
+      case VariantType::SBYTE:       return ObjectId::SByte;
+      case VariantType::BYTE:        return ObjectId::Byte;
+      case VariantType::INT16:       return ObjectId::Int16;
+      case VariantType::UINT16:      return ObjectId::UInt16;
+      case VariantType::INT32:       return ObjectId::Int32;
+      case VariantType::UINT32:      return ObjectId::UInt32;
+      case VariantType::INT64:       return ObjectId::Int64;
+      case VariantType::UINT64:      return ObjectId::UInt64;
+      case VariantType::FLOAT:       return ObjectId::Float;
+      case VariantType::DOUBLE:      return ObjectId::Double;
+      case VariantType::STRING:      return ObjectId::String;
+      case VariantType::BYTE_STRING: return ObjectId::ByteString;
+      case VariantType::DATE_TIME:   return ObjectId::DateTime;
+      case VariantType::GUID:        return ObjectId::Guid;
 
       default:
         std::stringstream stream;
-        stream << "Cannot convert VariantType '"<< (unsigned)type << "' to ObjectID.";
+        stream << "Cannot convert VariantType '"<< (unsigned)type << "' to ObjectId.";
         throw std::logic_error(stream.str());
     }
   }
 
   inline VariantType GetVariantType(xmlNode& node)
   {
-    const ObjectID typeId = GetObjectIdOfType(GetProperty(node, "type"));
+    const ObjectId typeId = GetObjectIdOfType(GetProperty(node, "type"));
     return ConvertToVariantType(typeId);
   }
 
@@ -408,7 +408,7 @@ namespace
     return atoi(propValue.c_str());
   }
 
-  NodeID GetNodeID(xmlNode& node)
+  NodeId GetNodeId(xmlNode& node)
   {
     std::string nodeValue = GetNodeValue(node);
     if (nodeValue.empty())
@@ -420,9 +420,9 @@ namespace
     uint32_t nsIndex = GetNamespaceIndex(node);
     if (IsNumericNodeType(node))
     {
-      return NumericNodeID(atoi(nodeValue.c_str()), nsIndex);
+      return NumericNodeId(atoi(nodeValue.c_str()), nsIndex);
     }
-    return StringNodeID(nodeValue, nsIndex);
+    return StringNodeId(nodeValue, nsIndex);
   }
 
   bool GetBool(std::string str)
@@ -586,7 +586,7 @@ namespace
     switch (id)
     {
       case AttributeID::NodeId:
-        return Variant(GetNodeID(node));
+        return Variant(GetNodeId(node));
 
       case AttributeID::NodeClass:
         return Variant((int32_t)GetNodeClass(node));
@@ -656,7 +656,7 @@ namespace
         const AttributeID attribute = GetAttributeID(*subNode);
         if (attribute == AttributeID::NodeId)
         {
-          OpcUaNode.ID = GetNodeID(*subNode);
+          OpcUaNode.ID = GetNodeId(*subNode);
           continue;
         }
 
@@ -688,14 +688,14 @@ namespace
       return OpcUaNode.Attributes.find(AttributeID::DataType) != OpcUaNode.Attributes.end();
     }
 
-    ObjectID GetDataType(AttributeID attr) const
+    ObjectId GetDataType(AttributeID attr) const
     {
       auto attrPos = OpcUaNode.Attributes.find(attr);
       if (attrPos == OpcUaNode.Attributes.end())
       {
-        return ObjectID::Null;
+        return ObjectId::Null;
       }
-      return ConvertToObjectID(attrPos->second.Type());
+      return ConvertToObjectId(attrPos->second.Type());
     }
 
   private:
@@ -736,7 +736,7 @@ namespace
     void AddReferenceToNode(xmlNode& refNode)
     {
       const std::string refName = GetNodeName(refNode);
-      const NodeID targetNode = GetNodeID(refNode);
+      const NodeId targetNode = GetNodeId(refNode);
       Reference reference;
       reference.ID = GetReferenceID(refName);
 
@@ -750,7 +750,7 @@ namespace
         const std::string& nodeName = GetNodeName(*subNode);
         if (nodeName == "id")
         {
-          reference.TargetNode = GetNodeID(*subNode);
+          reference.TargetNode = GetNodeId(*subNode);
         }
         else if (nodeName == "class")
         {
@@ -770,7 +770,7 @@ namespace
         }
         else if (nodeName == "type_definition")
         {
-          reference.TargetType = GetNodeID(*subNode);
+          reference.TargetType = GetNodeId(*subNode);
         }
       }
 
@@ -787,7 +787,7 @@ namespace
         stream << "Unknown reference type. line" << lineNum << ".";
         throw std::logic_error(stream.str());
       }
-      if (ref.TargetNode == NodeID())
+      if (ref.TargetNode == NodeId())
       {
         stream << "Empty target node ID. line" << lineNum << ".";
         throw std::logic_error(stream.str());
@@ -802,7 +802,7 @@ namespace
   class NodesCollector : private Internal::XmlProcessor
   {
   public:
-    NodesCollector(std::map<NodeID, INode>& nodes, bool debug)
+    NodesCollector(std::map<NodeId, INode>& nodes, bool debug)
       : Nodes(nodes)
       , Debug(debug)
     {
@@ -841,7 +841,7 @@ namespace
   private:
     void EnsureNodeIsValid(const INode& opcuaNode, const xmlNode& node) const
     {
-      if (opcuaNode.ID == NodeID())
+      if (opcuaNode.ID == NodeId())
       {
         std::stringstream stream;
         stream << "INode at line '" << node.line << "' has no ID.";
@@ -873,7 +873,7 @@ namespace
     }
 
   private:
-    std::map<NodeID, INode>& Nodes;
+    std::map<NodeId, INode>& Nodes;
     const bool Debug;
   };
 
@@ -887,12 +887,12 @@ namespace
 
     }
 
-    std::map<NodeID, INode> Process(xmlDoc& doc)
+    std::map<NodeId, INode> Process(xmlDoc& doc)
     {
       xmlNodePtr rootNode = xmlDocGetRootElement(&doc);
       EnsureRootNodeValid(*rootNode);
 
-      std::map<NodeID, INode> nodes;
+      std::map<NodeId, INode> nodes;
       NodesCollector nodesBuilder(nodes, Debug);
       for (xmlNodePtr cur = rootNode->children; cur; cur = cur->next)
       {
@@ -929,7 +929,7 @@ namespace
     const bool Debug;
   };
 
-  std::map<NodeID, INode> ParseConfig(const char* configPath, bool debug)
+  std::map<NodeId, INode> ParseConfig(const char* configPath, bool debug)
   {
     std::unique_ptr<xmlDoc, XmlDocDeleter> doc(xmlParseFile(configPath), XmlDocDeleter());
     if (!doc)
@@ -950,7 +950,7 @@ namespace
     {
     }
 
-    void RegisterNodes(const std::map<NodeID, INode>& nodes)
+    void RegisterNodes(const std::map<NodeId, INode>& nodes)
     {
       for (const auto& node : nodes)
       {
@@ -982,7 +982,7 @@ namespace
         desc.IsForward = ref.IsForward;
         desc.ReferenceTypeID = ref.ID;
         desc.TargetNodeClass = ref.TargetClass;
-        desc.TargetNodeID = ref.TargetNode;
+        desc.TargetNodeId = ref.TargetNode;
         desc.TargetNodeTypeDefinition = ref.TargetType;
         //Registry.AddReference(node.ID, desc);
       }
@@ -1007,7 +1007,7 @@ namespace OpcUa
 
     void XmlAddressSpaceLoader::Load(const char* fileName)
     {
-      std::map<NodeID, INode> nodes = ParseConfig(fileName, Debug);
+      std::map<NodeId, INode> nodes = ParseConfig(fileName, Debug);
       NodesRegistrator reg(Registry, Debug);
       reg.RegisterNodes(nodes);
     }

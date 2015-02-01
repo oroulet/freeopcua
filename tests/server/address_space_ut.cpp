@@ -44,22 +44,22 @@ protected:
     NameSpace.reset();
   }
 
-  OpcUa::NodeID CreateValue()
+  OpcUa::NodeId CreateValue()
   {
     OpcUa::AddNodesItem item;
     item.Attributes = OpcUa::VariableAttributes();
     item.BrowseName = OpcUa::QualifiedName("value");
     item.Class = OpcUa::NodeClass::Variable;
-    item.ParentNodeId = OpcUa::ObjectID::RootFolder;
+    item.ParentNodeId = OpcUa::ObjectId::RootFolder;
     std::vector<OpcUa::AddNodesResult> newNodesResult = NameSpace->AddNodes({item});
-    return newNodesResult[0].AddedNodeID;
+    return newNodesResult[0].AddedNodeId;
   }
 
 protected:
   OpcUa::Server::AddressSpace::UniquePtr NameSpace;
 };
 
-TEST_F(AddressSpace, GeneratesNodeIDIfPassNull)
+TEST_F(AddressSpace, GeneratesNodeIdIfPassNull)
 {
   OpcUa::AddNodesItem newNode;
   newNode.BrowseName.Name = "newNode";
@@ -68,26 +68,26 @@ TEST_F(AddressSpace, GeneratesNodeIDIfPassNull)
   ASSERT_EQ(results.size(), 1);
   const OpcUa::AddNodesResult& result = results[0];
   EXPECT_EQ(result.Status, OpcUa::StatusCode::Good);
-  EXPECT_NE(result.AddedNodeID, OpcUa::NodeID(OpcUa::ObjectID::Null));
+  EXPECT_NE(result.AddedNodeId, OpcUa::NodeId(OpcUa::ObjectId::Null));
 }
 
-TEST_F(AddressSpace, GeneratesIfNodeIDDuplicated)
+TEST_F(AddressSpace, GeneratesIfNodeIdDuplicated)
 {
   OpcUa::AddNodesItem newNode;
   newNode.BrowseName.Name = "newNode";
-  newNode.RequestedNewNodeID = OpcUa::ObjectID::RootFolder;
+  newNode.RequestedNewNodeId = OpcUa::ObjectId::RootFolder;
   newNode.Attributes = OpcUa::ObjectAttributes();
   std::vector<OpcUa::AddNodesResult> results = NameSpace->AddNodes({newNode});
   ASSERT_EQ(results.size(), 1);
   const OpcUa::AddNodesResult& result = results[0];
   EXPECT_EQ(result.Status, OpcUa::StatusCode::BadNodeIdExists);
-  EXPECT_EQ(result.AddedNodeID, OpcUa::ObjectID::Null);
+  EXPECT_EQ(result.AddedNodeId, OpcUa::ObjectId::Null);
 }
 
 TEST_F(AddressSpace, ReadAttributes)
 {
   OpcUa::ReadParameters readParams;
-  OpcUa::AttributeValueID value(OpcUa::ObjectID::RootFolder, OpcUa::AttributeID::BrowseName);
+  OpcUa::AttributeValueID value(OpcUa::ObjectId::RootFolder, OpcUa::AttributeID::BrowseName);
   readParams.AttributesToRead.push_back(value);
   std::vector<OpcUa::DataValue> results = NameSpace->Read(readParams);
   ASSERT_EQ(results.size(), 1);
@@ -98,12 +98,12 @@ TEST_F(AddressSpace, ReadAttributes)
 
 TEST_F(AddressSpace, CallsDataChangeCallbackOnWrite)
 {
-  OpcUa::NodeID valueId = CreateValue();
-  OpcUa::NodeID callbackID;
+  OpcUa::NodeId valueId = CreateValue();
+  OpcUa::NodeId callbackID;
   OpcUa::AttributeID callbackAttr;
   OpcUa::DataValue callbackValue;
   bool callbackCalled = false;
-  unsigned callbackHandle = NameSpace->AddDataChangeCallback(valueId, OpcUa::AttributeID::Value, [&](const OpcUa::NodeID& id, OpcUa::AttributeID attr, const OpcUa::DataValue& value){
+  unsigned callbackHandle = NameSpace->AddDataChangeCallback(valueId, OpcUa::AttributeID::Value, [&](const OpcUa::NodeId& id, OpcUa::AttributeID attr, const OpcUa::DataValue& value){
     callbackID = id;
     callbackAttr = attr;
     callbackValue = value;
@@ -133,7 +133,7 @@ TEST_F(AddressSpace, CallsDataChangeCallbackOnWrite)
 
 TEST_F(AddressSpace, ValueCallbackIsCalled)
 {
-  OpcUa::NodeID valueId = CreateValue();
+  OpcUa::NodeId valueId = CreateValue();
   OpcUa::StatusCode code = NameSpace->SetValueCallback(valueId, OpcUa::AttributeID::Value, [](){
     return OpcUa::DataValue(10);
   });

@@ -25,7 +25,7 @@ namespace OpcUa
 {
   namespace Model
   {
-    Variable::Variable(NodeID variableID, Services::SharedPtr services)
+    Variable::Variable(NodeId variableID, Services::SharedPtr services)
       : Node(services)
     {
       Id = variableID;
@@ -36,7 +36,7 @@ namespace OpcUa
       std::vector<DataValue> values = services->Attributes()->Read(attrs);
       DisplayName = values[0].Value.As<LocalizedText>();
       BrowseName = values[1].Value.As<QualifiedName>();
-      DataType = OpcUa::DataTypeToVariantType(values[2].Value.As<NodeID>());
+      DataType = OpcUa::DataTypeToVariantType(values[2].Value.As<NodeId>());
     }
 
     DataValue Variable::GetValue() const

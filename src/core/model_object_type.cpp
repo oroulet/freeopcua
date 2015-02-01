@@ -26,7 +26,7 @@ namespace OpcUa
   namespace Model
   {
 
-    ObjectType::ObjectType(NodeID objectId, Services::SharedPtr services)
+    ObjectType::ObjectType(NodeId objectId, Services::SharedPtr services)
       : Node(services)
     {
       Id = objectId;
@@ -62,7 +62,7 @@ namespace OpcUa
 
     ObjectType ObjectType::Parent() const
     {
-      return ObjectType(ObjectID::Null, GetServices());
+      return ObjectType(ObjectId::Null, GetServices());
     }
 
   }

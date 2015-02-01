@@ -72,7 +72,7 @@ namespace OpcUa
   uint32_t UaServer::RegisterNamespace(std::string uri)
   {
     CheckStarted();
-    Node namespacearray(Registry->GetServer(), ObjectID::Server_NamespaceArray);
+    Node namespacearray(Registry->GetServer(), ObjectId::Server_NamespaceArray);
     std::vector<std::string> uris = namespacearray.GetValue().As<std::vector<std::string>>();
     uint32_t index = uris.size();
     uris.push_back(uri);
@@ -83,7 +83,7 @@ namespace OpcUa
   uint32_t UaServer::GetNamespaceIndex(std::string uri)
   {
     CheckStarted();
-    Node namespacearray(Registry->GetServer(), ObjectID::Server_NamespaceArray);
+    Node namespacearray(Registry->GetServer(), ObjectId::Server_NamespaceArray);
     std::vector<std::string> uris = namespacearray.GetValue().As<std::vector<std::string>>();;
     for ( uint32_t i=0; i<uris.size(); ++i)
     {
@@ -128,10 +128,10 @@ namespace OpcUa
 
   Node UaServer::GetNode(const std::string& nodeid) const
   {
-    return GetNode(ToNodeID(nodeid));
+    return GetNode(ToNodeId(nodeid));
   }
 
-  Node UaServer::GetNode(const NodeID& nodeid) const
+  Node UaServer::GetNode(const NodeId& nodeid) const
   {
     CheckStarted();
     return Node(Registry->GetServer(), nodeid);
@@ -156,17 +156,17 @@ namespace OpcUa
 
   Node UaServer::GetRootNode() const
   {
-    return GetNode(OpcUa::ObjectID::RootFolder);
+    return GetNode(OpcUa::ObjectId::RootFolder);
   }
 
   Node UaServer::GetObjectsNode() const
   {
-    return GetNode(ObjectID::ObjectsFolder);
+    return GetNode(ObjectId::ObjectsFolder);
   }
 
   Node UaServer::GetServerNode() const
   {
-    return GetNode(ObjectID::Server);
+    return GetNode(ObjectId::Server);
   }
 
   void UaServer::EnableEventNotification()
@@ -193,7 +193,7 @@ namespace OpcUa
 
   void UaServer::TriggerEvent(Event event)
   {
-    SubscriptionService->TriggerEvent(ObjectID::Server, event);
+    SubscriptionService->TriggerEvent(ObjectId::Server, event);
   }
 
 }

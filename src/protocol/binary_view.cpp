@@ -53,7 +53,7 @@ namespace OpcUa
   {
   }
 
-  TranslateBrowsePathsToNodeIDsRequest::TranslateBrowsePathsToNodeIDsRequest()
+  TranslateBrowsePathsToNodeIdsRequest::TranslateBrowsePathsToNodeIdsRequest()
     : TypeID(TRANSLATE_BROWSE_PATHS_TO_NODE_IDS_REQUEST)
   {
   }
@@ -95,7 +95,7 @@ namespace OpcUa
   {
   }
 
-  TranslateBrowsePathsToNodeIDsResponse::TranslateBrowsePathsToNodeIDsResponse()
+  TranslateBrowsePathsToNodeIdsResponse::TranslateBrowsePathsToNodeIdsResponse()
     : TypeID(TRANSLATE_BROWSE_PATHS_TO_NODE_IDS_RESPONSE)
   {
   }
@@ -277,7 +277,7 @@ namespace OpcUa
     {
       return RawSize(desc.ReferenceTypeID) +
              RawSize(desc.IsForward) +
-             RawSize(desc.TargetNodeID) +
+             RawSize(desc.TargetNodeId) +
              RawSize(desc.BrowseName) +
              RawSize(desc.DisplayName) +
              RawSize(desc.TargetNodeClass) +
@@ -289,7 +289,7 @@ namespace OpcUa
     {
       *this << desc.ReferenceTypeID;
       *this << desc.IsForward;
-      *this << desc.TargetNodeID;
+      *this << desc.TargetNodeId;
       *this << desc.BrowseName;
       *this << desc.DisplayName;
       *this << desc.TargetNodeClass;
@@ -301,7 +301,7 @@ namespace OpcUa
     {
       *this >> desc.ReferenceTypeID;
       *this >> desc.IsForward;
-      *this >> desc.TargetNodeID;
+      *this >> desc.TargetNodeId;
       *this >> desc.BrowseName;
       *this >> desc.DisplayName;
       *this >> desc.TargetNodeClass;
@@ -529,17 +529,17 @@ namespace OpcUa
     }
 
     ////////////////////////////////////////////////////////////////////
-    // TranslateBrowsePathsToNodeIDsResponse
+    // TranslateBrowsePathsToNodeIdsResponse
     ////////////////////////////////////////////////////////////////////
 
     template<>
-    std::size_t RawSize<TranslateBrowsePathsToNodeIDsResponse>(const TranslateBrowsePathsToNodeIDsResponse& response)
+    std::size_t RawSize<TranslateBrowsePathsToNodeIdsResponse>(const TranslateBrowsePathsToNodeIdsResponse& response)
     {
       return RawSize(response.TypeID) + RawSize(response.Header) + RawSize(response.Result);
     }
 
     template<>
-    void DataSerializer::Serialize<TranslateBrowsePathsToNodeIDsResponse>(const TranslateBrowsePathsToNodeIDsResponse& response)
+    void DataSerializer::Serialize<TranslateBrowsePathsToNodeIdsResponse>(const TranslateBrowsePathsToNodeIdsResponse& response)
     {
       *this << response.TypeID;
       *this << response.Header;
@@ -547,7 +547,7 @@ namespace OpcUa
     }
 
     template<>
-    void DataDeserializer::Deserialize<TranslateBrowsePathsToNodeIDsResponse>(TranslateBrowsePathsToNodeIDsResponse& response)
+    void DataDeserializer::Deserialize<TranslateBrowsePathsToNodeIdsResponse>(TranslateBrowsePathsToNodeIdsResponse& response)
     {
       *this >> response.TypeID;
       *this >> response.Header;
@@ -676,17 +676,17 @@ namespace OpcUa
     }
 
     ////////////////////////////////////////////////////////////////////
-    // TranslateBrowsePathsToNodeIDsRequest
+    // TranslateBrowsePathsToNodeIdsRequest
     ////////////////////////////////////////////////////////////////////
 
     template<>
-    std::size_t RawSize<TranslateBrowsePathsToNodeIDsRequest>(const TranslateBrowsePathsToNodeIDsRequest& request)
+    std::size_t RawSize<TranslateBrowsePathsToNodeIdsRequest>(const TranslateBrowsePathsToNodeIdsRequest& request)
     {
       return RawSize(request.TypeID) + RawSize(request.Header) + RawSize(request.Parameters)  ;
     }
 
     template<>
-    void DataSerializer::Serialize<TranslateBrowsePathsToNodeIDsRequest>(const TranslateBrowsePathsToNodeIDsRequest& request)
+    void DataSerializer::Serialize<TranslateBrowsePathsToNodeIdsRequest>(const TranslateBrowsePathsToNodeIdsRequest& request)
     {
       *this << request.TypeID;
       *this << request.Header;
@@ -694,7 +694,7 @@ namespace OpcUa
     }
 
     template<>
-    void DataDeserializer::Deserialize<TranslateBrowsePathsToNodeIDsRequest>(TranslateBrowsePathsToNodeIDsRequest& request)
+    void DataDeserializer::Deserialize<TranslateBrowsePathsToNodeIdsRequest>(TranslateBrowsePathsToNodeIdsRequest& request)
     {
       *this >> request.TypeID;
       *this >> request.Header;

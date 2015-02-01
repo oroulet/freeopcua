@@ -21,45 +21,45 @@ namespace OpcUa
 {
 
 
-  NodeID::NodeID(uint32_t integerId, uint16_t index)
+  NodeId::NodeId(uint32_t integerId, uint16_t index)
   {
     Encoding = EV_NUMERIC;
     NumericData.Identifier = integerId;
     NumericData.NamespaceIndex = index;
   }
 
-  NodeID::NodeID(std::string stringId, uint16_t index)
+  NodeId::NodeId(std::string stringId, uint16_t index)
   {
     Encoding = EV_STRING;
     StringData.Identifier = stringId;
     StringData.NamespaceIndex = index;
   }
 
-  bool NodeID::IsInteger() const
+  bool NodeId::IsInteger() const
   {
-    const NodeIDEncoding enc = GetEncodingValue();
+    const NodeIdEncoding enc = GetEncodingValue();
     return enc == EV_TWO_BYTE || enc == EV_FOUR_BYTE || enc == EV_NUMERIC;
   }
 
-  bool NodeID::IsString() const
+  bool NodeId::IsString() const
   {
-    const NodeIDEncoding enc = GetEncodingValue();
+    const NodeIdEncoding enc = GetEncodingValue();
     return enc == EV_STRING;
   }
 
-  bool NodeID::IsBinary() const
+  bool NodeId::IsBinary() const
   {
-    const NodeIDEncoding enc = GetEncodingValue();
+    const NodeIdEncoding enc = GetEncodingValue();
     return enc == EV_BYTE_STRING;
   }
 
-  bool NodeID::IsGuid() const
+  bool NodeId::IsGuid() const
   {
-    const NodeIDEncoding enc = GetEncodingValue();
+    const NodeIdEncoding enc = GetEncodingValue();
     return enc == EV_GUID;
   }
 
-  std::string NodeID::GetStringIdentifier() const
+  std::string NodeId::GetStringIdentifier() const
   {
     if (IsString())
     {
@@ -68,7 +68,7 @@ namespace OpcUa
     throw std::logic_error("Node id is not in String format.");
   }
 
-  std::vector<uint8_t> NodeID::GetBinaryIdentifier() const
+  std::vector<uint8_t> NodeId::GetBinaryIdentifier() const
   {
     if (IsBinary())
     {
@@ -77,7 +77,7 @@ namespace OpcUa
     throw std::logic_error("Node id is not in String format.");
   }
 
-  Guid NodeID::GetGuidIdentifier() const
+  Guid NodeId::GetGuidIdentifier() const
   {
     if (IsGuid())
     {
@@ -86,7 +86,7 @@ namespace OpcUa
     throw std::logic_error("Node id is not in String format.");
   }
 
-  uint32_t NodeID::GetIntegerIdentifier() const
+  uint32_t NodeId::GetIntegerIdentifier() const
   {
     switch (GetEncodingValue())
     {
@@ -104,12 +104,12 @@ namespace OpcUa
       }
       default:
       {
-        throw std::logic_error("Cannot get integer identifier from NodeID - it is not in numeric format.");
+        throw std::logic_error("Cannot get integer identifier from NodeId - it is not in numeric format.");
       }
     }
   }
 
-  uint32_t NodeID::GetNamespaceIndex() const
+  uint32_t NodeId::GetNamespaceIndex() const
   {
     switch (GetEncodingValue())
     {
@@ -128,7 +128,7 @@ namespace OpcUa
     }
   }
 
-  void NodeID::SetNamespaceIndex(uint32_t ns)
+  void NodeId::SetNamespaceIndex(uint32_t ns)
   {
     switch (GetEncodingValue())
     {
@@ -152,16 +152,16 @@ namespace OpcUa
     }
   }
 
-  NodeID::NodeID()
+  NodeId::NodeId()
     : Encoding(EV_TWO_BYTE)
     , ServerIndex(0)
   {
   }
 
-  void NodeID::CopyNodeID(const NodeID& node)
+  void NodeId::CopyNodeId(const NodeId& node)
   {
     Encoding = node.Encoding;
-    const NodeIDEncoding enc = node.GetEncodingValue();
+    const NodeIdEncoding enc = node.GetEncodingValue();
     switch (enc)
     {
       case EV_TWO_BYTE:
@@ -216,71 +216,71 @@ namespace OpcUa
 
   }
 
-  NodeID::NodeID(const NodeID& node)
+  NodeId::NodeId(const NodeId& node)
   {
-    CopyNodeID(node);
+    CopyNodeId(node);
   }
 
-  NodeID::NodeID(const ExpandedNodeID& node)
+  NodeId::NodeId(const ExpandedNodeId& node)
   {
-    CopyNodeID(node);
+    CopyNodeId(node);
   }
 
-  NodeID::operator ExpandedNodeID()
+  NodeId::operator ExpandedNodeId()
   {
-    ExpandedNodeID node;
-    node.CopyNodeID(*this);
+    ExpandedNodeId node;
+    node.CopyNodeId(*this);
 
     return node;
   } 
 
-  NodeID& NodeID::operator=(const NodeID& node)
+  NodeId& NodeId::operator=(const NodeId& node)
   {
-    CopyNodeID(node);
+    CopyNodeId(node);
     return *this;
   }
 
-  NodeID& NodeID::operator=(const ExpandedNodeID& node)
+  NodeId& NodeId::operator=(const ExpandedNodeId& node)
   {
-    CopyNodeID(node);
+    CopyNodeId(node);
     return *this;
   }
 
-  NodeID::NodeID(MessageID messageID)
+  NodeId::NodeId(MessageID messageID)
     : Encoding(EV_FOUR_BYTE)
     , ServerIndex(0)
   {
     FourByteData.Identifier = messageID;
   }
 
-  NodeID::NodeID(ReferenceID referenceID)
+  NodeId::NodeId(ReferenceID referenceID)
     : Encoding(EV_NUMERIC)
     , ServerIndex(0)
   {
     NumericData.Identifier = static_cast<uint32_t>(referenceID);
   }
 
-  NodeID::NodeID(ObjectID objectID)
+  NodeId::NodeId(ObjectId objectID)
     : Encoding(EV_NUMERIC)
     , ServerIndex(0)
   {
     NumericData.Identifier = static_cast<uint32_t>(objectID);
   }
 
-  NodeID::NodeID(ExpandedObjectID objectID)
+  NodeId::NodeId(ExpandedObjectId objectID)
     : Encoding(EV_FOUR_BYTE)
     , ServerIndex(0)
   {
     FourByteData.Identifier = static_cast<uint32_t>(objectID);
   }
 
-  MessageID GetMessageID(const NodeID& id)
+  MessageID GetMessageID(const NodeId& id)
   {
     return static_cast<MessageID>(id.GetIntegerIdentifier());
   }
 
 
-  bool NodeID::operator== (const NodeID& node) const
+  bool NodeId::operator== (const NodeId& node) const
   {
     if (GetNamespaceIndex() != node.GetNamespaceIndex())
     {
@@ -305,7 +305,7 @@ namespace OpcUa
     return false;
   }
 
-  bool NodeID::operator < (const NodeID& node) const
+  bool NodeId::operator < (const NodeId& node) const
   {
     if (GetNamespaceIndex() != node.GetNamespaceIndex())
     {
@@ -333,135 +333,135 @@ namespace OpcUa
 
   }
 
-  NodeIDEncoding NodeID::GetEncodingValue() const
+  NodeIdEncoding NodeId::GetEncodingValue() const
   {
-    return static_cast<NodeIDEncoding>(Encoding & EV_VALUE_MASK);
+    return static_cast<NodeIdEncoding>(Encoding & EV_VALUE_MASK);
   }
 
-  bool NodeID::HasNamespaceURI() const
+  bool NodeId::HasNamespaceURI() const
   {
     return (Encoding & EV_NAMESPACE_URI_FLAG) != 0;
   }
 
-  bool NodeID::HasServerIndex() const
+  bool NodeId::HasServerIndex() const
   {
     return (Encoding & EV_SERVER_INDEX_FLAG) != 0;
   }
 
-  void NodeID::SetNamespaceURI(const std::string& uri)
+  void NodeId::SetNamespaceURI(const std::string& uri)
   {
-    Encoding = static_cast<NodeIDEncoding>(Encoding | EV_NAMESPACE_URI_FLAG);
+    Encoding = static_cast<NodeIdEncoding>(Encoding | EV_NAMESPACE_URI_FLAG);
     NamespaceURI = uri;
   }
 
-  void NodeID::SetServerIndex(uint32_t index)
+  void NodeId::SetServerIndex(uint32_t index)
   {
-    Encoding = static_cast<NodeIDEncoding>(Encoding | EV_SERVER_INDEX_FLAG);
+    Encoding = static_cast<NodeIdEncoding>(Encoding | EV_SERVER_INDEX_FLAG);
     ServerIndex = index;
   }
 
-  bool NodeID::operator!= (const NodeID& node) const
+  bool NodeId::operator!= (const NodeId& node) const
   {
     return !(*this == node);
   }
 
-  bool NodeID::operator!= (MessageID messageID) const
+  bool NodeId::operator!= (MessageID messageID) const
   {
     return !(*this == messageID);
   }
 
-  bool NodeID::operator!= (ReferenceID referenceID) const
+  bool NodeId::operator!= (ReferenceID referenceID) const
   {
     return !(*this == referenceID);
   }
 
-  bool NodeID::operator!= (ObjectID objectID) const
+  bool NodeId::operator!= (ObjectId objectID) const
   {
     return !(*this == objectID);
   }
 
-  bool NodeID::operator!= (ExpandedObjectID objectID) const
+  bool NodeId::operator!= (ExpandedObjectId objectID) const
   {
     return !(*this == objectID);
   }
 
 
 
-  bool NodeID::operator== (MessageID messageID) const
+  bool NodeId::operator== (MessageID messageID) const
   {
-    return *this == NodeID(messageID);
+    return *this == NodeId(messageID);
   }
 
-  bool NodeID::operator== (ReferenceID referenceID) const
+  bool NodeId::operator== (ReferenceID referenceID) const
   {
-    return *this == NodeID(referenceID);
+    return *this == NodeId(referenceID);
   }
 
-  bool NodeID::operator== (ObjectID messageID) const
+  bool NodeId::operator== (ObjectId messageID) const
   {
-    return *this == NodeID(messageID);
+    return *this == NodeId(messageID);
   }
 
-  bool NodeID::operator== (ExpandedObjectID messageID) const
+  bool NodeId::operator== (ExpandedObjectId messageID) const
   {
-    return *this == NodeID(messageID);
+    return *this == NodeId(messageID);
   }
 
 
   ///ExpandednNdeID
-  ExpandedNodeID::ExpandedNodeID()
+  ExpandedNodeId::ExpandedNodeId()
   {
     Encoding = EV_TWO_BYTE;
     ServerIndex = 0;
   }
 
-  ExpandedNodeID::ExpandedNodeID(uint32_t integerId, uint16_t index)
+  ExpandedNodeId::ExpandedNodeId(uint32_t integerId, uint16_t index)
   {
     Encoding = EV_NUMERIC;
     NumericData.Identifier = integerId;
     NumericData.NamespaceIndex = index;
   }
 
-  ExpandedNodeID::ExpandedNodeID(std::string stringId, uint16_t index)
+  ExpandedNodeId::ExpandedNodeId(std::string stringId, uint16_t index)
   {
     Encoding = EV_STRING;
     StringData.Identifier = stringId;
     StringData.NamespaceIndex = index;
   }
 
-  ExpandedNodeID::ExpandedNodeID(const NodeID& node)
+  ExpandedNodeId::ExpandedNodeId(const NodeId& node)
   {
-    CopyNodeID(node);
+    CopyNodeId(node);
   }
 
-  ExpandedNodeID::ExpandedNodeID(const ExpandedNodeID& node)
+  ExpandedNodeId::ExpandedNodeId(const ExpandedNodeId& node)
   {
-    CopyNodeID(node);
+    CopyNodeId(node);
   }
 
 
-  ExpandedNodeID::ExpandedNodeID(MessageID messageID)
+  ExpandedNodeId::ExpandedNodeId(MessageID messageID)
   {
     Encoding = EV_FOUR_BYTE;
     ServerIndex = 0;
     FourByteData.Identifier = messageID;
   }
 
-  ExpandedNodeID::ExpandedNodeID(ReferenceID referenceID)
+  ExpandedNodeId::ExpandedNodeId(ReferenceID referenceID)
   {
     Encoding = EV_NUMERIC;
     ServerIndex = 0;
     NumericData.Identifier = static_cast<uint32_t>(referenceID);
   }
 
-  ExpandedNodeID::ExpandedNodeID(ObjectID objectID)
+  ExpandedNodeId::ExpandedNodeId(ObjectId objectID)
   {
     Encoding = EV_NUMERIC;
     ServerIndex = 0;
     NumericData.Identifier = static_cast<uint32_t>(objectID);
   }
 
-  ExpandedNodeID::ExpandedNodeID(ExpandedObjectID objectID)
+  ExpandedNodeId::ExpandedNodeId(ExpandedObjectId objectID)
   {
     Encoding = EV_FOUR_BYTE;
     ServerIndex = 0;
@@ -472,27 +472,27 @@ namespace OpcUa
   namespace Binary
   {
     template<>
-    std::size_t RawSize<NodeIDEncoding>(const NodeIDEncoding&)
+    std::size_t RawSize<NodeIdEncoding>(const NodeIdEncoding&)
     {
       return 1;
     }
 
     template<>
-    void DataSerializer::Serialize<NodeIDEncoding>(const NodeIDEncoding& value)
+    void DataSerializer::Serialize<NodeIdEncoding>(const NodeIdEncoding& value)
     {
       *this << static_cast<uint8_t>(value);
     }
 
     template<>
-    void DataDeserializer::Deserialize<NodeIDEncoding>(NodeIDEncoding& value)
+    void DataDeserializer::Deserialize<NodeIdEncoding>(NodeIdEncoding& value)
     {
       uint8_t tmp = 0;
       *this >> tmp;
-      value = static_cast<NodeIDEncoding>(tmp);
+      value = static_cast<NodeIdEncoding>(tmp);
     }
 
     template<>
-    std::size_t RawSize<NodeID>(const NodeID& id)
+    std::size_t RawSize<NodeId>(const NodeId& id)
     {
       std::size_t size = 0;
 
@@ -542,14 +542,14 @@ namespace OpcUa
         }
 
       default:
-        throw std::logic_error("Unable serialize NodeID. Unknown encoding type.");
+        throw std::logic_error("Unable serialize NodeId. Unknown encoding type.");
       };
 
       return size;
     }
 
     template<>
-    void DataSerializer::Serialize<OpcUa::NodeID>(const OpcUa::NodeID& id)
+    void DataSerializer::Serialize<OpcUa::NodeId>(const OpcUa::NodeId& id)
     {
       //unset server and namespace flags in encoding, they should only be used in ExpandedNode ID
       uint8_t nodeid_encoding = id.Encoding;
@@ -597,13 +597,13 @@ namespace OpcUa
         }
 
       default:
-        throw std::logic_error("Unable serialize NodeID. Unknown encoding type.");
+        throw std::logic_error("Unable serialize NodeId. Unknown encoding type.");
       };
 
     }
 
     template<>
-    void DataDeserializer::Deserialize<OpcUa::NodeID>(OpcUa::NodeID& id)
+    void DataDeserializer::Deserialize<OpcUa::NodeId>(OpcUa::NodeId& id)
     {
       *this >> id.Encoding;
 
@@ -662,9 +662,9 @@ namespace OpcUa
     };
 
     template<>
-    std::size_t RawSize<ExpandedNodeID>(const ExpandedNodeID& id)
+    std::size_t RawSize<ExpandedNodeId>(const ExpandedNodeId& id)
     {
-      std::size_t size = RawSize((NodeID)id);
+      std::size_t size = RawSize((NodeId)id);
 
       if (id.HasNamespaceURI())
       {
@@ -680,7 +680,7 @@ namespace OpcUa
     }
 
     template<>
-    void DataSerializer::Serialize<OpcUa::ExpandedNodeID>(const OpcUa::ExpandedNodeID& id)
+    void DataSerializer::Serialize<OpcUa::ExpandedNodeId>(const OpcUa::ExpandedNodeId& id)
     {
       *this << id.Encoding;
 
@@ -723,7 +723,7 @@ namespace OpcUa
         }
 
       default:
-        throw std::logic_error("Unable serialize ExpandedNodeID. Unknown encoding type.");
+        throw std::logic_error("Unable serialize ExpandedNodeId. Unknown encoding type.");
       };
 
       if (id.HasNamespaceURI())
@@ -737,9 +737,9 @@ namespace OpcUa
     }
 
     template<>
-    void DataDeserializer::Deserialize<OpcUa::ExpandedNodeID>(OpcUa::ExpandedNodeID& id)
+    void DataDeserializer::Deserialize<OpcUa::ExpandedNodeId>(OpcUa::ExpandedNodeId& id)
     {
-      *this >> *(NodeID*) &id;
+      *this >> *(NodeId*) &id;
     };
 
 

@@ -13,9 +13,9 @@
 using namespace testing;
 using namespace OpcUa;
 
-TEST(ReferenceIDFromNodeID, CanBeConvertedFromValidNodeID)
+TEST(ReferenceIDFromNodeId, CanBeConvertedFromValidNodeId)
 {
-  NodeID id(ReferenceID::HasChild);
+  NodeId id(ReferenceID::HasChild);
   ASSERT_EQ(id.Encoding, EV_NUMERIC);
   ASSERT_EQ(id.NumericData.NamespaceIndex, 0);
   ASSERT_EQ(static_cast<ReferenceID>(id.NumericData.Identifier), ReferenceID::HasChild);

@@ -57,7 +57,7 @@ namespace OpcUa
     const char EventID[]         = "EventId";
     const char EventType[]       = "EventType";
     const char EventTypes[]      = "EventTypes";
-    const char ExpandedNodeID[]  = "ExpandedNodeId";
+    const char ExpandedNodeId[]  = "ExpandedNodeId";
     const char Float[]           = "Float";
     const char FolderType[]      = "FolderType";
     const char FromState[]       = "FromState";
@@ -113,7 +113,7 @@ namespace OpcUa
     const char NamespaceArray[]  = "NamespaceArray";
     const char NamingRule[]      = "NamingRule";
     const char NodeClass[]       = "NodeClass";
-    const char NodeID[]          = "NodeID";
+    const char NodeId[]          = "NodeId";
     const char NumericRange[]    = "NumericRange";
     const char NonHierarchicalReferences[] = "NonHierarchicalReferences";
     const char Number[]          = "Number";

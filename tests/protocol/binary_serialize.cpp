@@ -521,7 +521,7 @@ TEST_F(OpcUaBinarySerialization, AdditionalHeader)
   using namespace OpcUa;
   using namespace OpcUa::Binary;
   AdditionalHeader header;
-  header.TypeID.Encoding = static_cast<NodeIDEncoding>(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_SERVER_INDEX_FLAG);
+  header.TypeID.Encoding = static_cast<NodeIdEncoding>(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_SERVER_INDEX_FLAG);
   header.TypeID.StringData.NamespaceIndex = 0x1;
   header.TypeID.StringData.Identifier = "id";
   header.TypeID.NamespaceURI = "uri";

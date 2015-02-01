@@ -48,7 +48,7 @@ setup(name='python-freeopcua',
       sources=[
         'src/py_opcua_module.cpp',
         'src/py_opcua_enums.cpp',
-        'src/py_opcua_enums_ObjectID.cpp',
+        'src/py_opcua_enums_ObjectId.cpp',
         'src/py_opcua_enums_StatusCode.cpp',
         'src/py_opcua_enums_AttributeID.cpp',
         'src/py_opcua_subscriptionclient.cpp',

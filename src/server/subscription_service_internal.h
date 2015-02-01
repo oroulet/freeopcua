@@ -58,8 +58,8 @@ namespace OpcUa
 
         void DeleteAllSubscriptions();
         boost::asio::io_service& GetIOService();
-        bool PopPublishRequest(NodeID node);
-        void TriggerEvent(NodeID node, Event event);
+        bool PopPublishRequest(NodeId node);
+        void TriggerEvent(NodeId node, Event event);
         Server::AddressSpace& GetAddressSpace();
 
       private:
@@ -69,7 +69,7 @@ namespace OpcUa
         mutable boost::shared_mutex DbMutex;
         SubscriptionsIDMap SubscriptionsMap; // Map SubscptioinID, SubscriptionData
         uint32_t LastSubscriptionID = 2;
-        std::map<NodeID, uint32_t> PublishRequestQueues;
+        std::map<NodeId, uint32_t> PublishRequestQueues;
     };
 
 

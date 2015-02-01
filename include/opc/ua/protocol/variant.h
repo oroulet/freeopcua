@@ -140,8 +140,8 @@ namespace OpcUa
     virtual void Visit(const std::vector<Guid>& val) = 0;
     virtual void Visit(const ByteString& val) = 0;
     virtual void Visit(const std::vector<ByteString>& val) = 0;
-    virtual void Visit(const NodeID& val) = 0;
-    virtual void Visit(const std::vector<NodeID>& val) = 0;
+    virtual void Visit(const NodeId& val) = 0;
+    virtual void Visit(const std::vector<NodeId>& val) = 0;
     virtual void Visit(const StatusCode& val) = 0;
     virtual void Visit(const std::vector<StatusCode>& val) = 0;
     virtual void Visit(const LocalizedText& val) = 0;
@@ -170,10 +170,10 @@ namespace OpcUa
 
     template <typename T>
     Variant(const T& value) : Value(value){}
-    Variant(MessageID id) : Variant(NodeID(id)){}
-    Variant(ReferenceID id) : Variant(NodeID(id)){}
-    Variant(ObjectID id) : Variant(NodeID(id)){}
-    Variant(ExpandedObjectID id) : Variant(NodeID(id)){}
+    Variant(MessageID id) : Variant(NodeId(id)){}
+    Variant(ReferenceID id) : Variant(NodeId(id)){}
+    Variant(ObjectId id) : Variant(NodeId(id)){}
+    Variant(ExpandedObjectId id) : Variant(NodeId(id)){}
     explicit Variant(VariantType);
 
     Variant& operator= (const Variant& variant)
@@ -191,25 +191,25 @@ namespace OpcUa
 
     Variant& operator=(MessageID value)
     {
-      Value = NodeID(value);
+      Value = NodeId(value);
       return *this;
     }
 
     Variant& operator=(ReferenceID value)
     {
-      Value = NodeID(value);
+      Value = NodeId(value);
       return *this;
     }
 
-    Variant& operator=(ObjectID value)
+    Variant& operator=(ObjectId value)
     {
-      Value = NodeID(value);
+      Value = NodeId(value);
       return *this;
     }
 
-    Variant& operator=(ExpandedObjectID value)
+    Variant& operator=(ExpandedObjectId value)
     {
-      Value = NodeID(value);
+      Value = NodeId(value);
       return *this;
     }
 
@@ -224,22 +224,22 @@ namespace OpcUa
 
     bool operator==(MessageID id) const
     {
-      return *this == NodeID(id);
+      return *this == NodeId(id);
     }
 
     bool operator==(ReferenceID id) const
     {
-      return *this == NodeID(id);
+      return *this == NodeId(id);
     }
 
-    bool operator==(ObjectID id) const
+    bool operator==(ObjectId id) const
     {
-      return *this == NodeID(id);
+      return *this == NodeId(id);
     }
 
-    bool operator==(ExpandedObjectID id) const
+    bool operator==(ExpandedObjectId id) const
     {
-      return *this == NodeID(id);
+      return *this == NodeId(id);
     }
 
 
@@ -269,8 +269,8 @@ namespace OpcUa
     void Visit(VariantVisitor& visitor) const;
   };
 
-  ObjectID VariantTypeToDataType(VariantType vt);
-  VariantType DataTypeToVariantType(const NodeID& dataType);
+  ObjectId VariantTypeToDataType(VariantType vt);
+  VariantType DataTypeToVariantType(const NodeId& dataType);
 
 } // namespace OpcUa
 

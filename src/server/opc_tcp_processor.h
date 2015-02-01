@@ -48,8 +48,8 @@ namespace OpcUa
       bool Debug;
       uint32_t ChannelID;
       uint32_t TokenID;
-      ExpandedNodeID SessionID;
-      //ExpandedNodeID AuthenticationToken;
+      ExpandedNodeId SessionID;
+      //ExpandedNodeId AuthenticationToken;
       uint32_t SequenceNb;
 
       struct PublishRequestElement

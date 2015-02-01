@@ -37,10 +37,10 @@ class EndpointsTests(unittest.TestCase):
     def test_browse(self):
         params = opcua.BrowseParameters();
         params.node_to_browse.namespace = 1;
-        params.node_to_browse.identifier = opcua.ObjectID.ROOT_FOLDER
+        params.node_to_browse.identifier = opcua.ObjectId.ROOT_FOLDER
         params.direction = opcua.BrowseDirection.BOTH
         params.reference_type_id.namespace = 2;
-        params.reference_type_id.identifier = opcua.ObjectID.ORGANIZES
+        params.reference_type_id.identifier = opcua.ObjectId.ORGANIZES
         params.include_subtypes = True
         params.node_classes = opcua.NodeClass.OBJECT | opcua.NodeClass.VARIABLE
         params.result_mask = 2;

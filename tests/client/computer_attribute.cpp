@@ -70,7 +70,7 @@ TEST_F(Attribute, Read)
 
   AttributeValueID id;
   id.Node.Encoding = EV_TWO_BYTE;
-  id.Node.TwoByteData.Identifier = static_cast<uint8_t>(ObjectID::ObjectsFolder);
+  id.Node.TwoByteData.Identifier = static_cast<uint8_t>(ObjectId::ObjectsFolder);
   id.Attribute = AttributeID::BrowseName;
 
   OpcUa::ReadParameters params;
@@ -88,7 +88,7 @@ TEST_F(Attribute, Write)
 
   WriteValue value;
   value.Node.Encoding = EV_TWO_BYTE;
-  value.Node.TwoByteData.Identifier = static_cast<uint8_t>(ObjectID::ObjectsFolder);
+  value.Node.TwoByteData.Identifier = static_cast<uint8_t>(ObjectId::ObjectsFolder);
   value.Attribute = AttributeID::BrowseName;
 
   const std::vector<StatusCode> codes = Service->Write(std::vector<WriteValue>(1, value));

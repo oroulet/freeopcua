@@ -7,7 +7,7 @@ namespace OpcUa
   namespace Internal
   {
 
-    InternalSubscription::InternalSubscription(SubscriptionServiceInternal& service, const SubscriptionData& data, const NodeID& SessionAuthenticationToken, std::function<void (PublishResult)> callback, bool debug)
+    InternalSubscription::InternalSubscription(SubscriptionServiceInternal& service, const SubscriptionData& data, const NodeId& SessionAuthenticationToken, std::function<void (PublishResult)> callback, bool debug)
       : Service(service)
       , AddressSpace(Service.GetAddressSpace())
       , Data(data)
@@ -224,7 +224,7 @@ namespace OpcUa
       {
         if (Debug) std::cout << "SubscriptionService| Subscribing to data chanes in the address space." << std::endl;
         IntegerID id = result.MonitoredItemID;
-        callbackHandle = AddressSpace.AddDataChangeCallback(request.ItemToMonitor.Node, request.ItemToMonitor.Attribute, [this, id] (const OpcUa::NodeID& nodeId, OpcUa::AttributeID attr, const DataValue& value)
+        callbackHandle = AddressSpace.AddDataChangeCallback(request.ItemToMonitor.Node, request.ItemToMonitor.Attribute, [this, id] (const OpcUa::NodeId& nodeId, OpcUa::AttributeID attr, const DataValue& value)
           {
             this->DataChangeCallback(id, value);
           });
@@ -375,7 +375,7 @@ namespace OpcUa
       TriggeredDataChangeEvents.push_back(event);
     }
 
-    void InternalSubscription::TriggerEvent(NodeID node, Event event)
+    void InternalSubscription::TriggerEvent(NodeId node, Event event)
     {
       boost::shared_lock<boost::shared_mutex> lock(DbMutex);
 

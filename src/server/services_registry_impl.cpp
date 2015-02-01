@@ -72,11 +72,11 @@ namespace
       return std::vector<StatusCode>();
     }
 
-    virtual void AddAttribute(const NodeID& node, AttributeID attribute, const Variant& value)
+    virtual void AddAttribute(const NodeId& node, AttributeID attribute, const Variant& value)
     {
     }
 
-    virtual void AddReference(const NodeID& sourceNode, const ReferenceDescription& reference)
+    virtual void AddReference(const NodeId& sourceNode, const ReferenceDescription& reference)
     {
     }
 

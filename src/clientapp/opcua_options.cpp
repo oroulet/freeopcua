@@ -60,10 +60,10 @@ namespace
   // codegen
   #include "opcua_options_attribute_ids.h"
 
-  NodeID GetNodeIDOptionValue(const po::variables_map& vm)
+  NodeId GetNodeIdOptionValue(const po::variables_map& vm)
   {
     const std::string& value = vm[OPTION_NODE_ID].as<std::string>();
-    return OpcUa::ToNodeID(value);
+    return OpcUa::ToNodeId(value);
   }
 
   Variant GetOptionValue(const po::variables_map& vm)
@@ -185,7 +185,7 @@ namespace OpcUa
 
     if (vm.count(OPTION_NODE_ID))
     {
-      Node = GetNodeIDOptionValue(vm);
+      Node = GetNodeIdOptionValue(vm);
     }
 
     if (vm.count(OPTION_ATTRIBUTE))
