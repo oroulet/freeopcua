@@ -8,6 +8,7 @@
 /// http://www.gnu.org/licenses/lgpl.html)
 ///
 
+#include <opc/ua/protocol/protocol.h>
 #include <opc/ua/protocol/binary/common.h>
 #include <opc/ua/protocol/secure_channel.h>
 #include <opc/ua/protocol/types.h>
@@ -184,26 +185,10 @@ namespace OpcUa
   {
   }
 
-  OpenSecureChannelRequest::OpenSecureChannelRequest()
-    : TypeID(OPEN_SECURE_CHANNEL_REQUEST)
-  {
-  }
-
   ResponseHeader::ResponseHeader()
     : Timestamp(DateTime::Current())
     , RequestHandle(0)
     , ServiceResult(StatusCode::Good)
-  {
-  }
-
-  OpenSecureChannelResponse::OpenSecureChannelResponse()
-    : TypeID(OPEN_SECURE_CHANNEL_RESPONSE)
-    , ServerProtocolVersion(0)
-  {
-  }
-
-  CloseSecureChannelRequest::CloseSecureChannelRequest()
-    : TypeID(OpcUa::CLOSE_SECURE_CHANNEL_REQUEST)
   {
   }
 

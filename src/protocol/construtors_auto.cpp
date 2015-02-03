@@ -15,6 +15,16 @@
 namespace OpcUa
 {   
 
+     RequestHeader::RequestHeader()
+        : TypeId(ObjectId::RequestHeader_Encoding_DefaultBinary)
+    {
+    }
+
+     ResponseHeader::ResponseHeader()
+        : TypeId(ObjectId::ResponseHeader_Encoding_DefaultBinary)
+    {
+    }
+
      FindServersRequest::FindServersRequest()
         : TypeId(ObjectId::FindServersRequest_Encoding_DefaultBinary)
     {
@@ -45,6 +55,11 @@ namespace OpcUa
     {
     }
 
+     OpenSecureChannelParameters::OpenSecureChannelParameters()
+        : TypeId(ObjectId::OpenSecureChannelParameters_Encoding_DefaultBinary)
+    {
+    }
+
      OpenSecureChannelRequest::OpenSecureChannelRequest()
         : TypeId(ObjectId::OpenSecureChannelRequest_Encoding_DefaultBinary)
     {
@@ -72,6 +87,11 @@ namespace OpcUa
 
      CreateSessionResponse::CreateSessionResponse()
         : TypeId(ObjectId::CreateSessionResponse_Encoding_DefaultBinary)
+    {
+    }
+
+     UserIdentityToken::UserIdentityToken()
+        : TypeId(ObjectId::UserIdentityToken_Encoding_DefaultBinary)
     {
     }
 
@@ -165,6 +185,11 @@ namespace OpcUa
     {
     }
 
+     RelativePathElement::RelativePathElement()
+        : TypeId(ObjectId::RelativePathElement_Encoding_DefaultBinary)
+    {
+    }
+
      TranslateBrowsePathsToNodeIdsRequest::TranslateBrowsePathsToNodeIdsRequest()
         : TypeId(ObjectId::TranslateBrowsePathsToNodeIdsRequest_Encoding_DefaultBinary)
     {
@@ -212,6 +237,11 @@ namespace OpcUa
 
      QueryNextResponse::QueryNextResponse()
         : TypeId(ObjectId::QueryNextResponse_Encoding_DefaultBinary)
+    {
+    }
+
+     ReadValueId::ReadValueId()
+        : TypeId(ObjectId::ReadValueId_Encoding_DefaultBinary)
     {
     }
 
