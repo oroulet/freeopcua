@@ -18,7 +18,6 @@
 #include <opc/ua/protocol/datetime.h>
 #include <opc/ua/protocol/status_codes.h>
 #include <opc/ua/protocol/reference_ids.h>
-#include <opc/ua/protocol/protocol_auto.h>
 
 #include <memory>
 #include <stdint.h>
@@ -166,32 +165,6 @@ namespace OpcUa
     }
   };
 
-  struct RequestHeader
-  {
-    ExpandedNodeId SessionAuthenticationToken;
-    DateTime UtcTime;
-    uint32_t RequestHandle = 0;
-    uint32_t ReturnDiagnostics = 0;
-    std::string AuditEntryID;
-    uint32_t Timeout = 0; // in miliseconds
-    AdditionalHeader Additional;
-
-    RequestHeader();
-  };
-
-
-  struct ResponseHeader
-  {
-    DateTime Timestamp;
-    uint32_t RequestHandle = 0;
-    StatusCode ServiceResult = StatusCode::Good;
-    DiagnosticInfo InnerDiagnostics;
-    std::vector<std::string> StringTable;
-    AdditionalHeader Additional;
-
-    ResponseHeader();
-  };
-
   enum ExtensionObjectEncoding : uint8_t
   {
     NONE = 0,
@@ -199,6 +172,7 @@ namespace OpcUa
     HAS_XML_BODY    = 2,
   };
 
+  /*
   //TODO serialization tests
   struct ExtensionObjectHeader
   {
@@ -208,6 +182,7 @@ namespace OpcUa
     ExtensionObjectHeader();
     ExtensionObjectHeader(ExtensionObjectId objectID, ExtensionObjectEncoding encoding);
   };
+  */
 
 } // namespace OpcUa
 

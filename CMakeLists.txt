@@ -115,8 +115,8 @@ add_library(opcuaprotocol STATIC
     include/opc/ua/protocol/object_ids.h
     src/protocol/binary_attribute.cpp
     src/protocol/binary_data_value.cpp
-    src/protocol/binary_endpoints.cpp
     src/protocol/binary_messages.cpp
+    src/protocol/binary_protocol.cpp
     src/protocol/binary_node_management.cpp
     src/protocol/binary_raw_size.cpp
     src/protocol/binary_serialization.h

@@ -10,9 +10,27 @@ from IPython import embed
 NeedOverride = []
 NeedConstructor = ["RelativePathElement", "ReadValueId", "OpenSecureChannelParameters", "UserIdentityToken", "RequestHeader", "ResponseHeader"]
 IgnoredEnums = ["IdType", "NodeIdType"]
-IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText", "ByteString"]
+IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText"]
 #by default we split requests and respons in header and parameters, but some are so simple we do not split them
 NoSplitStruct = ["GetEndpointsResponse"]
+
+"""
+def rename_field(s):
+    tmp = re.sub(r'([a-z])([A-Z])', r'\1 \2', string) 
+    return tmp[1:].join("")
+    r = []
+    tmp = []
+    for c in s:
+        if c.isupper():
+            r.append(tmp.join(""))
+            tmp = []
+        else:
+            tmp.append(c)
+            r.append(' ')
+        l = not c.isupper()
+        r.append(c)
+    return ''.join(r)
+"""
 
 class Bit(object):
     def __init__(self):
@@ -37,7 +55,7 @@ class Struct(object):
 class Field(object):
     def __init__(self):
         self.name = None
-        self.ctype = None
+        self.uatype = None
         self.length = None
         self.sourcetype = None
         self.switchfield = None
@@ -45,51 +63,46 @@ class Field(object):
         self.sourcetype = None
         self.bitlength = 1 
 
-    def get_ctype(self):
+    def get_uatype(self):
         ty = ""
-        if self.ctype == "opc:String":
+        if self.uatype == "String":
             ty = "std::string"
-        elif self.ctype == "opc:CharArray":
+        elif self.uatype == "CharArray":
             ty = "std::string"
-        elif self.ctype == "opc:Char":
+        elif self.uatype == "Char":
             ty = "char"
-        elif self.ctype == "opc:SByte":
+        elif self.uatype == "SByte":
             ty = "char"
-        elif self.ctype == "opc:Int8":
+        elif self.uatype == "Int8":
             ty = "int8_t"
-        elif self.ctype == "opc:Int16":
+        elif self.uatype == "Int16":
             ty = "int16_t"
-        elif self.ctype == "opc:Int32":
+        elif self.uatype == "Int32":
             ty = "int32_t"
-        elif self.ctype == "opc:Int64":
+        elif self.uatype == "Int64":
             ty = "int64_t"
-        elif self.ctype == "opc:UInt8":
+        elif self.uatype == "UInt8":
             ty = "uint8_t"
-        elif self.ctype == "opc:UInt16":
+        elif self.uatype == "UInt16":
             ty = "uint16_t"
-        elif self.ctype == "opc:UInt32":
+        elif self.uatype == "UInt32":
             ty = "uint32_t"
-        elif self.ctype == "opc:UInt64":
+        elif self.uatype == "UInt64":
             ty = "uint64_t"
-        elif self.ctype == "opc:DateTime":
+        elif self.uatype == "DateTime":
             ty = "DateTime"
-        elif self.ctype == "opc:Boolean":
+        elif self.uatype == "Boolean":
             ty = "bool"
-        elif self.ctype == "opc:Double":
+        elif self.uatype == "Double":
             ty = "double"
-        elif self.ctype == "opc:Float":
+        elif self.uatype == "Float":
             ty = "float"
-        elif self.ctype == "opc:ByteString":
+        elif self.uatype == "ByteString":
             ty = "ByteString"
-        elif self.ctype == "opc:Byte":
+        elif self.uatype == "Byte":
             ty = "uint8_t"
-        elif self.ctype.startswith("tns:"):
-            ty = self.ctype[4:]
-        elif self.ctype.startswith("ua:"):
-            ty = self.ctype[3:]
         else:
-            print("Error unknown type: ", self.ctype)
-            ty = self.ctype
+            ty = self.uatype
         if self.length:
             ty = "std::vector<{}>".format(ty)
         return ty
@@ -97,52 +110,42 @@ class Field(object):
 class Enum(object):
     def __init__(self):
         self.name = None
-        self.ctype = None
+        self.uatype = None
         self.values = []
         self.doc = None
 
-    def get_ctype(self):
-        return "uint{}_t".format(self.ctype)
+    def get_uatype(self):
+        return "uint{}_t".format(self.uatype)
 
 class EnumValue(object):
     def __init__(self):
         self.name = None
         self.value = None
 
-class CodeGenerator(object):
-    def __init__(self, input_path, h_path, enum_path, size_path, ser_path, deser_path, const_path):
-        self.input_path = input_path
-        self.h_path = h_path
-        self.enum_path = enum_path
-        self.rawsize_path = size_path
-        self.serialize_path = ser_path
-        self.deserialize_path = deser_path
-        self.constructors_path = const_path
-        self.h_file = None
-        self.cpp_file = None
+class Model(object):
+    def __init__(self):
         self.structs = []
+        self.enums = []
 
-    def run(self):
-        sys.stderr.write("Generating header file {} and C++ files for XML file {}".format(self.h_path, self.input_path) + "\n")
-        self.h_file = open(self.h_path, "w")
-        self.enum_file = open(self.enum_path, "w")
-        self.rawsize_file = open(self.rawsize_path, "w")
-        self.serialize_file = open(self.serialize_path, "w")
-        self.deserialize_file = open(self.deserialize_path, "w")
-        self.constructors_file = open(self.constructors_path, "w")
+    def get_struct(self, name):
+        for struct in self.structs:
+            if name == struct.name:
+                return struct
+        raise Exception("No struct named: " + name)
 
-        self.make_header_h()
-        self.make_header_enum()
-        self.make_header_rawsize()
-        self.make_header_serialize()
-        self.make_header_deserialize()
-        self.make_header_constructors()
+    def get_enum(self, name):
+        for s in self.enums:
+            if name == s.name:
+                return name
+        raise Exception("No enum named: " + name)
 
-        self.write_h("  // forward declare structs that are not autogenerated")
-        for structname in IgnoredStructs:
-            self.write_h("  struct", structname +";")
+class Parser(object):
+    def __init__(self, path):
+        self.path = path
+        self.model = None
 
-
+    def parse(self):
+        self.model = Model()
         tree = ET.parse(xmlpath)
         root = tree.getroot()
         for child in root:
@@ -150,44 +153,14 @@ class CodeGenerator(object):
             if tag == "StructuredType":
                 structs = self.parse_struct(child)
                 for struct in structs:
-                    self.structs.append(struct)
-                    if struct.name in NeedConstructor:
-                        struct.needconstructor = True
-                    if struct.name in NeedOverride:
-                        struct.needoverride = True
-                    if not struct.name.endswith("Node") and not struct.name.endswith("NodeId") and not struct.name in IgnoredStructs:
-                        self.make_struct_h(struct)
-                        self.make_struct_ser(struct)
-                        self.make_constructors(struct)
+                    self.model.structs.append(struct)
             elif tag == "EnumeratedType":
                 enum = self.parse_enum(child)
-                if not enum.name in IgnoredEnums:
-                    self.make_enum_h(enum)
-                    self.make_struct_ser(enum)
+                self.model.enums.append(enum)
             else:
                 print("Not implemented node type: " + tag + "\n")
-
-        self.make_footer_h()
-        self.make_footer_enum()
-        self.make_footer_rawsize()
-        self.make_footer_serialize()
-        self.make_footer_deserialize()
-        self.make_footer_constructors()
-
-    def add_basetype_members(self, struct):
-        basename = struct.basetype.split(":")[1]
-        for base in self.structs:
-            if base.name == basename:
-                #if struct.name.endswith("Request"):
-                    #embed()
-                for name, bit in base.bits.items():
-                    struct.bits[name] = bit
-                for field in base.fields:
-                    if field.name != "Body":
-                        struct.fields.append(field)
-                return
-        print("Error baseobject:", basename, " not found")
-
+        self.reorder_structs(self.model)
+        return self.model
 
     def parse_struct(self, child):
         tag = child.tag[40:]
@@ -208,7 +181,7 @@ class CodeGenerator(object):
                     if key == "Name":
                         field.name = val
                     elif key == "TypeName":
-                        field.ctype = val
+                        field.uatype = val.split(":")[1]
                     elif key == "LengthField":
                         field.length = val
                     elif key == "SourceType":
@@ -220,42 +193,125 @@ class CodeGenerator(object):
                     elif key == "Length":
                         field.bitlength = int(val)
                     else:
-                        print("Uknown field item: ",struct.name,  key) 
+                        print("Uknown field item: ", struct.name, key) 
+
                 struct.fields.append(field)
             elif tag == "Documentation":
-                struct.doc = val
+                struct.doc = el.text
             else:
                 print("Uknown tag: ", tag)
 
         #Changes specific to our C++ implementation
-        struct = self.add_encoding_field(struct)
-        struct = self.remove_vector_length(struct)
+        self.add_encoding_field(struct)
+        self.remove_vector_length(struct)
+        self.remove_duplicates(struct)
+
 
         structs = self.fix_request(struct)
 
         return structs
+
+    def parse_enum(self, child):
+        tag = child.tag[40:]
+        enum = Enum()
+        for k, v in child.items():
+            if k == "Name":
+                enum.name = v
+            elif k == "LengthInBits":
+                enum.uatype = v
+            else:
+                print("Unknown attr for enum: ", k)
+        for el in child:
+            tag = el.tag[40:]
+            if tag == "EnumeratedValue":
+                ev = EnumValue()
+                for k, v in el.attrib.items():
+                    if k == "Name":
+                        ev.name = v
+                    elif k == "Value":
+                        ev.value = v
+                    else:
+                        print("Uknown field attrib: ", k) 
+                enum.values.append(ev)
+            elif tag == "Documentation":
+                enum.doc = el.text
+            else:
+                print("Unknown enum tag: ", tag)
+        return enum
+
+    def add_basetype_members(self, struct):
+        basename = struct.basetype.split(":")[1]
+        base = self.model.get_struct(basename)
+        for name, bit in base.bits.items():
+            struct.bits[name] = bit
+        for field in base.fields:
+            if field.name != "Body":
+                struct.fields.append(field)
+
+    def reorder_structs(self, model):
+        types = IgnoredStructs + IgnoredEnums + ["Char", "CharArray", "Guid", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "ByteString", "Byte", "StatusCode", "DiagnosticInfo", "String"] + [enum.name for enum in model.enums]
+        waiting = {}
+        newstructs = []
+        for s in model.structs:
+            print("Looking at ", s.name)
+            s.waitingfor = []
+            ok = True
+            for f in s.fields:
+                if f.uatype not in types:
+                    print("   field ", f.name, "missing type", f.uatype)
+                    if f.uatype in waiting.keys():
+                        waiting[f.uatype].append(s)
+                        s.waitingfor.append(f.uatype)
+                    else:
+                        waiting[f.uatype] = [s]
+                        s.waitingfor.append(f.uatype)
+                    ok = False
+            if ok:
+                newstructs.append(s)
+                types.append(s.name)
+                waitings = waiting.pop(s.name, None)
+                if waitings:
+                    for s2 in waitings:
+                        print(s2.name, " was wauiting for ", s.name)
+                        print(s2.name, s2.waitingfor) 
+                        s2.waitingfor.remove(s.name)
+                        if not s2.waitingfor:
+                            newstructs.append(s2)
+        print(len(model.structs), len(newstructs))
+        model.structs = newstructs
+    
+
+
+    def remove_duplicates(self, struct):
+        fields = []
+        names = []
+        for field in struct.fields:
+            if field.name not in names:
+                names.append(field.name)
+                fields.append(field)
+        struct.fields = fields
     
     def add_encoding_field(self, struct):
         newfields = []
         container = None
         idx = 0
         for field in struct.fields:
-            if field.ctype in ("opc:UInt6", "ua:NodeIdType"):
+            if field.uatype in ("UInt6", "NodeIdType"):
                 container = field.name
                 idx = 6
-            if field.ctype == "opc:Bit":
+            if field.uatype == "Bit":
                 if not container or idx > 7:
                     container = "Encoding"
                     idx = 0
                     f = Field()
                     f.name = "Encoding"
-                    f.ctype = "opc:UInt8"
+                    f.uatype = "UInt8"
                     newfields.append(f)
 
                 nb = field.bitlength
-                for i in range(0, nb):
+                for _ in range(0, nb):
                     b = Bit()
-                    b.name  = field.name
+                    b.name = field.name
                     b.idx = idx
                     b.container = container
                     idx += 1
@@ -263,7 +319,6 @@ class CodeGenerator(object):
             else:
                 newfields.append(field)
         struct.fields = newfields
-        return struct
 
     def remove_vector_length(self, struct):
         new = []
@@ -271,7 +326,6 @@ class CodeGenerator(object):
             if not field.name.startswith("NoOf"):
                 new.append(field)
         struct.fields = new
-        return struct
 
     def fix_request(self, struct):
         structs = []
@@ -284,12 +338,6 @@ class CodeGenerator(object):
         if structtype:
             struct.needconstructor = True
         if structtype and not struct.name in NoSplitStruct:
-            newfields = []
-            #typeid = Field()
-            #typeid.name = "TypeId"
-            #typeid.ctype = "ua:NodeId"
-            #struct.fields.insert(0, typeid)
-
             paramstruct = Struct()
             if structtype == "Request":
                 basename = struct.name.replace("Request", "") + "Parameters"
@@ -306,11 +354,77 @@ class CodeGenerator(object):
 
             typeid = Field()
             typeid.name = "Parameters" 
-            typeid.ctype = "ua:" + paramstruct.name 
+            typeid.uatype = paramstruct.name 
             struct.fields.append(typeid)
 
         return structs
 
+
+
+
+class CodeGenerator(object):
+    def __init__(self, model, h_path, enum_path, size_path, ser_path, deser_path, const_path):
+        self.model = model 
+        self.h_path = h_path
+        self.enum_path = enum_path
+        self.rawsize_path = size_path
+        self.serialize_path = ser_path
+        self.deserialize_path = deser_path
+        self.constructors_path = const_path
+        self.h_file = None
+        self.cpp_file = None
+        self.structs = []
+
+    def run(self):
+        #sys.stderr.write("Generating header file {} and C++ files for XML file {}".format(self.h_path, self.input_path) + "\n")
+        self.h_file = open(self.h_path, "w")
+        self.enum_file = open(self.enum_path, "w")
+        self.rawsize_file = open(self.rawsize_path, "w")
+        self.serialize_file = open(self.serialize_path, "w")
+        self.deserialize_file = open(self.deserialize_path, "w")
+        self.constructors_file = open(self.constructors_path, "w")
+
+        self.make_header_h()
+        self.make_header_enum()
+        self.make_header_rawsize()
+        self.make_header_serialize()
+        self.make_header_deserialize()
+        self.make_header_constructors()
+        
+        for struct in self.model.structs:
+            self.rename_fields(struct)
+            if struct.name in NeedConstructor:
+                struct.needconstructor = True
+            if struct.name in NeedOverride:
+                struct.needoverride = True
+            if not struct.name.endswith("Node") and not struct.name.endswith("NodeId") and not struct.name in IgnoredStructs:
+                self.make_struct_h(struct)
+                self.make_struct_ser(struct)
+                self.make_constructors(struct)
+        for enum in self.model.enums:
+            if not enum.name in IgnoredEnums:
+                self.make_enum_h(enum)
+                self.make_struct_ser(enum)
+
+        self.make_footer_h()
+        self.make_footer_enum()
+        self.make_footer_rawsize()
+        self.make_footer_serialize()
+        self.make_footer_deserialize()
+        self.make_footer_constructors()
+
+    def rename_fields(self, struct):
+        ##gcc does not want member with same name as a type
+        for field in struct.fields:
+            if field.name == field.get_uatype():
+                print("Error name same as type: ", field.name, field.get_uatype(), field.uatype)
+                if field.name.endswith("Header"):
+                    field.name = "Header"
+                elif field.name in ("ExpandedNodeId", "NodeId"):
+                    field.name = "Node"
+                elif field.name in ("StatusCode"):
+                    field.name = "Status"
+                print("Renamed to : ", field.name)
 
     def make_struct_h(self, struct):
         self.write_h("")
@@ -320,9 +434,13 @@ class CodeGenerator(object):
             name = "_" + struct.name
         self.write_h("    struct %s \n    {""" % name)
         for field in struct.fields: 
-            self.write_h("        ", field.get_ctype(), field.name + ";" )
+            if field.get_uatype() == struct.name:
+                #we have a problem selv referensing struct
+                self.write_h("         std::shared_ptr<{}> {};".format(field.get_uatype(), field.name))
+            else:
+                self.write_h("        ", field.get_uatype(), field.name + ";")
         if struct.needconstructor:
-            self.write_h("\n        ", struct.name + "();" )
+            self.write_h("\n        ", struct.name + "();")
         self.write_h("    };")
 
     def make_raw_size(self, struct):
@@ -330,11 +448,18 @@ class CodeGenerator(object):
         self.write_size("    template<>")
         self.write_size("    std::size_t RawSize<{}>(const {}& data)".format(struct.name, struct.name))
         self.write_size("    {")
-        print(type(struct), type(struct) == Enum)
         if type(struct) == Enum:
-            self.write_size("        return sizeof({});".format(struct.get_ctype()))
+            self.write_size("        return sizeof({});".format(struct.get_uatype()))
         else:
-            tmp = ["RawSizeContainer(data.{})".format(field.name) if field.length else  "RawSize(data.{})".format(field.name) for field in struct.fields]
+            tmp = []
+            for field in struct.fields:
+                prefix = ""
+                if field.get_uatype() == struct.name:
+                    prefix = "*"
+                if field.length:
+                    tmp.append("RawSizeContainer({}data.{})".format(prefix, field.name))
+                else:
+                    tmp.append("RawSize({}data.{})".format(prefix, field.name))
             tmp = " + ".join(tmp)
             self.write_size("        return " + tmp + ";")
         self.write_size("    }")
@@ -346,7 +471,7 @@ class CodeGenerator(object):
         self.write_ser("    void DataSerializer::Serialize<{}>(const {}& data)".format(struct.name, struct.name))
         self.write_ser("    {")
         if type(struct) == Enum:
-            self.write_ser("        *this << static_cast<{}>(data);".format(struct.get_ctype()))
+            self.write_ser("        *this << static_cast<{}>(data);".format(struct.get_uatype()))
         else:
             for field in struct.fields:
                 switch = ""
@@ -357,10 +482,13 @@ class CodeGenerator(object):
                         container = struct.bits[field.switchfield].container
                         idx = struct.bits[field.switchfield].idx
                         switch = "if ((data.{}) & (1<<({}))) ".format(container, idx)
+                prefix = ""
+                if field.get_uatype() == struct.name:
+                    prefix = "*"
                 if field.length:
-                    self.write_ser("        {}SerializeContainer(*this, data.{});".format(switch, field.name))
+                    self.write_ser("        {}SerializeContainer(*this, {}data.{});".format(switch, prefix, field.name))
                 else:
-                    self.write_ser("        {}*this << data.{};".format(switch, field.name))
+                    self.write_ser("        {}*this << {}data.{};".format(switch, prefix, field.name))
         self.write_ser("    }")
         self.write_ser("")
 
@@ -370,9 +498,9 @@ class CodeGenerator(object):
         self.write_deser("    void DataDeserializer::Deserialize<{}>({}& data)".format(struct.name, struct.name))
         self.write_deser("    {")
         if type(struct) == Enum:
-            self.write_deser("        {} tmp;".format(struct.get_ctype()))
+            self.write_deser("        {} tmp;".format(struct.get_uatype()))
             self.write_deser("        *this >> tmp;")
-            self.write_deser("        data = static_cast<{}(tmp);".format(struct.get_ctype()))
+            self.write_deser("        data = static_cast<{}(tmp);".format(struct.get_uatype()))
         else:
             for field in struct.fields:
                 switch = ""
@@ -404,38 +532,10 @@ class CodeGenerator(object):
         self.make_serialize(struct)
         self.make_deserialize(struct)
 
-    def parse_enum(self, child):
-        tag = child.tag[40:]
-        enum = Enum()
-        for k, v in child.items():
-            if k == "Name":
-                enum.name = v
-            elif k == "LengthInBits":
-                enum.ctype = v
-            else:
-                print("Unknown attr for enum: ", k)
-        for el in child:
-            tag = el.tag[40:]
-            if tag == "EnumeratedValue":
-                ev = EnumValue()
-                for k, v in el.attrib.items():
-                    if k == "Name":
-                        ev.name = v
-                    elif k == "Value":
-                        ev.value = v
-                    else:
-                        print("Uknown field attrib: ", k) 
-                enum.values.append(ev)
-            elif tag == "Documentation":
-                enum.doc = el.text
-            else:
-                print("Unknown enum tag: ", tag)
-        return enum
-
     def make_enum_h(self, enum):
         self.write_enum("\n")
         if enum.doc: self.write_enum("    //", enum.doc)
-        self.write_enum("    enum class %s : %s\n    {" % (enum.name, self.to_enum_type(enum.ctype)))
+        self.write_enum("    enum class %s : %s\n    {" % (enum.name, self.to_enum_type(enum.uatype)))
         for val in enum.values:
             self.write_enum("        ", val.name, "=", val.value + ",")
         self.write_enum("    };")
@@ -480,16 +580,16 @@ class CodeGenerator(object):
 #pragma once
 
 #include <opc/ua/protocol/enum_auto.h>
+#include <opc/ua/protocol/nodeid.h>
+#include <opc/ua/protocol/types.h>
+#include <opc/ua/protocol/variant.h>
+#include <opc/ua/protocol/data_value.h>
 
 namespace OpcUa
-{
-
-''' )
+{''')
 
     def make_footer_h(self):
         self.write_h('''
-   }
-
 } // namespace
     ''')
 
@@ -517,7 +617,7 @@ namespace OpcUa
 namespace OpcUa
 {
   struct DiagnosticInfo;
-''' )
+''')
 
     def make_footer_enum(self):
         self.write_enum('''
@@ -657,7 +757,9 @@ if __name__ == "__main__":
     rawsizepath = "../src/protocol/rawsize_auto.cpp"
     deserializerpath = "../src/protocol/deserialize_auto.cpp"
     constructorspath = "../src/protocol/construtors_auto.cpp"
-    c = CodeGenerator(xmlpath, hpath, enumpath, rawsizepath, serializerpath, deserializerpath, constructorspath)
+    p = Parser(xmlpath)
+    model = p.parse()
+    c = CodeGenerator(model, hpath, enumpath, rawsizepath, serializerpath, deserializerpath, constructorspath)
     c.run()
 
 

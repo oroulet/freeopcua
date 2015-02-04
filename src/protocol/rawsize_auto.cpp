@@ -32,7 +32,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DiagnosticInfo>(const DiagnosticInfo& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.SymbolicId) + RawSize(data.NamespaceURI) + RawSize(data.LocalizedText) + RawSize(data.AdditionalInfo) + RawSize(data.InnerStatusCode) + RawSize(data.InnerDiagnosticInfo);
+        return RawSize(data.Encoding) + RawSize(data.SymbolicId) + RawSize(data.NamespaceURI) + RawSize(data.LocalizedText) + RawSize(data.AdditionalInfo) + RawSize(data.InnerStatusCode) + RawSize(*data.InnerDiagnosticInfo);
     }
 
 
@@ -40,20 +40,6 @@ namespace OpcUa
     std::size_t RawSize<ExtensionObject>(const ExtensionObject& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.Body);
-    }
-
-
-    template<>
-    std::size_t RawSize<OpenFileMode>(const OpenFileMode& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
-    std::size_t RawSize<NodeClass>(const NodeClass& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -75,13 +61,6 @@ namespace OpcUa
     std::size_t RawSize<TimeZoneDataType>(const TimeZoneDataType& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Offset) + RawSize(data.DaylightSavingInOffset);
-    }
-
-
-    template<>
-    std::size_t RawSize<ApplicationType>(const ApplicationType& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -109,14 +88,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ServiceFault>(const ServiceFault& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ResponseHeader);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Header);
     }
 
 
     template<>
     std::size_t RawSize<FindServersParameters>(const FindServersParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.EndpointUrl) + RawSizeContainer(data.LocaleIds) + RawSizeContainer(data.ServerUris);
+        return RawSize(data.Header) + RawSize(data.EndpointUrl) + RawSizeContainer(data.LocaleIds) + RawSizeContainer(data.ServerUris);
     }
 
 
@@ -130,7 +109,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<FindServersData>(const FindServersData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Servers);
+        return RawSize(data.Header) + RawSizeContainer(data.Servers);
     }
 
 
@@ -138,20 +117,6 @@ namespace OpcUa
     std::size_t RawSize<FindServersResponse>(const FindServersResponse& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Parameters);
-    }
-
-
-    template<>
-    std::size_t RawSize<MessageSecurityMode>(const MessageSecurityMode& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
-    std::size_t RawSize<UserTokenType>(const UserTokenType& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -172,7 +137,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<GetEndpointsParameters>(const GetEndpointsParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.EndpointUrl) + RawSizeContainer(data.LocaleIds) + RawSizeContainer(data.ProfileUris);
+        return RawSize(data.Header) + RawSize(data.EndpointUrl) + RawSizeContainer(data.LocaleIds) + RawSizeContainer(data.ProfileUris);
     }
 
 
@@ -186,7 +151,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<GetEndpointsResponse>(const GetEndpointsResponse& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ResponseHeader) + RawSizeContainer(data.Endpoints);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Header) + RawSizeContainer(data.Endpoints);
     }
 
 
@@ -200,7 +165,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RegisterServerParameters>(const RegisterServerParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.Server);
+        return RawSize(data.Header) + RawSize(data.Server);
     }
 
 
@@ -214,7 +179,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RegisterServerData>(const RegisterServerData& data)
     {
-        return RawSize(data.ResponseHeader);
+        return RawSize(data.Header);
     }
 
 
@@ -222,13 +187,6 @@ namespace OpcUa
     std::size_t RawSize<RegisterServerResponse>(const RegisterServerResponse& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Parameters);
-    }
-
-
-    template<>
-    std::size_t RawSize<SecurityTokenRequestType>(const SecurityTokenRequestType& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -242,7 +200,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<OpenSecureChannelParameters>(const OpenSecureChannelParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.ClientProtocolVersion) + RawSize(data.RequestType) + RawSize(data.SecurityMode) + RawSize(data.ClientNonce) + RawSize(data.RequestedLifetime);
+        return RawSize(data.Header) + RawSize(data.ClientProtocolVersion) + RawSize(data.RequestType) + RawSize(data.SecurityMode) + RawSize(data.ClientNonce) + RawSize(data.RequestedLifetime);
     }
 
 
@@ -256,7 +214,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<OpenSecureChannelData>(const OpenSecureChannelData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.ServerProtocolVersion) + RawSize(data.SecurityToken) + RawSize(data.ServerNonce);
+        return RawSize(data.Header) + RawSize(data.ServerProtocolVersion) + RawSize(data.SecurityToken) + RawSize(data.ServerNonce);
     }
 
 
@@ -270,7 +228,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CloseSecureChannelParameters>(const CloseSecureChannelParameters& data)
     {
-        return RawSize(data.RequestHeader);
+        return RawSize(data.Header);
     }
 
 
@@ -284,7 +242,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CloseSecureChannelData>(const CloseSecureChannelData& data)
     {
-        return RawSize(data.ResponseHeader);
+        return RawSize(data.Header);
     }
 
 
@@ -312,7 +270,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CreateSessionParameters>(const CreateSessionParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.ClientDescription) + RawSize(data.ServerUri) + RawSize(data.EndpointUrl) + RawSize(data.SessionName) + RawSize(data.ClientNonce) + RawSize(data.ClientCertificate) + RawSize(data.RequestedSessionTimeout) + RawSize(data.MaxResponseMessageSize);
+        return RawSize(data.Header) + RawSize(data.ClientDescription) + RawSize(data.ServerUri) + RawSize(data.EndpointUrl) + RawSize(data.SessionName) + RawSize(data.ClientNonce) + RawSize(data.ClientCertificate) + RawSize(data.RequestedSessionTimeout) + RawSize(data.MaxResponseMessageSize);
     }
 
 
@@ -326,7 +284,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CreateSessionData>(const CreateSessionData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.SessionId) + RawSize(data.AuthenticationToken) + RawSize(data.RevisedSessionTimeout) + RawSize(data.ServerNonce) + RawSize(data.ServerCertificate) + RawSizeContainer(data.ServerEndpoints) + RawSizeContainer(data.ServerSoftwareCertificates) + RawSize(data.ServerSignature) + RawSize(data.MaxRequestMessageSize);
+        return RawSize(data.Header) + RawSize(data.SessionId) + RawSize(data.AuthenticationToken) + RawSize(data.RevisedSessionTimeout) + RawSize(data.ServerNonce) + RawSize(data.ServerCertificate) + RawSizeContainer(data.ServerEndpoints) + RawSizeContainer(data.ServerSoftwareCertificates) + RawSize(data.ServerSignature) + RawSize(data.MaxRequestMessageSize);
     }
 
 
@@ -347,35 +305,35 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AnonymousIdentityToken>(const AnonymousIdentityToken& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId) + RawSize(data.PolicyId);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId);
     }
 
 
     template<>
     std::size_t RawSize<UserNameIdentityToken>(const UserNameIdentityToken& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId) + RawSize(data.PolicyId) + RawSize(data.UserName) + RawSize(data.Password) + RawSize(data.EncryptionAlgorithm);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId) + RawSize(data.UserName) + RawSize(data.Password) + RawSize(data.EncryptionAlgorithm);
     }
 
 
     template<>
     std::size_t RawSize<X509IdentityToken>(const X509IdentityToken& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId) + RawSize(data.PolicyId) + RawSize(data.CertificateData);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId) + RawSize(data.CertificateData);
     }
 
 
     template<>
     std::size_t RawSize<IssuedIdentityToken>(const IssuedIdentityToken& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId) + RawSize(data.PolicyId) + RawSize(data.TokenData) + RawSize(data.EncryptionAlgorithm);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.PolicyId) + RawSize(data.TokenData) + RawSize(data.EncryptionAlgorithm);
     }
 
 
     template<>
     std::size_t RawSize<ActivateSessionParameters>(const ActivateSessionParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.ClientSignature) + RawSizeContainer(data.ClientSoftwareCertificates) + RawSizeContainer(data.LocaleIds) + RawSize(data.UserIdentityToken) + RawSize(data.UserTokenSignature);
+        return RawSize(data.Header) + RawSize(data.ClientSignature) + RawSizeContainer(data.ClientSoftwareCertificates) + RawSizeContainer(data.LocaleIds) + RawSize(data.UserIdentityToken) + RawSize(data.UserTokenSignature);
     }
 
 
@@ -389,7 +347,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ActivateSessionData>(const ActivateSessionData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.ServerNonce) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSize(data.ServerNonce) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -403,7 +361,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CloseSessionParameters>(const CloseSessionParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.DeleteSubscriptions);
+        return RawSize(data.Header) + RawSize(data.DeleteSubscriptions);
     }
 
 
@@ -417,7 +375,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CloseSessionData>(const CloseSessionData& data)
     {
-        return RawSize(data.ResponseHeader);
+        return RawSize(data.Header);
     }
 
 
@@ -431,7 +389,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CancelParameters>(const CancelParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.RequestHandle);
+        return RawSize(data.Header) + RawSize(data.RequestHandle);
     }
 
 
@@ -445,7 +403,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CancelData>(const CancelData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.CancelCount);
+        return RawSize(data.Header) + RawSize(data.CancelCount);
     }
 
 
@@ -453,13 +411,6 @@ namespace OpcUa
     std::size_t RawSize<CancelResponse>(const CancelResponse& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Parameters);
-    }
-
-
-    template<>
-    std::size_t RawSize<NodeAttributesMask>(const NodeAttributesMask& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -473,56 +424,56 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ObjectAttributes>(const ObjectAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.EventNotifier);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.EventNotifier);
     }
 
 
     template<>
     std::size_t RawSize<VariableAttributes>(const VariableAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.Value) + RawSize(data.DataType) + RawSize(data.ValueRank) + RawSizeContainer(data.ArrayDimensions) + RawSize(data.AccessLevel) + RawSize(data.UserAccessLevel) + RawSize(data.MinimumSamplingInterval) + RawSize(data.Historizing);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.Value) + RawSize(data.DataType) + RawSize(data.ValueRank) + RawSizeContainer(data.ArrayDimensions) + RawSize(data.AccessLevel) + RawSize(data.UserAccessLevel) + RawSize(data.MinimumSamplingInterval) + RawSize(data.Historizing);
     }
 
 
     template<>
     std::size_t RawSize<MethodAttributes>(const MethodAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.Executable) + RawSize(data.UserExecutable);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.Executable) + RawSize(data.UserExecutable);
     }
 
 
     template<>
     std::size_t RawSize<ObjectTypeAttributes>(const ObjectTypeAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.IsAbstract);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.IsAbstract);
     }
 
 
     template<>
     std::size_t RawSize<VariableTypeAttributes>(const VariableTypeAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.Value) + RawSize(data.DataType) + RawSize(data.ValueRank) + RawSizeContainer(data.ArrayDimensions) + RawSize(data.IsAbstract);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.Value) + RawSize(data.DataType) + RawSize(data.ValueRank) + RawSizeContainer(data.ArrayDimensions) + RawSize(data.IsAbstract);
     }
 
 
     template<>
     std::size_t RawSize<ReferenceTypeAttributes>(const ReferenceTypeAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.IsAbstract) + RawSize(data.Symmetric) + RawSize(data.InverseName);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.IsAbstract) + RawSize(data.Symmetric) + RawSize(data.InverseName);
     }
 
 
     template<>
     std::size_t RawSize<DataTypeAttributes>(const DataTypeAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.IsAbstract);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.IsAbstract);
     }
 
 
     template<>
     std::size_t RawSize<ViewAttributes>(const ViewAttributes& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.ContainsNoLoops) + RawSize(data.EventNotifier);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SpecifiedAttributes) + RawSize(data.DisplayName) + RawSize(data.Description) + RawSize(data.WriteMask) + RawSize(data.UserWriteMask) + RawSize(data.ContainsNoLoops) + RawSize(data.EventNotifier);
     }
 
 
@@ -536,14 +487,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AddNodesResult>(const AddNodesResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSize(data.AddedNodeId);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSize(data.AddedNodeId);
     }
 
 
     template<>
     std::size_t RawSize<AddNodesParameters>(const AddNodesParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.NodesToAdd);
+        return RawSize(data.Header) + RawSizeContainer(data.NodesToAdd);
     }
 
 
@@ -557,7 +508,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AddNodesData>(const AddNodesData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -578,7 +529,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AddReferencesParameters>(const AddReferencesParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.ReferencesToAdd);
+        return RawSize(data.Header) + RawSizeContainer(data.ReferencesToAdd);
     }
 
 
@@ -592,7 +543,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AddReferencesData>(const AddReferencesData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -606,14 +557,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteNodesItem>(const DeleteNodesItem& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.DeleteTargetReferences);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.DeleteTargetReferences);
     }
 
 
     template<>
     std::size_t RawSize<DeleteNodesParameters>(const DeleteNodesParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.NodesToDelete);
+        return RawSize(data.Header) + RawSizeContainer(data.NodesToDelete);
     }
 
 
@@ -627,7 +578,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteNodesData>(const DeleteNodesData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -648,7 +599,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteReferencesParameters>(const DeleteReferencesParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.ReferencesToDelete);
+        return RawSize(data.Header) + RawSizeContainer(data.ReferencesToDelete);
     }
 
 
@@ -662,7 +613,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteReferencesData>(const DeleteReferencesData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -670,20 +621,6 @@ namespace OpcUa
     std::size_t RawSize<DeleteReferencesResponse>(const DeleteReferencesResponse& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Parameters);
-    }
-
-
-    template<>
-    std::size_t RawSize<AttributeWriteMask>(const AttributeWriteMask& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
-    std::size_t RawSize<BrowseDirection>(const BrowseDirection& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -697,14 +634,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<BrowseDescription>(const BrowseDescription& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.BrowseDirection) + RawSize(data.ReferenceTypeId) + RawSize(data.IncludeSubtypes) + RawSize(data.NodeClassMask) + RawSize(data.ResultMask);
-    }
-
-
-    template<>
-    std::size_t RawSize<BrowseResultMask>(const BrowseResultMask& data)
-    {
-        return sizeof(uint32_t);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.BrowseDirection) + RawSize(data.ReferenceTypeId) + RawSize(data.IncludeSubtypes) + RawSize(data.NodeClassMask) + RawSize(data.ResultMask);
     }
 
 
@@ -718,14 +648,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<BrowseResult>(const BrowseResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSize(data.ContinuationPoint) + RawSizeContainer(data.References);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSize(data.ContinuationPoint) + RawSizeContainer(data.References);
     }
 
 
     template<>
     std::size_t RawSize<BrowseParameters>(const BrowseParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.View) + RawSize(data.RequestedMaxReferencesPerNode) + RawSizeContainer(data.NodesToBrowse);
+        return RawSize(data.Header) + RawSize(data.View) + RawSize(data.RequestedMaxReferencesPerNode) + RawSizeContainer(data.NodesToBrowse);
     }
 
 
@@ -739,7 +669,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<BrowseData>(const BrowseData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -753,7 +683,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<BrowseNextParameters>(const BrowseNextParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.ReleaseContinuationPoints) + RawSizeContainer(data.ContinuationPoints);
+        return RawSize(data.Header) + RawSize(data.ReleaseContinuationPoints) + RawSizeContainer(data.ContinuationPoints);
     }
 
 
@@ -767,7 +697,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<BrowseNextData>(const BrowseNextData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -809,14 +739,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<BrowsePathResult>(const BrowsePathResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSizeContainer(data.Targets);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSizeContainer(data.Targets);
     }
 
 
     template<>
     std::size_t RawSize<TranslateBrowsePathsToNodeIdsParameters>(const TranslateBrowsePathsToNodeIdsParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.BrowsePaths);
+        return RawSize(data.Header) + RawSizeContainer(data.BrowsePaths);
     }
 
 
@@ -830,7 +760,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<TranslateBrowsePathsToNodeIdsData>(const TranslateBrowsePathsToNodeIdsData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -844,7 +774,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RegisterNodesParameters>(const RegisterNodesParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.NodesToRegister);
+        return RawSize(data.Header) + RawSizeContainer(data.NodesToRegister);
     }
 
 
@@ -858,7 +788,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RegisterNodesData>(const RegisterNodesData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.RegisteredNodeIds);
+        return RawSize(data.Header) + RawSizeContainer(data.RegisteredNodeIds);
     }
 
 
@@ -872,7 +802,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<UnregisterNodesParameters>(const UnregisterNodesParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.NodesToUnregister);
+        return RawSize(data.Header) + RawSizeContainer(data.NodesToUnregister);
     }
 
 
@@ -886,7 +816,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<UnregisterNodesData>(const UnregisterNodesData& data)
     {
-        return RawSize(data.ResponseHeader);
+        return RawSize(data.Header);
     }
 
 
@@ -901,13 +831,6 @@ namespace OpcUa
     std::size_t RawSize<EndpointConfiguration>(const EndpointConfiguration& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.OperationTimeout) + RawSize(data.UseBinaryEncoding) + RawSize(data.MaxStringLength) + RawSize(data.MaxByteStringLength) + RawSize(data.MaxArrayLength) + RawSize(data.MaxMessageSize) + RawSize(data.MaxBufferSize) + RawSize(data.ChannelLifetime) + RawSize(data.SecurityTokenLifetime);
-    }
-
-
-    template<>
-    std::size_t RawSize<ComplianceLevel>(const ComplianceLevel& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -940,13 +863,6 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<FilterOperator>(const FilterOperator& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
     std::size_t RawSize<QueryDataSet>(const QueryDataSet& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.TypeDefinitionNode) + RawSizeContainer(data.Values);
@@ -956,7 +872,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<NodeReference>(const NodeReference& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.ReferenceTypeId) + RawSize(data.IsForward) + RawSizeContainer(data.ReferencedNodeIds);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.ReferenceTypeId) + RawSize(data.IsForward) + RawSizeContainer(data.ReferencedNodeIds);
     }
 
 
@@ -998,7 +914,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AttributeOperand>(const AttributeOperand& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.Alias) + RawSize(data.BrowsePath) + RawSize(data.AttributeId) + RawSize(data.IndexRange);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.Alias) + RawSize(data.BrowsePath) + RawSize(data.AttributeId) + RawSize(data.IndexRange);
     }
 
 
@@ -1012,7 +928,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ContentFilterElementResult>(const ContentFilterElementResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSizeContainer(data.OperandStatusCodes) + RawSizeContainer(data.OperandDiagnosticInfos);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSizeContainer(data.OperandStatusCodes) + RawSizeContainer(data.OperandDiagnosticInfos);
     }
 
 
@@ -1026,14 +942,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ParsingResult>(const ParsingResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSizeContainer(data.DataStatusCodes) + RawSizeContainer(data.DataDiagnosticInfos);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSizeContainer(data.DataStatusCodes) + RawSizeContainer(data.DataDiagnosticInfos);
     }
 
 
     template<>
     std::size_t RawSize<QueryFirstParameters>(const QueryFirstParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.View) + RawSizeContainer(data.NodeTypes) + RawSize(data.Filter) + RawSize(data.MaxDataSetsToReturn) + RawSize(data.MaxReferencesToReturn);
+        return RawSize(data.Header) + RawSize(data.View) + RawSizeContainer(data.NodeTypes) + RawSize(data.Filter) + RawSize(data.MaxDataSetsToReturn) + RawSize(data.MaxReferencesToReturn);
     }
 
 
@@ -1047,7 +963,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<QueryFirstData>(const QueryFirstData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.QueryDataSets) + RawSize(data.ContinuationPoint) + RawSizeContainer(data.ParsingResults) + RawSizeContainer(data.DiagnosticInfos) + RawSize(data.FilterResult);
+        return RawSize(data.Header) + RawSizeContainer(data.QueryDataSets) + RawSize(data.ContinuationPoint) + RawSizeContainer(data.ParsingResults) + RawSizeContainer(data.DiagnosticInfos) + RawSize(data.FilterResult);
     }
 
 
@@ -1061,7 +977,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<QueryNextParameters>(const QueryNextParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.ReleaseContinuationPoint) + RawSize(data.ContinuationPoint);
+        return RawSize(data.Header) + RawSize(data.ReleaseContinuationPoint) + RawSize(data.ContinuationPoint);
     }
 
 
@@ -1075,7 +991,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<QueryNextData>(const QueryNextData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.QueryDataSets) + RawSize(data.RevisedContinuationPoint);
+        return RawSize(data.Header) + RawSizeContainer(data.QueryDataSets) + RawSize(data.RevisedContinuationPoint);
     }
 
 
@@ -1087,23 +1003,16 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<TimestampsToReturn>(const TimestampsToReturn& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
     std::size_t RawSize<ReadValueId>(const ReadValueId& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.AttributeId) + RawSize(data.IndexRange) + RawSize(data.DataEncoding);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.AttributeId) + RawSize(data.IndexRange) + RawSize(data.DataEncoding);
     }
 
 
     template<>
     std::size_t RawSize<ReadParameters>(const ReadParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.MaxAge) + RawSize(data.TimestampsToReturn) + RawSizeContainer(data.NodesToRead);
+        return RawSize(data.Header) + RawSize(data.MaxAge) + RawSize(data.TimestampsToReturn) + RawSizeContainer(data.NodesToRead);
     }
 
 
@@ -1117,7 +1026,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ReadData>(const ReadData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1131,14 +1040,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<HistoryReadValueId>(const HistoryReadValueId& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.IndexRange) + RawSize(data.DataEncoding) + RawSize(data.ContinuationPoint);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.IndexRange) + RawSize(data.DataEncoding) + RawSize(data.ContinuationPoint);
     }
 
 
     template<>
     std::size_t RawSize<HistoryReadResult>(const HistoryReadResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSize(data.ContinuationPoint) + RawSize(data.HistoryData);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSize(data.ContinuationPoint) + RawSize(data.HistoryData);
     }
 
 
@@ -1150,23 +1059,9 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<ReadEventDetails>(const ReadEventDetails& data)
-    {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NumValuesPerNode) + RawSize(data.StartTime) + RawSize(data.EndTime) + RawSize(data.Filter);
-    }
-
-
-    template<>
     std::size_t RawSize<ReadRawModifiedDetails>(const ReadRawModifiedDetails& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.IsReadModified) + RawSize(data.StartTime) + RawSize(data.EndTime) + RawSize(data.NumValuesPerNode) + RawSize(data.ReturnBounds);
-    }
-
-
-    template<>
-    std::size_t RawSize<ReadProcessedDetails>(const ReadProcessedDetails& data)
-    {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StartTime) + RawSize(data.EndTime) + RawSize(data.ProcessingInterval) + RawSizeContainer(data.AggregateType) + RawSize(data.AggregateConfiguration);
     }
 
 
@@ -1194,21 +1089,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<HistoryModifiedData>(const HistoryModifiedData& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.DataValues) + RawSizeContainer(data.DataValues) + RawSizeContainer(data.ModificationInfos);
-    }
-
-
-    template<>
-    std::size_t RawSize<HistoryEvent>(const HistoryEvent& data)
-    {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.Events);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.DataValues) + RawSizeContainer(data.ModificationInfos);
     }
 
 
     template<>
     std::size_t RawSize<HistoryReadParameters>(const HistoryReadParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.HistoryReadDetails) + RawSize(data.TimestampsToReturn) + RawSize(data.ReleaseContinuationPoints) + RawSizeContainer(data.NodesToRead);
+        return RawSize(data.Header) + RawSize(data.HistoryReadDetails) + RawSize(data.TimestampsToReturn) + RawSize(data.ReleaseContinuationPoints) + RawSizeContainer(data.NodesToRead);
     }
 
 
@@ -1222,7 +1110,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<HistoryReadData>(const HistoryReadData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1236,14 +1124,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<WriteValue>(const WriteValue& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.AttributeId) + RawSize(data.IndexRange) + RawSize(data.Value);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.AttributeId) + RawSize(data.IndexRange) + RawSize(data.Value);
     }
 
 
     template<>
     std::size_t RawSize<WriteParameters>(const WriteParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.NodesToWrite);
+        return RawSize(data.Header) + RawSizeContainer(data.NodesToWrite);
     }
 
 
@@ -1257,7 +1145,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<WriteData>(const WriteData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1271,84 +1159,56 @@ namespace OpcUa
     template<>
     std::size_t RawSize<HistoryUpdateDetails>(const HistoryUpdateDetails& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId);
-    }
-
-
-    template<>
-    std::size_t RawSize<HistoryUpdateType>(const HistoryUpdateType& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
-    std::size_t RawSize<PerformUpdateType>(const PerformUpdateType& data)
-    {
-        return sizeof(uint32_t);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node);
     }
 
 
     template<>
     std::size_t RawSize<UpdateDataDetails>(const UpdateDataDetails& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.NodeId) + RawSize(data.PerformInsertReplace) + RawSizeContainer(data.UpdateValues);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.PerformInsertReplace) + RawSizeContainer(data.UpdateValues);
     }
 
 
     template<>
     std::size_t RawSize<UpdateStructureDataDetails>(const UpdateStructureDataDetails& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.NodeId) + RawSize(data.PerformInsertReplace) + RawSizeContainer(data.UpdateValues);
-    }
-
-
-    template<>
-    std::size_t RawSize<UpdateEventDetails>(const UpdateEventDetails& data)
-    {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.NodeId) + RawSize(data.PerformInsertReplace) + RawSize(data.Filter) + RawSizeContainer(data.EventData);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.PerformInsertReplace) + RawSizeContainer(data.UpdateValues);
     }
 
 
     template<>
     std::size_t RawSize<DeleteRawModifiedDetails>(const DeleteRawModifiedDetails& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.NodeId) + RawSize(data.IsDeleteModified) + RawSize(data.StartTime) + RawSize(data.EndTime);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.IsDeleteModified) + RawSize(data.StartTime) + RawSize(data.EndTime);
     }
 
 
     template<>
     std::size_t RawSize<DeleteAtTimeDetails>(const DeleteAtTimeDetails& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.NodeId) + RawSizeContainer(data.ReqTimes);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSizeContainer(data.ReqTimes);
     }
 
 
     template<>
     std::size_t RawSize<DeleteEventDetails>(const DeleteEventDetails& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NodeId) + RawSize(data.NodeId) + RawSizeContainer(data.EventIds);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSizeContainer(data.EventIds);
     }
 
 
     template<>
     std::size_t RawSize<HistoryUpdateResult>(const HistoryUpdateResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSizeContainer(data.OperationResults) + RawSizeContainer(data.DiagnosticInfos);
-    }
-
-
-    template<>
-    std::size_t RawSize<HistoryUpdateEventResult>(const HistoryUpdateEventResult& data)
-    {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSize(data.EventFilterResult);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSizeContainer(data.OperationResults) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
     template<>
     std::size_t RawSize<HistoryUpdateParameters>(const HistoryUpdateParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.HistoryUpdateDetails);
+        return RawSize(data.Header) + RawSizeContainer(data.HistoryUpdateDetails);
     }
 
 
@@ -1362,7 +1222,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<HistoryUpdateData>(const HistoryUpdateData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1390,14 +1250,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CallMethodResult>(const CallMethodResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSizeContainer(data.InputArgumentResults) + RawSizeContainer(data.InputArgumentDiagnosticInfos) + RawSizeContainer(data.OutputArguments);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSizeContainer(data.InputArgumentResults) + RawSizeContainer(data.InputArgumentDiagnosticInfos) + RawSizeContainer(data.OutputArguments);
     }
 
 
     template<>
     std::size_t RawSize<CallParameters>(const CallParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.MethodsToCall);
+        return RawSize(data.Header) + RawSizeContainer(data.MethodsToCall);
     }
 
 
@@ -1411,7 +1271,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CallData>(const CallData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1419,27 +1279,6 @@ namespace OpcUa
     std::size_t RawSize<CallResponse>(const CallResponse& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Parameters);
-    }
-
-
-    template<>
-    std::size_t RawSize<MonitoringMode>(const MonitoringMode& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
-    std::size_t RawSize<DataChangeTrigger>(const DataChangeTrigger& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
-    std::size_t RawSize<DeadbandType>(const DeadbandType& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -1465,9 +1304,23 @@ namespace OpcUa
 
 
     template<>
+    std::size_t RawSize<ReadEventDetails>(const ReadEventDetails& data)
+    {
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NumValuesPerNode) + RawSize(data.StartTime) + RawSize(data.EndTime) + RawSize(data.Filter);
+    }
+
+
+    template<>
     std::size_t RawSize<AggregateConfiguration>(const AggregateConfiguration& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.UseServerCapabilitiesDefaults) + RawSize(data.TreatUncertainAsBad) + RawSize(data.PercentDataBad) + RawSize(data.PercentDataGood) + RawSize(data.UseSlopedExtrapolation);
+    }
+
+
+    template<>
+    std::size_t RawSize<ReadProcessedDetails>(const ReadProcessedDetails& data)
+    {
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StartTime) + RawSize(data.EndTime) + RawSize(data.ProcessingInterval) + RawSizeContainer(data.AggregateType) + RawSize(data.AggregateConfiguration);
     }
 
 
@@ -1489,6 +1342,13 @@ namespace OpcUa
     std::size_t RawSize<EventFilterResult>(const EventFilterResult& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.SelectClauseResults) + RawSizeContainer(data.SelectClauseDiagnosticInfos) + RawSize(data.WhereClauseResult);
+    }
+
+
+    template<>
+    std::size_t RawSize<HistoryUpdateEventResult>(const HistoryUpdateEventResult& data)
+    {
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSize(data.EventFilterResult);
     }
 
 
@@ -1523,14 +1383,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<MonitoredItemCreateResult>(const MonitoredItemCreateResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSize(data.MonitoredItemId) + RawSize(data.RevisedSamplingInterval) + RawSize(data.RevisedQueueSize) + RawSize(data.FilterResult);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSize(data.MonitoredItemId) + RawSize(data.RevisedSamplingInterval) + RawSize(data.RevisedQueueSize) + RawSize(data.FilterResult);
     }
 
 
     template<>
     std::size_t RawSize<CreateMonitoredItemsParameters>(const CreateMonitoredItemsParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.SubscriptionId) + RawSize(data.TimestampsToReturn) + RawSizeContainer(data.ItemsToCreate);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.TimestampsToReturn) + RawSizeContainer(data.ItemsToCreate);
     }
 
 
@@ -1544,7 +1404,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CreateMonitoredItemsData>(const CreateMonitoredItemsData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1572,14 +1432,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<MonitoredItemModifyResult>(const MonitoredItemModifyResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSize(data.RevisedSamplingInterval) + RawSize(data.RevisedQueueSize) + RawSize(data.FilterResult);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSize(data.RevisedSamplingInterval) + RawSize(data.RevisedQueueSize) + RawSize(data.FilterResult);
     }
 
 
     template<>
     std::size_t RawSize<ModifyMonitoredItemsParameters>(const ModifyMonitoredItemsParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.SubscriptionId) + RawSize(data.TimestampsToReturn) + RawSizeContainer(data.ItemsToModify);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.TimestampsToReturn) + RawSizeContainer(data.ItemsToModify);
     }
 
 
@@ -1593,7 +1453,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ModifyMonitoredItemsData>(const ModifyMonitoredItemsData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1607,7 +1467,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<SetMonitoringModeParameters>(const SetMonitoringModeParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.SubscriptionId) + RawSize(data.MonitoringMode) + RawSizeContainer(data.MonitoredItemIds);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.MonitoringMode) + RawSizeContainer(data.MonitoredItemIds);
     }
 
 
@@ -1621,7 +1481,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<SetMonitoringModeData>(const SetMonitoringModeData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1635,7 +1495,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<SetTriggeringParameters>(const SetTriggeringParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.SubscriptionId) + RawSize(data.TriggeringItemId) + RawSizeContainer(data.LinksToAdd) + RawSizeContainer(data.LinksToRemove);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.TriggeringItemId) + RawSizeContainer(data.LinksToAdd) + RawSizeContainer(data.LinksToRemove);
     }
 
 
@@ -1649,7 +1509,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<SetTriggeringData>(const SetTriggeringData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.AddResults) + RawSizeContainer(data.AddDiagnosticInfos) + RawSizeContainer(data.RemoveResults) + RawSizeContainer(data.RemoveDiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.AddResults) + RawSizeContainer(data.AddDiagnosticInfos) + RawSizeContainer(data.RemoveResults) + RawSizeContainer(data.RemoveDiagnosticInfos);
     }
 
 
@@ -1663,7 +1523,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteMonitoredItemsParameters>(const DeleteMonitoredItemsParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.SubscriptionId) + RawSizeContainer(data.MonitoredItemIds);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSizeContainer(data.MonitoredItemIds);
     }
 
 
@@ -1677,7 +1537,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteMonitoredItemsData>(const DeleteMonitoredItemsData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1691,7 +1551,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CreateSubscriptionParameters>(const CreateSubscriptionParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.RequestedPublishingInterval) + RawSize(data.RequestedLifetimeCount) + RawSize(data.RequestedMaxKeepAliveCount) + RawSize(data.MaxNotificationsPerPublish) + RawSize(data.PublishingEnabled) + RawSize(data.Priority);
+        return RawSize(data.Header) + RawSize(data.RequestedPublishingInterval) + RawSize(data.RequestedLifetimeCount) + RawSize(data.RequestedMaxKeepAliveCount) + RawSize(data.MaxNotificationsPerPublish) + RawSize(data.PublishingEnabled) + RawSize(data.Priority);
     }
 
 
@@ -1705,7 +1565,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<CreateSubscriptionData>(const CreateSubscriptionData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.SubscriptionId) + RawSize(data.RevisedPublishingInterval) + RawSize(data.RevisedLifetimeCount) + RawSize(data.RevisedMaxKeepAliveCount);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.RevisedPublishingInterval) + RawSize(data.RevisedLifetimeCount) + RawSize(data.RevisedMaxKeepAliveCount);
     }
 
 
@@ -1719,7 +1579,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ModifySubscriptionParameters>(const ModifySubscriptionParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.SubscriptionId) + RawSize(data.RequestedPublishingInterval) + RawSize(data.RequestedLifetimeCount) + RawSize(data.RequestedMaxKeepAliveCount) + RawSize(data.MaxNotificationsPerPublish) + RawSize(data.Priority);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.RequestedPublishingInterval) + RawSize(data.RequestedLifetimeCount) + RawSize(data.RequestedMaxKeepAliveCount) + RawSize(data.MaxNotificationsPerPublish) + RawSize(data.Priority);
     }
 
 
@@ -1733,7 +1593,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ModifySubscriptionData>(const ModifySubscriptionData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.RevisedPublishingInterval) + RawSize(data.RevisedLifetimeCount) + RawSize(data.RevisedMaxKeepAliveCount);
+        return RawSize(data.Header) + RawSize(data.RevisedPublishingInterval) + RawSize(data.RevisedLifetimeCount) + RawSize(data.RevisedMaxKeepAliveCount);
     }
 
 
@@ -1747,7 +1607,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<SetPublishingModeParameters>(const SetPublishingModeParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.PublishingEnabled) + RawSizeContainer(data.SubscriptionIds);
+        return RawSize(data.Header) + RawSize(data.PublishingEnabled) + RawSizeContainer(data.SubscriptionIds);
     }
 
 
@@ -1761,7 +1621,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<SetPublishingModeData>(const SetPublishingModeData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1787,13 +1647,6 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<DataChangeNotification>(const DataChangeNotification& data)
-    {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.MonitoredItems) + RawSizeContainer(data.DiagnosticInfos);
-    }
-
-
-    template<>
     std::size_t RawSize<MonitoredItemNotification>(const MonitoredItemNotification& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ClientHandle) + RawSize(data.Value);
@@ -1801,9 +1654,9 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<EventNotificationList>(const EventNotificationList& data)
+    std::size_t RawSize<DataChangeNotification>(const DataChangeNotification& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.Events);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.MonitoredItems) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1815,9 +1668,30 @@ namespace OpcUa
 
 
     template<>
+    std::size_t RawSize<EventNotificationList>(const EventNotificationList& data)
+    {
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.Events);
+    }
+
+
+    template<>
     std::size_t RawSize<HistoryEventFieldList>(const HistoryEventFieldList& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.EventFields);
+    }
+
+
+    template<>
+    std::size_t RawSize<HistoryEvent>(const HistoryEvent& data)
+    {
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSizeContainer(data.Events);
+    }
+
+
+    template<>
+    std::size_t RawSize<UpdateEventDetails>(const UpdateEventDetails& data)
+    {
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Node) + RawSize(data.PerformInsertReplace) + RawSize(data.Filter) + RawSizeContainer(data.EventData);
     }
 
 
@@ -1838,7 +1712,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<PublishParameters>(const PublishParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.SubscriptionAcknowledgements);
+        return RawSize(data.Header) + RawSizeContainer(data.SubscriptionAcknowledgements);
     }
 
 
@@ -1852,7 +1726,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<PublishData>(const PublishData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.SubscriptionId) + RawSizeContainer(data.AvailableSequenceNumbers) + RawSize(data.MoreNotifications) + RawSize(data.NotificationMessage) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSizeContainer(data.AvailableSequenceNumbers) + RawSize(data.MoreNotifications) + RawSize(data.NotificationMessage) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1866,7 +1740,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RepublishParameters>(const RepublishParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.SubscriptionId) + RawSize(data.RetransmitSequenceNumber);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.RetransmitSequenceNumber);
     }
 
 
@@ -1880,7 +1754,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RepublishData>(const RepublishData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.NotificationMessage);
+        return RawSize(data.Header) + RawSize(data.NotificationMessage);
     }
 
 
@@ -1894,14 +1768,14 @@ namespace OpcUa
     template<>
     std::size_t RawSize<TransferResult>(const TransferResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSizeContainer(data.AvailableSequenceNumbers);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSizeContainer(data.AvailableSequenceNumbers);
     }
 
 
     template<>
     std::size_t RawSize<TransferSubscriptionsParameters>(const TransferSubscriptionsParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.SubscriptionIds) + RawSize(data.SendInitialValues);
+        return RawSize(data.Header) + RawSizeContainer(data.SubscriptionIds) + RawSize(data.SendInitialValues);
     }
 
 
@@ -1915,7 +1789,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<TransferSubscriptionsData>(const TransferSubscriptionsData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1929,7 +1803,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteSubscriptionsParameters>(const DeleteSubscriptionsParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSizeContainer(data.SubscriptionIds);
+        return RawSize(data.Header) + RawSizeContainer(data.SubscriptionIds);
     }
 
 
@@ -1943,7 +1817,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<DeleteSubscriptionsData>(const DeleteSubscriptionsData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1955,16 +1829,9 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<EnumeratedTestType>(const EnumeratedTestType& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
     std::size_t RawSize<ScalarTestType>(const ScalarTestType& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Boolean) + RawSize(data.SByte) + RawSize(data.Byte) + RawSize(data.Int16) + RawSize(data.UInt16) + RawSize(data.Int32) + RawSize(data.UInt32) + RawSize(data.Int64) + RawSize(data.UInt64) + RawSize(data.Float) + RawSize(data.Double) + RawSize(data.String) + RawSize(data.DateTime) + RawSize(data.Guid) + RawSize(data.ByteString) + RawSize(data.XmlElement) + RawSize(data.NodeId) + RawSize(data.ExpandedNodeId) + RawSize(data.StatusCode) + RawSize(data.DiagnosticInfo) + RawSize(data.QualifiedName) + RawSize(data.LocalizedText) + RawSize(data.ExtensionObject) + RawSize(data.DataValue) + RawSize(data.EnumeratedValue);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Boolean) + RawSize(data.SByte) + RawSize(data.Byte) + RawSize(data.Int16) + RawSize(data.UInt16) + RawSize(data.Int32) + RawSize(data.UInt32) + RawSize(data.Int64) + RawSize(data.UInt64) + RawSize(data.Float) + RawSize(data.Double) + RawSize(data.String) + RawSize(data.DateTime) + RawSize(data.Guid) + RawSize(data.ByteString) + RawSize(data.XmlElement) + RawSize(data.Node) + RawSize(data.Node) + RawSize(data.Status) + RawSize(data.DiagnosticInfo) + RawSize(data.QualifiedName) + RawSize(data.LocalizedText) + RawSize(data.ExtensionObject) + RawSize(data.DataValue) + RawSize(data.EnumeratedValue);
     }
 
 
@@ -1985,7 +1852,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<TestStackParameters>(const TestStackParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.TestId) + RawSize(data.Iteration) + RawSize(data.Input);
+        return RawSize(data.Header) + RawSize(data.TestId) + RawSize(data.Iteration) + RawSize(data.Input);
     }
 
 
@@ -1999,7 +1866,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<TestStackData>(const TestStackData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.Output);
+        return RawSize(data.Header) + RawSize(data.Output);
     }
 
 
@@ -2013,7 +1880,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<TestStackExParameters>(const TestStackExParameters& data)
     {
-        return RawSize(data.RequestHeader) + RawSize(data.TestId) + RawSize(data.Iteration) + RawSize(data.Input);
+        return RawSize(data.Header) + RawSize(data.TestId) + RawSize(data.Iteration) + RawSize(data.Input);
     }
 
 
@@ -2027,7 +1894,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<TestStackExData>(const TestStackExData& data)
     {
-        return RawSize(data.ResponseHeader) + RawSize(data.Output);
+        return RawSize(data.Header) + RawSize(data.Output);
     }
 
 
@@ -2042,20 +1909,6 @@ namespace OpcUa
     std::size_t RawSize<BuildInfo>(const BuildInfo& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ProductUri) + RawSize(data.ManufacturerName) + RawSize(data.ProductName) + RawSize(data.SoftwareVersion) + RawSize(data.BuildNumber) + RawSize(data.BuildDate);
-    }
-
-
-    template<>
-    std::size_t RawSize<RedundancySupport>(const RedundancySupport& data)
-    {
-        return sizeof(uint32_t);
-    }
-
-
-    template<>
-    std::size_t RawSize<ServerState>(const ServerState& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -2102,16 +1955,9 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<SessionDiagnosticsDataType>(const SessionDiagnosticsDataType& data)
-    {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SessionId) + RawSize(data.SessionName) + RawSize(data.ClientDescription) + RawSize(data.ServerUri) + RawSize(data.EndpointUrl) + RawSizeContainer(data.LocaleIds) + RawSize(data.ActualSessionTimeout) + RawSize(data.MaxResponseMessageSize) + RawSize(data.ClientConnectionTime) + RawSize(data.ClientLastContactTime) + RawSize(data.CurrentSubscriptionsCount) + RawSize(data.CurrentMonitoredItemsCount) + RawSize(data.CurrentPublishRequestsInQueue) + RawSize(data.TotalRequestCount) + RawSize(data.UnauthorizedRequestCount) + RawSize(data.ReadCount) + RawSize(data.HistoryReadCount) + RawSize(data.WriteCount) + RawSize(data.HistoryUpdateCount) + RawSize(data.CallCount) + RawSize(data.CreateMonitoredItemsCount) + RawSize(data.ModifyMonitoredItemsCount) + RawSize(data.SetMonitoringModeCount) + RawSize(data.SetTriggeringCount) + RawSize(data.DeleteMonitoredItemsCount) + RawSize(data.CreateSubscriptionCount) + RawSize(data.ModifySubscriptionCount) + RawSize(data.SetPublishingModeCount) + RawSize(data.PublishCount) + RawSize(data.RepublishCount) + RawSize(data.TransferSubscriptionsCount) + RawSize(data.DeleteSubscriptionsCount) + RawSize(data.AddNodesCount) + RawSize(data.AddReferencesCount) + RawSize(data.DeleteNodesCount) + RawSize(data.DeleteReferencesCount) + RawSize(data.BrowseCount) + RawSize(data.BrowseNextCount) + RawSize(data.TranslateBrowsePathsToNodeIdsCount) + RawSize(data.QueryFirstCount) + RawSize(data.QueryNextCount) + RawSize(data.RegisterNodesCount) + RawSize(data.UnregisterNodesCount);
-    }
-
-
-    template<>
     std::size_t RawSize<SessionSecurityDiagnosticsDataType>(const SessionSecurityDiagnosticsDataType& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SessionId) + RawSize(data.ClientUserIdOfSession) + RawSizeContainer(data.ClientUserIdHistory) + RawSize(data.AuthenticationMechanism) + RawSize(data.Encoding) + RawSize(data.TransportProtocol) + RawSize(data.SecurityMode) + RawSize(data.SecurityPolicyUri) + RawSize(data.ClientCertificate);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SessionId) + RawSize(data.ClientUserIdOfSession) + RawSizeContainer(data.ClientUserIdHistory) + RawSize(data.AuthenticationMechanism) + RawSize(data.TransportProtocol) + RawSize(data.SecurityMode) + RawSize(data.SecurityPolicyUri) + RawSize(data.ClientCertificate);
     }
 
 
@@ -2123,9 +1969,16 @@ namespace OpcUa
 
 
     template<>
+    std::size_t RawSize<SessionDiagnosticsDataType>(const SessionDiagnosticsDataType& data)
+    {
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SessionId) + RawSize(data.SessionName) + RawSize(data.ClientDescription) + RawSize(data.ServerUri) + RawSize(data.EndpointUrl) + RawSizeContainer(data.LocaleIds) + RawSize(data.ActualSessionTimeout) + RawSize(data.MaxResponseMessageSize) + RawSize(data.ClientConnectionTime) + RawSize(data.ClientLastContactTime) + RawSize(data.CurrentSubscriptionsCount) + RawSize(data.CurrentMonitoredItemsCount) + RawSize(data.CurrentPublishRequestsInQueue) + RawSize(data.TotalRequestCount) + RawSize(data.UnauthorizedRequestCount) + RawSize(data.ReadCount) + RawSize(data.HistoryReadCount) + RawSize(data.WriteCount) + RawSize(data.HistoryUpdateCount) + RawSize(data.CallCount) + RawSize(data.CreateMonitoredItemsCount) + RawSize(data.ModifyMonitoredItemsCount) + RawSize(data.SetMonitoringModeCount) + RawSize(data.SetTriggeringCount) + RawSize(data.DeleteMonitoredItemsCount) + RawSize(data.CreateSubscriptionCount) + RawSize(data.ModifySubscriptionCount) + RawSize(data.SetPublishingModeCount) + RawSize(data.PublishCount) + RawSize(data.RepublishCount) + RawSize(data.TransferSubscriptionsCount) + RawSize(data.DeleteSubscriptionsCount) + RawSize(data.AddNodesCount) + RawSize(data.AddReferencesCount) + RawSize(data.DeleteNodesCount) + RawSize(data.DeleteReferencesCount) + RawSize(data.BrowseCount) + RawSize(data.BrowseNextCount) + RawSize(data.TranslateBrowsePathsToNodeIdsCount) + RawSize(data.QueryFirstCount) + RawSize(data.QueryNextCount) + RawSize(data.RegisterNodesCount) + RawSize(data.UnregisterNodesCount);
+    }
+
+
+    template<>
     std::size_t RawSize<StatusResult>(const StatusResult& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.StatusCode) + RawSize(data.DiagnosticInfo);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Status) + RawSize(data.DiagnosticInfo);
     }
 
 
@@ -2133,13 +1986,6 @@ namespace OpcUa
     std::size_t RawSize<SubscriptionDiagnosticsDataType>(const SubscriptionDiagnosticsDataType& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.SessionId) + RawSize(data.SubscriptionId) + RawSize(data.Priority) + RawSize(data.PublishingInterval) + RawSize(data.MaxKeepAliveCount) + RawSize(data.MaxLifetimeCount) + RawSize(data.MaxNotificationsPerPublish) + RawSize(data.PublishingEnabled) + RawSize(data.ModifyCount) + RawSize(data.EnableCount) + RawSize(data.DisableCount) + RawSize(data.RepublishRequestCount) + RawSize(data.RepublishMessageRequestCount) + RawSize(data.RepublishMessageCount) + RawSize(data.TransferRequestCount) + RawSize(data.TransferredToAltClientCount) + RawSize(data.TransferredToSameClientCount) + RawSize(data.PublishRequestCount) + RawSize(data.DataChangeNotificationsCount) + RawSize(data.EventNotificationsCount) + RawSize(data.NotificationsCount) + RawSize(data.LatePublishRequestCount) + RawSize(data.CurrentKeepAliveCount) + RawSize(data.CurrentLifetimeCount) + RawSize(data.UnacknowledgedMessageCount) + RawSize(data.DiscardedMessageCount) + RawSize(data.MonitoredItemCount) + RawSize(data.DisabledMonitoredItemCount) + RawSize(data.MonitoringQueueOverflowCount) + RawSize(data.NextSequenceNumber) + RawSize(data.EventQueueOverFlowCount);
-    }
-
-
-    template<>
-    std::size_t RawSize<ModelChangeStructureVerbMask>(const ModelChangeStructureVerbMask& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -2168,13 +2014,6 @@ namespace OpcUa
     std::size_t RawSize<EUInformation>(const EUInformation& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.NamespaceUri) + RawSize(data.UnitId) + RawSize(data.DisplayName) + RawSize(data.Description);
-    }
-
-
-    template<>
-    std::size_t RawSize<AxisScaleEnumeration>(const AxisScaleEnumeration& data)
-    {
-        return sizeof(uint32_t);
     }
 
 
@@ -2217,6 +2056,167 @@ namespace OpcUa
     std::size_t RawSize<Annotation>(const Annotation& data)
     {
         return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Message) + RawSize(data.UserName) + RawSize(data.AnnotationTime);
+    }
+
+
+    template<>
+    std::size_t RawSize<OpenFileMode>(const OpenFileMode& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<NodeClass>(const NodeClass& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<ApplicationType>(const ApplicationType& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<MessageSecurityMode>(const MessageSecurityMode& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<UserTokenType>(const UserTokenType& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<SecurityTokenRequestType>(const SecurityTokenRequestType& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<NodeAttributesMask>(const NodeAttributesMask& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<AttributeWriteMask>(const AttributeWriteMask& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<BrowseDirection>(const BrowseDirection& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<BrowseResultMask>(const BrowseResultMask& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<ComplianceLevel>(const ComplianceLevel& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<FilterOperator>(const FilterOperator& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<TimestampsToReturn>(const TimestampsToReturn& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<HistoryUpdateType>(const HistoryUpdateType& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<PerformUpdateType>(const PerformUpdateType& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<MonitoringMode>(const MonitoringMode& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<DataChangeTrigger>(const DataChangeTrigger& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<DeadbandType>(const DeadbandType& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<EnumeratedTestType>(const EnumeratedTestType& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<RedundancySupport>(const RedundancySupport& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<ServerState>(const ServerState& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<ModelChangeStructureVerbMask>(const ModelChangeStructureVerbMask& data)
+    {
+        return sizeof(uint32_t);
+    }
+
+
+    template<>
+    std::size_t RawSize<AxisScaleEnumeration>(const AxisScaleEnumeration& data)
+    {
+        return sizeof(uint32_t);
     }
 
 
