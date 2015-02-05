@@ -114,10 +114,10 @@ namespace
       data.Encoding =
         DATA_VALUE |
         DATA_VALUE_STATUS_CODE |
-        DATA_VALUE_SOURCE_TIMESTAMP |
-        DATA_VALUE_SERVER_TIMESTAMP |
-        DATA_VALUE_SOURCE_PICOSECONDS |
-        DATA_VALUE_SERVER_PICOSECONDS;
+        DATA_VALUE_Source_TIMESTAMP |
+        DATA_VALUE_Server_TIMESTAMP |
+        DATA_VALUE_Source_PICOSECONDS |
+        DATA_VALUE_Server_PICOSECONDS;
       data.ServerPicoseconds = 1;
       data.ServerTimestamp.Value = 2;
       data.SourcePicoseconds = 3;
@@ -149,10 +149,10 @@ namespace
       const uint8_t encoding =
           DATA_VALUE |
           DATA_VALUE_STATUS_CODE |
-          DATA_VALUE_SOURCE_TIMESTAMP |
-          DATA_VALUE_SERVER_TIMESTAMP |
-          DATA_VALUE_SOURCE_PICOSECONDS |
-          DATA_VALUE_SERVER_PICOSECONDS;
+          DATA_VALUE_Source_TIMESTAMP |
+          DATA_VALUE_Server_TIMESTAMP |
+          DATA_VALUE_Source_PICOSECONDS |
+          DATA_VALUE_Server_PICOSECONDS;
 
       Assert(value.Data.Encoding == encoding, "Invalid encoding mask.");
 

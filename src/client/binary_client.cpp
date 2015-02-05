@@ -730,7 +730,7 @@ private:
     RequestHeader CreateRequestHeader() const
     {
       RequestHeader header;
-      header.SessionAuthenticationToken = AuthenticationToken;
+      header.AuthenticationToken = AuthenticationToken;
       header.RequestHandle = GetRequestHandle();
       header.Timeout = 10000;
       return header;

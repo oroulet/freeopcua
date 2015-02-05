@@ -8,11 +8,12 @@ import xml.etree.ElementTree as ET
 from IPython import embed
 
 NeedOverride = []
-NeedConstructor = ["RelativePathElement", "ReadValueId", "OpenSecureChannelParameters", "UserIdentityToken", "RequestHeader", "ResponseHeader"]
+NeedConstructor = ["RelativePathElement", "ReadValueId", "OpenSecureChannelParameters", "UserIdentityToken", "RequestHeader", "ResponseHeader", "ReadParameters"]
 IgnoredEnums = ["IdType", "NodeIdType"]
 IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText"]
 #by default we split requests and respons in header and parameters, but some are so simple we do not split them
 NoSplitStruct = ["GetEndpointsResponse"]
+OverrideTypes = {"AttributeId": "AttributeID"}
 
 """
 def rename_field(s):
@@ -51,6 +52,12 @@ class Struct(object):
         self.needconstructor = None
         self.needoverride = False
 
+    def get_field(self, name):
+        for f in self.fields:
+            if f.name == name:
+                return f
+        raise Exception("field not found: " + name)
+
 
 class Field(object):
     def __init__(self):
@@ -60,11 +67,14 @@ class Field(object):
         self.sourcetype = None
         self.switchfield = None
         self.switchvalue = None
-        self.sourcetype = None
         self.bitlength = 1 
 
+    def is_struct(self):
+        if self.uatype in ("Bit", "Char", "CharArray", "Guid", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "ByteString", "Byte"):
+            return False
+        return True
+
     def get_uatype(self):
-        ty = ""
         if self.uatype == "String":
             ty = "std::string"
         elif self.uatype == "CharArray":
@@ -139,6 +149,128 @@ class Model(object):
                 return name
         raise Exception("No enum named: " + name)
 
+
+
+
+def reorder_structs(model):
+    types = IgnoredStructs + IgnoredEnums + ["Bit", "Char", "CharArray", "Guid", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "ByteString", "Byte", "StatusCode", "DiagnosticInfo", "String", "AttributeID"] + [enum.name for enum in model.enums]
+    waiting = {}
+    newstructs = []
+    for s in model.structs:
+        print("Looking at ", s.name)
+        s.waitingfor = []
+        ok = True
+        for f in s.fields:
+            if f.uatype not in types:
+                print("   field ", f.name, "missing type", f.uatype)
+                if f.uatype in waiting.keys():
+                    waiting[f.uatype].append(s)
+                    s.waitingfor.append(f.uatype)
+                else:
+                    waiting[f.uatype] = [s]
+                    s.waitingfor.append(f.uatype)
+                ok = False
+        if ok:
+            newstructs.append(s)
+            types.append(s.name)
+            waitings = waiting.pop(s.name, None)
+            if waitings:
+                for s2 in waitings:
+                    print(s2.name, " was wauiting for ", s.name)
+                    print(s2.name, s2.waitingfor) 
+                    s2.waitingfor.remove(s.name)
+                    if not s2.waitingfor:
+                        newstructs.append(s2)
+    print(len(model.structs), len(newstructs))
+    model.structs = newstructs
+
+def override_types(model):
+    for struct in model.structs:
+        for field in struct.fields:
+            if field.name in OverrideTypes.keys():
+                field.uatype = OverrideTypes[field.name]
+
+def remove_duplicates(model):
+    for struct in model.structs:
+        fields = []
+        names = []
+        for field in struct.fields:
+            if field.name not in names:
+                names.append(field.name)
+                fields.append(field)
+        struct.fields = fields
+    
+def add_encoding_field(model):
+    for struct in model.structs:
+        newfields = []
+        container = None
+        idx = 0
+        for field in struct.fields:
+            if field.uatype in ("UInt6", "NodeIdType"):
+                container = field.name
+                idx = 6
+            if field.uatype == "Bit":
+                if not container or idx > 7:
+                    container = "Encoding"
+                    idx = 0
+                    f = Field()
+                    f.name = "Encoding"
+                    f.uatype = "UInt8"
+                    newfields.append(f)
+
+                nb = field.bitlength
+                for _ in range(0, nb):
+                    b = Bit()
+                    b.name = field.name
+                    b.idx = idx
+                    b.container = container
+                    idx += 1
+                    struct.bits[b.name] = b
+            else:
+                newfields.append(field)
+        struct.fields = newfields
+
+def remove_vector_length(model):
+    for struct in model.structs:
+        new = []
+        for field in struct.fields:
+            if not field.name.startswith("NoOf"):
+                new.append(field)
+        struct.fields = new
+
+def fix_requests(model):
+    structs = []
+    for struct in model.structs:
+        structtype = None
+        if struct.name.endswith("Request"):
+            structtype = "Request"
+        elif struct.name.endswith("Response"):
+            structtype = "Response"
+        if structtype:
+            struct.needconstructor = True
+        if structtype and not struct.name in NoSplitStruct:
+            paramstruct = Struct()
+            if structtype == "Request":
+                basename = struct.name.replace("Request", "") + "Parameters"
+                paramstruct.name = basename 
+            else:
+                basename = struct.name.replace("Response", "") + "Data"
+                paramstruct.name = basename 
+            paramstruct.fields = struct.fields[3:]
+            paramstruct.bits = struct.bits
+
+            struct.fields = struct.fields[:3]
+            #struct.bits = {}
+            structs.append(paramstruct)
+
+            typeid = Field()
+            typeid.name = "Parameters" 
+            typeid.uatype = paramstruct.name 
+            struct.fields.append(typeid)
+        structs.append(struct)
+    model.structs = structs
+
+
 class Parser(object):
     def __init__(self, path):
         self.path = path
@@ -146,20 +278,19 @@ class Parser(object):
 
     def parse(self):
         self.model = Model()
-        tree = ET.parse(xmlpath)
+        tree = ET.parse(self.path)
         root = tree.getroot()
         for child in root:
             tag = child.tag[40:]
             if tag == "StructuredType":
-                structs = self.parse_struct(child)
-                for struct in structs:
-                    self.model.structs.append(struct)
+                struct = self.parse_struct(child)
+                self.model.structs.append(struct)
             elif tag == "EnumeratedType":
                 enum = self.parse_enum(child)
                 self.model.enums.append(enum)
             else:
                 print("Not implemented node type: " + tag + "\n")
-        self.reorder_structs(self.model)
+        reorder_structs(self.model)
         return self.model
 
     def parse_struct(self, child):
@@ -201,15 +332,7 @@ class Parser(object):
             else:
                 print("Uknown tag: ", tag)
 
-        #Changes specific to our C++ implementation
-        self.add_encoding_field(struct)
-        self.remove_vector_length(struct)
-        self.remove_duplicates(struct)
-
-
-        structs = self.fix_request(struct)
-
-        return structs
+        return struct
 
     def parse_enum(self, child):
         tag = child.tag[40:]
@@ -239,6 +362,7 @@ class Parser(object):
                 print("Unknown enum tag: ", tag)
         return enum
 
+
     def add_basetype_members(self, struct):
         basename = struct.basetype.split(":")[1]
         base = self.model.get_struct(basename)
@@ -247,117 +371,6 @@ class Parser(object):
         for field in base.fields:
             if field.name != "Body":
                 struct.fields.append(field)
-
-    def reorder_structs(self, model):
-        types = IgnoredStructs + IgnoredEnums + ["Char", "CharArray", "Guid", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "ByteString", "Byte", "StatusCode", "DiagnosticInfo", "String"] + [enum.name for enum in model.enums]
-        waiting = {}
-        newstructs = []
-        for s in model.structs:
-            print("Looking at ", s.name)
-            s.waitingfor = []
-            ok = True
-            for f in s.fields:
-                if f.uatype not in types:
-                    print("   field ", f.name, "missing type", f.uatype)
-                    if f.uatype in waiting.keys():
-                        waiting[f.uatype].append(s)
-                        s.waitingfor.append(f.uatype)
-                    else:
-                        waiting[f.uatype] = [s]
-                        s.waitingfor.append(f.uatype)
-                    ok = False
-            if ok:
-                newstructs.append(s)
-                types.append(s.name)
-                waitings = waiting.pop(s.name, None)
-                if waitings:
-                    for s2 in waitings:
-                        print(s2.name, " was wauiting for ", s.name)
-                        print(s2.name, s2.waitingfor) 
-                        s2.waitingfor.remove(s.name)
-                        if not s2.waitingfor:
-                            newstructs.append(s2)
-        print(len(model.structs), len(newstructs))
-        model.structs = newstructs
-    
-
-
-    def remove_duplicates(self, struct):
-        fields = []
-        names = []
-        for field in struct.fields:
-            if field.name not in names:
-                names.append(field.name)
-                fields.append(field)
-        struct.fields = fields
-    
-    def add_encoding_field(self, struct):
-        newfields = []
-        container = None
-        idx = 0
-        for field in struct.fields:
-            if field.uatype in ("UInt6", "NodeIdType"):
-                container = field.name
-                idx = 6
-            if field.uatype == "Bit":
-                if not container or idx > 7:
-                    container = "Encoding"
-                    idx = 0
-                    f = Field()
-                    f.name = "Encoding"
-                    f.uatype = "UInt8"
-                    newfields.append(f)
-
-                nb = field.bitlength
-                for _ in range(0, nb):
-                    b = Bit()
-                    b.name = field.name
-                    b.idx = idx
-                    b.container = container
-                    idx += 1
-                    struct.bits[b.name] = b
-            else:
-                newfields.append(field)
-        struct.fields = newfields
-
-    def remove_vector_length(self, struct):
-        new = []
-        for field in struct.fields:
-            if not field.name.startswith("NoOf"):
-                new.append(field)
-        struct.fields = new
-
-    def fix_request(self, struct):
-        structs = []
-        structs.append(struct)
-        structtype = None
-        if struct.name.endswith("Request"):
-            structtype = "Request"
-        elif struct.name.endswith("Response"):
-            structtype = "Response"
-        if structtype:
-            struct.needconstructor = True
-        if structtype and not struct.name in NoSplitStruct:
-            paramstruct = Struct()
-            if structtype == "Request":
-                basename = struct.name.replace("Request", "") + "Parameters"
-                paramstruct.name = basename 
-            else:
-                basename = struct.name.replace("Response", "") + "Data"
-                paramstruct.name = basename 
-            paramstruct.fields = struct.fields[3:]
-            paramstruct.bits = struct.bits
-
-            struct.fields = struct.fields[:3]
-            #struct.bits = {}
-            structs.insert(0, paramstruct)
-
-            typeid = Field()
-            typeid.name = "Parameters" 
-            typeid.uatype = paramstruct.name 
-            struct.fields.append(typeid)
-
-        return structs
 
 
 
@@ -417,14 +430,24 @@ class CodeGenerator(object):
         ##gcc does not want member with same name as a type
         for field in struct.fields:
             if field.name == field.get_uatype():
-                print("Error name same as type: ", field.name, field.get_uatype(), field.uatype)
                 if field.name.endswith("Header"):
                     field.name = "Header"
-                elif field.name in ("ExpandedNodeId", "NodeId"):
+                elif field.name == "ExpandedNodeId":
+                    field.name = "ExpandedNode"
+                elif field.name == "NodeId":
                     field.name = "Node"
                 elif field.name in ("StatusCode"):
                     field.name = "Status"
-                print("Renamed to : ", field.name)
+                elif field.name in ("NodeClass"):
+                    field.name = "Class"
+                elif field.name in ("MonitoringMode"):
+                    field.name = "Mode"
+                elif field.name in ("NotificationMessage"):
+                    field.name = "Notification"
+                elif field.name in ("NodeIdType"):
+                    field.name = "Type"
+                else:
+                    print("Error name same as type: ", field.name, field.get_uatype(), field.uatype)
 
     def make_struct_h(self, struct):
         self.write_h("")
@@ -438,7 +461,7 @@ class CodeGenerator(object):
                 #we have a problem selv referensing struct
                 self.write_h("         std::shared_ptr<{}> {};".format(field.get_uatype(), field.name))
             else:
-                self.write_h("        ", field.get_uatype(), field.name + ";")
+                self.write_h("        " , field.get_uatype(), field.name + ";")
         if struct.needconstructor:
             self.write_h("\n        ", struct.name + "();")
         self.write_h("    };")
@@ -580,6 +603,7 @@ class CodeGenerator(object):
 #pragma once
 
 #include <opc/ua/protocol/enum_auto.h>
+#include <opc/ua/protocol/attribute_ids.h>
 #include <opc/ua/protocol/nodeid.h>
 #include <opc/ua/protocol/types.h>
 #include <opc/ua/protocol/variant.h>
@@ -759,6 +783,13 @@ if __name__ == "__main__":
     constructorspath = "../src/protocol/construtors_auto.cpp"
     p = Parser(xmlpath)
     model = p.parse()
+    #Changes specific to our C++ implementation
+    add_encoding_field(model)
+    remove_vector_length(model)
+    remove_duplicates(model)
+    override_types(model)
+    fix_requests(model)
+
     c = CodeGenerator(model, hpath, enumpath, rawsizepath, serializerpath, deserializerpath, constructorspath)
     c.run()
 

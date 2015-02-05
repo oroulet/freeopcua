@@ -10,8 +10,8 @@
 
 #include <opc/ua/protocol/protocol.h>
 #include <opc/ua/protocol/binary/common.h>
-#include <opc/ua/protocol/secure_channel.h>
 #include <opc/ua/protocol/types.h>
+#include <opc/ua/protocol/protocol.h>
 
 #include <algorithm>
 #include <stdexcept>
@@ -166,22 +166,22 @@ namespace OpcUa
 
   RequestHeader::RequestHeader()
   {
-    SessionAuthenticationToken.Encoding = EV_TWO_BYTE;
-    SessionAuthenticationToken.TwoByteData.Identifier = 0;
-    UtcTime = DateTime::Current();
+    AuthenticationToken.Encoding = EV_TWO_BYTE;
+    AuthenticationToken.TwoByteData.Identifier = 0;
+    Timestamp = DateTime::Current();
     RequestHandle = 0;
     ReturnDiagnostics = 0;
-    AuditEntryID = "";
-    Timeout = 0; // in miliseconds
-    Additional.TypeID.Encoding = EV_TWO_BYTE;
-    Additional.TypeID.TwoByteData.Identifier = 0;
+    AuditEntryId = "";
+    TimeoutHint = 0; // in miliseconds
+    AdditionalHeader.TypeId.Encoding = EV_TWO_BYTE;
+    AdditionalHeader.TypeId.TwoByteData.Identifier = 0;
   }
 
   OpenSecureChannelParameters::OpenSecureChannelParameters()
     : ClientProtocolVersion(0)
-    , RequestType(STR_ISSUE)
-    , SecurityMode(MSM_NONE)
-    , RequestLifeTime(300000)
+    , RequestType(SecurityTokenRequestType::Issue)
+    , SecurityMode(MessageSecurityMode::None)
+    , RequestedLifetime(300000)
   {
   }
 

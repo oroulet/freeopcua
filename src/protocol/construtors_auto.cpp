@@ -245,6 +245,11 @@ namespace OpcUa
     {
     }
 
+     ReadParameters::ReadParameters()
+        : TypeId(ObjectId::ReadParameters_Encoding_DefaultBinary)
+    {
+    }
+
      ReadRequest::ReadRequest()
         : TypeId(ObjectId::ReadRequest_Encoding_DefaultBinary)
     {

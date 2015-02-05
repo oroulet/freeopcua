@@ -57,7 +57,7 @@ namespace OpcUa
       params.RequestType = STR_RENEW;
       params.SecurityMode = MSM_NONE;
       params.ClientNonce = std::vector<uint8_t>(1, 0);
-      params.RequestLifeTime = Period;
+      params.RequestedLifetime = Period;
       OpenSecureChannelResponse response = Server->OpenSecureChannel(params);
       if ( (response.ChannelSecurityToken.RevisedLifetime < Period) && (response.ChannelSecurityToken.RevisedLifetime > 0) )
       {
@@ -197,10 +197,10 @@ namespace OpcUa
   {
     OpenSecureChannelParameters channelparams;
     channelparams.ClientProtocolVersion = 0;
-    channelparams.RequestType = STR_ISSUE;
+    channelparams.RequestType = SecurityTokenRquestType.Issue;
     channelparams.SecurityMode = MSM_NONE;
     channelparams.ClientNonce = std::vector<uint8_t>(1, 0);
-    channelparams.RequestLifeTime = DefaultTimeout;
+    channelparams.RequestedLifetime = DefaultTimeout;
     const OpenSecureChannelResponse& response = Server->OpenSecureChannel(channelparams);
 
     CheckStatusCode(response.Header.ServiceResult);

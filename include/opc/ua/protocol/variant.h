@@ -23,6 +23,8 @@
 
 namespace OpcUa
 {
+  
+  struct DiagnosticInfo;
 
   enum class VariantType : uint8_t
   {

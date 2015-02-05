@@ -7,11 +7,11 @@ namespace OpcUa
   namespace Internal
   {
 
-    InternalSubscription::InternalSubscription(SubscriptionServiceInternal& service, const SubscriptionData& data, const NodeId& SessionAuthenticationToken, std::function<void (PublishResult)> callback, bool debug)
+    InternalSubscription::InternalSubscription(SubscriptionServiceInternal& service, const SubscriptionData& data, const NodeId& AuthenticationToken, std::function<void (PublishResult)> callback, bool debug)
       : Service(service)
       , AddressSpace(Service.GetAddressSpace())
       , Data(data)
-      , CurrentSession(SessionAuthenticationToken)
+      , CurrentSession(AuthenticationToken)
       , Callback(callback)
       , io(service.GetIOService())
       , Timer(io, boost::posix_time::milliseconds(data.RevisedPublishingInterval))

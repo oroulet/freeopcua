@@ -480,7 +480,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<AddNodesItem>(const AddNodesItem& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ParentNodeId) + RawSize(data.ReferenceTypeId) + RawSize(data.RequestedNewNodeId) + RawSize(data.BrowseName) + RawSize(data.NodeClass) + RawSize(data.NodeAttributes) + RawSize(data.TypeDefinition);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ParentNodeId) + RawSize(data.ReferenceTypeId) + RawSize(data.RequestedNewNodeId) + RawSize(data.BrowseName) + RawSize(data.Class) + RawSize(data.NodeAttributes) + RawSize(data.TypeDefinition);
     }
 
 
@@ -641,7 +641,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ReferenceDescription>(const ReferenceDescription& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ReferenceTypeId) + RawSize(data.IsForward) + RawSize(data.NodeId) + RawSize(data.BrowseName) + RawSize(data.DisplayName) + RawSize(data.NodeClass) + RawSize(data.TypeDefinition);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.ReferenceTypeId) + RawSize(data.IsForward) + RawSize(data.NodeId) + RawSize(data.BrowseName) + RawSize(data.DisplayName) + RawSize(data.Class) + RawSize(data.TypeDefinition);
     }
 
 
@@ -1369,7 +1369,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<MonitoredItemCreateParameters>(const MonitoredItemCreateParameters& data)
     {
-        return RawSize(data.ItemToMonitor) + RawSize(data.MonitoringMode) + RawSize(data.RequestedParameters);
+        return RawSize(data.ItemToMonitor) + RawSize(data.Mode) + RawSize(data.RequestedParameters);
     }
 
 
@@ -1467,7 +1467,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<SetMonitoringModeParameters>(const SetMonitoringModeParameters& data)
     {
-        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.MonitoringMode) + RawSizeContainer(data.MonitoredItemIds);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSize(data.Mode) + RawSizeContainer(data.MonitoredItemIds);
     }
 
 
@@ -1726,7 +1726,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<PublishData>(const PublishData& data)
     {
-        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSizeContainer(data.AvailableSequenceNumbers) + RawSize(data.MoreNotifications) + RawSize(data.NotificationMessage) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
+        return RawSize(data.Header) + RawSize(data.SubscriptionId) + RawSizeContainer(data.AvailableSequenceNumbers) + RawSize(data.MoreNotifications) + RawSize(data.Notification) + RawSizeContainer(data.Results) + RawSizeContainer(data.DiagnosticInfos);
     }
 
 
@@ -1754,7 +1754,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RepublishData>(const RepublishData& data)
     {
-        return RawSize(data.Header) + RawSize(data.NotificationMessage);
+        return RawSize(data.Header) + RawSize(data.Notification);
     }
 
 
@@ -1831,7 +1831,7 @@ namespace OpcUa
     template<>
     std::size_t RawSize<ScalarTestType>(const ScalarTestType& data)
     {
-        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Boolean) + RawSize(data.SByte) + RawSize(data.Byte) + RawSize(data.Int16) + RawSize(data.UInt16) + RawSize(data.Int32) + RawSize(data.UInt32) + RawSize(data.Int64) + RawSize(data.UInt64) + RawSize(data.Float) + RawSize(data.Double) + RawSize(data.String) + RawSize(data.DateTime) + RawSize(data.Guid) + RawSize(data.ByteString) + RawSize(data.XmlElement) + RawSize(data.Node) + RawSize(data.Node) + RawSize(data.Status) + RawSize(data.DiagnosticInfo) + RawSize(data.QualifiedName) + RawSize(data.LocalizedText) + RawSize(data.ExtensionObject) + RawSize(data.DataValue) + RawSize(data.EnumeratedValue);
+        return RawSize(data.Encoding) + RawSize(data.TypeId) + RawSize(data.BodyLength) + RawSize(data.Boolean) + RawSize(data.SByte) + RawSize(data.Byte) + RawSize(data.Int16) + RawSize(data.UInt16) + RawSize(data.Int32) + RawSize(data.UInt32) + RawSize(data.Int64) + RawSize(data.UInt64) + RawSize(data.Float) + RawSize(data.Double) + RawSize(data.String) + RawSize(data.DateTime) + RawSize(data.Guid) + RawSize(data.ByteString) + RawSize(data.XmlElement) + RawSize(data.Node) + RawSize(data.ExpandedNode) + RawSize(data.Status) + RawSize(data.DiagnosticInfo) + RawSize(data.QualifiedName) + RawSize(data.LocalizedText) + RawSize(data.ExtensionObject) + RawSize(data.DataValue) + RawSize(data.EnumeratedValue);
     }
 
 

@@ -521,7 +521,7 @@ TEST_F(OpcUaBinarySerialization, AdditionalHeader)
   using namespace OpcUa;
   using namespace OpcUa::Binary;
   AdditionalHeader header;
-  header.TypeID.Encoding = static_cast<NodeIdEncoding>(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_SERVER_INDEX_FLAG);
+  header.TypeID.Encoding = static_cast<NodeIdEncoding>(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_Server_INDEX_FLAG);
   header.TypeID.StringData.NamespaceIndex = 0x1;
   header.TypeID.StringData.Identifier = "id";
   header.TypeID.NamespaceURI = "uri";
@@ -529,7 +529,7 @@ TEST_F(OpcUaBinarySerialization, AdditionalHeader)
   header.Encoding = 1;
 
   const std::vector<char> expectedData = {
-  int8_t(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_SERVER_INDEX_FLAG),
+  int8_t(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_Server_INDEX_FLAG),
   1, 0,
   2, 0, 0, 0,
   'i', 'd',
@@ -757,7 +757,7 @@ TEST_F(OpcUaBinarySerialization, OpenSequreChannelRequest)
   request.Parameters.RequestType = STR_RENEW;
   request.Parameters.SecurityMode = MSM_SIGN;
   request.Parameters.ClientNonce = std::vector<uint8_t>(1, 1);
-  request.Parameters.RequestLifeTime = 5;
+  request.Parameters.RequestedLifetime = 5;
 
   GetStream() << request << flush;
 

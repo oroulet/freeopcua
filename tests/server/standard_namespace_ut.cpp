@@ -706,19 +706,19 @@ TEST_F(StandardNamespaceStructure, DateTime)
 {
   const std::vector<ReferenceDescription> refs = Browse(ObjectId::DateTime);
   EXPECT_EQ(SizeOf(refs), 2);
-  EXPECT_TRUE(HasReference(refs, ReferenceID::HasSubtype, ObjectId::UtcTime));
+  EXPECT_TRUE(HasReference(refs, ReferenceID::HasSubtype, ObjectId::Timestamp));
 
   ExpectHasBaseAttributes(ObjectId::DateTime);
   ExpectHasTypeAttributes(ObjectId::DateTime);
 }
 
-TEST_F(StandardNamespaceStructure, UtcTime)
+TEST_F(StandardNamespaceStructure, Timestamp)
 {
-  const std::vector<ReferenceDescription> refs = Browse(ObjectId::UtcTime);
+  const std::vector<ReferenceDescription> refs = Browse(ObjectId::Timestamp);
   EXPECT_EQ(SizeOf(refs), 0);
 
-  ExpectHasBaseAttributes(ObjectId::UtcTime);
-  ExpectHasTypeAttributes(ObjectId::UtcTime);
+  ExpectHasBaseAttributes(ObjectId::Timestamp);
+  ExpectHasTypeAttributes(ObjectId::Timestamp);
 }
 
 TEST_F(StandardNamespaceStructure, DiagnosticInfo)

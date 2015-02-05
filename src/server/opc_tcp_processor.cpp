@@ -212,7 +212,7 @@ namespace OpcUa
       response.ChannelSecurityToken.SecureChannelID = ChannelID;
       response.ChannelSecurityToken.TokenID = TokenID;
       response.ChannelSecurityToken.CreatedAt = OpcUa::DateTime::Current();
-      response.ChannelSecurityToken.RevisedLifetime = request.Parameters.RequestLifeTime;
+      response.ChannelSecurityToken.RevisedLifetime = request.Parameters.RequestedLifetime;
 
       SecureHeader responseHeader(MT_SECURE_OPEN, CHT_SINGLE, ChannelID);
       responseHeader.AddSize(RawSize(algorithmHeader));
@@ -283,7 +283,7 @@ namespace OpcUa
           return;
         }
 
-        case OpcUa::FIND_SERVERS_REQUEST:
+        case OpcUa::FIND_ServerS_REQUEST:
         {
           if (Debug) std::clog << "opc_tcp_processor| Processing 'Find Servers' request." << std::endl;
           FindServersParameters params;

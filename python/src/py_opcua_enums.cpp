@@ -35,9 +35,9 @@ void py_opcua_enums()
   enum_<ApplicationType>("ApplicationType")
 #define _value(X) value(#X, ApplicationType:: X)
   ._value(CLIENT)
-  ._value(CLIENT_AND_SERVER)
-  ._value(DISCOVERY_SERVER)
-  ._value(SERVER)
+  ._value(CLIENT_AND_Server)
+  ._value(DISCOVERY_Server)
+  ._value(Server)
 #undef _value
   ;
 
@@ -82,10 +82,10 @@ void py_opcua_enums()
 
   enum_<TimestampsToReturn>("TimestampsToReturn")
 #define _value(X) value(#X, TimestampsToReturn:: X)
-  ._value(SOURCE)
-  ._value(SERVER)
+  ._value(Source)
+  ._value(Server)
   ._value(BOTH)
-  ._value(NEITHER)
+  ._value(Neither)
 #undef _value
   ;
 

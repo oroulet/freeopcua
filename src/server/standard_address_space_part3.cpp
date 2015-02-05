@@ -1202,13 +1202,13 @@ namespace OpcUa
         {
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=294");
-        node.BrowseName = ToQualifiedName("UtcTime");
+        node.BrowseName = ToQualifiedName("Timestamp");
         node.Class = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=13");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
         attrs.Description = LocalizedText("b'A date/time value specified in Universal Coordinated Time (UTC).'");
-        attrs.DisplayName = LocalizedText("UtcTime");
+        attrs.DisplayName = LocalizedText("Timestamp");
         attrs.IsAbstract = false;
         node.Attributes = attrs;
         registry.AddNodes(std::vector<AddNodesItem>{node});

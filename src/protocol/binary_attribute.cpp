@@ -26,13 +26,13 @@ namespace OpcUa
 {
   // TODO move to appropriate file
   ReadValueId::ReadValueId()
-    : Attribute(AttributeID::Value)
+    : AttributeId(AttributeID::Value)
   {
   }
 
   ReadParameters::ReadParameters()
     : MaxAge(0)
-    , TimestampsType(TimestampsToReturn::NEITHER)
+    , TimestampsToReturn(TimestampsToReturn::Neither)
   {
 
   }

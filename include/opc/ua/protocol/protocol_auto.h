@@ -13,6 +13,7 @@
 #pragma once
 
 #include <opc/ua/protocol/enum_auto.h>
+#include <opc/ua/protocol/attribute_ids.h>
 #include <opc/ua/protocol/nodeid.h>
 #include <opc/ua/protocol/types.h>
 #include <opc/ua/protocol/variant.h>
@@ -749,7 +750,7 @@ namespace OpcUa
          NodeId ReferenceTypeId;
          ExpandedNodeId RequestedNewNodeId;
          QualifiedName BrowseName;
-         NodeClass NodeClass;
+         NodeClass Class;
          ExtensionObject NodeAttributes;
          ExpandedNodeId TypeDefinition;
     };
@@ -977,7 +978,7 @@ namespace OpcUa
          ExpandedNodeId NodeId;
          QualifiedName BrowseName;
          LocalizedText DisplayName;
-         NodeClass NodeClass;
+         NodeClass Class;
          ExpandedNodeId TypeDefinition;
     };
 
@@ -1272,7 +1273,7 @@ namespace OpcUa
          ExpandedNodeId TypeId;
          int32_t BodyLength;
          RelativePath RelativePath;
-         uint32_t AttributeId;
+         AttributeID AttributeId;
          std::string IndexRange;
     };
 
@@ -1355,7 +1356,7 @@ namespace OpcUa
          NodeId Node;
          std::string Alias;
          RelativePath BrowsePath;
-         uint32_t AttributeId;
+         AttributeID AttributeId;
          std::string IndexRange;
     };
 
@@ -1366,7 +1367,7 @@ namespace OpcUa
          int32_t BodyLength;
          NodeId TypeDefinitionId;
          std::vector<QualifiedName> BrowsePath;
-         uint32_t AttributeId;
+         AttributeID AttributeId;
          std::string IndexRange;
     };
 
@@ -1479,7 +1480,7 @@ namespace OpcUa
          ExpandedNodeId TypeId;
          int32_t BodyLength;
          NodeId Node;
-         uint32_t AttributeId;
+         AttributeID AttributeId;
          std::string IndexRange;
          QualifiedName DataEncoding;
 
@@ -1492,6 +1493,8 @@ namespace OpcUa
          double MaxAge;
          TimestampsToReturn TimestampsToReturn;
          std::vector<ReadValueId> NodesToRead;
+
+         ReadParameters();
     };
 
     struct ReadRequest 
@@ -1639,7 +1642,7 @@ namespace OpcUa
          ExpandedNodeId TypeId;
          int32_t BodyLength;
          NodeId Node;
-         uint32_t AttributeId;
+         AttributeID AttributeId;
          std::string IndexRange;
          DataValue Value;
     };
@@ -1961,7 +1964,7 @@ namespace OpcUa
     struct MonitoredItemCreateParameters 
     {
          ReadValueId ItemToMonitor;
-         MonitoringMode MonitoringMode;
+         MonitoringMode Mode;
          MonitoringParameters RequestedParameters;
     };
 
@@ -2088,7 +2091,7 @@ namespace OpcUa
     {
          RequestHeader Header;
          uint32_t SubscriptionId;
-         MonitoringMode MonitoringMode;
+         MonitoringMode Mode;
          std::vector<uint32_t> MonitoredItemIds;
     };
 
@@ -2423,7 +2426,7 @@ namespace OpcUa
          uint32_t SubscriptionId;
          std::vector<uint32_t> AvailableSequenceNumbers;
          bool MoreNotifications;
-         NotificationMessage NotificationMessage;
+         NotificationMessage Notification;
          std::vector<StatusCode> Results;
          std::vector<DiagnosticInfo> DiagnosticInfos;
     };
@@ -2458,7 +2461,7 @@ namespace OpcUa
     struct RepublishData 
     {
          ResponseHeader Header;
-         NotificationMessage NotificationMessage;
+         NotificationMessage Notification;
     };
 
     struct RepublishResponse 
@@ -2570,7 +2573,7 @@ namespace OpcUa
          ByteString ByteString;
          XmlElement XmlElement;
          NodeId Node;
-         ExpandedNodeId Node;
+         ExpandedNodeId ExpandedNode;
          StatusCode Status;
          DiagnosticInfo DiagnosticInfo;
          QualifiedName QualifiedName;

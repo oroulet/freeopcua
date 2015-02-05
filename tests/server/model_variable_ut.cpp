@@ -83,7 +83,7 @@ TEST_F(ModelVariable, CanSetVariableValue_ByVariant)
   variable.SetValue(10);
   OpcUa::DataValue data = variable.GetValue();
   ASSERT_TRUE(data.Encoding & (OpcUa::DATA_VALUE));
-  ASSERT_TRUE(data.Encoding & (OpcUa::DATA_VALUE_SOURCE_TIMESTAMP));
+  ASSERT_TRUE(data.Encoding & (OpcUa::DATA_VALUE_Source_TIMESTAMP));
   EXPECT_EQ(data.Value, 10);
   EXPECT_NE(data.SourceTimestamp, 0);
 }
@@ -106,7 +106,7 @@ TEST_F(ModelVariable, CanSetVariableValue_DataValue)
   variable.SetValue(data);
   OpcUa::DataValue result = variable.GetValue();
   ASSERT_NE(result.Encoding & (OpcUa::DATA_VALUE), 0);
-  ASSERT_NE(result.Encoding & (OpcUa::DATA_VALUE_SOURCE_TIMESTAMP), 0);
+  ASSERT_NE(result.Encoding & (OpcUa::DATA_VALUE_Source_TIMESTAMP), 0);
   EXPECT_EQ(result.Value, 10);
   EXPECT_EQ(result.SourceTimestamp, 12345);
 }

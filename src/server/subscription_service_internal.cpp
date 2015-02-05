@@ -86,7 +86,7 @@ namespace OpcUa
       data.RevizedMaxKeepAliveCount = request.Parameters.RequestedMaxKeepAliveCount;
       if (Debug) std::cout << "SubscriptionService | Creating Subscription with ID: " << data.ID << std::endl;
 
-      std::shared_ptr<InternalSubscription> sub(new InternalSubscription(*this, data, request.Header.SessionAuthenticationToken, callback, Debug));
+      std::shared_ptr<InternalSubscription> sub(new InternalSubscription(*this, data, request.Header.AuthenticationToken, callback, Debug));
       sub->Start();
       SubscriptionsMap[data.ID] = sub;
       return data;
@@ -143,9 +143,9 @@ namespace OpcUa
     {
       boost::unique_lock<boost::shared_mutex> lock(DbMutex);
 
-      if ( PublishRequestQueues[request.Header.SessionAuthenticationToken] < 100 )
+      if ( PublishRequestQueues[request.Header.AuthenticationToken] < 100 )
       {
-        PublishRequestQueues[request.Header.SessionAuthenticationToken] += 1;
+        PublishRequestQueues[request.Header.AuthenticationToken] += 1;
       }
       //FIXME: else spec says we should return error to warn client
 

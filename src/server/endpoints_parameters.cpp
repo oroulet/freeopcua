@@ -93,11 +93,11 @@ namespace
       if (typeName == "client" || typeName.empty())
         return ApplicationType::CLIENT;
       else if (typeName == "server")
-        return ApplicationType::SERVER;
+        return ApplicationType::Server;
       else if (typeName == "client_and_server")
-        return ApplicationType::CLIENT_AND_SERVER;
+        return ApplicationType::CLIENT_AND_Server;
       else if (typeName == "discovery_server")
-        return ApplicationType::DISCOVERY_SERVER;
+        return ApplicationType::DISCOVERY_Server;
 
       throw std::logic_error("Invalid name of type application type: " + typeName);
     }
@@ -106,13 +106,13 @@ namespace
     {
       switch (type)
       {
-      case ApplicationType::SERVER:
+      case ApplicationType::Server:
         return "server";
       case ApplicationType::CLIENT:
         return "client";
-      case ApplicationType::CLIENT_AND_SERVER:
+      case ApplicationType::CLIENT_AND_Server:
         return "client_and_server";
-      case ApplicationType::DISCOVERY_SERVER:
+      case ApplicationType::DISCOVERY_Server:
         return "discovery_server";
       default:
         throw std::logic_error("Unknown application type: " + std::to_string((unsigned)type));

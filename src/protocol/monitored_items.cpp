@@ -21,7 +21,7 @@ namespace OpcUa
 {
 
   MonitoredItemsParameters::MonitoredItemsParameters()
-    : Timestamps(TimestampsToReturn::NEITHER)
+    : Timestamps(TimestampsToReturn::Neither)
   {
   }
 

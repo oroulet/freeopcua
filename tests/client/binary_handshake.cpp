@@ -233,7 +233,7 @@ TEST_F(OpcBinaryHandshake, ActivateSession)
   CreateSessionResponse session = CreateSession(stream);
 
   ActivateSessionRequest activate;
-  activate.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  activate.Header.AuthenticationToken = session.AuthenticationToken;
   activate.LocaleIDs.push_back("en");
   stream << activate << flush;
 
@@ -260,7 +260,7 @@ TEST_F(OpcBinaryHandshake, CloseSession)
   CreateSessionResponse session = CreateSession(stream);
 
   ActivateSessionRequest activate;
-  activate.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  activate.Header.AuthenticationToken = session.AuthenticationToken;
   activate.LocaleIDs.push_back("en");
   stream << activate << flush;
 
@@ -268,7 +268,7 @@ TEST_F(OpcBinaryHandshake, CloseSession)
   stream >> response;
 
   CloseSessionRequest closeSession;
-  closeSession.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  closeSession.Header.AuthenticationToken = session.AuthenticationToken;
   stream << closeSession << flush;
 
   CloseSessionResponse closeResponse;
@@ -282,7 +282,7 @@ TEST_F(OpcBinaryHandshake, CloseSession)
 void CloseSession(OpcUa::Binary::IOStream& stream, const OpcUa::Binary::CreateSessionResponse& session)
 {
   CloseSessionRequest closeSession;
-  closeSession.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  closeSession.Header.AuthenticationToken = session.AuthenticationToken;
   stream << closeSession << flush;
 
   CloseSessionResponse closeResponse;
@@ -293,7 +293,7 @@ void ActivateSession(OpcUa::Binary::IOStream& stream, const OpcUa::Binary::Creat
 {
   using namespace OpcUa::Binary;
   ActivateSessionRequest activate;
-  activate.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  activate.Header.AuthenticationToken = session.AuthenticationToken;
   activate.LocaleIDs.push_back("en");
   stream << activate << flush;
 
@@ -317,7 +317,7 @@ TEST_F(OpcBinaryHandshake, Browse)
   ActivateSession(stream, session);
 
   OpcUa::Binary::BrowseRequest browse;
-  browse.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  browse.Header.AuthenticationToken = session.AuthenticationToken;
   browse.MaxReferenciesPerNode = 2;
 
   BrowseDescription desc;
@@ -339,7 +339,7 @@ TEST_F(OpcBinaryHandshake, Browse)
   EXPECT_TRUE(!response.Results.empty());
 
   BrowseNextRequest browseNext;
-  browseNext.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  browseNext.Header.AuthenticationToken = session.AuthenticationToken;
   browseNext.ReleaseContinuationPoints= false;
   browseNext.ContinuationPoints.push_back(response.Results[0].ContinuationPoint);  
 
@@ -383,9 +383,9 @@ TEST_F(OpcBinaryHandshake, Read)
 
 
   OpcUa::Binary::ReadRequest request;
-  request.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  request.Header.AuthenticationToken = session.AuthenticationToken;
   request.MaxAge = 0;
-  request.TimestampsType = TimestampsToReturn::NEITHER;
+  request.TimestampsType = TimestampsToReturn::Neither;
   request.AttributesToRead.push_back(value);
  
   stream << request << flush;
@@ -420,7 +420,7 @@ TEST_F(OpcBinaryHandshake, Write)
   ActivateSession(stream, session);
 
   OpcUa::Binary::WriteRequest request;
-  request.Header.SessionAuthenticationToken = session.AuthenticationToken;
+  request.Header.AuthenticationToken = session.AuthenticationToken;
 
   WriteValue value;
   value.Node.Encoding = EV_FOUR_BYTE;

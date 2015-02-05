@@ -964,11 +964,11 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<OpcUa::RequestHeader>(const OpcUa::RequestHeader& header)
     {
-      *this << header.SessionAuthenticationToken;
-      *this << header.UtcTime;
+      *this << header.AuthenticationToken;
+      *this << header.Timestamp;
       *this << header.RequestHandle;
       *this << header.ReturnDiagnostics;
-      *this << header.AuditEntryID;
+      *this << header.AuditEntryId;
       *this << header.Timeout; // in miliseconds
       *this << header.Additional;
     }
@@ -976,11 +976,11 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<OpcUa::RequestHeader>(OpcUa::RequestHeader& header)
     {
-      *this >> header.SessionAuthenticationToken;
-      *this >> header.UtcTime;
+      *this >> header.AuthenticationToken;
+      *this >> header.Timestamp;
       *this >> header.RequestHandle;
       *this >> header.ReturnDiagnostics;
-      *this >> header.AuditEntryID;
+      *this >> header.AuditEntryId;
       *this >> header.Timeout; // in miliseconds
       *this >> header.Additional;
     };
@@ -1116,7 +1116,7 @@ namespace OpcUa
       *this << (uint32_t)request.Parameters.RequestType;
       *this << (uint32_t)request.Parameters.SecurityMode;
       SerializeContainer(*this, request.Parameters.ClientNonce);
-      *this << request.Parameters.RequestLifeTime;
+      *this << request.Parameters.RequestedLifetime;
     }
 
     template<>
@@ -1136,7 +1136,7 @@ namespace OpcUa
       request.Parameters.SecurityMode = static_cast<MessageSecurityMode>(tmp2);
 
       DeserializeContainer(*this, request.Parameters.ClientNonce);
-      *this >> request.Parameters.RequestLifeTime;
+      *this >> request.Parameters.RequestedLifetime;
     };
 
 

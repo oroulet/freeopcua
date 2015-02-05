@@ -229,15 +229,15 @@ namespace OpcUa
     template<>
     std::size_t RawSize<RequestHeader>(const RequestHeader& header)
     {
-      const std::size_t sizeofSessionAuthenticationToken = RawSize(header.SessionAuthenticationToken);
-      const std::size_t sizeofUtcTime = 8;
+      const std::size_t sizeofAuthenticationToken = RawSize(header.AuthenticationToken);
+      const std::size_t sizeofTimestamp = 8;
       const std::size_t sizeofRequestHandle = 4;
       const std::size_t sizeofReturnDiagnostics = 4;
-      const std::size_t sizeofAuditEntryID = 4 + header.AuditEntryID.size();
+      const std::size_t sizeofAuditEntryId = 4 + header.AuditEntryId.size();
       const std::size_t sizeofTimeout = 4;
       const std::size_t sizeofAdditional = RawSize(header.Additional);
 
-      return sizeofSessionAuthenticationToken + sizeofUtcTime + sizeofRequestHandle + sizeofReturnDiagnostics + sizeofAuditEntryID + sizeofTimeout + sizeofAdditional;
+      return sizeofAuthenticationToken + sizeofTimestamp + sizeofRequestHandle + sizeofReturnDiagnostics + sizeofAuditEntryId + sizeofTimeout + sizeofAdditional;
     }
 
     template<>
@@ -249,9 +249,9 @@ namespace OpcUa
       const std::size_t sizeofRequestType = 4;
       const std::size_t sizeofSecurityMode = 4;
       const std::size_t sizeofClientNonce = 4 + request.Parameters.ClientNonce.size();
-      const std::size_t sizeofRequestLifeTime = 4;
+      const std::size_t sizeofRequestedLifetime = 4;
 
-      return sizeofTypeID + sizeofHeader + sizeofClientProtocolVersion + sizeofRequestType + sizeofSecurityMode + sizeofClientNonce + sizeofRequestLifeTime;
+      return sizeofTypeID + sizeofHeader + sizeofClientProtocolVersion + sizeofRequestType + sizeofSecurityMode + sizeofClientNonce + sizeofRequestedLifetime;
     };
 
     template<>

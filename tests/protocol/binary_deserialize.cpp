@@ -594,7 +594,7 @@ TEST_F(OpcUaBinaryDeserialization, AdditionalHeader)
   using namespace OpcUa;
 
   const std::vector<char> expectedData = {
-  int8_t(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_SERVER_INDEX_FLAG),
+  int8_t(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_Server_INDEX_FLAG),
   1, 0,
   2, 0, 0, 0,
   'i', 'd',
@@ -609,7 +609,7 @@ TEST_F(OpcUaBinaryDeserialization, AdditionalHeader)
   AdditionalHeader header;
   GetStream() >> header;
 
-  ASSERT_EQ(header.TypeID.Encoding, uint8_t(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_SERVER_INDEX_FLAG));
+  ASSERT_EQ(header.TypeID.Encoding, uint8_t(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_Server_INDEX_FLAG));
   ASSERT_EQ(header.TypeID.StringData.NamespaceIndex, 0x1);
   ASSERT_EQ(header.TypeID.StringData.Identifier, "id");
   ASSERT_EQ(header.TypeID.NamespaceURI, "uri");
@@ -645,12 +645,12 @@ TEST_F(OpcUaBinaryDeserialization, RequestHeader)
   RequestHeader header;
   GetStream() >> header;
 
-  ASSERT_EQ(header.SessionAuthenticationToken.Encoding, EV_TWO_BYTE);
-  ASSERT_EQ(header.SessionAuthenticationToken.TwoByteData.Identifier, 1);
-  ASSERT_EQ(header.UtcTime, 2);
+  ASSERT_EQ(header.AuthenticationToken.Encoding, EV_TWO_BYTE);
+  ASSERT_EQ(header.AuthenticationToken.TwoByteData.Identifier, 1);
+  ASSERT_EQ(header.Timestamp, 2);
   ASSERT_EQ(header.RequestHandle, 3);
   ASSERT_EQ(header.ReturnDiagnostics, 4);
-  ASSERT_EQ(header.AuditEntryID, "audit");
+  ASSERT_EQ(header.AuditEntryId, "audit");
   ASSERT_EQ(header.Timeout, 5); // in miliseconds
   ASSERT_EQ(header.Additional.TypeID.Encoding, EV_TWO_BYTE);
   ASSERT_EQ(header.Additional.TypeID.TwoByteData.Identifier, 6);
@@ -844,7 +844,7 @@ TEST_F(OpcUaBinaryDeserialization, OpenSequreChannelRequest)
   ASSERT_EQ(request.Parameters.RequestType, STR_RENEW);
   ASSERT_EQ(request.Parameters.SecurityMode, MSM_SIGN);
   ASSERT_EQ(request.Parameters.ClientNonce, std::vector<uint8_t>(1, 1));
-  ASSERT_EQ(request.Parameters.RequestLifeTime, 5);
+  ASSERT_EQ(request.Parameters.RequestedLifetime, 5);
 
   ASSERT_REQUEST_HEADER_EQ(request.Header);
 }

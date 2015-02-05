@@ -400,13 +400,13 @@ namespace OpcUa
         {
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=388");
-        node.BrowseName = ToQualifiedName("SessionAuthenticationToken");
+        node.BrowseName = ToQualifiedName("AuthenticationToken");
         node.Class = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=17");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
         attrs.Description = LocalizedText("b'A unique identifier for a session used to authenticate requests.'");
-        attrs.DisplayName = LocalizedText("SessionAuthenticationToken");
+        attrs.DisplayName = LocalizedText("AuthenticationToken");
         attrs.IsAbstract = false;
         node.Attributes = attrs;
         registry.AddNodes(std::vector<AddNodesItem>{node});

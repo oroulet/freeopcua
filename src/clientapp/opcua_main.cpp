@@ -68,13 +68,13 @@ namespace
   {
     switch (type)
     {
-      case OpcUa::ApplicationType::SERVER:
+      case OpcUa::ApplicationType::Server:
         return "server";
       case OpcUa::ApplicationType::CLIENT:
         return "client";
-      case OpcUa::ApplicationType::CLIENT_AND_SERVER:
+      case OpcUa::ApplicationType::CLIENT_AND_Server:
         return "client and server";
-      case OpcUa::ApplicationType::DISCOVERY_SERVER:
+      case OpcUa::ApplicationType::DISCOVERY_Server:
         return "discovery server";
       default:
         return "unknown";
@@ -245,7 +245,7 @@ namespace
       std::cout << tabs << "Namespace URI: " << nodeID.NamespaceURI << std::endl;
     }
 
-    if (nodeID.Encoding & OpcUa::NodeIdEncoding::EV_SERVER_INDEX_FLAG)
+    if (nodeID.Encoding & OpcUa::NodeIdEncoding::EV_Server_INDEX_FLAG)
     {
       std::cout << tabs << "Server index: " << nodeID.ServerIndex << std::endl;
     }

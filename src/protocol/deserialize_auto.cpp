@@ -789,7 +789,7 @@ namespace OpcUa
         *this >> data.ReferenceTypeId;
         *this >> data.RequestedNewNodeId;
         *this >> data.BrowseName;
-        *this >> data.NodeClass;
+        *this >> data.Class;
         *this >> data.NodeAttributes;
         *this >> data.TypeDefinition;
     }
@@ -1032,7 +1032,7 @@ namespace OpcUa
         *this >> data.NodeId;
         *this >> data.BrowseName;
         *this >> data.DisplayName;
-        *this >> data.NodeClass;
+        *this >> data.Class;
         *this >> data.TypeDefinition;
     }
 
@@ -2154,7 +2154,7 @@ namespace OpcUa
     void DataDeserializer::Deserialize<MonitoredItemCreateParameters>(MonitoredItemCreateParameters& data)
     {
         *this >> data.ItemToMonitor;
-        *this >> data.MonitoringMode;
+        *this >> data.Mode;
         *this >> data.RequestedParameters;
     }
 
@@ -2297,7 +2297,7 @@ namespace OpcUa
     {
         *this >> data.Header;
         *this >> data.SubscriptionId;
-        *this >> data.MonitoringMode;
+        *this >> data.Mode;
         DeserializeContainer(*this, data.MonitoredItemIds);
     }
 
@@ -2680,7 +2680,7 @@ namespace OpcUa
         *this >> data.SubscriptionId;
         DeserializeContainer(*this, data.AvailableSequenceNumbers);
         *this >> data.MoreNotifications;
-        *this >> data.NotificationMessage;
+        *this >> data.Notification;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2719,7 +2719,7 @@ namespace OpcUa
     void DataDeserializer::Deserialize<RepublishData>(RepublishData& data)
     {
         *this >> data.Header;
-        *this >> data.NotificationMessage;
+        *this >> data.Notification;
     }
 
 
@@ -2842,7 +2842,7 @@ namespace OpcUa
         *this >> data.ByteString;
         *this >> data.XmlElement;
         *this >> data.Node;
-        *this >> data.Node;
+        *this >> data.ExpandedNode;
         *this >> data.Status;
         *this >> data.DiagnosticInfo;
         *this >> data.QualifiedName;
