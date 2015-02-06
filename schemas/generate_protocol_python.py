@@ -1,3 +1,5 @@
+import struct
+
 from  generate_protocol import Parser, add_encoding_field
 
 
@@ -21,7 +23,10 @@ class CodeGenerator(object):
         self.write("'''")
         self.write("Autogenerate code from xml spec")
         self.write("'''")
+        self.write("")
         self.write("import struct")
+        self.write("")
+        self.write("import types")
         self.write("")
         self.write("")
 
@@ -39,6 +44,8 @@ class CodeGenerator(object):
         for field in obj.fields:
             self.write("        self.{} = {}".format(field.name, "[]" if field.length else "None"))
 
+        #serialize code
+        """
         for bitname, bit in obj.bits.items():
             self.write("")
             self.write("    @property")
@@ -48,22 +55,49 @@ class CodeGenerator(object):
             self.write("    @{}.setter".format(bitname))
             self.write("    def {}(self, value):".format(bitname))
             self.write("        return self.{} | (value << {})".format(bit.container, bit.idx))
+        """
         self.write("")
         self.write("    def to_binary(self):")
-        self.write("        b = bytes()")
+        self.write("        b = []")
+        for field in obj.fields:
+            if field.switchfield:
+                if field.switchvalue:
+                    self.write("        if self.{}: self.{} |= (value << {}):".format(field.name, field.switchfield, field.switchvalue))
+                else:
+                    bit = obj.bits[field.switchfield]
+                    self.write("        if self.{}: self.{} |= (value << {}):".format(field.name, bit.container, bit.idx))
         for field in obj.fields:
             switch = ""
             if field.switchfield:
-                switch = "if self.{} ".format(field.switchfield)
-                
+                switch = "if self.{}: ".format(field.name)
+            
+            if field.length:
+                self.write("        {}b.append(struct.pack('!{}', len(self.{}))".format(switch, self.to_fmt(obj.get_field(field.length).uatype), field.name))
+            if field.is_struct():
+                self.write("        {}b.append(self.{}.to_binary())".format(switch, field.name))
             else:
-                if field.length:
-                    self.write("        {}b += struct.pack('!{}', len(self.{})".format(switch, self.to_fmt(obj.get_field(field.length).uatype), field.name))
-                if field.is_struct():
-                    self.write("        {}b += self.{}.to_binary()".format(switch, field.name))
+                self.write("        {}b.append(struct.pack('!{}', self.{}))".format(switch, self.to_fmt(field.uatype), field.name))
+        self.write("        return b"".join()")
+        self.write("")
+        self.write("    def from_binary(self, data):")
+        for field in obj.fields:
+            indent = ""
+            if field.switchfield:
+                indent = "    "
+                if field.switchvalue:
+                    self.write("        if self.{} & (1 << {}):".format(field.switchfield, field.switchvalue))
                 else:
-                    self.write("        b += struct.pack('!{}', self.{})".format(self.to_fmt(field.uatype), field.name))
-        self.write("        return b")
+                    bit = obj.bits[field.switchfield]
+                    self.write("        if self.{} & (1 << {}):".format(bit.container, bit.idx))
+            if field.is_struct():
+                self.write(indent + "        data = self.{}.from_binary(data)".format(field.name))
+            else:
+                fmt = self.to_fmt(field.uatype)
+                size = struct.calcsize(fmt)
+                self.write(indent + "        self.{} = struct.unpack({}, data[:{}])".format(field.name, fmt, size))
+                self.write(indent + "        data = data[{}:]".format(size))
+
+        self.write("        return data")
 
 
     def to_fmt(self, uatype):
@@ -99,8 +133,6 @@ class CodeGenerator(object):
             return "d"
         elif uatype == "Float":
             return "f"
-        elif uatype == "ByteString":
-            return "c"
         elif uatype == "Byte":
             return "c"
         else:

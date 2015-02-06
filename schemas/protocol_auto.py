@@ -1,7 +1,10 @@
 '''
 Autogenerate code from xml spec
 '''
+
 import struct
+
+import types
 
 
 
@@ -267,20 +270,32 @@ class XmlElement(object):
         self.Value = []
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!i', self.Length)
-        b += struct.pack('!i', len(self.Value)
-        b += struct.pack('!c', self.Value)
-        return b
+        b = []
+        b.append(struct.pack('!i', self.Length))
+        b.append(struct.pack('!i', len(self.Value))
+        b.append(struct.pack('!c', self.Value))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Length = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Value = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class TwoByteNodeId(object):
     def __init__(self):
         self.Identifier = None
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!c', self.Identifier)
-        return b
+        b = []
+        b.append(struct.pack('!c', self.Identifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Identifier = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class FourByteNodeId(object):
     def __init__(self):
@@ -288,10 +303,17 @@ class FourByteNodeId(object):
         self.Identifier = None
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!c', self.NamespaceIndex)
-        b += struct.pack('!H', self.Identifier)
-        return b
+        b = []
+        b.append(struct.pack('!c', self.NamespaceIndex))
+        b.append(struct.pack('!H', self.Identifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.NamespaceIndex = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.Identifier = struct.unpack(H, data[:2])
+        data = data[2:]
+        return data
 
 class NumericNodeId(object):
     def __init__(self):
@@ -299,10 +321,17 @@ class NumericNodeId(object):
         self.Identifier = None
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!H', self.NamespaceIndex)
-        b += struct.pack('!I', self.Identifier)
-        return b
+        b = []
+        b.append(struct.pack('!H', self.NamespaceIndex))
+        b.append(struct.pack('!I', self.Identifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.NamespaceIndex = struct.unpack(H, data[:2])
+        data = data[2:]
+        self.Identifier = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class StringNodeId(object):
     def __init__(self):
@@ -310,10 +339,17 @@ class StringNodeId(object):
         self.Identifier = None
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!H', self.NamespaceIndex)
-        b += struct.pack('!s', self.Identifier)
-        return b
+        b = []
+        b.append(struct.pack('!H', self.NamespaceIndex))
+        b.append(struct.pack('!s', self.Identifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.NamespaceIndex = struct.unpack(H, data[:2])
+        data = data[2:]
+        self.Identifier = struct.unpack(s, data[:1])
+        data = data[1:]
+        return data
 
 class GuidNodeId(object):
     def __init__(self):
@@ -321,10 +357,16 @@ class GuidNodeId(object):
         self.Identifier = None
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!H', self.NamespaceIndex)
-        b += struct.pack('!None', self.Identifier)
-        return b
+        b = []
+        b.append(struct.pack('!H', self.NamespaceIndex))
+        b.append(self.Identifier.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.NamespaceIndex = struct.unpack(H, data[:2])
+        data = data[2:]
+        data = self.Identifier.from_binary(data)
+        return data
 
 class ByteStringNodeId(object):
     def __init__(self):
@@ -332,10 +374,16 @@ class ByteStringNodeId(object):
         self.Identifier = None
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!H', self.NamespaceIndex)
-        b += struct.pack('!c', self.Identifier)
-        return b
+        b = []
+        b.append(struct.pack('!H', self.NamespaceIndex))
+        b.append(self.Identifier.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.NamespaceIndex = struct.unpack(H, data[:2])
+        data = data[2:]
+        data = self.Identifier.from_binary(data)
+        return data
 
 class NodeId(object):
     def __init__(self):
@@ -347,18 +395,38 @@ class NodeId(object):
         self.Guid = None
         self.ByteString = None
 
-    @property
-    def Reserved1(self):
-        return self.NodeIdType & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.NodeIdType | (value << 7)
-
     def to_binary(self):
-        b = bytes()
-        b += self.NodeIdType.to_binary()
-        return b
+        b = []
+        if self.TwoByte: self.NodeIdType |= (value << 0):
+        if self.FourByte: self.NodeIdType |= (value << 1):
+        if self.Numeric: self.NodeIdType |= (value << 2):
+        if self.String: self.NodeIdType |= (value << 3):
+        if self.Guid: self.NodeIdType |= (value << 4):
+        if self.ByteString: self.NodeIdType |= (value << 5):
+        b.append(self.NodeIdType.to_binary())
+        if self.TwoByte: b.append(self.TwoByte.to_binary())
+        if self.FourByte: b.append(self.FourByte.to_binary())
+        if self.Numeric: b.append(self.Numeric.to_binary())
+        if self.String: b.append(self.String.to_binary())
+        if self.Guid: b.append(self.Guid.to_binary())
+        if self.ByteString: b.append(self.ByteString.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        data = self.NodeIdType.from_binary(data)
+        if self.NodeIdType & (1 << 0):
+            data = self.TwoByte.from_binary(data)
+        if self.NodeIdType & (1 << 1):
+            data = self.FourByte.from_binary(data)
+        if self.NodeIdType & (1 << 2):
+            data = self.Numeric.from_binary(data)
+        if self.NodeIdType & (1 << 3):
+            data = self.String.from_binary(data)
+        if self.NodeIdType & (1 << 4):
+            data = self.Guid.from_binary(data)
+        if self.NodeIdType & (1 << 5):
+            data = self.ByteString.from_binary(data)
+        return data
 
 class ExpandedNodeId(object):
     def __init__(self):
@@ -372,26 +440,48 @@ class ExpandedNodeId(object):
         self.NamespaceURI = None
         self.ServerIndex = None
 
-    @property
-    def NamespaceURISpecified(self):
-        return self.NodeIdType & (1 << 7)
-
-    @NamespaceURISpecified.setter
-    def NamespaceURISpecified(self, value):
-        return self.NodeIdType | (value << 7)
-
-    @property
-    def ServerIndexSpecified(self):
-        return self.NodeIdType & (1 << 6)
-
-    @ServerIndexSpecified.setter
-    def ServerIndexSpecified(self, value):
-        return self.NodeIdType | (value << 6)
-
     def to_binary(self):
-        b = bytes()
-        b += self.NodeIdType.to_binary()
-        return b
+        b = []
+        if self.TwoByte: self.NodeIdType |= (value << 0):
+        if self.FourByte: self.NodeIdType |= (value << 1):
+        if self.Numeric: self.NodeIdType |= (value << 2):
+        if self.String: self.NodeIdType |= (value << 3):
+        if self.Guid: self.NodeIdType |= (value << 4):
+        if self.ByteString: self.NodeIdType |= (value << 5):
+        if self.NamespaceURI: self.NodeIdType |= (value << 7):
+        if self.ServerIndex: self.NodeIdType |= (value << 6):
+        b.append(self.NodeIdType.to_binary())
+        if self.TwoByte: b.append(self.TwoByte.to_binary())
+        if self.FourByte: b.append(self.FourByte.to_binary())
+        if self.Numeric: b.append(self.Numeric.to_binary())
+        if self.String: b.append(self.String.to_binary())
+        if self.Guid: b.append(self.Guid.to_binary())
+        if self.ByteString: b.append(self.ByteString.to_binary())
+        if self.NamespaceURI: b.append(struct.pack('!s', self.NamespaceURI))
+        if self.ServerIndex: b.append(struct.pack('!I', self.ServerIndex))
+        return b.join()
+
+    def from_binary(self, data):
+        data = self.NodeIdType.from_binary(data)
+        if self.NodeIdType & (1 << 0):
+            data = self.TwoByte.from_binary(data)
+        if self.NodeIdType & (1 << 1):
+            data = self.FourByte.from_binary(data)
+        if self.NodeIdType & (1 << 2):
+            data = self.Numeric.from_binary(data)
+        if self.NodeIdType & (1 << 3):
+            data = self.String.from_binary(data)
+        if self.NodeIdType & (1 << 4):
+            data = self.Guid.from_binary(data)
+        if self.NodeIdType & (1 << 5):
+            data = self.ByteString.from_binary(data)
+        if self.NodeIdType & (1 << 7):
+            self.NamespaceURI = struct.unpack(s, data[:1])
+            data = data[1:]
+        if self.NodeIdType & (1 << 6):
+            self.ServerIndex = struct.unpack(I, data[:4])
+            data = data[4:]
+        return data
 
 class DiagnosticInfo(object):
     def __init__(self):
@@ -403,74 +493,43 @@ class DiagnosticInfo(object):
         self.InnerStatusCode = None
         self.InnerDiagnosticInfo = None
 
-    @property
-    def LocaleSpecified(self):
-        return self.Encoding & (1 << 3)
-
-    @LocaleSpecified.setter
-    def LocaleSpecified(self, value):
-        return self.Encoding | (value << 3)
-
-    @property
-    def InnerDiagnosticInfoSpecified(self):
-        return self.Encoding & (1 << 6)
-
-    @InnerDiagnosticInfoSpecified.setter
-    def InnerDiagnosticInfoSpecified(self, value):
-        return self.Encoding | (value << 6)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def SymbolicIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @SymbolicIdSpecified.setter
-    def SymbolicIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
-    @property
-    def NamespaceURISpecified(self):
-        return self.Encoding & (1 << 1)
-
-    @NamespaceURISpecified.setter
-    def NamespaceURISpecified(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def InnerStatusCodeSpecified(self):
-        return self.Encoding & (1 << 5)
-
-    @InnerStatusCodeSpecified.setter
-    def InnerStatusCodeSpecified(self, value):
-        return self.Encoding | (value << 5)
-
-    @property
-    def LocalizedTextSpecified(self):
-        return self.Encoding & (1 << 2)
-
-    @LocalizedTextSpecified.setter
-    def LocalizedTextSpecified(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def AdditionalInfoSpecified(self):
-        return self.Encoding & (1 << 4)
-
-    @AdditionalInfoSpecified.setter
-    def AdditionalInfoSpecified(self, value):
-        return self.Encoding | (value << 4)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        return b
+        b = []
+        if self.SymbolicId: self.Encoding |= (value << 0):
+        if self.NamespaceURI: self.Encoding |= (value << 1):
+        if self.LocalizedText: self.Encoding |= (value << 2):
+        if self.AdditionalInfo: self.Encoding |= (value << 4):
+        if self.InnerStatusCode: self.Encoding |= (value << 5):
+        if self.InnerDiagnosticInfo: self.Encoding |= (value << 6):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.SymbolicId: b.append(struct.pack('!i', self.SymbolicId))
+        if self.NamespaceURI: b.append(struct.pack('!i', self.NamespaceURI))
+        if self.LocalizedText: b.append(struct.pack('!i', self.LocalizedText))
+        if self.AdditionalInfo: b.append(struct.pack('!s', self.AdditionalInfo))
+        if self.InnerStatusCode: b.append(self.InnerStatusCode.to_binary())
+        if self.InnerDiagnosticInfo: b.append(self.InnerDiagnosticInfo.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            self.SymbolicId = struct.unpack(i, data[:4])
+            data = data[4:]
+        if self.Encoding & (1 << 1):
+            self.NamespaceURI = struct.unpack(i, data[:4])
+            data = data[4:]
+        if self.Encoding & (1 << 2):
+            self.LocalizedText = struct.unpack(i, data[:4])
+            data = data[4:]
+        if self.Encoding & (1 << 4):
+            self.AdditionalInfo = struct.unpack(s, data[:1])
+            data = data[1:]
+        if self.Encoding & (1 << 5):
+            data = self.InnerStatusCode.from_binary(data)
+        if self.Encoding & (1 << 6):
+            data = self.InnerDiagnosticInfo.from_binary(data)
+        return data
 
 class QualifiedName(object):
     def __init__(self):
@@ -478,10 +537,17 @@ class QualifiedName(object):
         self.Name = None
 
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!i', self.NamespaceIndex)
-        b += struct.pack('!s', self.Name)
-        return b
+        b = []
+        b.append(struct.pack('!i', self.NamespaceIndex))
+        b.append(struct.pack('!s', self.Name))
+        return b.join()
+
+    def from_binary(self, data):
+        self.NamespaceIndex = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Name = struct.unpack(s, data[:1])
+        data = data[1:]
+        return data
 
 class LocalizedText(object):
     def __init__(self):
@@ -489,34 +555,25 @@ class LocalizedText(object):
         self.Locale = None
         self.Text = None
 
-    @property
-    def LocaleSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @LocaleSpecified.setter
-    def LocaleSpecified(self, value):
-        return self.Encoding | (value << 0)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def TextSpecified(self):
-        return self.Encoding & (1 << 1)
-
-    @TextSpecified.setter
-    def TextSpecified(self, value):
-        return self.Encoding | (value << 1)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        return b
+        b = []
+        if self.Locale: self.Encoding |= (value << 0):
+        if self.Text: self.Encoding |= (value << 1):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.Locale: b.append(struct.pack('!s', self.Locale))
+        if self.Text: b.append(struct.pack('!s', self.Text))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            self.Locale = struct.unpack(s, data[:1])
+            data = data[1:]
+        if self.Encoding & (1 << 1):
+            self.Text = struct.unpack(s, data[:1])
+            data = data[1:]
+        return data
 
 class DataValue(object):
     def __init__(self):
@@ -528,66 +585,43 @@ class DataValue(object):
         self.ServerTimestamp = None
         self.ServerPicoseconds = None
 
-    @property
-    def ValueSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @ValueSpecified.setter
-    def ValueSpecified(self, value):
-        return self.Encoding | (value << 0)
-
-    @property
-    def SourceTimestampSpecified(self):
-        return self.Encoding & (1 << 2)
-
-    @SourceTimestampSpecified.setter
-    def SourceTimestampSpecified(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def StatusCodeSpecified(self):
-        return self.Encoding & (1 << 1)
-
-    @StatusCodeSpecified.setter
-    def StatusCodeSpecified(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def ServerPicosecondsSpecified(self):
-        return self.Encoding & (1 << 5)
-
-    @ServerPicosecondsSpecified.setter
-    def ServerPicosecondsSpecified(self, value):
-        return self.Encoding | (value << 5)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def ServerTimestampSpecified(self):
-        return self.Encoding & (1 << 4)
-
-    @ServerTimestampSpecified.setter
-    def ServerTimestampSpecified(self, value):
-        return self.Encoding | (value << 4)
-
-    @property
-    def SourcePicosecondsSpecified(self):
-        return self.Encoding & (1 << 3)
-
-    @SourcePicosecondsSpecified.setter
-    def SourcePicosecondsSpecified(self, value):
-        return self.Encoding | (value << 3)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        return b
+        b = []
+        if self.Value: self.Encoding |= (value << 0):
+        if self.StatusCode: self.Encoding |= (value << 1):
+        if self.SourceTimestamp: self.Encoding |= (value << 2):
+        if self.SourcePicoseconds: self.Encoding |= (value << 3):
+        if self.ServerTimestamp: self.Encoding |= (value << 4):
+        if self.ServerPicoseconds: self.Encoding |= (value << 5):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.Value: b.append(self.Value.to_binary())
+        if self.StatusCode: b.append(self.StatusCode.to_binary())
+        if self.SourceTimestamp: b.append(struct.pack('!d', self.SourceTimestamp))
+        if self.SourcePicoseconds: b.append(struct.pack('!H', self.SourcePicoseconds))
+        if self.ServerTimestamp: b.append(struct.pack('!d', self.ServerTimestamp))
+        if self.ServerPicoseconds: b.append(struct.pack('!H', self.ServerPicoseconds))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.Value.from_binary(data)
+        if self.Encoding & (1 << 1):
+            data = self.StatusCode.from_binary(data)
+        if self.Encoding & (1 << 2):
+            self.SourceTimestamp = struct.unpack(d, data[:8])
+            data = data[8:]
+        if self.Encoding & (1 << 3):
+            self.SourcePicoseconds = struct.unpack(H, data[:2])
+            data = data[2:]
+        if self.Encoding & (1 << 4):
+            self.ServerTimestamp = struct.unpack(d, data[:8])
+            data = data[8:]
+        if self.Encoding & (1 << 5):
+            self.ServerPicoseconds = struct.unpack(H, data[:2])
+            data = data[2:]
+        return data
 
 class ExtensionObject(object):
     def __init__(self):
@@ -596,45 +630,26 @@ class ExtensionObject(object):
         self.BodyLength = None
         self.Body = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', len(self.Body)
-        b += struct.pack('!c', self.Body)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', len(self.Body))
+        b.append(struct.pack('!c', self.Body))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Body = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class Variant(object):
     def __init__(self):
@@ -666,26 +681,157 @@ class Variant(object):
         self.DataValue = []
         self.Variant = []
 
-    @property
-    def ArrayLengthSpecified(self):
-        return self.Encoding & (1 << 7)
-
-    @ArrayLengthSpecified.setter
-    def ArrayLengthSpecified(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def VariantType(self):
-        return self.Encoding & (1 << 6)
-
-    @VariantType.setter
-    def VariantType(self, value):
-        return self.Encoding | (value << 6)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        return b
+        b = []
+        if self.ArrayLength: self.Encoding |= (value << 7):
+        if self.Boolean: self.VariantType |= (value << 1):
+        if self.SByte: self.VariantType |= (value << 2):
+        if self.Byte: self.VariantType |= (value << 3):
+        if self.Int16: self.VariantType |= (value << 4):
+        if self.UInt16: self.VariantType |= (value << 5):
+        if self.Int32: self.VariantType |= (value << 6):
+        if self.UInt32: self.VariantType |= (value << 7):
+        if self.Int64: self.VariantType |= (value << 8):
+        if self.UInt64: self.VariantType |= (value << 9):
+        if self.Float: self.VariantType |= (value << 10):
+        if self.Double: self.VariantType |= (value << 11):
+        if self.String: self.VariantType |= (value << 12):
+        if self.DateTime: self.VariantType |= (value << 13):
+        if self.Guid: self.VariantType |= (value << 14):
+        if self.ByteString: self.VariantType |= (value << 15):
+        if self.XmlElement: self.VariantType |= (value << 16):
+        if self.NodeId: self.VariantType |= (value << 17):
+        if self.ExpandedNodeId: self.VariantType |= (value << 18):
+        if self.StatusCode: self.VariantType |= (value << 19):
+        if self.DiagnosticInfo: self.VariantType |= (value << 20):
+        if self.QualifiedName: self.VariantType |= (value << 21):
+        if self.LocalizedText: self.VariantType |= (value << 22):
+        if self.ExtensionObject: self.VariantType |= (value << 23):
+        if self.DataValue: self.VariantType |= (value << 24):
+        if self.Variant: self.VariantType |= (value << 25):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.ArrayLength: b.append(struct.pack('!i', self.ArrayLength))
+        if self.Boolean: b.append(struct.pack('!i', len(self.Boolean))
+        if self.Boolean: b.append(struct.pack('!?', self.Boolean))
+        if self.SByte: b.append(struct.pack('!i', len(self.SByte))
+        if self.SByte: b.append(struct.pack('!B', self.SByte))
+        if self.Byte: b.append(struct.pack('!i', len(self.Byte))
+        if self.Byte: b.append(struct.pack('!c', self.Byte))
+        if self.Int16: b.append(struct.pack('!i', len(self.Int16))
+        if self.Int16: b.append(struct.pack('!h', self.Int16))
+        if self.UInt16: b.append(struct.pack('!i', len(self.UInt16))
+        if self.UInt16: b.append(struct.pack('!H', self.UInt16))
+        if self.Int32: b.append(struct.pack('!i', len(self.Int32))
+        if self.Int32: b.append(struct.pack('!i', self.Int32))
+        if self.UInt32: b.append(struct.pack('!i', len(self.UInt32))
+        if self.UInt32: b.append(struct.pack('!I', self.UInt32))
+        if self.Int64: b.append(struct.pack('!i', len(self.Int64))
+        if self.Int64: b.append(struct.pack('!q', self.Int64))
+        if self.UInt64: b.append(struct.pack('!i', len(self.UInt64))
+        if self.UInt64: b.append(struct.pack('!Q', self.UInt64))
+        if self.Float: b.append(struct.pack('!i', len(self.Float))
+        if self.Float: b.append(struct.pack('!f', self.Float))
+        if self.Double: b.append(struct.pack('!i', len(self.Double))
+        if self.Double: b.append(struct.pack('!d', self.Double))
+        if self.String: b.append(struct.pack('!i', len(self.String))
+        if self.String: b.append(self.String.to_binary())
+        if self.DateTime: b.append(struct.pack('!i', len(self.DateTime))
+        if self.DateTime: b.append(struct.pack('!d', self.DateTime))
+        if self.Guid: b.append(struct.pack('!i', len(self.Guid))
+        if self.Guid: b.append(self.Guid.to_binary())
+        if self.ByteString: b.append(struct.pack('!i', len(self.ByteString))
+        if self.ByteString: b.append(self.ByteString.to_binary())
+        if self.XmlElement: b.append(struct.pack('!i', len(self.XmlElement))
+        if self.XmlElement: b.append(self.XmlElement.to_binary())
+        if self.NodeId: b.append(struct.pack('!i', len(self.NodeId))
+        if self.NodeId: b.append(self.NodeId.to_binary())
+        if self.ExpandedNodeId: b.append(struct.pack('!i', len(self.ExpandedNodeId))
+        if self.ExpandedNodeId: b.append(self.ExpandedNodeId.to_binary())
+        if self.StatusCode: b.append(struct.pack('!i', len(self.StatusCode))
+        if self.StatusCode: b.append(self.StatusCode.to_binary())
+        if self.DiagnosticInfo: b.append(struct.pack('!i', len(self.DiagnosticInfo))
+        if self.DiagnosticInfo: b.append(self.DiagnosticInfo.to_binary())
+        if self.QualifiedName: b.append(struct.pack('!i', len(self.QualifiedName))
+        if self.QualifiedName: b.append(self.QualifiedName.to_binary())
+        if self.LocalizedText: b.append(struct.pack('!i', len(self.LocalizedText))
+        if self.LocalizedText: b.append(self.LocalizedText.to_binary())
+        if self.ExtensionObject: b.append(struct.pack('!i', len(self.ExtensionObject))
+        if self.ExtensionObject: b.append(self.ExtensionObject.to_binary())
+        if self.DataValue: b.append(struct.pack('!i', len(self.DataValue))
+        if self.DataValue: b.append(self.DataValue.to_binary())
+        if self.Variant: b.append(struct.pack('!i', len(self.Variant))
+        if self.Variant: b.append(self.Variant.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 7):
+            self.ArrayLength = struct.unpack(i, data[:4])
+            data = data[4:]
+        if self.VariantType & (1 << 1):
+            self.Boolean = struct.unpack(?, data[:1])
+            data = data[1:]
+        if self.VariantType & (1 << 2):
+            self.SByte = struct.unpack(B, data[:1])
+            data = data[1:]
+        if self.VariantType & (1 << 3):
+            self.Byte = struct.unpack(c, data[:1])
+            data = data[1:]
+        if self.VariantType & (1 << 4):
+            self.Int16 = struct.unpack(h, data[:2])
+            data = data[2:]
+        if self.VariantType & (1 << 5):
+            self.UInt16 = struct.unpack(H, data[:2])
+            data = data[2:]
+        if self.VariantType & (1 << 6):
+            self.Int32 = struct.unpack(i, data[:4])
+            data = data[4:]
+        if self.VariantType & (1 << 7):
+            self.UInt32 = struct.unpack(I, data[:4])
+            data = data[4:]
+        if self.VariantType & (1 << 8):
+            self.Int64 = struct.unpack(q, data[:8])
+            data = data[8:]
+        if self.VariantType & (1 << 9):
+            self.UInt64 = struct.unpack(Q, data[:8])
+            data = data[8:]
+        if self.VariantType & (1 << 10):
+            self.Float = struct.unpack(f, data[:4])
+            data = data[4:]
+        if self.VariantType & (1 << 11):
+            self.Double = struct.unpack(d, data[:8])
+            data = data[8:]
+        if self.VariantType & (1 << 12):
+            data = self.String.from_binary(data)
+        if self.VariantType & (1 << 13):
+            self.DateTime = struct.unpack(d, data[:8])
+            data = data[8:]
+        if self.VariantType & (1 << 14):
+            data = self.Guid.from_binary(data)
+        if self.VariantType & (1 << 15):
+            data = self.ByteString.from_binary(data)
+        if self.VariantType & (1 << 16):
+            data = self.XmlElement.from_binary(data)
+        if self.VariantType & (1 << 17):
+            data = self.NodeId.from_binary(data)
+        if self.VariantType & (1 << 18):
+            data = self.ExpandedNodeId.from_binary(data)
+        if self.VariantType & (1 << 19):
+            data = self.StatusCode.from_binary(data)
+        if self.VariantType & (1 << 20):
+            data = self.DiagnosticInfo.from_binary(data)
+        if self.VariantType & (1 << 21):
+            data = self.QualifiedName.from_binary(data)
+        if self.VariantType & (1 << 22):
+            data = self.LocalizedText.from_binary(data)
+        if self.VariantType & (1 << 23):
+            data = self.ExtensionObject.from_binary(data)
+        if self.VariantType & (1 << 24):
+            data = self.DataValue.from_binary(data)
+        if self.VariantType & (1 << 25):
+            data = self.Variant.from_binary(data)
+        return data
 
 class ReferenceNode(object):
     def __init__(self):
@@ -696,46 +842,29 @@ class ReferenceNode(object):
         self.IsInverse = None
         self.TargetId = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ReferenceTypeId.to_binary()
-        b += struct.pack('!?', self.IsInverse)
-        b += self.TargetId.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(struct.pack('!?', self.IsInverse))
+        b.append(self.TargetId.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ReferenceTypeId.from_binary(data)
+        self.IsInverse = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.TargetId.from_binary(data)
+        return data
 
 class Node(object):
     def __init__(self):
@@ -752,53 +881,44 @@ class Node(object):
         self.NoOfReferences = None
         self.References = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        return data
 
 class InstanceNode(object):
     def __init__(self):
@@ -824,63 +944,66 @@ class InstanceNode(object):
         self.NoOfReferences = None
         self.References = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        return data
 
 class TypeNode(object):
     def __init__(self):
@@ -906,63 +1029,66 @@ class TypeNode(object):
         self.NoOfReferences = None
         self.References = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        return data
 
 class ObjectNode(object):
     def __init__(self):
@@ -998,74 +1124,91 @@ class ObjectNode(object):
         self.References = []
         self.EventNotifier = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += struct.pack('!c', self.EventNotifier)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(struct.pack('!c', self.EventNotifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        self.EventNotifier = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class ObjectTypeNode(object):
     def __init__(self):
@@ -1101,74 +1244,91 @@ class ObjectTypeNode(object):
         self.References = []
         self.IsAbstract = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += struct.pack('!?', self.IsAbstract)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(struct.pack('!?', self.IsAbstract))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class VariableNode(object):
     def __init__(self):
@@ -1212,83 +1372,114 @@ class VariableNode(object):
         self.MinimumSamplingInterval = None
         self.Historizing = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.Value.to_binary()
-        b += self.DataType.to_binary()
-        b += struct.pack('!i', self.ValueRank)
-        b += struct.pack('!i', self.NoOfArrayDimensions)
-        b += struct.pack('!i', len(self.ArrayDimensions)
-        b += struct.pack('!I', self.ArrayDimensions)
-        b += struct.pack('!c', self.AccessLevel)
-        b += struct.pack('!c', self.UserAccessLevel)
-        b += struct.pack('!d', self.MinimumSamplingInterval)
-        b += struct.pack('!?', self.Historizing)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.Value.to_binary())
+        b.append(self.DataType.to_binary())
+        b.append(struct.pack('!i', self.ValueRank))
+        b.append(struct.pack('!i', self.NoOfArrayDimensions))
+        b.append(struct.pack('!i', len(self.ArrayDimensions))
+        b.append(struct.pack('!I', self.ArrayDimensions))
+        b.append(struct.pack('!c', self.AccessLevel))
+        b.append(struct.pack('!c', self.UserAccessLevel))
+        b.append(struct.pack('!d', self.MinimumSamplingInterval))
+        b.append(struct.pack('!?', self.Historizing))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.Value.from_binary(data)
+        data = self.DataType.from_binary(data)
+        self.ValueRank = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfArrayDimensions = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ArrayDimensions = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.AccessLevel = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.UserAccessLevel = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.MinimumSamplingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.Historizing = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class VariableTypeNode(object):
     def __init__(self):
@@ -1329,80 +1520,105 @@ class VariableTypeNode(object):
         self.ArrayDimensions = []
         self.IsAbstract = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.Value.to_binary()
-        b += self.DataType.to_binary()
-        b += struct.pack('!i', self.ValueRank)
-        b += struct.pack('!i', self.NoOfArrayDimensions)
-        b += struct.pack('!i', len(self.ArrayDimensions)
-        b += struct.pack('!I', self.ArrayDimensions)
-        b += struct.pack('!?', self.IsAbstract)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.Value.to_binary())
+        b.append(self.DataType.to_binary())
+        b.append(struct.pack('!i', self.ValueRank))
+        b.append(struct.pack('!i', self.NoOfArrayDimensions))
+        b.append(struct.pack('!i', len(self.ArrayDimensions))
+        b.append(struct.pack('!I', self.ArrayDimensions))
+        b.append(struct.pack('!?', self.IsAbstract))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.Value.from_binary(data)
+        data = self.DataType.from_binary(data)
+        self.ValueRank = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfArrayDimensions = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ArrayDimensions = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ReferenceTypeNode(object):
     def __init__(self):
@@ -1440,76 +1656,96 @@ class ReferenceTypeNode(object):
         self.Symmetric = None
         self.InverseName = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += struct.pack('!?', self.IsAbstract)
-        b += struct.pack('!?', self.Symmetric)
-        b += self.InverseName.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(struct.pack('!?', self.IsAbstract))
+        b.append(struct.pack('!?', self.Symmetric))
+        b.append(self.InverseName.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.Symmetric = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.InverseName.from_binary(data)
+        return data
 
 class MethodNode(object):
     def __init__(self):
@@ -1546,75 +1782,94 @@ class MethodNode(object):
         self.Executable = None
         self.UserExecutable = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += struct.pack('!?', self.Executable)
-        b += struct.pack('!?', self.UserExecutable)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(struct.pack('!?', self.Executable))
+        b.append(struct.pack('!?', self.UserExecutable))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        self.Executable = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.UserExecutable = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ViewNode(object):
     def __init__(self):
@@ -1651,75 +1906,94 @@ class ViewNode(object):
         self.ContainsNoLoops = None
         self.EventNotifier = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += struct.pack('!?', self.ContainsNoLoops)
-        b += struct.pack('!c', self.EventNotifier)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(struct.pack('!?', self.ContainsNoLoops))
+        b.append(struct.pack('!c', self.EventNotifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        self.ContainsNoLoops = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.EventNotifier = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class DataTypeNode(object):
     def __init__(self):
@@ -1755,74 +2029,91 @@ class DataTypeNode(object):
         self.References = []
         self.IsAbstract = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        b += struct.pack('!?', self.IsAbstract)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        b.append(struct.pack('!?', self.IsAbstract))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class Argument(object):
     def __init__(self):
@@ -1836,50 +2127,38 @@ class Argument(object):
         self.ArrayDimensions = []
         self.Description = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Name.to_binary()
-        b += self.DataType.to_binary()
-        b += struct.pack('!i', self.ValueRank)
-        b += struct.pack('!i', self.NoOfArrayDimensions)
-        b += struct.pack('!i', len(self.ArrayDimensions)
-        b += struct.pack('!I', self.ArrayDimensions)
-        b += self.Description.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Name.to_binary())
+        b.append(self.DataType.to_binary())
+        b.append(struct.pack('!i', self.ValueRank))
+        b.append(struct.pack('!i', self.NoOfArrayDimensions))
+        b.append(struct.pack('!i', len(self.ArrayDimensions))
+        b.append(struct.pack('!I', self.ArrayDimensions))
+        b.append(self.Description.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Name.from_binary(data)
+        data = self.DataType.from_binary(data)
+        self.ValueRank = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfArrayDimensions = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ArrayDimensions = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.Description.from_binary(data)
+        return data
 
 class EnumValueType(object):
     def __init__(self):
@@ -1890,46 +2169,29 @@ class EnumValueType(object):
         self.DisplayName = None
         self.Description = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!q', self.Value)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!q', self.Value))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Value = struct.unpack(q, data[:8])
+        data = data[8:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        return data
 
 class TimeZoneDataType(object):
     def __init__(self):
@@ -1939,45 +2201,28 @@ class TimeZoneDataType(object):
         self.Offset = None
         self.DaylightSavingInOffset = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!h', self.Offset)
-        b += struct.pack('!?', self.DaylightSavingInOffset)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!h', self.Offset))
+        b.append(struct.pack('!?', self.DaylightSavingInOffset))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Offset = struct.unpack(h, data[:2])
+        data = data[2:]
+        self.DaylightSavingInOffset = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ApplicationDescription(object):
     def __init__(self):
@@ -1993,52 +2238,40 @@ class ApplicationDescription(object):
         self.NoOfDiscoveryUrls = None
         self.DiscoveryUrls = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ApplicationUri.to_binary()
-        b += self.ProductUri.to_binary()
-        b += self.ApplicationName.to_binary()
-        b += self.ApplicationType.to_binary()
-        b += self.GatewayServerUri.to_binary()
-        b += self.DiscoveryProfileUri.to_binary()
-        b += struct.pack('!i', self.NoOfDiscoveryUrls)
-        b += struct.pack('!i', len(self.DiscoveryUrls)
-        b += self.DiscoveryUrls.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ApplicationUri.to_binary())
+        b.append(self.ProductUri.to_binary())
+        b.append(self.ApplicationName.to_binary())
+        b.append(self.ApplicationType.to_binary())
+        b.append(self.GatewayServerUri.to_binary())
+        b.append(self.DiscoveryProfileUri.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiscoveryUrls))
+        b.append(struct.pack('!i', len(self.DiscoveryUrls))
+        b.append(self.DiscoveryUrls.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ApplicationUri.from_binary(data)
+        data = self.ProductUri.from_binary(data)
+        data = self.ApplicationName.from_binary(data)
+        data = self.ApplicationType.from_binary(data)
+        data = self.GatewayServerUri.from_binary(data)
+        data = self.DiscoveryProfileUri.from_binary(data)
+        self.NoOfDiscoveryUrls = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiscoveryUrls.from_binary(data)
+        return data
 
 class RequestHeader(object):
     def __init__(self):
@@ -2053,50 +2286,40 @@ class RequestHeader(object):
         self.TimeoutHint = None
         self.AdditionalHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.AuthenticationToken.to_binary()
-        b += struct.pack('!d', self.Timestamp)
-        b += struct.pack('!I', self.RequestHandle)
-        b += struct.pack('!I', self.ReturnDiagnostics)
-        b += self.AuditEntryId.to_binary()
-        b += struct.pack('!I', self.TimeoutHint)
-        b += self.AdditionalHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.AuthenticationToken.to_binary())
+        b.append(struct.pack('!d', self.Timestamp))
+        b.append(struct.pack('!I', self.RequestHandle))
+        b.append(struct.pack('!I', self.ReturnDiagnostics))
+        b.append(self.AuditEntryId.to_binary())
+        b.append(struct.pack('!I', self.TimeoutHint))
+        b.append(self.AdditionalHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.AuthenticationToken.from_binary(data)
+        self.Timestamp = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RequestHandle = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.ReturnDiagnostics = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.AuditEntryId.from_binary(data)
+        self.TimeoutHint = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.AdditionalHeader.from_binary(data)
+        return data
 
 class ResponseHeader(object):
     def __init__(self):
@@ -2111,51 +2334,40 @@ class ResponseHeader(object):
         self.StringTable = []
         self.AdditionalHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.Timestamp)
-        b += struct.pack('!I', self.RequestHandle)
-        b += self.ServiceResult.to_binary()
-        b += self.ServiceDiagnostics.to_binary()
-        b += struct.pack('!i', self.NoOfStringTable)
-        b += struct.pack('!i', len(self.StringTable)
-        b += self.StringTable.to_binary()
-        b += self.AdditionalHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.Timestamp))
+        b.append(struct.pack('!I', self.RequestHandle))
+        b.append(self.ServiceResult.to_binary())
+        b.append(self.ServiceDiagnostics.to_binary())
+        b.append(struct.pack('!i', self.NoOfStringTable))
+        b.append(struct.pack('!i', len(self.StringTable))
+        b.append(self.StringTable.to_binary())
+        b.append(self.AdditionalHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Timestamp = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RequestHandle = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.ServiceResult.from_binary(data)
+        data = self.ServiceDiagnostics.from_binary(data)
+        self.NoOfStringTable = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StringTable.from_binary(data)
+        data = self.AdditionalHeader.from_binary(data)
+        return data
 
 class ServiceFault(object):
     def __init__(self):
@@ -2164,44 +2376,24 @@ class ServiceFault(object):
         self.BodyLength = None
         self.ResponseHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        return data
 
 class FindServersRequest(object):
     def __init__(self):
@@ -2215,51 +2407,38 @@ class FindServersRequest(object):
         self.NoOfServerUris = None
         self.ServerUris = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.EndpointUrl.to_binary()
-        b += struct.pack('!i', self.NoOfLocaleIds)
-        b += struct.pack('!i', len(self.LocaleIds)
-        b += self.LocaleIds.to_binary()
-        b += struct.pack('!i', self.NoOfServerUris)
-        b += struct.pack('!i', len(self.ServerUris)
-        b += self.ServerUris.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.EndpointUrl.to_binary())
+        b.append(struct.pack('!i', self.NoOfLocaleIds))
+        b.append(struct.pack('!i', len(self.LocaleIds))
+        b.append(self.LocaleIds.to_binary())
+        b.append(struct.pack('!i', self.NoOfServerUris))
+        b.append(struct.pack('!i', len(self.ServerUris))
+        b.append(self.ServerUris.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.EndpointUrl.from_binary(data)
+        self.NoOfLocaleIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.LocaleIds.from_binary(data)
+        self.NoOfServerUris = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ServerUris.from_binary(data)
+        return data
 
 class FindServersResponse(object):
     def __init__(self):
@@ -2270,47 +2449,30 @@ class FindServersResponse(object):
         self.NoOfServers = None
         self.Servers = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfServers)
-        b += struct.pack('!i', len(self.Servers)
-        b += self.Servers.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfServers))
+        b.append(struct.pack('!i', len(self.Servers))
+        b.append(self.Servers.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfServers = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Servers.from_binary(data)
+        return data
 
 class UserTokenPolicy(object):
     def __init__(self):
@@ -2323,48 +2485,32 @@ class UserTokenPolicy(object):
         self.IssuerEndpointUrl = None
         self.SecurityPolicyUri = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.PolicyId.to_binary()
-        b += self.TokenType.to_binary()
-        b += self.IssuedTokenType.to_binary()
-        b += self.IssuerEndpointUrl.to_binary()
-        b += self.SecurityPolicyUri.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.PolicyId.to_binary())
+        b.append(self.TokenType.to_binary())
+        b.append(self.IssuedTokenType.to_binary())
+        b.append(self.IssuerEndpointUrl.to_binary())
+        b.append(self.SecurityPolicyUri.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.PolicyId.from_binary(data)
+        data = self.TokenType.from_binary(data)
+        data = self.IssuedTokenType.from_binary(data)
+        data = self.IssuerEndpointUrl.from_binary(data)
+        data = self.SecurityPolicyUri.from_binary(data)
+        return data
 
 class EndpointDescription(object):
     def __init__(self):
@@ -2381,53 +2527,43 @@ class EndpointDescription(object):
         self.TransportProfileUri = None
         self.SecurityLevel = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.EndpointUrl.to_binary()
-        b += self.Server.to_binary()
-        b += struct.pack('!c', self.ServerCertificate)
-        b += self.SecurityMode.to_binary()
-        b += self.SecurityPolicyUri.to_binary()
-        b += struct.pack('!i', self.NoOfUserIdentityTokens)
-        b += struct.pack('!i', len(self.UserIdentityTokens)
-        b += self.UserIdentityTokens.to_binary()
-        b += self.TransportProfileUri.to_binary()
-        b += struct.pack('!c', self.SecurityLevel)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.EndpointUrl.to_binary())
+        b.append(self.Server.to_binary())
+        b.append(self.ServerCertificate.to_binary())
+        b.append(self.SecurityMode.to_binary())
+        b.append(self.SecurityPolicyUri.to_binary())
+        b.append(struct.pack('!i', self.NoOfUserIdentityTokens))
+        b.append(struct.pack('!i', len(self.UserIdentityTokens))
+        b.append(self.UserIdentityTokens.to_binary())
+        b.append(self.TransportProfileUri.to_binary())
+        b.append(struct.pack('!c', self.SecurityLevel))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EndpointUrl.from_binary(data)
+        data = self.Server.from_binary(data)
+        data = self.ServerCertificate.from_binary(data)
+        data = self.SecurityMode.from_binary(data)
+        data = self.SecurityPolicyUri.from_binary(data)
+        self.NoOfUserIdentityTokens = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.UserIdentityTokens.from_binary(data)
+        data = self.TransportProfileUri.from_binary(data)
+        self.SecurityLevel = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class GetEndpointsRequest(object):
     def __init__(self):
@@ -2441,51 +2577,38 @@ class GetEndpointsRequest(object):
         self.NoOfProfileUris = None
         self.ProfileUris = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.EndpointUrl.to_binary()
-        b += struct.pack('!i', self.NoOfLocaleIds)
-        b += struct.pack('!i', len(self.LocaleIds)
-        b += self.LocaleIds.to_binary()
-        b += struct.pack('!i', self.NoOfProfileUris)
-        b += struct.pack('!i', len(self.ProfileUris)
-        b += self.ProfileUris.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.EndpointUrl.to_binary())
+        b.append(struct.pack('!i', self.NoOfLocaleIds))
+        b.append(struct.pack('!i', len(self.LocaleIds))
+        b.append(self.LocaleIds.to_binary())
+        b.append(struct.pack('!i', self.NoOfProfileUris))
+        b.append(struct.pack('!i', len(self.ProfileUris))
+        b.append(self.ProfileUris.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.EndpointUrl.from_binary(data)
+        self.NoOfLocaleIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.LocaleIds.from_binary(data)
+        self.NoOfProfileUris = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ProfileUris.from_binary(data)
+        return data
 
 class GetEndpointsResponse(object):
     def __init__(self):
@@ -2496,47 +2619,30 @@ class GetEndpointsResponse(object):
         self.NoOfEndpoints = None
         self.Endpoints = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfEndpoints)
-        b += struct.pack('!i', len(self.Endpoints)
-        b += self.Endpoints.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfEndpoints))
+        b.append(struct.pack('!i', len(self.Endpoints))
+        b.append(self.Endpoints.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfEndpoints = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Endpoints.from_binary(data)
+        return data
 
 class RegisteredServer(object):
     def __init__(self):
@@ -2554,55 +2660,47 @@ class RegisteredServer(object):
         self.SemaphoreFilePath = None
         self.IsOnline = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ServerUri.to_binary()
-        b += self.ProductUri.to_binary()
-        b += struct.pack('!i', self.NoOfServerNames)
-        b += struct.pack('!i', len(self.ServerNames)
-        b += self.ServerNames.to_binary()
-        b += self.ServerType.to_binary()
-        b += self.GatewayServerUri.to_binary()
-        b += struct.pack('!i', self.NoOfDiscoveryUrls)
-        b += struct.pack('!i', len(self.DiscoveryUrls)
-        b += self.DiscoveryUrls.to_binary()
-        b += self.SemaphoreFilePath.to_binary()
-        b += struct.pack('!?', self.IsOnline)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ServerUri.to_binary())
+        b.append(self.ProductUri.to_binary())
+        b.append(struct.pack('!i', self.NoOfServerNames))
+        b.append(struct.pack('!i', len(self.ServerNames))
+        b.append(self.ServerNames.to_binary())
+        b.append(self.ServerType.to_binary())
+        b.append(self.GatewayServerUri.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiscoveryUrls))
+        b.append(struct.pack('!i', len(self.DiscoveryUrls))
+        b.append(self.DiscoveryUrls.to_binary())
+        b.append(self.SemaphoreFilePath.to_binary())
+        b.append(struct.pack('!?', self.IsOnline))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ServerUri.from_binary(data)
+        data = self.ProductUri.from_binary(data)
+        self.NoOfServerNames = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ServerNames.from_binary(data)
+        data = self.ServerType.from_binary(data)
+        data = self.GatewayServerUri.from_binary(data)
+        self.NoOfDiscoveryUrls = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiscoveryUrls.from_binary(data)
+        data = self.SemaphoreFilePath.from_binary(data)
+        self.IsOnline = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class RegisterServerRequest(object):
     def __init__(self):
@@ -2612,45 +2710,26 @@ class RegisterServerRequest(object):
         self.RequestHeader = None
         self.Server = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.Server.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.Server.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.Server.from_binary(data)
+        return data
 
 class RegisterServerResponse(object):
     def __init__(self):
@@ -2659,44 +2738,24 @@ class RegisterServerResponse(object):
         self.BodyLength = None
         self.ResponseHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        return data
 
 class ChannelSecurityToken(object):
     def __init__(self):
@@ -2708,47 +2767,34 @@ class ChannelSecurityToken(object):
         self.CreatedAt = None
         self.RevisedLifetime = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.ChannelId)
-        b += struct.pack('!I', self.TokenId)
-        b += struct.pack('!d', self.CreatedAt)
-        b += struct.pack('!I', self.RevisedLifetime)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.ChannelId))
+        b.append(struct.pack('!I', self.TokenId))
+        b.append(struct.pack('!d', self.CreatedAt))
+        b.append(struct.pack('!I', self.RevisedLifetime))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ChannelId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.TokenId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CreatedAt = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RevisedLifetime = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class OpenSecureChannelRequest(object):
     def __init__(self):
@@ -2762,49 +2808,36 @@ class OpenSecureChannelRequest(object):
         self.ClientNonce = None
         self.RequestedLifetime = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.ClientProtocolVersion)
-        b += self.RequestType.to_binary()
-        b += self.SecurityMode.to_binary()
-        b += struct.pack('!c', self.ClientNonce)
-        b += struct.pack('!I', self.RequestedLifetime)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.ClientProtocolVersion))
+        b.append(self.RequestType.to_binary())
+        b.append(self.SecurityMode.to_binary())
+        b.append(self.ClientNonce.to_binary())
+        b.append(struct.pack('!I', self.RequestedLifetime))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.ClientProtocolVersion = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.RequestType.from_binary(data)
+        data = self.SecurityMode.from_binary(data)
+        data = self.ClientNonce.from_binary(data)
+        self.RequestedLifetime = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class OpenSecureChannelResponse(object):
     def __init__(self):
@@ -2816,47 +2849,31 @@ class OpenSecureChannelResponse(object):
         self.SecurityToken = None
         self.ServerNonce = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!I', self.ServerProtocolVersion)
-        b += self.SecurityToken.to_binary()
-        b += struct.pack('!c', self.ServerNonce)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!I', self.ServerProtocolVersion))
+        b.append(self.SecurityToken.to_binary())
+        b.append(self.ServerNonce.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.ServerProtocolVersion = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.SecurityToken.from_binary(data)
+        data = self.ServerNonce.from_binary(data)
+        return data
 
 class CloseSecureChannelRequest(object):
     def __init__(self):
@@ -2865,44 +2882,24 @@ class CloseSecureChannelRequest(object):
         self.BodyLength = None
         self.RequestHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        return data
 
 class CloseSecureChannelResponse(object):
     def __init__(self):
@@ -2911,44 +2908,24 @@ class CloseSecureChannelResponse(object):
         self.BodyLength = None
         self.ResponseHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        return data
 
 class SignedSoftwareCertificate(object):
     def __init__(self):
@@ -2958,45 +2935,26 @@ class SignedSoftwareCertificate(object):
         self.CertificateData = None
         self.Signature = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!c', self.CertificateData)
-        b += struct.pack('!c', self.Signature)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.CertificateData.to_binary())
+        b.append(self.Signature.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.CertificateData.from_binary(data)
+        data = self.Signature.from_binary(data)
+        return data
 
 class SignatureData(object):
     def __init__(self):
@@ -3006,45 +2964,26 @@ class SignatureData(object):
         self.Algorithm = None
         self.Signature = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Algorithm.to_binary()
-        b += struct.pack('!c', self.Signature)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Algorithm.to_binary())
+        b.append(self.Signature.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Algorithm.from_binary(data)
+        data = self.Signature.from_binary(data)
+        return data
 
 class CreateSessionRequest(object):
     def __init__(self):
@@ -3061,52 +3000,42 @@ class CreateSessionRequest(object):
         self.RequestedSessionTimeout = None
         self.MaxResponseMessageSize = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.ClientDescription.to_binary()
-        b += self.ServerUri.to_binary()
-        b += self.EndpointUrl.to_binary()
-        b += self.SessionName.to_binary()
-        b += struct.pack('!c', self.ClientNonce)
-        b += struct.pack('!c', self.ClientCertificate)
-        b += struct.pack('!d', self.RequestedSessionTimeout)
-        b += struct.pack('!I', self.MaxResponseMessageSize)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.ClientDescription.to_binary())
+        b.append(self.ServerUri.to_binary())
+        b.append(self.EndpointUrl.to_binary())
+        b.append(self.SessionName.to_binary())
+        b.append(self.ClientNonce.to_binary())
+        b.append(self.ClientCertificate.to_binary())
+        b.append(struct.pack('!d', self.RequestedSessionTimeout))
+        b.append(struct.pack('!I', self.MaxResponseMessageSize))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.ClientDescription.from_binary(data)
+        data = self.ServerUri.from_binary(data)
+        data = self.EndpointUrl.from_binary(data)
+        data = self.SessionName.from_binary(data)
+        data = self.ClientNonce.from_binary(data)
+        data = self.ClientCertificate.from_binary(data)
+        self.RequestedSessionTimeout = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.MaxResponseMessageSize = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class CreateSessionResponse(object):
     def __init__(self):
@@ -3126,57 +3055,52 @@ class CreateSessionResponse(object):
         self.ServerSignature = None
         self.MaxRequestMessageSize = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += self.SessionId.to_binary()
-        b += self.AuthenticationToken.to_binary()
-        b += struct.pack('!d', self.RevisedSessionTimeout)
-        b += struct.pack('!c', self.ServerNonce)
-        b += struct.pack('!c', self.ServerCertificate)
-        b += struct.pack('!i', self.NoOfServerEndpoints)
-        b += struct.pack('!i', len(self.ServerEndpoints)
-        b += self.ServerEndpoints.to_binary()
-        b += struct.pack('!i', self.NoOfServerSoftwareCertificates)
-        b += struct.pack('!i', len(self.ServerSoftwareCertificates)
-        b += self.ServerSoftwareCertificates.to_binary()
-        b += self.ServerSignature.to_binary()
-        b += struct.pack('!I', self.MaxRequestMessageSize)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(self.SessionId.to_binary())
+        b.append(self.AuthenticationToken.to_binary())
+        b.append(struct.pack('!d', self.RevisedSessionTimeout))
+        b.append(self.ServerNonce.to_binary())
+        b.append(self.ServerCertificate.to_binary())
+        b.append(struct.pack('!i', self.NoOfServerEndpoints))
+        b.append(struct.pack('!i', len(self.ServerEndpoints))
+        b.append(self.ServerEndpoints.to_binary())
+        b.append(struct.pack('!i', self.NoOfServerSoftwareCertificates))
+        b.append(struct.pack('!i', len(self.ServerSoftwareCertificates))
+        b.append(self.ServerSoftwareCertificates.to_binary())
+        b.append(self.ServerSignature.to_binary())
+        b.append(struct.pack('!I', self.MaxRequestMessageSize))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        data = self.SessionId.from_binary(data)
+        data = self.AuthenticationToken.from_binary(data)
+        self.RevisedSessionTimeout = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.ServerNonce.from_binary(data)
+        data = self.ServerCertificate.from_binary(data)
+        self.NoOfServerEndpoints = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ServerEndpoints.from_binary(data)
+        self.NoOfServerSoftwareCertificates = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ServerSoftwareCertificates.from_binary(data)
+        data = self.ServerSignature.from_binary(data)
+        self.MaxRequestMessageSize = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class UserIdentityToken(object):
     def __init__(self):
@@ -3185,44 +3109,24 @@ class UserIdentityToken(object):
         self.BodyLength = None
         self.PolicyId = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.PolicyId.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.PolicyId.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.PolicyId.from_binary(data)
+        return data
 
 class AnonymousIdentityToken(object):
     def __init__(self):
@@ -3232,45 +3136,26 @@ class AnonymousIdentityToken(object):
         self.PolicyId = None
         self.PolicyId = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.PolicyId.to_binary()
-        b += self.PolicyId.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.PolicyId.to_binary())
+        b.append(self.PolicyId.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.PolicyId.from_binary(data)
+        data = self.PolicyId.from_binary(data)
+        return data
 
 class UserNameIdentityToken(object):
     def __init__(self):
@@ -3283,48 +3168,32 @@ class UserNameIdentityToken(object):
         self.Password = None
         self.EncryptionAlgorithm = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.PolicyId.to_binary()
-        b += self.PolicyId.to_binary()
-        b += self.UserName.to_binary()
-        b += struct.pack('!c', self.Password)
-        b += self.EncryptionAlgorithm.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.PolicyId.to_binary())
+        b.append(self.PolicyId.to_binary())
+        b.append(self.UserName.to_binary())
+        b.append(self.Password.to_binary())
+        b.append(self.EncryptionAlgorithm.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.PolicyId.from_binary(data)
+        data = self.PolicyId.from_binary(data)
+        data = self.UserName.from_binary(data)
+        data = self.Password.from_binary(data)
+        data = self.EncryptionAlgorithm.from_binary(data)
+        return data
 
 class X509IdentityToken(object):
     def __init__(self):
@@ -3335,46 +3204,28 @@ class X509IdentityToken(object):
         self.PolicyId = None
         self.CertificateData = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.PolicyId.to_binary()
-        b += self.PolicyId.to_binary()
-        b += struct.pack('!c', self.CertificateData)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.PolicyId.to_binary())
+        b.append(self.PolicyId.to_binary())
+        b.append(self.CertificateData.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.PolicyId.from_binary(data)
+        data = self.PolicyId.from_binary(data)
+        data = self.CertificateData.from_binary(data)
+        return data
 
 class IssuedIdentityToken(object):
     def __init__(self):
@@ -3386,47 +3237,30 @@ class IssuedIdentityToken(object):
         self.TokenData = None
         self.EncryptionAlgorithm = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.PolicyId.to_binary()
-        b += self.PolicyId.to_binary()
-        b += struct.pack('!c', self.TokenData)
-        b += self.EncryptionAlgorithm.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.PolicyId.to_binary())
+        b.append(self.PolicyId.to_binary())
+        b.append(self.TokenData.to_binary())
+        b.append(self.EncryptionAlgorithm.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.PolicyId.from_binary(data)
+        data = self.PolicyId.from_binary(data)
+        data = self.TokenData.from_binary(data)
+        data = self.EncryptionAlgorithm.from_binary(data)
+        return data
 
 class ActivateSessionRequest(object):
     def __init__(self):
@@ -3442,53 +3276,42 @@ class ActivateSessionRequest(object):
         self.UserIdentityToken = None
         self.UserTokenSignature = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.ClientSignature.to_binary()
-        b += struct.pack('!i', self.NoOfClientSoftwareCertificates)
-        b += struct.pack('!i', len(self.ClientSoftwareCertificates)
-        b += self.ClientSoftwareCertificates.to_binary()
-        b += struct.pack('!i', self.NoOfLocaleIds)
-        b += struct.pack('!i', len(self.LocaleIds)
-        b += self.LocaleIds.to_binary()
-        b += self.UserIdentityToken.to_binary()
-        b += self.UserTokenSignature.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.ClientSignature.to_binary())
+        b.append(struct.pack('!i', self.NoOfClientSoftwareCertificates))
+        b.append(struct.pack('!i', len(self.ClientSoftwareCertificates))
+        b.append(self.ClientSoftwareCertificates.to_binary())
+        b.append(struct.pack('!i', self.NoOfLocaleIds))
+        b.append(struct.pack('!i', len(self.LocaleIds))
+        b.append(self.LocaleIds.to_binary())
+        b.append(self.UserIdentityToken.to_binary())
+        b.append(self.UserTokenSignature.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.ClientSignature.from_binary(data)
+        self.NoOfClientSoftwareCertificates = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ClientSoftwareCertificates.from_binary(data)
+        self.NoOfLocaleIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.LocaleIds.from_binary(data)
+        data = self.UserIdentityToken.from_binary(data)
+        data = self.UserTokenSignature.from_binary(data)
+        return data
 
 class ActivateSessionResponse(object):
     def __init__(self):
@@ -3502,51 +3325,38 @@ class ActivateSessionResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!c', self.ServerNonce)
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(self.ServerNonce.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        data = self.ServerNonce.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class CloseSessionRequest(object):
     def __init__(self):
@@ -3556,45 +3366,27 @@ class CloseSessionRequest(object):
         self.RequestHeader = None
         self.DeleteSubscriptions = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!?', self.DeleteSubscriptions)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!?', self.DeleteSubscriptions))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.DeleteSubscriptions = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class CloseSessionResponse(object):
     def __init__(self):
@@ -3603,44 +3395,24 @@ class CloseSessionResponse(object):
         self.BodyLength = None
         self.ResponseHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        return data
 
 class CancelRequest(object):
     def __init__(self):
@@ -3650,45 +3422,27 @@ class CancelRequest(object):
         self.RequestHeader = None
         self.RequestHandle = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.RequestHandle)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.RequestHandle))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.RequestHandle = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class CancelResponse(object):
     def __init__(self):
@@ -3698,45 +3452,27 @@ class CancelResponse(object):
         self.ResponseHeader = None
         self.CancelCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!I', self.CancelCount)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!I', self.CancelCount))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.CancelCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class NodeAttributes(object):
     def __init__(self):
@@ -3749,48 +3485,35 @@ class NodeAttributes(object):
         self.WriteMask = None
         self.UserWriteMask = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class ObjectAttributes(object):
     def __init__(self):
@@ -3809,54 +3532,51 @@ class ObjectAttributes(object):
         self.UserWriteMask = None
         self.EventNotifier = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!c', self.EventNotifier)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!c', self.EventNotifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.EventNotifier = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class VariableAttributes(object):
     def __init__(self):
@@ -3883,63 +3603,74 @@ class VariableAttributes(object):
         self.MinimumSamplingInterval = None
         self.Historizing = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += self.Value.to_binary()
-        b += self.DataType.to_binary()
-        b += struct.pack('!i', self.ValueRank)
-        b += struct.pack('!i', self.NoOfArrayDimensions)
-        b += struct.pack('!i', len(self.ArrayDimensions)
-        b += struct.pack('!I', self.ArrayDimensions)
-        b += struct.pack('!c', self.AccessLevel)
-        b += struct.pack('!c', self.UserAccessLevel)
-        b += struct.pack('!d', self.MinimumSamplingInterval)
-        b += struct.pack('!?', self.Historizing)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(self.Value.to_binary())
+        b.append(self.DataType.to_binary())
+        b.append(struct.pack('!i', self.ValueRank))
+        b.append(struct.pack('!i', self.NoOfArrayDimensions))
+        b.append(struct.pack('!i', len(self.ArrayDimensions))
+        b.append(struct.pack('!I', self.ArrayDimensions))
+        b.append(struct.pack('!c', self.AccessLevel))
+        b.append(struct.pack('!c', self.UserAccessLevel))
+        b.append(struct.pack('!d', self.MinimumSamplingInterval))
+        b.append(struct.pack('!?', self.Historizing))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.Value.from_binary(data)
+        data = self.DataType.from_binary(data)
+        self.ValueRank = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfArrayDimensions = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ArrayDimensions = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.AccessLevel = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.UserAccessLevel = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.MinimumSamplingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.Historizing = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class MethodAttributes(object):
     def __init__(self):
@@ -3959,55 +3690,54 @@ class MethodAttributes(object):
         self.Executable = None
         self.UserExecutable = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!?', self.Executable)
-        b += struct.pack('!?', self.UserExecutable)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!?', self.Executable))
+        b.append(struct.pack('!?', self.UserExecutable))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.Executable = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.UserExecutable = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ObjectTypeAttributes(object):
     def __init__(self):
@@ -4026,54 +3756,51 @@ class ObjectTypeAttributes(object):
         self.UserWriteMask = None
         self.IsAbstract = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!?', self.IsAbstract)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!?', self.IsAbstract))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class VariableTypeAttributes(object):
     def __init__(self):
@@ -4097,60 +3824,65 @@ class VariableTypeAttributes(object):
         self.ArrayDimensions = []
         self.IsAbstract = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += self.Value.to_binary()
-        b += self.DataType.to_binary()
-        b += struct.pack('!i', self.ValueRank)
-        b += struct.pack('!i', self.NoOfArrayDimensions)
-        b += struct.pack('!i', len(self.ArrayDimensions)
-        b += struct.pack('!I', self.ArrayDimensions)
-        b += struct.pack('!?', self.IsAbstract)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(self.Value.to_binary())
+        b.append(self.DataType.to_binary())
+        b.append(struct.pack('!i', self.ValueRank))
+        b.append(struct.pack('!i', self.NoOfArrayDimensions))
+        b.append(struct.pack('!i', len(self.ArrayDimensions))
+        b.append(struct.pack('!I', self.ArrayDimensions))
+        b.append(struct.pack('!?', self.IsAbstract))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.Value.from_binary(data)
+        data = self.DataType.from_binary(data)
+        self.ValueRank = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfArrayDimensions = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ArrayDimensions = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ReferenceTypeAttributes(object):
     def __init__(self):
@@ -4171,56 +3903,56 @@ class ReferenceTypeAttributes(object):
         self.Symmetric = None
         self.InverseName = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!?', self.IsAbstract)
-        b += struct.pack('!?', self.Symmetric)
-        b += self.InverseName.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!?', self.IsAbstract))
+        b.append(struct.pack('!?', self.Symmetric))
+        b.append(self.InverseName.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.Symmetric = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.InverseName.from_binary(data)
+        return data
 
 class DataTypeAttributes(object):
     def __init__(self):
@@ -4239,54 +3971,51 @@ class DataTypeAttributes(object):
         self.UserWriteMask = None
         self.IsAbstract = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!?', self.IsAbstract)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!?', self.IsAbstract))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.IsAbstract = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ViewAttributes(object):
     def __init__(self):
@@ -4306,55 +4035,54 @@ class ViewAttributes(object):
         self.ContainsNoLoops = None
         self.EventNotifier = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!I', self.SpecifiedAttributes)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        b += struct.pack('!I', self.WriteMask)
-        b += struct.pack('!I', self.UserWriteMask)
-        b += struct.pack('!?', self.ContainsNoLoops)
-        b += struct.pack('!c', self.EventNotifier)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!I', self.SpecifiedAttributes))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        b.append(struct.pack('!I', self.WriteMask))
+        b.append(struct.pack('!I', self.UserWriteMask))
+        b.append(struct.pack('!?', self.ContainsNoLoops))
+        b.append(struct.pack('!c', self.EventNotifier))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SpecifiedAttributes = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        self.WriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UserWriteMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.ContainsNoLoops = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.EventNotifier = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class AddNodesItem(object):
     def __init__(self):
@@ -4369,50 +4097,36 @@ class AddNodesItem(object):
         self.NodeAttributes = None
         self.TypeDefinition = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ParentNodeId.to_binary()
-        b += self.ReferenceTypeId.to_binary()
-        b += self.RequestedNewNodeId.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.NodeAttributes.to_binary()
-        b += self.TypeDefinition.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ParentNodeId.to_binary())
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(self.RequestedNewNodeId.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.NodeAttributes.to_binary())
+        b.append(self.TypeDefinition.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ParentNodeId.from_binary(data)
+        data = self.ReferenceTypeId.from_binary(data)
+        data = self.RequestedNewNodeId.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.NodeAttributes.from_binary(data)
+        data = self.TypeDefinition.from_binary(data)
+        return data
 
 class AddNodesResult(object):
     def __init__(self):
@@ -4422,45 +4136,26 @@ class AddNodesResult(object):
         self.StatusCode = None
         self.AddedNodeId = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += self.AddedNodeId.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(self.AddedNodeId.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        data = self.AddedNodeId.from_binary(data)
+        return data
 
 class AddNodesRequest(object):
     def __init__(self):
@@ -4471,47 +4166,30 @@ class AddNodesRequest(object):
         self.NoOfNodesToAdd = None
         self.NodesToAdd = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfNodesToAdd)
-        b += struct.pack('!i', len(self.NodesToAdd)
-        b += self.NodesToAdd.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodesToAdd))
+        b.append(struct.pack('!i', len(self.NodesToAdd))
+        b.append(self.NodesToAdd.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfNodesToAdd = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToAdd.from_binary(data)
+        return data
 
 class AddNodesResponse(object):
     def __init__(self):
@@ -4524,50 +4202,36 @@ class AddNodesResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class AddReferencesItem(object):
     def __init__(self):
@@ -4581,49 +4245,35 @@ class AddReferencesItem(object):
         self.TargetNodeId = None
         self.TargetNodeClass = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.SourceNodeId.to_binary()
-        b += self.ReferenceTypeId.to_binary()
-        b += struct.pack('!?', self.IsForward)
-        b += self.TargetServerUri.to_binary()
-        b += self.TargetNodeId.to_binary()
-        b += self.TargetNodeClass.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.SourceNodeId.to_binary())
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(struct.pack('!?', self.IsForward))
+        b.append(self.TargetServerUri.to_binary())
+        b.append(self.TargetNodeId.to_binary())
+        b.append(self.TargetNodeClass.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SourceNodeId.from_binary(data)
+        data = self.ReferenceTypeId.from_binary(data)
+        self.IsForward = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.TargetServerUri.from_binary(data)
+        data = self.TargetNodeId.from_binary(data)
+        data = self.TargetNodeClass.from_binary(data)
+        return data
 
 class AddReferencesRequest(object):
     def __init__(self):
@@ -4634,47 +4284,30 @@ class AddReferencesRequest(object):
         self.NoOfReferencesToAdd = None
         self.ReferencesToAdd = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfReferencesToAdd)
-        b += struct.pack('!i', len(self.ReferencesToAdd)
-        b += self.ReferencesToAdd.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfReferencesToAdd))
+        b.append(struct.pack('!i', len(self.ReferencesToAdd))
+        b.append(self.ReferencesToAdd.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfReferencesToAdd = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ReferencesToAdd.from_binary(data)
+        return data
 
 class AddReferencesResponse(object):
     def __init__(self):
@@ -4687,50 +4320,36 @@ class AddReferencesResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class DeleteNodesItem(object):
     def __init__(self):
@@ -4740,45 +4359,27 @@ class DeleteNodesItem(object):
         self.NodeId = None
         self.DeleteTargetReferences = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += struct.pack('!?', self.DeleteTargetReferences)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(struct.pack('!?', self.DeleteTargetReferences))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        self.DeleteTargetReferences = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class DeleteNodesRequest(object):
     def __init__(self):
@@ -4789,47 +4390,30 @@ class DeleteNodesRequest(object):
         self.NoOfNodesToDelete = None
         self.NodesToDelete = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfNodesToDelete)
-        b += struct.pack('!i', len(self.NodesToDelete)
-        b += self.NodesToDelete.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodesToDelete))
+        b.append(struct.pack('!i', len(self.NodesToDelete))
+        b.append(self.NodesToDelete.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfNodesToDelete = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToDelete.from_binary(data)
+        return data
 
 class DeleteNodesResponse(object):
     def __init__(self):
@@ -4842,50 +4426,36 @@ class DeleteNodesResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class DeleteReferencesItem(object):
     def __init__(self):
@@ -4898,48 +4468,34 @@ class DeleteReferencesItem(object):
         self.TargetNodeId = None
         self.DeleteBidirectional = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.SourceNodeId.to_binary()
-        b += self.ReferenceTypeId.to_binary()
-        b += struct.pack('!?', self.IsForward)
-        b += self.TargetNodeId.to_binary()
-        b += struct.pack('!?', self.DeleteBidirectional)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.SourceNodeId.to_binary())
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(struct.pack('!?', self.IsForward))
+        b.append(self.TargetNodeId.to_binary())
+        b.append(struct.pack('!?', self.DeleteBidirectional))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SourceNodeId.from_binary(data)
+        data = self.ReferenceTypeId.from_binary(data)
+        self.IsForward = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.TargetNodeId.from_binary(data)
+        self.DeleteBidirectional = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class DeleteReferencesRequest(object):
     def __init__(self):
@@ -4950,47 +4506,30 @@ class DeleteReferencesRequest(object):
         self.NoOfReferencesToDelete = None
         self.ReferencesToDelete = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfReferencesToDelete)
-        b += struct.pack('!i', len(self.ReferencesToDelete)
-        b += self.ReferencesToDelete.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfReferencesToDelete))
+        b.append(struct.pack('!i', len(self.ReferencesToDelete))
+        b.append(self.ReferencesToDelete.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfReferencesToDelete = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ReferencesToDelete.from_binary(data)
+        return data
 
 class DeleteReferencesResponse(object):
     def __init__(self):
@@ -5003,50 +4542,36 @@ class DeleteReferencesResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class ViewDescription(object):
     def __init__(self):
@@ -5057,46 +4582,30 @@ class ViewDescription(object):
         self.Timestamp = None
         self.ViewVersion = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ViewId.to_binary()
-        b += struct.pack('!d', self.Timestamp)
-        b += struct.pack('!I', self.ViewVersion)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ViewId.to_binary())
+        b.append(struct.pack('!d', self.Timestamp))
+        b.append(struct.pack('!I', self.ViewVersion))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ViewId.from_binary(data)
+        self.Timestamp = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.ViewVersion = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class BrowseDescription(object):
     def __init__(self):
@@ -5110,49 +4619,37 @@ class BrowseDescription(object):
         self.NodeClassMask = None
         self.ResultMask = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.BrowseDirection.to_binary()
-        b += self.ReferenceTypeId.to_binary()
-        b += struct.pack('!?', self.IncludeSubtypes)
-        b += struct.pack('!I', self.NodeClassMask)
-        b += struct.pack('!I', self.ResultMask)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.BrowseDirection.to_binary())
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(struct.pack('!?', self.IncludeSubtypes))
+        b.append(struct.pack('!I', self.NodeClassMask))
+        b.append(struct.pack('!I', self.ResultMask))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.BrowseDirection.from_binary(data)
+        data = self.ReferenceTypeId.from_binary(data)
+        self.IncludeSubtypes = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.NodeClassMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.ResultMask = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class ReferenceDescription(object):
     def __init__(self):
@@ -5167,50 +4664,37 @@ class ReferenceDescription(object):
         self.NodeClass = None
         self.TypeDefinition = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ReferenceTypeId.to_binary()
-        b += struct.pack('!?', self.IsForward)
-        b += self.NodeId.to_binary()
-        b += self.BrowseName.to_binary()
-        b += self.DisplayName.to_binary()
-        b += self.NodeClass.to_binary()
-        b += self.TypeDefinition.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(struct.pack('!?', self.IsForward))
+        b.append(self.NodeId.to_binary())
+        b.append(self.BrowseName.to_binary())
+        b.append(self.DisplayName.to_binary())
+        b.append(self.NodeClass.to_binary())
+        b.append(self.TypeDefinition.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ReferenceTypeId.from_binary(data)
+        self.IsForward = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.NodeId.from_binary(data)
+        data = self.BrowseName.from_binary(data)
+        data = self.DisplayName.from_binary(data)
+        data = self.NodeClass.from_binary(data)
+        data = self.TypeDefinition.from_binary(data)
+        return data
 
 class BrowseResult(object):
     def __init__(self):
@@ -5222,48 +4706,32 @@ class BrowseResult(object):
         self.NoOfReferences = None
         self.References = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!c', self.ContinuationPoint)
-        b += struct.pack('!i', self.NoOfReferences)
-        b += struct.pack('!i', len(self.References)
-        b += self.References.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(self.ContinuationPoint.to_binary())
+        b.append(struct.pack('!i', self.NoOfReferences))
+        b.append(struct.pack('!i', len(self.References))
+        b.append(self.References.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        data = self.ContinuationPoint.from_binary(data)
+        self.NoOfReferences = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.References.from_binary(data)
+        return data
 
 class BrowseRequest(object):
     def __init__(self):
@@ -5276,49 +4744,35 @@ class BrowseRequest(object):
         self.NoOfNodesToBrowse = None
         self.NodesToBrowse = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.View.to_binary()
-        b += struct.pack('!I', self.RequestedMaxReferencesPerNode)
-        b += struct.pack('!i', self.NoOfNodesToBrowse)
-        b += struct.pack('!i', len(self.NodesToBrowse)
-        b += self.NodesToBrowse.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.View.to_binary())
+        b.append(struct.pack('!I', self.RequestedMaxReferencesPerNode))
+        b.append(struct.pack('!i', self.NoOfNodesToBrowse))
+        b.append(struct.pack('!i', len(self.NodesToBrowse))
+        b.append(self.NodesToBrowse.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.View.from_binary(data)
+        self.RequestedMaxReferencesPerNode = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfNodesToBrowse = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToBrowse.from_binary(data)
+        return data
 
 class BrowseResponse(object):
     def __init__(self):
@@ -5331,50 +4785,36 @@ class BrowseResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class BrowseNextRequest(object):
     def __init__(self):
@@ -5386,48 +4826,33 @@ class BrowseNextRequest(object):
         self.NoOfContinuationPoints = None
         self.ContinuationPoints = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!?', self.ReleaseContinuationPoints)
-        b += struct.pack('!i', self.NoOfContinuationPoints)
-        b += struct.pack('!i', len(self.ContinuationPoints)
-        b += struct.pack('!c', self.ContinuationPoints)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!?', self.ReleaseContinuationPoints))
+        b.append(struct.pack('!i', self.NoOfContinuationPoints))
+        b.append(struct.pack('!i', len(self.ContinuationPoints))
+        b.append(self.ContinuationPoints.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.ReleaseContinuationPoints = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.NoOfContinuationPoints = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ContinuationPoints.from_binary(data)
+        return data
 
 class BrowseNextResponse(object):
     def __init__(self):
@@ -5440,50 +4865,36 @@ class BrowseNextResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class RelativePathElement(object):
     def __init__(self):
@@ -5495,47 +4906,32 @@ class RelativePathElement(object):
         self.IncludeSubtypes = None
         self.TargetName = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ReferenceTypeId.to_binary()
-        b += struct.pack('!?', self.IsInverse)
-        b += struct.pack('!?', self.IncludeSubtypes)
-        b += self.TargetName.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(struct.pack('!?', self.IsInverse))
+        b.append(struct.pack('!?', self.IncludeSubtypes))
+        b.append(self.TargetName.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ReferenceTypeId.from_binary(data)
+        self.IsInverse = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.IncludeSubtypes = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.TargetName.from_binary(data)
+        return data
 
 class RelativePath(object):
     def __init__(self):
@@ -5545,46 +4941,28 @@ class RelativePath(object):
         self.NoOfElements = None
         self.Elements = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfElements)
-        b += struct.pack('!i', len(self.Elements)
-        b += self.Elements.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfElements))
+        b.append(struct.pack('!i', len(self.Elements))
+        b.append(self.Elements.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfElements = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Elements.from_binary(data)
+        return data
 
 class BrowsePath(object):
     def __init__(self):
@@ -5594,45 +4972,26 @@ class BrowsePath(object):
         self.StartingNode = None
         self.RelativePath = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StartingNode.to_binary()
-        b += self.RelativePath.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StartingNode.to_binary())
+        b.append(self.RelativePath.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StartingNode.from_binary(data)
+        data = self.RelativePath.from_binary(data)
+        return data
 
 class BrowsePathTarget(object):
     def __init__(self):
@@ -5642,45 +5001,27 @@ class BrowsePathTarget(object):
         self.TargetId = None
         self.RemainingPathIndex = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.TargetId.to_binary()
-        b += struct.pack('!I', self.RemainingPathIndex)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.TargetId.to_binary())
+        b.append(struct.pack('!I', self.RemainingPathIndex))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.TargetId.from_binary(data)
+        self.RemainingPathIndex = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class BrowsePathResult(object):
     def __init__(self):
@@ -5691,47 +5032,30 @@ class BrowsePathResult(object):
         self.NoOfTargets = None
         self.Targets = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!i', self.NoOfTargets)
-        b += struct.pack('!i', len(self.Targets)
-        b += self.Targets.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!i', self.NoOfTargets))
+        b.append(struct.pack('!i', len(self.Targets))
+        b.append(self.Targets.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.NoOfTargets = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Targets.from_binary(data)
+        return data
 
 class TranslateBrowsePathsToNodeIdsRequest(object):
     def __init__(self):
@@ -5742,47 +5066,30 @@ class TranslateBrowsePathsToNodeIdsRequest(object):
         self.NoOfBrowsePaths = None
         self.BrowsePaths = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfBrowsePaths)
-        b += struct.pack('!i', len(self.BrowsePaths)
-        b += self.BrowsePaths.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfBrowsePaths))
+        b.append(struct.pack('!i', len(self.BrowsePaths))
+        b.append(self.BrowsePaths.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfBrowsePaths = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.BrowsePaths.from_binary(data)
+        return data
 
 class TranslateBrowsePathsToNodeIdsResponse(object):
     def __init__(self):
@@ -5795,50 +5102,36 @@ class TranslateBrowsePathsToNodeIdsResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class RegisterNodesRequest(object):
     def __init__(self):
@@ -5849,47 +5142,30 @@ class RegisterNodesRequest(object):
         self.NoOfNodesToRegister = None
         self.NodesToRegister = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfNodesToRegister)
-        b += struct.pack('!i', len(self.NodesToRegister)
-        b += self.NodesToRegister.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodesToRegister))
+        b.append(struct.pack('!i', len(self.NodesToRegister))
+        b.append(self.NodesToRegister.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfNodesToRegister = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToRegister.from_binary(data)
+        return data
 
 class RegisterNodesResponse(object):
     def __init__(self):
@@ -5900,47 +5176,30 @@ class RegisterNodesResponse(object):
         self.NoOfRegisteredNodeIds = None
         self.RegisteredNodeIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfRegisteredNodeIds)
-        b += struct.pack('!i', len(self.RegisteredNodeIds)
-        b += self.RegisteredNodeIds.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfRegisteredNodeIds))
+        b.append(struct.pack('!i', len(self.RegisteredNodeIds))
+        b.append(self.RegisteredNodeIds.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfRegisteredNodeIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RegisteredNodeIds.from_binary(data)
+        return data
 
 class UnregisterNodesRequest(object):
     def __init__(self):
@@ -5951,47 +5210,30 @@ class UnregisterNodesRequest(object):
         self.NoOfNodesToUnregister = None
         self.NodesToUnregister = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfNodesToUnregister)
-        b += struct.pack('!i', len(self.NodesToUnregister)
-        b += self.NodesToUnregister.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodesToUnregister))
+        b.append(struct.pack('!i', len(self.NodesToUnregister))
+        b.append(self.NodesToUnregister.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfNodesToUnregister = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToUnregister.from_binary(data)
+        return data
 
 class UnregisterNodesResponse(object):
     def __init__(self):
@@ -6000,44 +5242,24 @@ class UnregisterNodesResponse(object):
         self.BodyLength = None
         self.ResponseHeader = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        return data
 
 class EndpointConfiguration(object):
     def __init__(self):
@@ -6054,52 +5276,49 @@ class EndpointConfiguration(object):
         self.ChannelLifetime = None
         self.SecurityTokenLifetime = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.OperationTimeout)
-        b += struct.pack('!?', self.UseBinaryEncoding)
-        b += struct.pack('!i', self.MaxStringLength)
-        b += struct.pack('!i', self.MaxByteStringLength)
-        b += struct.pack('!i', self.MaxArrayLength)
-        b += struct.pack('!i', self.MaxMessageSize)
-        b += struct.pack('!i', self.MaxBufferSize)
-        b += struct.pack('!i', self.ChannelLifetime)
-        b += struct.pack('!i', self.SecurityTokenLifetime)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.OperationTimeout))
+        b.append(struct.pack('!?', self.UseBinaryEncoding))
+        b.append(struct.pack('!i', self.MaxStringLength))
+        b.append(struct.pack('!i', self.MaxByteStringLength))
+        b.append(struct.pack('!i', self.MaxArrayLength))
+        b.append(struct.pack('!i', self.MaxMessageSize))
+        b.append(struct.pack('!i', self.MaxBufferSize))
+        b.append(struct.pack('!i', self.ChannelLifetime))
+        b.append(struct.pack('!i', self.SecurityTokenLifetime))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.OperationTimeout = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.UseBinaryEncoding = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.MaxStringLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.MaxByteStringLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.MaxArrayLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.MaxMessageSize = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.MaxBufferSize = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ChannelLifetime = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SecurityTokenLifetime = struct.unpack(i, data[:4])
+        data = data[4:]
+        return data
 
 class SupportedProfile(object):
     def __init__(self):
@@ -6114,51 +5333,39 @@ class SupportedProfile(object):
         self.NoOfUnsupportedUnitIds = None
         self.UnsupportedUnitIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.OrganizationUri.to_binary()
-        b += self.ProfileId.to_binary()
-        b += self.ComplianceTool.to_binary()
-        b += struct.pack('!d', self.ComplianceDate)
-        b += self.ComplianceLevel.to_binary()
-        b += struct.pack('!i', self.NoOfUnsupportedUnitIds)
-        b += struct.pack('!i', len(self.UnsupportedUnitIds)
-        b += self.UnsupportedUnitIds.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.OrganizationUri.to_binary())
+        b.append(self.ProfileId.to_binary())
+        b.append(self.ComplianceTool.to_binary())
+        b.append(struct.pack('!d', self.ComplianceDate))
+        b.append(self.ComplianceLevel.to_binary())
+        b.append(struct.pack('!i', self.NoOfUnsupportedUnitIds))
+        b.append(struct.pack('!i', len(self.UnsupportedUnitIds))
+        b.append(self.UnsupportedUnitIds.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.OrganizationUri.from_binary(data)
+        data = self.ProfileId.from_binary(data)
+        data = self.ComplianceTool.from_binary(data)
+        self.ComplianceDate = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.ComplianceLevel.from_binary(data)
+        self.NoOfUnsupportedUnitIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.UnsupportedUnitIds.from_binary(data)
+        return data
 
 class SoftwareCertificate(object):
     def __init__(self):
@@ -6177,55 +5384,48 @@ class SoftwareCertificate(object):
         self.NoOfSupportedProfiles = None
         self.SupportedProfiles = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ProductName.to_binary()
-        b += self.ProductUri.to_binary()
-        b += self.VendorName.to_binary()
-        b += struct.pack('!c', self.VendorProductCertificate)
-        b += self.SoftwareVersion.to_binary()
-        b += self.BuildNumber.to_binary()
-        b += struct.pack('!d', self.BuildDate)
-        b += self.IssuedBy.to_binary()
-        b += struct.pack('!d', self.IssueDate)
-        b += struct.pack('!i', self.NoOfSupportedProfiles)
-        b += struct.pack('!i', len(self.SupportedProfiles)
-        b += self.SupportedProfiles.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ProductName.to_binary())
+        b.append(self.ProductUri.to_binary())
+        b.append(self.VendorName.to_binary())
+        b.append(self.VendorProductCertificate.to_binary())
+        b.append(self.SoftwareVersion.to_binary())
+        b.append(self.BuildNumber.to_binary())
+        b.append(struct.pack('!d', self.BuildDate))
+        b.append(self.IssuedBy.to_binary())
+        b.append(struct.pack('!d', self.IssueDate))
+        b.append(struct.pack('!i', self.NoOfSupportedProfiles))
+        b.append(struct.pack('!i', len(self.SupportedProfiles))
+        b.append(self.SupportedProfiles.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ProductName.from_binary(data)
+        data = self.ProductUri.from_binary(data)
+        data = self.VendorName.from_binary(data)
+        data = self.VendorProductCertificate.from_binary(data)
+        data = self.SoftwareVersion.from_binary(data)
+        data = self.BuildNumber.from_binary(data)
+        self.BuildDate = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.IssuedBy.from_binary(data)
+        self.IssueDate = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.NoOfSupportedProfiles = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SupportedProfiles.from_binary(data)
+        return data
 
 class QueryDataDescription(object):
     def __init__(self):
@@ -6236,46 +5436,29 @@ class QueryDataDescription(object):
         self.AttributeId = None
         self.IndexRange = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RelativePath.to_binary()
-        b += struct.pack('!I', self.AttributeId)
-        b += self.IndexRange.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RelativePath.to_binary())
+        b.append(struct.pack('!I', self.AttributeId))
+        b.append(self.IndexRange.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RelativePath.from_binary(data)
+        self.AttributeId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.IndexRange.from_binary(data)
+        return data
 
 class NodeTypeDescription(object):
     def __init__(self):
@@ -6287,48 +5470,33 @@ class NodeTypeDescription(object):
         self.NoOfDataToReturn = None
         self.DataToReturn = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.TypeDefinitionNode.to_binary()
-        b += struct.pack('!?', self.IncludeSubTypes)
-        b += struct.pack('!i', self.NoOfDataToReturn)
-        b += struct.pack('!i', len(self.DataToReturn)
-        b += self.DataToReturn.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.TypeDefinitionNode.to_binary())
+        b.append(struct.pack('!?', self.IncludeSubTypes))
+        b.append(struct.pack('!i', self.NoOfDataToReturn))
+        b.append(struct.pack('!i', len(self.DataToReturn))
+        b.append(self.DataToReturn.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.TypeDefinitionNode.from_binary(data)
+        self.IncludeSubTypes = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.NoOfDataToReturn = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DataToReturn.from_binary(data)
+        return data
 
 class QueryDataSet(object):
     def __init__(self):
@@ -6340,48 +5508,32 @@ class QueryDataSet(object):
         self.NoOfValues = None
         self.Values = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.TypeDefinitionNode.to_binary()
-        b += struct.pack('!i', self.NoOfValues)
-        b += struct.pack('!i', len(self.Values)
-        b += self.Values.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.TypeDefinitionNode.to_binary())
+        b.append(struct.pack('!i', self.NoOfValues))
+        b.append(struct.pack('!i', len(self.Values))
+        b.append(self.Values.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.TypeDefinitionNode.from_binary(data)
+        self.NoOfValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Values.from_binary(data)
+        return data
 
 class NodeReference(object):
     def __init__(self):
@@ -6394,49 +5546,35 @@ class NodeReference(object):
         self.NoOfReferencedNodeIds = None
         self.ReferencedNodeIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.ReferenceTypeId.to_binary()
-        b += struct.pack('!?', self.IsForward)
-        b += struct.pack('!i', self.NoOfReferencedNodeIds)
-        b += struct.pack('!i', len(self.ReferencedNodeIds)
-        b += self.ReferencedNodeIds.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.ReferenceTypeId.to_binary())
+        b.append(struct.pack('!?', self.IsForward))
+        b.append(struct.pack('!i', self.NoOfReferencedNodeIds))
+        b.append(struct.pack('!i', len(self.ReferencedNodeIds))
+        b.append(self.ReferencedNodeIds.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.ReferenceTypeId.from_binary(data)
+        self.IsForward = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.NoOfReferencedNodeIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ReferencedNodeIds.from_binary(data)
+        return data
 
 class ContentFilterElement(object):
     def __init__(self):
@@ -6447,47 +5585,30 @@ class ContentFilterElement(object):
         self.NoOfFilterOperands = None
         self.FilterOperands = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.FilterOperator.to_binary()
-        b += struct.pack('!i', self.NoOfFilterOperands)
-        b += struct.pack('!i', len(self.FilterOperands)
-        b += self.FilterOperands.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.FilterOperator.to_binary())
+        b.append(struct.pack('!i', self.NoOfFilterOperands))
+        b.append(struct.pack('!i', len(self.FilterOperands))
+        b.append(self.FilterOperands.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.FilterOperator.from_binary(data)
+        self.NoOfFilterOperands = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.FilterOperands.from_binary(data)
+        return data
 
 class ContentFilter(object):
     def __init__(self):
@@ -6497,46 +5618,28 @@ class ContentFilter(object):
         self.NoOfElements = None
         self.Elements = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfElements)
-        b += struct.pack('!i', len(self.Elements)
-        b += self.Elements.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfElements))
+        b.append(struct.pack('!i', len(self.Elements))
+        b.append(self.Elements.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfElements = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Elements.from_binary(data)
+        return data
 
 class FilterOperand(object):
     def __init__(self):
@@ -6544,43 +5647,22 @@ class FilterOperand(object):
         self.TypeId = None
         self.BodyLength = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        return data
 
 class ElementOperand(object):
     def __init__(self):
@@ -6589,44 +5671,25 @@ class ElementOperand(object):
         self.BodyLength = None
         self.Index = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.Index)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.Index))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Index = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class LiteralOperand(object):
     def __init__(self):
@@ -6635,44 +5698,24 @@ class LiteralOperand(object):
         self.BodyLength = None
         self.Value = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Value.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Value.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Value.from_binary(data)
+        return data
 
 class AttributeOperand(object):
     def __init__(self):
@@ -6685,48 +5728,33 @@ class AttributeOperand(object):
         self.AttributeId = None
         self.IndexRange = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.Alias.to_binary()
-        b += self.BrowsePath.to_binary()
-        b += struct.pack('!I', self.AttributeId)
-        b += self.IndexRange.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.Alias.to_binary())
+        b.append(self.BrowsePath.to_binary())
+        b.append(struct.pack('!I', self.AttributeId))
+        b.append(self.IndexRange.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.Alias.from_binary(data)
+        data = self.BrowsePath.from_binary(data)
+        self.AttributeId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.IndexRange.from_binary(data)
+        return data
 
 class SimpleAttributeOperand(object):
     def __init__(self):
@@ -6739,49 +5767,35 @@ class SimpleAttributeOperand(object):
         self.AttributeId = None
         self.IndexRange = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.TypeDefinitionId.to_binary()
-        b += struct.pack('!i', self.NoOfBrowsePath)
-        b += struct.pack('!i', len(self.BrowsePath)
-        b += self.BrowsePath.to_binary()
-        b += struct.pack('!I', self.AttributeId)
-        b += self.IndexRange.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.TypeDefinitionId.to_binary())
+        b.append(struct.pack('!i', self.NoOfBrowsePath))
+        b.append(struct.pack('!i', len(self.BrowsePath))
+        b.append(self.BrowsePath.to_binary())
+        b.append(struct.pack('!I', self.AttributeId))
+        b.append(self.IndexRange.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.TypeDefinitionId.from_binary(data)
+        self.NoOfBrowsePath = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.BrowsePath.from_binary(data)
+        self.AttributeId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.IndexRange.from_binary(data)
+        return data
 
 class ContentFilterElementResult(object):
     def __init__(self):
@@ -6794,50 +5808,36 @@ class ContentFilterElementResult(object):
         self.NoOfOperandDiagnosticInfos = None
         self.OperandDiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!i', self.NoOfOperandStatusCodes)
-        b += struct.pack('!i', len(self.OperandStatusCodes)
-        b += self.OperandStatusCodes.to_binary()
-        b += struct.pack('!i', self.NoOfOperandDiagnosticInfos)
-        b += struct.pack('!i', len(self.OperandDiagnosticInfos)
-        b += self.OperandDiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!i', self.NoOfOperandStatusCodes))
+        b.append(struct.pack('!i', len(self.OperandStatusCodes))
+        b.append(self.OperandStatusCodes.to_binary())
+        b.append(struct.pack('!i', self.NoOfOperandDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.OperandDiagnosticInfos))
+        b.append(self.OperandDiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.NoOfOperandStatusCodes = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.OperandStatusCodes.from_binary(data)
+        self.NoOfOperandDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.OperandDiagnosticInfos.from_binary(data)
+        return data
 
 class ContentFilterResult(object):
     def __init__(self):
@@ -6849,49 +5849,34 @@ class ContentFilterResult(object):
         self.NoOfElementDiagnosticInfos = None
         self.ElementDiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfElementResults)
-        b += struct.pack('!i', len(self.ElementResults)
-        b += self.ElementResults.to_binary()
-        b += struct.pack('!i', self.NoOfElementDiagnosticInfos)
-        b += struct.pack('!i', len(self.ElementDiagnosticInfos)
-        b += self.ElementDiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfElementResults))
+        b.append(struct.pack('!i', len(self.ElementResults))
+        b.append(self.ElementResults.to_binary())
+        b.append(struct.pack('!i', self.NoOfElementDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.ElementDiagnosticInfos))
+        b.append(self.ElementDiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfElementResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ElementResults.from_binary(data)
+        self.NoOfElementDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ElementDiagnosticInfos.from_binary(data)
+        return data
 
 class ParsingResult(object):
     def __init__(self):
@@ -6904,50 +5889,36 @@ class ParsingResult(object):
         self.NoOfDataDiagnosticInfos = None
         self.DataDiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!i', self.NoOfDataStatusCodes)
-        b += struct.pack('!i', len(self.DataStatusCodes)
-        b += self.DataStatusCodes.to_binary()
-        b += struct.pack('!i', self.NoOfDataDiagnosticInfos)
-        b += struct.pack('!i', len(self.DataDiagnosticInfos)
-        b += self.DataDiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!i', self.NoOfDataStatusCodes))
+        b.append(struct.pack('!i', len(self.DataStatusCodes))
+        b.append(self.DataStatusCodes.to_binary())
+        b.append(struct.pack('!i', self.NoOfDataDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DataDiagnosticInfos))
+        b.append(self.DataDiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.NoOfDataStatusCodes = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DataStatusCodes.from_binary(data)
+        self.NoOfDataDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DataDiagnosticInfos.from_binary(data)
+        return data
 
 class QueryFirstRequest(object):
     def __init__(self):
@@ -6962,51 +5933,40 @@ class QueryFirstRequest(object):
         self.MaxDataSetsToReturn = None
         self.MaxReferencesToReturn = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.View.to_binary()
-        b += struct.pack('!i', self.NoOfNodeTypes)
-        b += struct.pack('!i', len(self.NodeTypes)
-        b += self.NodeTypes.to_binary()
-        b += self.Filter.to_binary()
-        b += struct.pack('!I', self.MaxDataSetsToReturn)
-        b += struct.pack('!I', self.MaxReferencesToReturn)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.View.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodeTypes))
+        b.append(struct.pack('!i', len(self.NodeTypes))
+        b.append(self.NodeTypes.to_binary())
+        b.append(self.Filter.to_binary())
+        b.append(struct.pack('!I', self.MaxDataSetsToReturn))
+        b.append(struct.pack('!I', self.MaxReferencesToReturn))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.View.from_binary(data)
+        self.NoOfNodeTypes = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeTypes.from_binary(data)
+        data = self.Filter.from_binary(data)
+        self.MaxDataSetsToReturn = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MaxReferencesToReturn = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class QueryFirstResponse(object):
     def __init__(self):
@@ -7023,55 +5983,46 @@ class QueryFirstResponse(object):
         self.DiagnosticInfos = []
         self.FilterResult = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfQueryDataSets)
-        b += struct.pack('!i', len(self.QueryDataSets)
-        b += self.QueryDataSets.to_binary()
-        b += struct.pack('!c', self.ContinuationPoint)
-        b += struct.pack('!i', self.NoOfParsingResults)
-        b += struct.pack('!i', len(self.ParsingResults)
-        b += self.ParsingResults.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        b += self.FilterResult.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfQueryDataSets))
+        b.append(struct.pack('!i', len(self.QueryDataSets))
+        b.append(self.QueryDataSets.to_binary())
+        b.append(self.ContinuationPoint.to_binary())
+        b.append(struct.pack('!i', self.NoOfParsingResults))
+        b.append(struct.pack('!i', len(self.ParsingResults))
+        b.append(self.ParsingResults.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        b.append(self.FilterResult.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfQueryDataSets = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.QueryDataSets.from_binary(data)
+        data = self.ContinuationPoint.from_binary(data)
+        self.NoOfParsingResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ParsingResults.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        data = self.FilterResult.from_binary(data)
+        return data
 
 class QueryNextRequest(object):
     def __init__(self):
@@ -7082,46 +6033,29 @@ class QueryNextRequest(object):
         self.ReleaseContinuationPoint = None
         self.ContinuationPoint = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!?', self.ReleaseContinuationPoint)
-        b += struct.pack('!c', self.ContinuationPoint)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!?', self.ReleaseContinuationPoint))
+        b.append(self.ContinuationPoint.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.ReleaseContinuationPoint = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.ContinuationPoint.from_binary(data)
+        return data
 
 class QueryNextResponse(object):
     def __init__(self):
@@ -7133,48 +6067,32 @@ class QueryNextResponse(object):
         self.QueryDataSets = []
         self.RevisedContinuationPoint = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfQueryDataSets)
-        b += struct.pack('!i', len(self.QueryDataSets)
-        b += self.QueryDataSets.to_binary()
-        b += struct.pack('!c', self.RevisedContinuationPoint)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfQueryDataSets))
+        b.append(struct.pack('!i', len(self.QueryDataSets))
+        b.append(self.QueryDataSets.to_binary())
+        b.append(self.RevisedContinuationPoint.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfQueryDataSets = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.QueryDataSets.from_binary(data)
+        data = self.RevisedContinuationPoint.from_binary(data)
+        return data
 
 class ReadValueId(object):
     def __init__(self):
@@ -7186,47 +6104,31 @@ class ReadValueId(object):
         self.IndexRange = None
         self.DataEncoding = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += struct.pack('!I', self.AttributeId)
-        b += self.IndexRange.to_binary()
-        b += self.DataEncoding.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(struct.pack('!I', self.AttributeId))
+        b.append(self.IndexRange.to_binary())
+        b.append(self.DataEncoding.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        self.AttributeId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.IndexRange.from_binary(data)
+        data = self.DataEncoding.from_binary(data)
+        return data
 
 class ReadRequest(object):
     def __init__(self):
@@ -7239,49 +6141,35 @@ class ReadRequest(object):
         self.NoOfNodesToRead = None
         self.NodesToRead = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!d', self.MaxAge)
-        b += self.TimestampsToReturn.to_binary()
-        b += struct.pack('!i', self.NoOfNodesToRead)
-        b += struct.pack('!i', len(self.NodesToRead)
-        b += self.NodesToRead.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!d', self.MaxAge))
+        b.append(self.TimestampsToReturn.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodesToRead))
+        b.append(struct.pack('!i', len(self.NodesToRead))
+        b.append(self.NodesToRead.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.MaxAge = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.TimestampsToReturn.from_binary(data)
+        self.NoOfNodesToRead = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToRead.from_binary(data)
+        return data
 
 class ReadResponse(object):
     def __init__(self):
@@ -7294,50 +6182,36 @@ class ReadResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class HistoryReadValueId(object):
     def __init__(self):
@@ -7349,47 +6223,30 @@ class HistoryReadValueId(object):
         self.DataEncoding = None
         self.ContinuationPoint = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.IndexRange.to_binary()
-        b += self.DataEncoding.to_binary()
-        b += struct.pack('!c', self.ContinuationPoint)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.IndexRange.to_binary())
+        b.append(self.DataEncoding.to_binary())
+        b.append(self.ContinuationPoint.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.IndexRange.from_binary(data)
+        data = self.DataEncoding.from_binary(data)
+        data = self.ContinuationPoint.from_binary(data)
+        return data
 
 class HistoryReadResult(object):
     def __init__(self):
@@ -7400,46 +6257,28 @@ class HistoryReadResult(object):
         self.ContinuationPoint = None
         self.HistoryData = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!c', self.ContinuationPoint)
-        b += self.HistoryData.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(self.ContinuationPoint.to_binary())
+        b.append(self.HistoryData.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        data = self.ContinuationPoint.from_binary(data)
+        data = self.HistoryData.from_binary(data)
+        return data
 
 class HistoryReadDetails(object):
     def __init__(self):
@@ -7447,43 +6286,22 @@ class HistoryReadDetails(object):
         self.TypeId = None
         self.BodyLength = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        return data
 
 class ReadRawModifiedDetails(object):
     def __init__(self):
@@ -7496,48 +6314,37 @@ class ReadRawModifiedDetails(object):
         self.NumValuesPerNode = None
         self.ReturnBounds = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!?', self.IsReadModified)
-        b += struct.pack('!d', self.StartTime)
-        b += struct.pack('!d', self.EndTime)
-        b += struct.pack('!I', self.NumValuesPerNode)
-        b += struct.pack('!?', self.ReturnBounds)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!?', self.IsReadModified))
+        b.append(struct.pack('!d', self.StartTime))
+        b.append(struct.pack('!d', self.EndTime))
+        b.append(struct.pack('!I', self.NumValuesPerNode))
+        b.append(struct.pack('!?', self.ReturnBounds))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.IsReadModified = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.StartTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.EndTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.NumValuesPerNode = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.ReturnBounds = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ReadAtTimeDetails(object):
     def __init__(self):
@@ -7548,47 +6355,32 @@ class ReadAtTimeDetails(object):
         self.ReqTimes = []
         self.UseSimpleBounds = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfReqTimes)
-        b += struct.pack('!i', len(self.ReqTimes)
-        b += struct.pack('!d', self.ReqTimes)
-        b += struct.pack('!?', self.UseSimpleBounds)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfReqTimes))
+        b.append(struct.pack('!i', len(self.ReqTimes))
+        b.append(struct.pack('!d', self.ReqTimes))
+        b.append(struct.pack('!?', self.UseSimpleBounds))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfReqTimes = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ReqTimes = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.UseSimpleBounds = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class HistoryData(object):
     def __init__(self):
@@ -7598,46 +6390,28 @@ class HistoryData(object):
         self.NoOfDataValues = None
         self.DataValues = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfDataValues)
-        b += struct.pack('!i', len(self.DataValues)
-        b += self.DataValues.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfDataValues))
+        b.append(struct.pack('!i', len(self.DataValues))
+        b.append(self.DataValues.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfDataValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DataValues.from_binary(data)
+        return data
 
 class ModificationInfo(object):
     def __init__(self):
@@ -7648,46 +6422,29 @@ class ModificationInfo(object):
         self.UpdateType = None
         self.UserName = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.ModificationTime)
-        b += self.UpdateType.to_binary()
-        b += self.UserName.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.ModificationTime))
+        b.append(self.UpdateType.to_binary())
+        b.append(self.UserName.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ModificationTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.UpdateType.from_binary(data)
+        data = self.UserName.from_binary(data)
+        return data
 
 class HistoryModifiedData(object):
     def __init__(self):
@@ -7701,52 +6458,40 @@ class HistoryModifiedData(object):
         self.NoOfModificationInfos = None
         self.ModificationInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfDataValues)
-        b += struct.pack('!i', len(self.DataValues)
-        b += self.DataValues.to_binary()
-        b += struct.pack('!i', self.NoOfDataValues)
-        b += struct.pack('!i', len(self.DataValues)
-        b += self.DataValues.to_binary()
-        b += struct.pack('!i', self.NoOfModificationInfos)
-        b += struct.pack('!i', len(self.ModificationInfos)
-        b += self.ModificationInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfDataValues))
+        b.append(struct.pack('!i', len(self.DataValues))
+        b.append(self.DataValues.to_binary())
+        b.append(struct.pack('!i', self.NoOfDataValues))
+        b.append(struct.pack('!i', len(self.DataValues))
+        b.append(self.DataValues.to_binary())
+        b.append(struct.pack('!i', self.NoOfModificationInfos))
+        b.append(struct.pack('!i', len(self.ModificationInfos))
+        b.append(self.ModificationInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfDataValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DataValues.from_binary(data)
+        self.NoOfDataValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DataValues.from_binary(data)
+        self.NoOfModificationInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ModificationInfos.from_binary(data)
+        return data
 
 class HistoryReadRequest(object):
     def __init__(self):
@@ -7760,50 +6505,37 @@ class HistoryReadRequest(object):
         self.NoOfNodesToRead = None
         self.NodesToRead = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += self.HistoryReadDetails.to_binary()
-        b += self.TimestampsToReturn.to_binary()
-        b += struct.pack('!?', self.ReleaseContinuationPoints)
-        b += struct.pack('!i', self.NoOfNodesToRead)
-        b += struct.pack('!i', len(self.NodesToRead)
-        b += self.NodesToRead.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(self.HistoryReadDetails.to_binary())
+        b.append(self.TimestampsToReturn.to_binary())
+        b.append(struct.pack('!?', self.ReleaseContinuationPoints))
+        b.append(struct.pack('!i', self.NoOfNodesToRead))
+        b.append(struct.pack('!i', len(self.NodesToRead))
+        b.append(self.NodesToRead.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        data = self.HistoryReadDetails.from_binary(data)
+        data = self.TimestampsToReturn.from_binary(data)
+        self.ReleaseContinuationPoints = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.NoOfNodesToRead = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToRead.from_binary(data)
+        return data
 
 class HistoryReadResponse(object):
     def __init__(self):
@@ -7816,50 +6548,36 @@ class HistoryReadResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class WriteValue(object):
     def __init__(self):
@@ -7871,47 +6589,31 @@ class WriteValue(object):
         self.IndexRange = None
         self.Value = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += struct.pack('!I', self.AttributeId)
-        b += self.IndexRange.to_binary()
-        b += self.Value.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(struct.pack('!I', self.AttributeId))
+        b.append(self.IndexRange.to_binary())
+        b.append(self.Value.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        self.AttributeId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.IndexRange.from_binary(data)
+        data = self.Value.from_binary(data)
+        return data
 
 class WriteRequest(object):
     def __init__(self):
@@ -7922,47 +6624,30 @@ class WriteRequest(object):
         self.NoOfNodesToWrite = None
         self.NodesToWrite = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfNodesToWrite)
-        b += struct.pack('!i', len(self.NodesToWrite)
-        b += self.NodesToWrite.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodesToWrite))
+        b.append(struct.pack('!i', len(self.NodesToWrite))
+        b.append(self.NodesToWrite.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfNodesToWrite = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodesToWrite.from_binary(data)
+        return data
 
 class WriteResponse(object):
     def __init__(self):
@@ -7975,50 +6660,36 @@ class WriteResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class HistoryUpdateDetails(object):
     def __init__(self):
@@ -8027,44 +6698,24 @@ class HistoryUpdateDetails(object):
         self.BodyLength = None
         self.NodeId = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        return data
 
 class UpdateDataDetails(object):
     def __init__(self):
@@ -8077,49 +6728,34 @@ class UpdateDataDetails(object):
         self.NoOfUpdateValues = None
         self.UpdateValues = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.PerformInsertReplace.to_binary()
-        b += struct.pack('!i', self.NoOfUpdateValues)
-        b += struct.pack('!i', len(self.UpdateValues)
-        b += self.UpdateValues.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.PerformInsertReplace.to_binary())
+        b.append(struct.pack('!i', self.NoOfUpdateValues))
+        b.append(struct.pack('!i', len(self.UpdateValues))
+        b.append(self.UpdateValues.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.PerformInsertReplace.from_binary(data)
+        self.NoOfUpdateValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.UpdateValues.from_binary(data)
+        return data
 
 class UpdateStructureDataDetails(object):
     def __init__(self):
@@ -8132,49 +6768,34 @@ class UpdateStructureDataDetails(object):
         self.NoOfUpdateValues = None
         self.UpdateValues = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.PerformInsertReplace.to_binary()
-        b += struct.pack('!i', self.NoOfUpdateValues)
-        b += struct.pack('!i', len(self.UpdateValues)
-        b += self.UpdateValues.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.PerformInsertReplace.to_binary())
+        b.append(struct.pack('!i', self.NoOfUpdateValues))
+        b.append(struct.pack('!i', len(self.UpdateValues))
+        b.append(self.UpdateValues.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.PerformInsertReplace.from_binary(data)
+        self.NoOfUpdateValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.UpdateValues.from_binary(data)
+        return data
 
 class DeleteRawModifiedDetails(object):
     def __init__(self):
@@ -8187,48 +6808,35 @@ class DeleteRawModifiedDetails(object):
         self.StartTime = None
         self.EndTime = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeId.to_binary()
-        b += struct.pack('!?', self.IsDeleteModified)
-        b += struct.pack('!d', self.StartTime)
-        b += struct.pack('!d', self.EndTime)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(struct.pack('!?', self.IsDeleteModified))
+        b.append(struct.pack('!d', self.StartTime))
+        b.append(struct.pack('!d', self.EndTime))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        self.IsDeleteModified = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.StartTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.EndTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
 
 class DeleteAtTimeDetails(object):
     def __init__(self):
@@ -8240,48 +6848,33 @@ class DeleteAtTimeDetails(object):
         self.NoOfReqTimes = None
         self.ReqTimes = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeId.to_binary()
-        b += struct.pack('!i', self.NoOfReqTimes)
-        b += struct.pack('!i', len(self.ReqTimes)
-        b += struct.pack('!d', self.ReqTimes)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(struct.pack('!i', self.NoOfReqTimes))
+        b.append(struct.pack('!i', len(self.ReqTimes))
+        b.append(struct.pack('!d', self.ReqTimes))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        self.NoOfReqTimes = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ReqTimes = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
 
 class DeleteEventDetails(object):
     def __init__(self):
@@ -8293,48 +6886,32 @@ class DeleteEventDetails(object):
         self.NoOfEventIds = None
         self.EventIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeId.to_binary()
-        b += struct.pack('!i', self.NoOfEventIds)
-        b += struct.pack('!i', len(self.EventIds)
-        b += struct.pack('!c', self.EventIds)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(struct.pack('!i', self.NoOfEventIds))
+        b.append(struct.pack('!i', len(self.EventIds))
+        b.append(self.EventIds.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        self.NoOfEventIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EventIds.from_binary(data)
+        return data
 
 class HistoryUpdateResult(object):
     def __init__(self):
@@ -8347,50 +6924,36 @@ class HistoryUpdateResult(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!i', self.NoOfOperationResults)
-        b += struct.pack('!i', len(self.OperationResults)
-        b += self.OperationResults.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!i', self.NoOfOperationResults))
+        b.append(struct.pack('!i', len(self.OperationResults))
+        b.append(self.OperationResults.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.NoOfOperationResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.OperationResults.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class HistoryUpdateRequest(object):
     def __init__(self):
@@ -8401,47 +6964,30 @@ class HistoryUpdateRequest(object):
         self.NoOfHistoryUpdateDetails = None
         self.HistoryUpdateDetails = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfHistoryUpdateDetails)
-        b += struct.pack('!i', len(self.HistoryUpdateDetails)
-        b += self.HistoryUpdateDetails.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfHistoryUpdateDetails))
+        b.append(struct.pack('!i', len(self.HistoryUpdateDetails))
+        b.append(self.HistoryUpdateDetails.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfHistoryUpdateDetails = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.HistoryUpdateDetails.from_binary(data)
+        return data
 
 class HistoryUpdateResponse(object):
     def __init__(self):
@@ -8454,50 +7000,36 @@ class HistoryUpdateResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class CallMethodRequest(object):
     def __init__(self):
@@ -8509,48 +7041,32 @@ class CallMethodRequest(object):
         self.NoOfInputArguments = None
         self.InputArguments = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ObjectId.to_binary()
-        b += self.MethodId.to_binary()
-        b += struct.pack('!i', self.NoOfInputArguments)
-        b += struct.pack('!i', len(self.InputArguments)
-        b += self.InputArguments.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ObjectId.to_binary())
+        b.append(self.MethodId.to_binary())
+        b.append(struct.pack('!i', self.NoOfInputArguments))
+        b.append(struct.pack('!i', len(self.InputArguments))
+        b.append(self.InputArguments.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ObjectId.from_binary(data)
+        data = self.MethodId.from_binary(data)
+        self.NoOfInputArguments = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.InputArguments.from_binary(data)
+        return data
 
 class CallMethodResult(object):
     def __init__(self):
@@ -8565,53 +7081,42 @@ class CallMethodResult(object):
         self.NoOfOutputArguments = None
         self.OutputArguments = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!i', self.NoOfInputArgumentResults)
-        b += struct.pack('!i', len(self.InputArgumentResults)
-        b += self.InputArgumentResults.to_binary()
-        b += struct.pack('!i', self.NoOfInputArgumentDiagnosticInfos)
-        b += struct.pack('!i', len(self.InputArgumentDiagnosticInfos)
-        b += self.InputArgumentDiagnosticInfos.to_binary()
-        b += struct.pack('!i', self.NoOfOutputArguments)
-        b += struct.pack('!i', len(self.OutputArguments)
-        b += self.OutputArguments.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!i', self.NoOfInputArgumentResults))
+        b.append(struct.pack('!i', len(self.InputArgumentResults))
+        b.append(self.InputArgumentResults.to_binary())
+        b.append(struct.pack('!i', self.NoOfInputArgumentDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.InputArgumentDiagnosticInfos))
+        b.append(self.InputArgumentDiagnosticInfos.to_binary())
+        b.append(struct.pack('!i', self.NoOfOutputArguments))
+        b.append(struct.pack('!i', len(self.OutputArguments))
+        b.append(self.OutputArguments.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.NoOfInputArgumentResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.InputArgumentResults.from_binary(data)
+        self.NoOfInputArgumentDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.InputArgumentDiagnosticInfos.from_binary(data)
+        self.NoOfOutputArguments = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.OutputArguments.from_binary(data)
+        return data
 
 class CallRequest(object):
     def __init__(self):
@@ -8622,47 +7127,30 @@ class CallRequest(object):
         self.NoOfMethodsToCall = None
         self.MethodsToCall = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfMethodsToCall)
-        b += struct.pack('!i', len(self.MethodsToCall)
-        b += self.MethodsToCall.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfMethodsToCall))
+        b.append(struct.pack('!i', len(self.MethodsToCall))
+        b.append(self.MethodsToCall.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfMethodsToCall = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.MethodsToCall.from_binary(data)
+        return data
 
 class CallResponse(object):
     def __init__(self):
@@ -8675,50 +7163,36 @@ class CallResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class MonitoringFilter(object):
     def __init__(self):
@@ -8726,43 +7200,22 @@ class MonitoringFilter(object):
         self.TypeId = None
         self.BodyLength = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        return data
 
 class DataChangeFilter(object):
     def __init__(self):
@@ -8773,46 +7226,30 @@ class DataChangeFilter(object):
         self.DeadbandType = None
         self.DeadbandValue = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Trigger.to_binary()
-        b += struct.pack('!I', self.DeadbandType)
-        b += struct.pack('!d', self.DeadbandValue)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Trigger.to_binary())
+        b.append(struct.pack('!I', self.DeadbandType))
+        b.append(struct.pack('!d', self.DeadbandValue))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Trigger.from_binary(data)
+        self.DeadbandType = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.DeadbandValue = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
 
 class EventFilter(object):
     def __init__(self):
@@ -8823,47 +7260,30 @@ class EventFilter(object):
         self.SelectClauses = []
         self.WhereClause = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfSelectClauses)
-        b += struct.pack('!i', len(self.SelectClauses)
-        b += self.SelectClauses.to_binary()
-        b += self.WhereClause.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfSelectClauses))
+        b.append(struct.pack('!i', len(self.SelectClauses))
+        b.append(self.SelectClauses.to_binary())
+        b.append(self.WhereClause.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfSelectClauses = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SelectClauses.from_binary(data)
+        data = self.WhereClause.from_binary(data)
+        return data
 
 class ReadEventDetails(object):
     def __init__(self):
@@ -8875,47 +7295,33 @@ class ReadEventDetails(object):
         self.EndTime = None
         self.Filter = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.NumValuesPerNode)
-        b += struct.pack('!d', self.StartTime)
-        b += struct.pack('!d', self.EndTime)
-        b += self.Filter.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.NumValuesPerNode))
+        b.append(struct.pack('!d', self.StartTime))
+        b.append(struct.pack('!d', self.EndTime))
+        b.append(self.Filter.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NumValuesPerNode = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.StartTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.EndTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.Filter.from_binary(data)
+        return data
 
 class AggregateConfiguration(object):
     def __init__(self):
@@ -8928,48 +7334,37 @@ class AggregateConfiguration(object):
         self.PercentDataGood = None
         self.UseSlopedExtrapolation = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!?', self.UseServerCapabilitiesDefaults)
-        b += struct.pack('!?', self.TreatUncertainAsBad)
-        b += struct.pack('!c', self.PercentDataBad)
-        b += struct.pack('!c', self.PercentDataGood)
-        b += struct.pack('!?', self.UseSlopedExtrapolation)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!?', self.UseServerCapabilitiesDefaults))
+        b.append(struct.pack('!?', self.TreatUncertainAsBad))
+        b.append(struct.pack('!c', self.PercentDataBad))
+        b.append(struct.pack('!c', self.PercentDataGood))
+        b.append(struct.pack('!?', self.UseSlopedExtrapolation))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.UseServerCapabilitiesDefaults = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.TreatUncertainAsBad = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.PercentDataBad = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.PercentDataGood = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.UseSlopedExtrapolation = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class ReadProcessedDetails(object):
     def __init__(self):
@@ -8983,50 +7378,39 @@ class ReadProcessedDetails(object):
         self.AggregateType = []
         self.AggregateConfiguration = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.StartTime)
-        b += struct.pack('!d', self.EndTime)
-        b += struct.pack('!d', self.ProcessingInterval)
-        b += struct.pack('!i', self.NoOfAggregateType)
-        b += struct.pack('!i', len(self.AggregateType)
-        b += self.AggregateType.to_binary()
-        b += self.AggregateConfiguration.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.StartTime))
+        b.append(struct.pack('!d', self.EndTime))
+        b.append(struct.pack('!d', self.ProcessingInterval))
+        b.append(struct.pack('!i', self.NoOfAggregateType))
+        b.append(struct.pack('!i', len(self.AggregateType))
+        b.append(self.AggregateType.to_binary())
+        b.append(self.AggregateConfiguration.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.StartTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.EndTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.ProcessingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.NoOfAggregateType = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.AggregateType.from_binary(data)
+        data = self.AggregateConfiguration.from_binary(data)
+        return data
 
 class AggregateFilter(object):
     def __init__(self):
@@ -9038,47 +7422,32 @@ class AggregateFilter(object):
         self.ProcessingInterval = None
         self.AggregateConfiguration = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.StartTime)
-        b += self.AggregateType.to_binary()
-        b += struct.pack('!d', self.ProcessingInterval)
-        b += self.AggregateConfiguration.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.StartTime))
+        b.append(self.AggregateType.to_binary())
+        b.append(struct.pack('!d', self.ProcessingInterval))
+        b.append(self.AggregateConfiguration.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.StartTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.AggregateType.from_binary(data)
+        self.ProcessingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.AggregateConfiguration.from_binary(data)
+        return data
 
 class MonitoringFilterResult(object):
     def __init__(self):
@@ -9086,43 +7455,22 @@ class MonitoringFilterResult(object):
         self.TypeId = None
         self.BodyLength = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        return data
 
 class EventFilterResult(object):
     def __init__(self):
@@ -9135,50 +7483,36 @@ class EventFilterResult(object):
         self.SelectClauseDiagnosticInfos = []
         self.WhereClauseResult = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfSelectClauseResults)
-        b += struct.pack('!i', len(self.SelectClauseResults)
-        b += self.SelectClauseResults.to_binary()
-        b += struct.pack('!i', self.NoOfSelectClauseDiagnosticInfos)
-        b += struct.pack('!i', len(self.SelectClauseDiagnosticInfos)
-        b += self.SelectClauseDiagnosticInfos.to_binary()
-        b += self.WhereClauseResult.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfSelectClauseResults))
+        b.append(struct.pack('!i', len(self.SelectClauseResults))
+        b.append(self.SelectClauseResults.to_binary())
+        b.append(struct.pack('!i', self.NoOfSelectClauseDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.SelectClauseDiagnosticInfos))
+        b.append(self.SelectClauseDiagnosticInfos.to_binary())
+        b.append(self.WhereClauseResult.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfSelectClauseResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SelectClauseResults.from_binary(data)
+        self.NoOfSelectClauseDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SelectClauseDiagnosticInfos.from_binary(data)
+        data = self.WhereClauseResult.from_binary(data)
+        return data
 
 class HistoryUpdateEventResult(object):
     def __init__(self):
@@ -9188,45 +7522,26 @@ class HistoryUpdateEventResult(object):
         self.StatusCode = None
         self.EventFilterResult = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += self.EventFilterResult.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(self.EventFilterResult.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        data = self.EventFilterResult.from_binary(data)
+        return data
 
 class AggregateFilterResult(object):
     def __init__(self):
@@ -9237,46 +7552,30 @@ class AggregateFilterResult(object):
         self.RevisedProcessingInterval = None
         self.RevisedAggregateConfiguration = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.RevisedStartTime)
-        b += struct.pack('!d', self.RevisedProcessingInterval)
-        b += self.RevisedAggregateConfiguration.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.RevisedStartTime))
+        b.append(struct.pack('!d', self.RevisedProcessingInterval))
+        b.append(self.RevisedAggregateConfiguration.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.RevisedStartTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RevisedProcessingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.RevisedAggregateConfiguration.from_binary(data)
+        return data
 
 class MonitoringParameters(object):
     def __init__(self):
@@ -9289,48 +7588,36 @@ class MonitoringParameters(object):
         self.QueueSize = None
         self.DiscardOldest = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.ClientHandle)
-        b += struct.pack('!d', self.SamplingInterval)
-        b += self.Filter.to_binary()
-        b += struct.pack('!I', self.QueueSize)
-        b += struct.pack('!?', self.DiscardOldest)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.ClientHandle))
+        b.append(struct.pack('!d', self.SamplingInterval))
+        b.append(self.Filter.to_binary())
+        b.append(struct.pack('!I', self.QueueSize))
+        b.append(struct.pack('!?', self.DiscardOldest))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ClientHandle = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SamplingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.Filter.from_binary(data)
+        self.QueueSize = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.DiscardOldest = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class MonitoredItemCreateRequest(object):
     def __init__(self):
@@ -9341,46 +7628,28 @@ class MonitoredItemCreateRequest(object):
         self.MonitoringMode = None
         self.RequestedParameters = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ItemToMonitor.to_binary()
-        b += self.MonitoringMode.to_binary()
-        b += self.RequestedParameters.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ItemToMonitor.to_binary())
+        b.append(self.MonitoringMode.to_binary())
+        b.append(self.RequestedParameters.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ItemToMonitor.from_binary(data)
+        data = self.MonitoringMode.from_binary(data)
+        data = self.RequestedParameters.from_binary(data)
+        return data
 
 class MonitoredItemCreateResult(object):
     def __init__(self):
@@ -9393,48 +7662,35 @@ class MonitoredItemCreateResult(object):
         self.RevisedQueueSize = None
         self.FilterResult = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!I', self.MonitoredItemId)
-        b += struct.pack('!d', self.RevisedSamplingInterval)
-        b += struct.pack('!I', self.RevisedQueueSize)
-        b += self.FilterResult.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!I', self.MonitoredItemId))
+        b.append(struct.pack('!d', self.RevisedSamplingInterval))
+        b.append(struct.pack('!I', self.RevisedQueueSize))
+        b.append(self.FilterResult.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.MonitoredItemId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RevisedSamplingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RevisedQueueSize = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.FilterResult.from_binary(data)
+        return data
 
 class CreateMonitoredItemsRequest(object):
     def __init__(self):
@@ -9447,49 +7703,35 @@ class CreateMonitoredItemsRequest(object):
         self.NoOfItemsToCreate = None
         self.ItemsToCreate = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += self.TimestampsToReturn.to_binary()
-        b += struct.pack('!i', self.NoOfItemsToCreate)
-        b += struct.pack('!i', len(self.ItemsToCreate)
-        b += self.ItemsToCreate.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(self.TimestampsToReturn.to_binary())
+        b.append(struct.pack('!i', self.NoOfItemsToCreate))
+        b.append(struct.pack('!i', len(self.ItemsToCreate))
+        b.append(self.ItemsToCreate.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.TimestampsToReturn.from_binary(data)
+        self.NoOfItemsToCreate = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ItemsToCreate.from_binary(data)
+        return data
 
 class CreateMonitoredItemsResponse(object):
     def __init__(self):
@@ -9502,50 +7744,36 @@ class CreateMonitoredItemsResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class MonitoredItemModifyRequest(object):
     def __init__(self):
@@ -9555,45 +7783,27 @@ class MonitoredItemModifyRequest(object):
         self.MonitoredItemId = None
         self.RequestedParameters = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.MonitoredItemId)
-        b += self.RequestedParameters.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.MonitoredItemId))
+        b.append(self.RequestedParameters.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.MonitoredItemId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.RequestedParameters.from_binary(data)
+        return data
 
 class MonitoredItemModifyResult(object):
     def __init__(self):
@@ -9605,47 +7815,32 @@ class MonitoredItemModifyResult(object):
         self.RevisedQueueSize = None
         self.FilterResult = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!d', self.RevisedSamplingInterval)
-        b += struct.pack('!I', self.RevisedQueueSize)
-        b += self.FilterResult.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!d', self.RevisedSamplingInterval))
+        b.append(struct.pack('!I', self.RevisedQueueSize))
+        b.append(self.FilterResult.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.RevisedSamplingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RevisedQueueSize = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.FilterResult.from_binary(data)
+        return data
 
 class ModifyMonitoredItemsRequest(object):
     def __init__(self):
@@ -9658,49 +7853,35 @@ class ModifyMonitoredItemsRequest(object):
         self.NoOfItemsToModify = None
         self.ItemsToModify = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += self.TimestampsToReturn.to_binary()
-        b += struct.pack('!i', self.NoOfItemsToModify)
-        b += struct.pack('!i', len(self.ItemsToModify)
-        b += self.ItemsToModify.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(self.TimestampsToReturn.to_binary())
+        b.append(struct.pack('!i', self.NoOfItemsToModify))
+        b.append(struct.pack('!i', len(self.ItemsToModify))
+        b.append(self.ItemsToModify.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.TimestampsToReturn.from_binary(data)
+        self.NoOfItemsToModify = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ItemsToModify.from_binary(data)
+        return data
 
 class ModifyMonitoredItemsResponse(object):
     def __init__(self):
@@ -9713,50 +7894,36 @@ class ModifyMonitoredItemsResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class SetMonitoringModeRequest(object):
     def __init__(self):
@@ -9769,49 +7936,36 @@ class SetMonitoringModeRequest(object):
         self.NoOfMonitoredItemIds = None
         self.MonitoredItemIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += self.MonitoringMode.to_binary()
-        b += struct.pack('!i', self.NoOfMonitoredItemIds)
-        b += struct.pack('!i', len(self.MonitoredItemIds)
-        b += struct.pack('!I', self.MonitoredItemIds)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(self.MonitoringMode.to_binary())
+        b.append(struct.pack('!i', self.NoOfMonitoredItemIds))
+        b.append(struct.pack('!i', len(self.MonitoredItemIds))
+        b.append(struct.pack('!I', self.MonitoredItemIds))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.MonitoringMode.from_binary(data)
+        self.NoOfMonitoredItemIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.MonitoredItemIds = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class SetMonitoringModeResponse(object):
     def __init__(self):
@@ -9824,50 +7978,36 @@ class SetMonitoringModeResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class SetTriggeringRequest(object):
     def __init__(self):
@@ -9882,52 +8022,44 @@ class SetTriggeringRequest(object):
         self.NoOfLinksToRemove = None
         self.LinksToRemove = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!I', self.TriggeringItemId)
-        b += struct.pack('!i', self.NoOfLinksToAdd)
-        b += struct.pack('!i', len(self.LinksToAdd)
-        b += struct.pack('!I', self.LinksToAdd)
-        b += struct.pack('!i', self.NoOfLinksToRemove)
-        b += struct.pack('!i', len(self.LinksToRemove)
-        b += struct.pack('!I', self.LinksToRemove)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!I', self.TriggeringItemId))
+        b.append(struct.pack('!i', self.NoOfLinksToAdd))
+        b.append(struct.pack('!i', len(self.LinksToAdd))
+        b.append(struct.pack('!I', self.LinksToAdd))
+        b.append(struct.pack('!i', self.NoOfLinksToRemove))
+        b.append(struct.pack('!i', len(self.LinksToRemove))
+        b.append(struct.pack('!I', self.LinksToRemove))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.TriggeringItemId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfLinksToAdd = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.LinksToAdd = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfLinksToRemove = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.LinksToRemove = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class SetTriggeringResponse(object):
     def __init__(self):
@@ -9944,56 +8076,48 @@ class SetTriggeringResponse(object):
         self.NoOfRemoveDiagnosticInfos = None
         self.RemoveDiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfAddResults)
-        b += struct.pack('!i', len(self.AddResults)
-        b += self.AddResults.to_binary()
-        b += struct.pack('!i', self.NoOfAddDiagnosticInfos)
-        b += struct.pack('!i', len(self.AddDiagnosticInfos)
-        b += self.AddDiagnosticInfos.to_binary()
-        b += struct.pack('!i', self.NoOfRemoveResults)
-        b += struct.pack('!i', len(self.RemoveResults)
-        b += self.RemoveResults.to_binary()
-        b += struct.pack('!i', self.NoOfRemoveDiagnosticInfos)
-        b += struct.pack('!i', len(self.RemoveDiagnosticInfos)
-        b += self.RemoveDiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfAddResults))
+        b.append(struct.pack('!i', len(self.AddResults))
+        b.append(self.AddResults.to_binary())
+        b.append(struct.pack('!i', self.NoOfAddDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.AddDiagnosticInfos))
+        b.append(self.AddDiagnosticInfos.to_binary())
+        b.append(struct.pack('!i', self.NoOfRemoveResults))
+        b.append(struct.pack('!i', len(self.RemoveResults))
+        b.append(self.RemoveResults.to_binary())
+        b.append(struct.pack('!i', self.NoOfRemoveDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.RemoveDiagnosticInfos))
+        b.append(self.RemoveDiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfAddResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.AddResults.from_binary(data)
+        self.NoOfAddDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.AddDiagnosticInfos.from_binary(data)
+        self.NoOfRemoveResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RemoveResults.from_binary(data)
+        self.NoOfRemoveDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RemoveDiagnosticInfos.from_binary(data)
+        return data
 
 class DeleteMonitoredItemsRequest(object):
     def __init__(self):
@@ -10005,48 +8129,34 @@ class DeleteMonitoredItemsRequest(object):
         self.NoOfMonitoredItemIds = None
         self.MonitoredItemIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!i', self.NoOfMonitoredItemIds)
-        b += struct.pack('!i', len(self.MonitoredItemIds)
-        b += struct.pack('!I', self.MonitoredItemIds)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!i', self.NoOfMonitoredItemIds))
+        b.append(struct.pack('!i', len(self.MonitoredItemIds))
+        b.append(struct.pack('!I', self.MonitoredItemIds))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfMonitoredItemIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.MonitoredItemIds = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class DeleteMonitoredItemsResponse(object):
     def __init__(self):
@@ -10059,50 +8169,36 @@ class DeleteMonitoredItemsResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class CreateSubscriptionRequest(object):
     def __init__(self):
@@ -10117,50 +8213,42 @@ class CreateSubscriptionRequest(object):
         self.PublishingEnabled = None
         self.Priority = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!d', self.RequestedPublishingInterval)
-        b += struct.pack('!I', self.RequestedLifetimeCount)
-        b += struct.pack('!I', self.RequestedMaxKeepAliveCount)
-        b += struct.pack('!I', self.MaxNotificationsPerPublish)
-        b += struct.pack('!?', self.PublishingEnabled)
-        b += struct.pack('!c', self.Priority)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!d', self.RequestedPublishingInterval))
+        b.append(struct.pack('!I', self.RequestedLifetimeCount))
+        b.append(struct.pack('!I', self.RequestedMaxKeepAliveCount))
+        b.append(struct.pack('!I', self.MaxNotificationsPerPublish))
+        b.append(struct.pack('!?', self.PublishingEnabled))
+        b.append(struct.pack('!c', self.Priority))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.RequestedPublishingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RequestedLifetimeCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RequestedMaxKeepAliveCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MaxNotificationsPerPublish = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.PublishingEnabled = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.Priority = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class CreateSubscriptionResponse(object):
     def __init__(self):
@@ -10173,48 +8261,36 @@ class CreateSubscriptionResponse(object):
         self.RevisedLifetimeCount = None
         self.RevisedMaxKeepAliveCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!d', self.RevisedPublishingInterval)
-        b += struct.pack('!I', self.RevisedLifetimeCount)
-        b += struct.pack('!I', self.RevisedMaxKeepAliveCount)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!d', self.RevisedPublishingInterval))
+        b.append(struct.pack('!I', self.RevisedLifetimeCount))
+        b.append(struct.pack('!I', self.RevisedMaxKeepAliveCount))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RevisedPublishingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RevisedLifetimeCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RevisedMaxKeepAliveCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class ModifySubscriptionRequest(object):
     def __init__(self):
@@ -10229,50 +8305,42 @@ class ModifySubscriptionRequest(object):
         self.MaxNotificationsPerPublish = None
         self.Priority = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!d', self.RequestedPublishingInterval)
-        b += struct.pack('!I', self.RequestedLifetimeCount)
-        b += struct.pack('!I', self.RequestedMaxKeepAliveCount)
-        b += struct.pack('!I', self.MaxNotificationsPerPublish)
-        b += struct.pack('!c', self.Priority)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!d', self.RequestedPublishingInterval))
+        b.append(struct.pack('!I', self.RequestedLifetimeCount))
+        b.append(struct.pack('!I', self.RequestedMaxKeepAliveCount))
+        b.append(struct.pack('!I', self.MaxNotificationsPerPublish))
+        b.append(struct.pack('!c', self.Priority))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RequestedPublishingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RequestedLifetimeCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RequestedMaxKeepAliveCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MaxNotificationsPerPublish = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.Priority = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class ModifySubscriptionResponse(object):
     def __init__(self):
@@ -10284,47 +8352,33 @@ class ModifySubscriptionResponse(object):
         self.RevisedLifetimeCount = None
         self.RevisedMaxKeepAliveCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!d', self.RevisedPublishingInterval)
-        b += struct.pack('!I', self.RevisedLifetimeCount)
-        b += struct.pack('!I', self.RevisedMaxKeepAliveCount)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!d', self.RevisedPublishingInterval))
+        b.append(struct.pack('!I', self.RevisedLifetimeCount))
+        b.append(struct.pack('!I', self.RevisedMaxKeepAliveCount))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.RevisedPublishingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.RevisedLifetimeCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RevisedMaxKeepAliveCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class SetPublishingModeRequest(object):
     def __init__(self):
@@ -10336,48 +8390,34 @@ class SetPublishingModeRequest(object):
         self.NoOfSubscriptionIds = None
         self.SubscriptionIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!?', self.PublishingEnabled)
-        b += struct.pack('!i', self.NoOfSubscriptionIds)
-        b += struct.pack('!i', len(self.SubscriptionIds)
-        b += struct.pack('!I', self.SubscriptionIds)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!?', self.PublishingEnabled))
+        b.append(struct.pack('!i', self.NoOfSubscriptionIds))
+        b.append(struct.pack('!i', len(self.SubscriptionIds))
+        b.append(struct.pack('!I', self.SubscriptionIds))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.PublishingEnabled = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.NoOfSubscriptionIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SubscriptionIds = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class SetPublishingModeResponse(object):
     def __init__(self):
@@ -10390,50 +8430,36 @@ class SetPublishingModeResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class NotificationMessage(object):
     def __init__(self):
@@ -10445,48 +8471,34 @@ class NotificationMessage(object):
         self.NoOfNotificationData = None
         self.NotificationData = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SequenceNumber)
-        b += struct.pack('!d', self.PublishTime)
-        b += struct.pack('!i', self.NoOfNotificationData)
-        b += struct.pack('!i', len(self.NotificationData)
-        b += self.NotificationData.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SequenceNumber))
+        b.append(struct.pack('!d', self.PublishTime))
+        b.append(struct.pack('!i', self.NoOfNotificationData))
+        b.append(struct.pack('!i', len(self.NotificationData))
+        b.append(self.NotificationData.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SequenceNumber = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.PublishTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.NoOfNotificationData = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NotificationData.from_binary(data)
+        return data
 
 class NotificationData(object):
     def __init__(self):
@@ -10494,43 +8506,22 @@ class NotificationData(object):
         self.TypeId = None
         self.BodyLength = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        return data
 
 class MonitoredItemNotification(object):
     def __init__(self):
@@ -10540,45 +8531,27 @@ class MonitoredItemNotification(object):
         self.ClientHandle = None
         self.Value = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.ClientHandle)
-        b += self.Value.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.ClientHandle))
+        b.append(self.Value.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ClientHandle = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.Value.from_binary(data)
+        return data
 
 class DataChangeNotification(object):
     def __init__(self):
@@ -10590,49 +8563,34 @@ class DataChangeNotification(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfMonitoredItems)
-        b += struct.pack('!i', len(self.MonitoredItems)
-        b += self.MonitoredItems.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfMonitoredItems))
+        b.append(struct.pack('!i', len(self.MonitoredItems))
+        b.append(self.MonitoredItems.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfMonitoredItems = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.MonitoredItems.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class EventFieldList(object):
     def __init__(self):
@@ -10643,47 +8601,31 @@ class EventFieldList(object):
         self.NoOfEventFields = None
         self.EventFields = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.ClientHandle)
-        b += struct.pack('!i', self.NoOfEventFields)
-        b += struct.pack('!i', len(self.EventFields)
-        b += self.EventFields.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.ClientHandle))
+        b.append(struct.pack('!i', self.NoOfEventFields))
+        b.append(struct.pack('!i', len(self.EventFields))
+        b.append(self.EventFields.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ClientHandle = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfEventFields = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EventFields.from_binary(data)
+        return data
 
 class EventNotificationList(object):
     def __init__(self):
@@ -10693,46 +8635,28 @@ class EventNotificationList(object):
         self.NoOfEvents = None
         self.Events = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfEvents)
-        b += struct.pack('!i', len(self.Events)
-        b += self.Events.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfEvents))
+        b.append(struct.pack('!i', len(self.Events))
+        b.append(self.Events.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfEvents = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Events.from_binary(data)
+        return data
 
 class HistoryEventFieldList(object):
     def __init__(self):
@@ -10742,46 +8666,28 @@ class HistoryEventFieldList(object):
         self.NoOfEventFields = None
         self.EventFields = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfEventFields)
-        b += struct.pack('!i', len(self.EventFields)
-        b += self.EventFields.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfEventFields))
+        b.append(struct.pack('!i', len(self.EventFields))
+        b.append(self.EventFields.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfEventFields = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EventFields.from_binary(data)
+        return data
 
 class HistoryEvent(object):
     def __init__(self):
@@ -10791,46 +8697,28 @@ class HistoryEvent(object):
         self.NoOfEvents = None
         self.Events = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfEvents)
-        b += struct.pack('!i', len(self.Events)
-        b += self.Events.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfEvents))
+        b.append(struct.pack('!i', len(self.Events))
+        b.append(self.Events.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfEvents = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Events.from_binary(data)
+        return data
 
 class UpdateEventDetails(object):
     def __init__(self):
@@ -10844,50 +8732,36 @@ class UpdateEventDetails(object):
         self.NoOfEventData = None
         self.EventData = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NodeId.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.PerformInsertReplace.to_binary()
-        b += self.Filter.to_binary()
-        b += struct.pack('!i', self.NoOfEventData)
-        b += struct.pack('!i', len(self.EventData)
-        b += self.EventData.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NodeId.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.PerformInsertReplace.to_binary())
+        b.append(self.Filter.to_binary())
+        b.append(struct.pack('!i', self.NoOfEventData))
+        b.append(struct.pack('!i', len(self.EventData))
+        b.append(self.EventData.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeId.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.PerformInsertReplace.from_binary(data)
+        data = self.Filter.from_binary(data)
+        self.NoOfEventData = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EventData.from_binary(data)
+        return data
 
 class StatusChangeNotification(object):
     def __init__(self):
@@ -10897,45 +8771,26 @@ class StatusChangeNotification(object):
         self.Status = None
         self.DiagnosticInfo = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Status.to_binary()
-        b += self.DiagnosticInfo.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Status.to_binary())
+        b.append(self.DiagnosticInfo.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Status.from_binary(data)
+        data = self.DiagnosticInfo.from_binary(data)
+        return data
 
 class SubscriptionAcknowledgement(object):
     def __init__(self):
@@ -10945,45 +8800,28 @@ class SubscriptionAcknowledgement(object):
         self.SubscriptionId = None
         self.SequenceNumber = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!I', self.SequenceNumber)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!I', self.SequenceNumber))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SequenceNumber = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class PublishRequest(object):
     def __init__(self):
@@ -10994,47 +8832,30 @@ class PublishRequest(object):
         self.NoOfSubscriptionAcknowledgements = None
         self.SubscriptionAcknowledgements = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfSubscriptionAcknowledgements)
-        b += struct.pack('!i', len(self.SubscriptionAcknowledgements)
-        b += self.SubscriptionAcknowledgements.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfSubscriptionAcknowledgements))
+        b.append(struct.pack('!i', len(self.SubscriptionAcknowledgements))
+        b.append(self.SubscriptionAcknowledgements.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfSubscriptionAcknowledgements = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SubscriptionAcknowledgements.from_binary(data)
+        return data
 
 class PublishResponse(object):
     def __init__(self):
@@ -11052,56 +8873,51 @@ class PublishResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!i', self.NoOfAvailableSequenceNumbers)
-        b += struct.pack('!i', len(self.AvailableSequenceNumbers)
-        b += struct.pack('!I', self.AvailableSequenceNumbers)
-        b += struct.pack('!?', self.MoreNotifications)
-        b += self.NotificationMessage.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!i', self.NoOfAvailableSequenceNumbers))
+        b.append(struct.pack('!i', len(self.AvailableSequenceNumbers))
+        b.append(struct.pack('!I', self.AvailableSequenceNumbers))
+        b.append(struct.pack('!?', self.MoreNotifications))
+        b.append(self.NotificationMessage.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfAvailableSequenceNumbers = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.AvailableSequenceNumbers = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MoreNotifications = struct.unpack(?, data[:1])
+        data = data[1:]
+        data = self.NotificationMessage.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class RepublishRequest(object):
     def __init__(self):
@@ -11112,46 +8928,30 @@ class RepublishRequest(object):
         self.SubscriptionId = None
         self.RetransmitSequenceNumber = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!I', self.RetransmitSequenceNumber)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!I', self.RetransmitSequenceNumber))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RetransmitSequenceNumber = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class RepublishResponse(object):
     def __init__(self):
@@ -11161,45 +8961,26 @@ class RepublishResponse(object):
         self.ResponseHeader = None
         self.NotificationMessage = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += self.NotificationMessage.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(self.NotificationMessage.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        data = self.NotificationMessage.from_binary(data)
+        return data
 
 class TransferResult(object):
     def __init__(self):
@@ -11210,47 +8991,31 @@ class TransferResult(object):
         self.NoOfAvailableSequenceNumbers = None
         self.AvailableSequenceNumbers = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += struct.pack('!i', self.NoOfAvailableSequenceNumbers)
-        b += struct.pack('!i', len(self.AvailableSequenceNumbers)
-        b += struct.pack('!I', self.AvailableSequenceNumbers)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(struct.pack('!i', self.NoOfAvailableSequenceNumbers))
+        b.append(struct.pack('!i', len(self.AvailableSequenceNumbers))
+        b.append(struct.pack('!I', self.AvailableSequenceNumbers))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        self.NoOfAvailableSequenceNumbers = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.AvailableSequenceNumbers = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class TransferSubscriptionsRequest(object):
     def __init__(self):
@@ -11262,48 +9027,34 @@ class TransferSubscriptionsRequest(object):
         self.SubscriptionIds = []
         self.SendInitialValues = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfSubscriptionIds)
-        b += struct.pack('!i', len(self.SubscriptionIds)
-        b += struct.pack('!I', self.SubscriptionIds)
-        b += struct.pack('!?', self.SendInitialValues)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfSubscriptionIds))
+        b.append(struct.pack('!i', len(self.SubscriptionIds))
+        b.append(struct.pack('!I', self.SubscriptionIds))
+        b.append(struct.pack('!?', self.SendInitialValues))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfSubscriptionIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SubscriptionIds = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SendInitialValues = struct.unpack(?, data[:1])
+        data = data[1:]
+        return data
 
 class TransferSubscriptionsResponse(object):
     def __init__(self):
@@ -11316,50 +9067,36 @@ class TransferSubscriptionsResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class DeleteSubscriptionsRequest(object):
     def __init__(self):
@@ -11370,47 +9107,31 @@ class DeleteSubscriptionsRequest(object):
         self.NoOfSubscriptionIds = None
         self.SubscriptionIds = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!i', self.NoOfSubscriptionIds)
-        b += struct.pack('!i', len(self.SubscriptionIds)
-        b += struct.pack('!I', self.SubscriptionIds)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfSubscriptionIds))
+        b.append(struct.pack('!i', len(self.SubscriptionIds))
+        b.append(struct.pack('!I', self.SubscriptionIds))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.NoOfSubscriptionIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SubscriptionIds = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class DeleteSubscriptionsResponse(object):
     def __init__(self):
@@ -11423,50 +9144,36 @@ class DeleteSubscriptionsResponse(object):
         self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += struct.pack('!i', self.NoOfResults)
-        b += struct.pack('!i', len(self.Results)
-        b += self.Results.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(struct.pack('!i', self.NoOfResults))
+        b.append(struct.pack('!i', len(self.Results))
+        b.append(self.Results.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        self.NoOfResults = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Results.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        return data
 
 class ScalarTestType(object):
     def __init__(self):
@@ -11499,68 +9206,84 @@ class ScalarTestType(object):
         self.DataValue = None
         self.EnumeratedValue = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!?', self.Boolean)
-        b += struct.pack('!B', self.SByte)
-        b += struct.pack('!c', self.Byte)
-        b += struct.pack('!h', self.Int16)
-        b += struct.pack('!H', self.UInt16)
-        b += struct.pack('!i', self.Int32)
-        b += struct.pack('!I', self.UInt32)
-        b += struct.pack('!q', self.Int64)
-        b += struct.pack('!Q', self.UInt64)
-        b += struct.pack('!f', self.Float)
-        b += struct.pack('!d', self.Double)
-        b += self.String.to_binary()
-        b += struct.pack('!d', self.DateTime)
-        b += struct.pack('!None', self.Guid)
-        b += struct.pack('!c', self.ByteString)
-        b += self.XmlElement.to_binary()
-        b += self.NodeId.to_binary()
-        b += self.ExpandedNodeId.to_binary()
-        b += self.StatusCode.to_binary()
-        b += self.DiagnosticInfo.to_binary()
-        b += self.QualifiedName.to_binary()
-        b += self.LocalizedText.to_binary()
-        b += self.ExtensionObject.to_binary()
-        b += self.DataValue.to_binary()
-        b += self.EnumeratedValue.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!?', self.Boolean))
+        b.append(struct.pack('!B', self.SByte))
+        b.append(struct.pack('!c', self.Byte))
+        b.append(struct.pack('!h', self.Int16))
+        b.append(struct.pack('!H', self.UInt16))
+        b.append(struct.pack('!i', self.Int32))
+        b.append(struct.pack('!I', self.UInt32))
+        b.append(struct.pack('!q', self.Int64))
+        b.append(struct.pack('!Q', self.UInt64))
+        b.append(struct.pack('!f', self.Float))
+        b.append(struct.pack('!d', self.Double))
+        b.append(self.String.to_binary())
+        b.append(struct.pack('!d', self.DateTime))
+        b.append(self.Guid.to_binary())
+        b.append(self.ByteString.to_binary())
+        b.append(self.XmlElement.to_binary())
+        b.append(self.NodeId.to_binary())
+        b.append(self.ExpandedNodeId.to_binary())
+        b.append(self.StatusCode.to_binary())
+        b.append(self.DiagnosticInfo.to_binary())
+        b.append(self.QualifiedName.to_binary())
+        b.append(self.LocalizedText.to_binary())
+        b.append(self.ExtensionObject.to_binary())
+        b.append(self.DataValue.to_binary())
+        b.append(self.EnumeratedValue.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Boolean = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.SByte = struct.unpack(B, data[:1])
+        data = data[1:]
+        self.Byte = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.Int16 = struct.unpack(h, data[:2])
+        data = data[2:]
+        self.UInt16 = struct.unpack(H, data[:2])
+        data = data[2:]
+        self.Int32 = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.UInt32 = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.Int64 = struct.unpack(q, data[:8])
+        data = data[8:]
+        self.UInt64 = struct.unpack(Q, data[:8])
+        data = data[8:]
+        self.Float = struct.unpack(f, data[:4])
+        data = data[4:]
+        self.Double = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.String.from_binary(data)
+        self.DateTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.Guid.from_binary(data)
+        data = self.ByteString.from_binary(data)
+        data = self.XmlElement.from_binary(data)
+        data = self.NodeId.from_binary(data)
+        data = self.ExpandedNodeId.from_binary(data)
+        data = self.StatusCode.from_binary(data)
+        data = self.DiagnosticInfo.from_binary(data)
+        data = self.QualifiedName.from_binary(data)
+        data = self.LocalizedText.from_binary(data)
+        data = self.ExtensionObject.from_binary(data)
+        data = self.DataValue.from_binary(data)
+        data = self.EnumeratedValue.from_binary(data)
+        return data
 
 class ArrayTestType(object):
     def __init__(self):
@@ -11618,118 +9341,183 @@ class ArrayTestType(object):
         self.NoOfEnumeratedValues = None
         self.EnumeratedValues = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfBooleans)
-        b += struct.pack('!i', len(self.Booleans)
-        b += struct.pack('!?', self.Booleans)
-        b += struct.pack('!i', self.NoOfSBytes)
-        b += struct.pack('!i', len(self.SBytes)
-        b += struct.pack('!B', self.SBytes)
-        b += struct.pack('!i', self.NoOfInt16s)
-        b += struct.pack('!i', len(self.Int16s)
-        b += struct.pack('!h', self.Int16s)
-        b += struct.pack('!i', self.NoOfUInt16s)
-        b += struct.pack('!i', len(self.UInt16s)
-        b += struct.pack('!H', self.UInt16s)
-        b += struct.pack('!i', self.NoOfInt32s)
-        b += struct.pack('!i', len(self.Int32s)
-        b += struct.pack('!i', self.Int32s)
-        b += struct.pack('!i', self.NoOfUInt32s)
-        b += struct.pack('!i', len(self.UInt32s)
-        b += struct.pack('!I', self.UInt32s)
-        b += struct.pack('!i', self.NoOfInt64s)
-        b += struct.pack('!i', len(self.Int64s)
-        b += struct.pack('!q', self.Int64s)
-        b += struct.pack('!i', self.NoOfUInt64s)
-        b += struct.pack('!i', len(self.UInt64s)
-        b += struct.pack('!Q', self.UInt64s)
-        b += struct.pack('!i', self.NoOfFloats)
-        b += struct.pack('!i', len(self.Floats)
-        b += struct.pack('!f', self.Floats)
-        b += struct.pack('!i', self.NoOfDoubles)
-        b += struct.pack('!i', len(self.Doubles)
-        b += struct.pack('!d', self.Doubles)
-        b += struct.pack('!i', self.NoOfStrings)
-        b += struct.pack('!i', len(self.Strings)
-        b += self.Strings.to_binary()
-        b += struct.pack('!i', self.NoOfDateTimes)
-        b += struct.pack('!i', len(self.DateTimes)
-        b += struct.pack('!d', self.DateTimes)
-        b += struct.pack('!i', self.NoOfGuids)
-        b += struct.pack('!i', len(self.Guids)
-        b += struct.pack('!None', self.Guids)
-        b += struct.pack('!i', self.NoOfByteStrings)
-        b += struct.pack('!i', len(self.ByteStrings)
-        b += struct.pack('!c', self.ByteStrings)
-        b += struct.pack('!i', self.NoOfXmlElements)
-        b += struct.pack('!i', len(self.XmlElements)
-        b += self.XmlElements.to_binary()
-        b += struct.pack('!i', self.NoOfNodeIds)
-        b += struct.pack('!i', len(self.NodeIds)
-        b += self.NodeIds.to_binary()
-        b += struct.pack('!i', self.NoOfExpandedNodeIds)
-        b += struct.pack('!i', len(self.ExpandedNodeIds)
-        b += self.ExpandedNodeIds.to_binary()
-        b += struct.pack('!i', self.NoOfStatusCodes)
-        b += struct.pack('!i', len(self.StatusCodes)
-        b += self.StatusCodes.to_binary()
-        b += struct.pack('!i', self.NoOfDiagnosticInfos)
-        b += struct.pack('!i', len(self.DiagnosticInfos)
-        b += self.DiagnosticInfos.to_binary()
-        b += struct.pack('!i', self.NoOfQualifiedNames)
-        b += struct.pack('!i', len(self.QualifiedNames)
-        b += self.QualifiedNames.to_binary()
-        b += struct.pack('!i', self.NoOfLocalizedTexts)
-        b += struct.pack('!i', len(self.LocalizedTexts)
-        b += self.LocalizedTexts.to_binary()
-        b += struct.pack('!i', self.NoOfExtensionObjects)
-        b += struct.pack('!i', len(self.ExtensionObjects)
-        b += self.ExtensionObjects.to_binary()
-        b += struct.pack('!i', self.NoOfDataValues)
-        b += struct.pack('!i', len(self.DataValues)
-        b += self.DataValues.to_binary()
-        b += struct.pack('!i', self.NoOfVariants)
-        b += struct.pack('!i', len(self.Variants)
-        b += self.Variants.to_binary()
-        b += struct.pack('!i', self.NoOfEnumeratedValues)
-        b += struct.pack('!i', len(self.EnumeratedValues)
-        b += self.EnumeratedValues.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfBooleans))
+        b.append(struct.pack('!i', len(self.Booleans))
+        b.append(struct.pack('!?', self.Booleans))
+        b.append(struct.pack('!i', self.NoOfSBytes))
+        b.append(struct.pack('!i', len(self.SBytes))
+        b.append(struct.pack('!B', self.SBytes))
+        b.append(struct.pack('!i', self.NoOfInt16s))
+        b.append(struct.pack('!i', len(self.Int16s))
+        b.append(struct.pack('!h', self.Int16s))
+        b.append(struct.pack('!i', self.NoOfUInt16s))
+        b.append(struct.pack('!i', len(self.UInt16s))
+        b.append(struct.pack('!H', self.UInt16s))
+        b.append(struct.pack('!i', self.NoOfInt32s))
+        b.append(struct.pack('!i', len(self.Int32s))
+        b.append(struct.pack('!i', self.Int32s))
+        b.append(struct.pack('!i', self.NoOfUInt32s))
+        b.append(struct.pack('!i', len(self.UInt32s))
+        b.append(struct.pack('!I', self.UInt32s))
+        b.append(struct.pack('!i', self.NoOfInt64s))
+        b.append(struct.pack('!i', len(self.Int64s))
+        b.append(struct.pack('!q', self.Int64s))
+        b.append(struct.pack('!i', self.NoOfUInt64s))
+        b.append(struct.pack('!i', len(self.UInt64s))
+        b.append(struct.pack('!Q', self.UInt64s))
+        b.append(struct.pack('!i', self.NoOfFloats))
+        b.append(struct.pack('!i', len(self.Floats))
+        b.append(struct.pack('!f', self.Floats))
+        b.append(struct.pack('!i', self.NoOfDoubles))
+        b.append(struct.pack('!i', len(self.Doubles))
+        b.append(struct.pack('!d', self.Doubles))
+        b.append(struct.pack('!i', self.NoOfStrings))
+        b.append(struct.pack('!i', len(self.Strings))
+        b.append(self.Strings.to_binary())
+        b.append(struct.pack('!i', self.NoOfDateTimes))
+        b.append(struct.pack('!i', len(self.DateTimes))
+        b.append(struct.pack('!d', self.DateTimes))
+        b.append(struct.pack('!i', self.NoOfGuids))
+        b.append(struct.pack('!i', len(self.Guids))
+        b.append(self.Guids.to_binary())
+        b.append(struct.pack('!i', self.NoOfByteStrings))
+        b.append(struct.pack('!i', len(self.ByteStrings))
+        b.append(self.ByteStrings.to_binary())
+        b.append(struct.pack('!i', self.NoOfXmlElements))
+        b.append(struct.pack('!i', len(self.XmlElements))
+        b.append(self.XmlElements.to_binary())
+        b.append(struct.pack('!i', self.NoOfNodeIds))
+        b.append(struct.pack('!i', len(self.NodeIds))
+        b.append(self.NodeIds.to_binary())
+        b.append(struct.pack('!i', self.NoOfExpandedNodeIds))
+        b.append(struct.pack('!i', len(self.ExpandedNodeIds))
+        b.append(self.ExpandedNodeIds.to_binary())
+        b.append(struct.pack('!i', self.NoOfStatusCodes))
+        b.append(struct.pack('!i', len(self.StatusCodes))
+        b.append(self.StatusCodes.to_binary())
+        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
+        b.append(struct.pack('!i', len(self.DiagnosticInfos))
+        b.append(self.DiagnosticInfos.to_binary())
+        b.append(struct.pack('!i', self.NoOfQualifiedNames))
+        b.append(struct.pack('!i', len(self.QualifiedNames))
+        b.append(self.QualifiedNames.to_binary())
+        b.append(struct.pack('!i', self.NoOfLocalizedTexts))
+        b.append(struct.pack('!i', len(self.LocalizedTexts))
+        b.append(self.LocalizedTexts.to_binary())
+        b.append(struct.pack('!i', self.NoOfExtensionObjects))
+        b.append(struct.pack('!i', len(self.ExtensionObjects))
+        b.append(self.ExtensionObjects.to_binary())
+        b.append(struct.pack('!i', self.NoOfDataValues))
+        b.append(struct.pack('!i', len(self.DataValues))
+        b.append(self.DataValues.to_binary())
+        b.append(struct.pack('!i', self.NoOfVariants))
+        b.append(struct.pack('!i', len(self.Variants))
+        b.append(self.Variants.to_binary())
+        b.append(struct.pack('!i', self.NoOfEnumeratedValues))
+        b.append(struct.pack('!i', len(self.EnumeratedValues))
+        b.append(self.EnumeratedValues.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfBooleans = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Booleans = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.NoOfSBytes = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SBytes = struct.unpack(B, data[:1])
+        data = data[1:]
+        self.NoOfInt16s = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Int16s = struct.unpack(h, data[:2])
+        data = data[2:]
+        self.NoOfUInt16s = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.UInt16s = struct.unpack(H, data[:2])
+        data = data[2:]
+        self.NoOfInt32s = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Int32s = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfUInt32s = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.UInt32s = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NoOfInt64s = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Int64s = struct.unpack(q, data[:8])
+        data = data[8:]
+        self.NoOfUInt64s = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.UInt64s = struct.unpack(Q, data[:8])
+        data = data[8:]
+        self.NoOfFloats = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Floats = struct.unpack(f, data[:4])
+        data = data[4:]
+        self.NoOfDoubles = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Doubles = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.NoOfStrings = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Strings.from_binary(data)
+        self.NoOfDateTimes = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.DateTimes = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.NoOfGuids = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Guids.from_binary(data)
+        self.NoOfByteStrings = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ByteStrings.from_binary(data)
+        self.NoOfXmlElements = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.XmlElements.from_binary(data)
+        self.NoOfNodeIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NodeIds.from_binary(data)
+        self.NoOfExpandedNodeIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ExpandedNodeIds.from_binary(data)
+        self.NoOfStatusCodes = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCodes.from_binary(data)
+        self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DiagnosticInfos.from_binary(data)
+        self.NoOfQualifiedNames = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.QualifiedNames.from_binary(data)
+        self.NoOfLocalizedTexts = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.LocalizedTexts.from_binary(data)
+        self.NoOfExtensionObjects = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ExtensionObjects.from_binary(data)
+        self.NoOfDataValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DataValues.from_binary(data)
+        self.NoOfVariants = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Variants.from_binary(data)
+        self.NoOfEnumeratedValues = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EnumeratedValues.from_binary(data)
+        return data
 
 class CompositeTestType(object):
     def __init__(self):
@@ -11739,45 +9527,26 @@ class CompositeTestType(object):
         self.Field1 = None
         self.Field2 = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Field1.to_binary()
-        b += self.Field2.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Field1.to_binary())
+        b.append(self.Field2.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Field1.from_binary(data)
+        data = self.Field2.from_binary(data)
+        return data
 
 class TestStackRequest(object):
     def __init__(self):
@@ -11789,47 +9558,32 @@ class TestStackRequest(object):
         self.Iteration = None
         self.Input = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.TestId)
-        b += struct.pack('!i', self.Iteration)
-        b += self.Input.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.TestId))
+        b.append(struct.pack('!i', self.Iteration))
+        b.append(self.Input.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.TestId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.Iteration = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Input.from_binary(data)
+        return data
 
 class TestStackResponse(object):
     def __init__(self):
@@ -11839,45 +9593,26 @@ class TestStackResponse(object):
         self.ResponseHeader = None
         self.Output = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += self.Output.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(self.Output.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        data = self.Output.from_binary(data)
+        return data
 
 class TestStackExRequest(object):
     def __init__(self):
@@ -11889,47 +9624,32 @@ class TestStackExRequest(object):
         self.Iteration = None
         self.Input = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.RequestHeader.to_binary()
-        b += struct.pack('!I', self.TestId)
-        b += struct.pack('!i', self.Iteration)
-        b += self.Input.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.RequestHeader.to_binary())
+        b.append(struct.pack('!I', self.TestId))
+        b.append(struct.pack('!i', self.Iteration))
+        b.append(self.Input.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.RequestHeader.from_binary(data)
+        self.TestId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.Iteration = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Input.from_binary(data)
+        return data
 
 class TestStackExResponse(object):
     def __init__(self):
@@ -11939,45 +9659,26 @@ class TestStackExResponse(object):
         self.ResponseHeader = None
         self.Output = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ResponseHeader.to_binary()
-        b += self.Output.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ResponseHeader.to_binary())
+        b.append(self.Output.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ResponseHeader.from_binary(data)
+        data = self.Output.from_binary(data)
+        return data
 
 class BuildInfo(object):
     def __init__(self):
@@ -11991,49 +9692,35 @@ class BuildInfo(object):
         self.BuildNumber = None
         self.BuildDate = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ProductUri.to_binary()
-        b += self.ManufacturerName.to_binary()
-        b += self.ProductName.to_binary()
-        b += self.SoftwareVersion.to_binary()
-        b += self.BuildNumber.to_binary()
-        b += struct.pack('!d', self.BuildDate)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ProductUri.to_binary())
+        b.append(self.ManufacturerName.to_binary())
+        b.append(self.ProductName.to_binary())
+        b.append(self.SoftwareVersion.to_binary())
+        b.append(self.BuildNumber.to_binary())
+        b.append(struct.pack('!d', self.BuildDate))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ProductUri.from_binary(data)
+        data = self.ManufacturerName.from_binary(data)
+        data = self.ProductName.from_binary(data)
+        data = self.SoftwareVersion.from_binary(data)
+        data = self.BuildNumber.from_binary(data)
+        self.BuildDate = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
 
 class RedundantServerDataType(object):
     def __init__(self):
@@ -12044,46 +9731,29 @@ class RedundantServerDataType(object):
         self.ServiceLevel = None
         self.ServerState = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ServerId.to_binary()
-        b += struct.pack('!c', self.ServiceLevel)
-        b += self.ServerState.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ServerId.to_binary())
+        b.append(struct.pack('!c', self.ServiceLevel))
+        b.append(self.ServerState.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ServerId.from_binary(data)
+        self.ServiceLevel = struct.unpack(c, data[:1])
+        data = data[1:]
+        data = self.ServerState.from_binary(data)
+        return data
 
 class EndpointUrlListDataType(object):
     def __init__(self):
@@ -12093,46 +9763,28 @@ class EndpointUrlListDataType(object):
         self.NoOfEndpointUrlList = None
         self.EndpointUrlList = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!i', self.NoOfEndpointUrlList)
-        b += struct.pack('!i', len(self.EndpointUrlList)
-        b += self.EndpointUrlList.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!i', self.NoOfEndpointUrlList))
+        b.append(struct.pack('!i', len(self.EndpointUrlList))
+        b.append(self.EndpointUrlList.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.NoOfEndpointUrlList = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EndpointUrlList.from_binary(data)
+        return data
 
 class NetworkGroupDataType(object):
     def __init__(self):
@@ -12143,47 +9795,30 @@ class NetworkGroupDataType(object):
         self.NoOfNetworkPaths = None
         self.NetworkPaths = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.ServerUri.to_binary()
-        b += struct.pack('!i', self.NoOfNetworkPaths)
-        b += struct.pack('!i', len(self.NetworkPaths)
-        b += self.NetworkPaths.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.ServerUri.to_binary())
+        b.append(struct.pack('!i', self.NoOfNetworkPaths))
+        b.append(struct.pack('!i', len(self.NetworkPaths))
+        b.append(self.NetworkPaths.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ServerUri.from_binary(data)
+        self.NoOfNetworkPaths = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NetworkPaths.from_binary(data)
+        return data
 
 class SamplingIntervalDiagnosticsDataType(object):
     def __init__(self):
@@ -12195,47 +9830,34 @@ class SamplingIntervalDiagnosticsDataType(object):
         self.MaxMonitoredItemCount = None
         self.DisabledMonitoredItemCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.SamplingInterval)
-        b += struct.pack('!I', self.MonitoredItemCount)
-        b += struct.pack('!I', self.MaxMonitoredItemCount)
-        b += struct.pack('!I', self.DisabledMonitoredItemCount)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.SamplingInterval))
+        b.append(struct.pack('!I', self.MonitoredItemCount))
+        b.append(struct.pack('!I', self.MaxMonitoredItemCount))
+        b.append(struct.pack('!I', self.DisabledMonitoredItemCount))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.SamplingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.MonitoredItemCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MaxMonitoredItemCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.DisabledMonitoredItemCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class ServerDiagnosticsSummaryDataType(object):
     def __init__(self):
@@ -12255,55 +9877,58 @@ class ServerDiagnosticsSummaryDataType(object):
         self.SecurityRejectedRequestsCount = None
         self.RejectedRequestsCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.ServerViewCount)
-        b += struct.pack('!I', self.CurrentSessionCount)
-        b += struct.pack('!I', self.CumulatedSessionCount)
-        b += struct.pack('!I', self.SecurityRejectedSessionCount)
-        b += struct.pack('!I', self.RejectedSessionCount)
-        b += struct.pack('!I', self.SessionTimeoutCount)
-        b += struct.pack('!I', self.SessionAbortCount)
-        b += struct.pack('!I', self.CurrentSubscriptionCount)
-        b += struct.pack('!I', self.CumulatedSubscriptionCount)
-        b += struct.pack('!I', self.PublishingIntervalCount)
-        b += struct.pack('!I', self.SecurityRejectedRequestsCount)
-        b += struct.pack('!I', self.RejectedRequestsCount)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.ServerViewCount))
+        b.append(struct.pack('!I', self.CurrentSessionCount))
+        b.append(struct.pack('!I', self.CumulatedSessionCount))
+        b.append(struct.pack('!I', self.SecurityRejectedSessionCount))
+        b.append(struct.pack('!I', self.RejectedSessionCount))
+        b.append(struct.pack('!I', self.SessionTimeoutCount))
+        b.append(struct.pack('!I', self.SessionAbortCount))
+        b.append(struct.pack('!I', self.CurrentSubscriptionCount))
+        b.append(struct.pack('!I', self.CumulatedSubscriptionCount))
+        b.append(struct.pack('!I', self.PublishingIntervalCount))
+        b.append(struct.pack('!I', self.SecurityRejectedRequestsCount))
+        b.append(struct.pack('!I', self.RejectedRequestsCount))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.ServerViewCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CurrentSessionCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CumulatedSessionCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SecurityRejectedSessionCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RejectedSessionCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SessionTimeoutCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SessionAbortCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CurrentSubscriptionCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CumulatedSubscriptionCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.PublishingIntervalCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.SecurityRejectedRequestsCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RejectedRequestsCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class ServerStatusDataType(object):
     def __init__(self):
@@ -12317,49 +9942,37 @@ class ServerStatusDataType(object):
         self.SecondsTillShutdown = None
         self.ShutdownReason = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.StartTime)
-        b += struct.pack('!d', self.CurrentTime)
-        b += self.State.to_binary()
-        b += self.BuildInfo.to_binary()
-        b += struct.pack('!I', self.SecondsTillShutdown)
-        b += self.ShutdownReason.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.StartTime))
+        b.append(struct.pack('!d', self.CurrentTime))
+        b.append(self.State.to_binary())
+        b.append(self.BuildInfo.to_binary())
+        b.append(struct.pack('!I', self.SecondsTillShutdown))
+        b.append(self.ShutdownReason.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.StartTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.CurrentTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.State.from_binary(data)
+        data = self.BuildInfo.from_binary(data)
+        self.SecondsTillShutdown = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.ShutdownReason.from_binary(data)
+        return data
 
 class SessionSecurityDiagnosticsDataType(object):
     def __init__(self):
@@ -12377,54 +9990,44 @@ class SessionSecurityDiagnosticsDataType(object):
         self.SecurityPolicyUri = None
         self.ClientCertificate = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.SessionId.to_binary()
-        b += self.ClientUserIdOfSession.to_binary()
-        b += struct.pack('!i', self.NoOfClientUserIdHistory)
-        b += struct.pack('!i', len(self.ClientUserIdHistory)
-        b += self.ClientUserIdHistory.to_binary()
-        b += self.AuthenticationMechanism.to_binary()
-        b += self.Encoding.to_binary()
-        b += self.TransportProtocol.to_binary()
-        b += self.SecurityMode.to_binary()
-        b += self.SecurityPolicyUri.to_binary()
-        b += struct.pack('!c', self.ClientCertificate)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.SessionId.to_binary())
+        b.append(self.ClientUserIdOfSession.to_binary())
+        b.append(struct.pack('!i', self.NoOfClientUserIdHistory))
+        b.append(struct.pack('!i', len(self.ClientUserIdHistory))
+        b.append(self.ClientUserIdHistory.to_binary())
+        b.append(self.AuthenticationMechanism.to_binary())
+        b.append(self.Encoding.to_binary())
+        b.append(self.TransportProtocol.to_binary())
+        b.append(self.SecurityMode.to_binary())
+        b.append(self.SecurityPolicyUri.to_binary())
+        b.append(self.ClientCertificate.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SessionId.from_binary(data)
+        data = self.ClientUserIdOfSession.from_binary(data)
+        self.NoOfClientUserIdHistory = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.ClientUserIdHistory.from_binary(data)
+        data = self.AuthenticationMechanism.from_binary(data)
+        data = self.Encoding.from_binary(data)
+        data = self.TransportProtocol.from_binary(data)
+        data = self.SecurityMode.from_binary(data)
+        data = self.SecurityPolicyUri.from_binary(data)
+        data = self.ClientCertificate.from_binary(data)
+        return data
 
 class ServiceCounterDataType(object):
     def __init__(self):
@@ -12434,45 +10037,28 @@ class ServiceCounterDataType(object):
         self.TotalCount = None
         self.ErrorCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!I', self.TotalCount)
-        b += struct.pack('!I', self.ErrorCount)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!I', self.TotalCount))
+        b.append(struct.pack('!I', self.ErrorCount))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.TotalCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.ErrorCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class SessionDiagnosticsDataType(object):
     def __init__(self):
@@ -12524,88 +10110,120 @@ class SessionDiagnosticsDataType(object):
         self.RegisterNodesCount = None
         self.UnregisterNodesCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.SessionId.to_binary()
-        b += self.SessionName.to_binary()
-        b += self.ClientDescription.to_binary()
-        b += self.ServerUri.to_binary()
-        b += self.EndpointUrl.to_binary()
-        b += struct.pack('!i', self.NoOfLocaleIds)
-        b += struct.pack('!i', len(self.LocaleIds)
-        b += self.LocaleIds.to_binary()
-        b += struct.pack('!d', self.ActualSessionTimeout)
-        b += struct.pack('!I', self.MaxResponseMessageSize)
-        b += struct.pack('!d', self.ClientConnectionTime)
-        b += struct.pack('!d', self.ClientLastContactTime)
-        b += struct.pack('!I', self.CurrentSubscriptionsCount)
-        b += struct.pack('!I', self.CurrentMonitoredItemsCount)
-        b += struct.pack('!I', self.CurrentPublishRequestsInQueue)
-        b += self.TotalRequestCount.to_binary()
-        b += struct.pack('!I', self.UnauthorizedRequestCount)
-        b += self.ReadCount.to_binary()
-        b += self.HistoryReadCount.to_binary()
-        b += self.WriteCount.to_binary()
-        b += self.HistoryUpdateCount.to_binary()
-        b += self.CallCount.to_binary()
-        b += self.CreateMonitoredItemsCount.to_binary()
-        b += self.ModifyMonitoredItemsCount.to_binary()
-        b += self.SetMonitoringModeCount.to_binary()
-        b += self.SetTriggeringCount.to_binary()
-        b += self.DeleteMonitoredItemsCount.to_binary()
-        b += self.CreateSubscriptionCount.to_binary()
-        b += self.ModifySubscriptionCount.to_binary()
-        b += self.SetPublishingModeCount.to_binary()
-        b += self.PublishCount.to_binary()
-        b += self.RepublishCount.to_binary()
-        b += self.TransferSubscriptionsCount.to_binary()
-        b += self.DeleteSubscriptionsCount.to_binary()
-        b += self.AddNodesCount.to_binary()
-        b += self.AddReferencesCount.to_binary()
-        b += self.DeleteNodesCount.to_binary()
-        b += self.DeleteReferencesCount.to_binary()
-        b += self.BrowseCount.to_binary()
-        b += self.BrowseNextCount.to_binary()
-        b += self.TranslateBrowsePathsToNodeIdsCount.to_binary()
-        b += self.QueryFirstCount.to_binary()
-        b += self.QueryNextCount.to_binary()
-        b += self.RegisterNodesCount.to_binary()
-        b += self.UnregisterNodesCount.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.SessionId.to_binary())
+        b.append(self.SessionName.to_binary())
+        b.append(self.ClientDescription.to_binary())
+        b.append(self.ServerUri.to_binary())
+        b.append(self.EndpointUrl.to_binary())
+        b.append(struct.pack('!i', self.NoOfLocaleIds))
+        b.append(struct.pack('!i', len(self.LocaleIds))
+        b.append(self.LocaleIds.to_binary())
+        b.append(struct.pack('!d', self.ActualSessionTimeout))
+        b.append(struct.pack('!I', self.MaxResponseMessageSize))
+        b.append(struct.pack('!d', self.ClientConnectionTime))
+        b.append(struct.pack('!d', self.ClientLastContactTime))
+        b.append(struct.pack('!I', self.CurrentSubscriptionsCount))
+        b.append(struct.pack('!I', self.CurrentMonitoredItemsCount))
+        b.append(struct.pack('!I', self.CurrentPublishRequestsInQueue))
+        b.append(self.TotalRequestCount.to_binary())
+        b.append(struct.pack('!I', self.UnauthorizedRequestCount))
+        b.append(self.ReadCount.to_binary())
+        b.append(self.HistoryReadCount.to_binary())
+        b.append(self.WriteCount.to_binary())
+        b.append(self.HistoryUpdateCount.to_binary())
+        b.append(self.CallCount.to_binary())
+        b.append(self.CreateMonitoredItemsCount.to_binary())
+        b.append(self.ModifyMonitoredItemsCount.to_binary())
+        b.append(self.SetMonitoringModeCount.to_binary())
+        b.append(self.SetTriggeringCount.to_binary())
+        b.append(self.DeleteMonitoredItemsCount.to_binary())
+        b.append(self.CreateSubscriptionCount.to_binary())
+        b.append(self.ModifySubscriptionCount.to_binary())
+        b.append(self.SetPublishingModeCount.to_binary())
+        b.append(self.PublishCount.to_binary())
+        b.append(self.RepublishCount.to_binary())
+        b.append(self.TransferSubscriptionsCount.to_binary())
+        b.append(self.DeleteSubscriptionsCount.to_binary())
+        b.append(self.AddNodesCount.to_binary())
+        b.append(self.AddReferencesCount.to_binary())
+        b.append(self.DeleteNodesCount.to_binary())
+        b.append(self.DeleteReferencesCount.to_binary())
+        b.append(self.BrowseCount.to_binary())
+        b.append(self.BrowseNextCount.to_binary())
+        b.append(self.TranslateBrowsePathsToNodeIdsCount.to_binary())
+        b.append(self.QueryFirstCount.to_binary())
+        b.append(self.QueryNextCount.to_binary())
+        b.append(self.RegisterNodesCount.to_binary())
+        b.append(self.UnregisterNodesCount.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SessionId.from_binary(data)
+        data = self.SessionName.from_binary(data)
+        data = self.ClientDescription.from_binary(data)
+        data = self.ServerUri.from_binary(data)
+        data = self.EndpointUrl.from_binary(data)
+        self.NoOfLocaleIds = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.LocaleIds.from_binary(data)
+        self.ActualSessionTimeout = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.MaxResponseMessageSize = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.ClientConnectionTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.ClientLastContactTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.CurrentSubscriptionsCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CurrentMonitoredItemsCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CurrentPublishRequestsInQueue = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.TotalRequestCount.from_binary(data)
+        self.UnauthorizedRequestCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        data = self.ReadCount.from_binary(data)
+        data = self.HistoryReadCount.from_binary(data)
+        data = self.WriteCount.from_binary(data)
+        data = self.HistoryUpdateCount.from_binary(data)
+        data = self.CallCount.from_binary(data)
+        data = self.CreateMonitoredItemsCount.from_binary(data)
+        data = self.ModifyMonitoredItemsCount.from_binary(data)
+        data = self.SetMonitoringModeCount.from_binary(data)
+        data = self.SetTriggeringCount.from_binary(data)
+        data = self.DeleteMonitoredItemsCount.from_binary(data)
+        data = self.CreateSubscriptionCount.from_binary(data)
+        data = self.ModifySubscriptionCount.from_binary(data)
+        data = self.SetPublishingModeCount.from_binary(data)
+        data = self.PublishCount.from_binary(data)
+        data = self.RepublishCount.from_binary(data)
+        data = self.TransferSubscriptionsCount.from_binary(data)
+        data = self.DeleteSubscriptionsCount.from_binary(data)
+        data = self.AddNodesCount.from_binary(data)
+        data = self.AddReferencesCount.from_binary(data)
+        data = self.DeleteNodesCount.from_binary(data)
+        data = self.DeleteReferencesCount.from_binary(data)
+        data = self.BrowseCount.from_binary(data)
+        data = self.BrowseNextCount.from_binary(data)
+        data = self.TranslateBrowsePathsToNodeIdsCount.from_binary(data)
+        data = self.QueryFirstCount.from_binary(data)
+        data = self.QueryNextCount.from_binary(data)
+        data = self.RegisterNodesCount.from_binary(data)
+        data = self.UnregisterNodesCount.from_binary(data)
+        return data
 
 class StatusResult(object):
     def __init__(self):
@@ -12615,45 +10233,26 @@ class StatusResult(object):
         self.StatusCode = None
         self.DiagnosticInfo = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.StatusCode.to_binary()
-        b += self.DiagnosticInfo.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.StatusCode.to_binary())
+        b.append(self.DiagnosticInfo.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.StatusCode.from_binary(data)
+        data = self.DiagnosticInfo.from_binary(data)
+        return data
 
 class SubscriptionDiagnosticsDataType(object):
     def __init__(self):
@@ -12692,74 +10291,114 @@ class SubscriptionDiagnosticsDataType(object):
         self.NextSequenceNumber = None
         self.EventQueueOverFlowCount = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.SessionId.to_binary()
-        b += struct.pack('!I', self.SubscriptionId)
-        b += struct.pack('!c', self.Priority)
-        b += struct.pack('!d', self.PublishingInterval)
-        b += struct.pack('!I', self.MaxKeepAliveCount)
-        b += struct.pack('!I', self.MaxLifetimeCount)
-        b += struct.pack('!I', self.MaxNotificationsPerPublish)
-        b += struct.pack('!?', self.PublishingEnabled)
-        b += struct.pack('!I', self.ModifyCount)
-        b += struct.pack('!I', self.EnableCount)
-        b += struct.pack('!I', self.DisableCount)
-        b += struct.pack('!I', self.RepublishRequestCount)
-        b += struct.pack('!I', self.RepublishMessageRequestCount)
-        b += struct.pack('!I', self.RepublishMessageCount)
-        b += struct.pack('!I', self.TransferRequestCount)
-        b += struct.pack('!I', self.TransferredToAltClientCount)
-        b += struct.pack('!I', self.TransferredToSameClientCount)
-        b += struct.pack('!I', self.PublishRequestCount)
-        b += struct.pack('!I', self.DataChangeNotificationsCount)
-        b += struct.pack('!I', self.EventNotificationsCount)
-        b += struct.pack('!I', self.NotificationsCount)
-        b += struct.pack('!I', self.LatePublishRequestCount)
-        b += struct.pack('!I', self.CurrentKeepAliveCount)
-        b += struct.pack('!I', self.CurrentLifetimeCount)
-        b += struct.pack('!I', self.UnacknowledgedMessageCount)
-        b += struct.pack('!I', self.DiscardedMessageCount)
-        b += struct.pack('!I', self.MonitoredItemCount)
-        b += struct.pack('!I', self.DisabledMonitoredItemCount)
-        b += struct.pack('!I', self.MonitoringQueueOverflowCount)
-        b += struct.pack('!I', self.NextSequenceNumber)
-        b += struct.pack('!I', self.EventQueueOverFlowCount)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.SessionId.to_binary())
+        b.append(struct.pack('!I', self.SubscriptionId))
+        b.append(struct.pack('!c', self.Priority))
+        b.append(struct.pack('!d', self.PublishingInterval))
+        b.append(struct.pack('!I', self.MaxKeepAliveCount))
+        b.append(struct.pack('!I', self.MaxLifetimeCount))
+        b.append(struct.pack('!I', self.MaxNotificationsPerPublish))
+        b.append(struct.pack('!?', self.PublishingEnabled))
+        b.append(struct.pack('!I', self.ModifyCount))
+        b.append(struct.pack('!I', self.EnableCount))
+        b.append(struct.pack('!I', self.DisableCount))
+        b.append(struct.pack('!I', self.RepublishRequestCount))
+        b.append(struct.pack('!I', self.RepublishMessageRequestCount))
+        b.append(struct.pack('!I', self.RepublishMessageCount))
+        b.append(struct.pack('!I', self.TransferRequestCount))
+        b.append(struct.pack('!I', self.TransferredToAltClientCount))
+        b.append(struct.pack('!I', self.TransferredToSameClientCount))
+        b.append(struct.pack('!I', self.PublishRequestCount))
+        b.append(struct.pack('!I', self.DataChangeNotificationsCount))
+        b.append(struct.pack('!I', self.EventNotificationsCount))
+        b.append(struct.pack('!I', self.NotificationsCount))
+        b.append(struct.pack('!I', self.LatePublishRequestCount))
+        b.append(struct.pack('!I', self.CurrentKeepAliveCount))
+        b.append(struct.pack('!I', self.CurrentLifetimeCount))
+        b.append(struct.pack('!I', self.UnacknowledgedMessageCount))
+        b.append(struct.pack('!I', self.DiscardedMessageCount))
+        b.append(struct.pack('!I', self.MonitoredItemCount))
+        b.append(struct.pack('!I', self.DisabledMonitoredItemCount))
+        b.append(struct.pack('!I', self.MonitoringQueueOverflowCount))
+        b.append(struct.pack('!I', self.NextSequenceNumber))
+        b.append(struct.pack('!I', self.EventQueueOverFlowCount))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.SessionId.from_binary(data)
+        self.SubscriptionId = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.Priority = struct.unpack(c, data[:1])
+        data = data[1:]
+        self.PublishingInterval = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.MaxKeepAliveCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MaxLifetimeCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MaxNotificationsPerPublish = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.PublishingEnabled = struct.unpack(?, data[:1])
+        data = data[1:]
+        self.ModifyCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.EnableCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.DisableCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RepublishRequestCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RepublishMessageRequestCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.RepublishMessageCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.TransferRequestCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.TransferredToAltClientCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.TransferredToSameClientCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.PublishRequestCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.DataChangeNotificationsCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.EventNotificationsCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NotificationsCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.LatePublishRequestCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CurrentKeepAliveCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.CurrentLifetimeCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.UnacknowledgedMessageCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.DiscardedMessageCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MonitoredItemCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.DisabledMonitoredItemCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.MonitoringQueueOverflowCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.NextSequenceNumber = struct.unpack(I, data[:4])
+        data = data[4:]
+        self.EventQueueOverFlowCount = struct.unpack(I, data[:4])
+        data = data[4:]
+        return data
 
 class ModelChangeStructureDataType(object):
     def __init__(self):
@@ -12770,46 +10409,29 @@ class ModelChangeStructureDataType(object):
         self.AffectedType = None
         self.Verb = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Affected.to_binary()
-        b += self.AffectedType.to_binary()
-        b += struct.pack('!c', self.Verb)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Affected.to_binary())
+        b.append(self.AffectedType.to_binary())
+        b.append(struct.pack('!c', self.Verb))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Affected.from_binary(data)
+        data = self.AffectedType.from_binary(data)
+        self.Verb = struct.unpack(c, data[:1])
+        data = data[1:]
+        return data
 
 class SemanticChangeStructureDataType(object):
     def __init__(self):
@@ -12819,45 +10441,26 @@ class SemanticChangeStructureDataType(object):
         self.Affected = None
         self.AffectedType = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Affected.to_binary()
-        b += self.AffectedType.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Affected.to_binary())
+        b.append(self.AffectedType.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Affected.from_binary(data)
+        data = self.AffectedType.from_binary(data)
+        return data
 
 class Range(object):
     def __init__(self):
@@ -12867,45 +10470,28 @@ class Range(object):
         self.Low = None
         self.High = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.Low)
-        b += struct.pack('!d', self.High)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.Low))
+        b.append(struct.pack('!d', self.High))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Low = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.High = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
 
 class EUInformation(object):
     def __init__(self):
@@ -12917,47 +10503,31 @@ class EUInformation(object):
         self.DisplayName = None
         self.Description = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.NamespaceUri.to_binary()
-        b += struct.pack('!i', self.UnitId)
-        b += self.DisplayName.to_binary()
-        b += self.Description.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.NamespaceUri.to_binary())
+        b.append(struct.pack('!i', self.UnitId))
+        b.append(self.DisplayName.to_binary())
+        b.append(self.Description.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.NamespaceUri.from_binary(data)
+        self.UnitId = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.DisplayName.from_binary(data)
+        data = self.Description.from_binary(data)
+        return data
 
 class ComplexNumberType(object):
     def __init__(self):
@@ -12967,45 +10537,28 @@ class ComplexNumberType(object):
         self.Real = None
         self.Imaginary = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!f', self.Real)
-        b += struct.pack('!f', self.Imaginary)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!f', self.Real))
+        b.append(struct.pack('!f', self.Imaginary))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Real = struct.unpack(f, data[:4])
+        data = data[4:]
+        self.Imaginary = struct.unpack(f, data[:4])
+        data = data[4:]
+        return data
 
 class DoubleComplexNumberType(object):
     def __init__(self):
@@ -13015,45 +10568,28 @@ class DoubleComplexNumberType(object):
         self.Real = None
         self.Imaginary = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.Real)
-        b += struct.pack('!d', self.Imaginary)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.Real))
+        b.append(struct.pack('!d', self.Imaginary))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.Real = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.Imaginary = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
 
 class AxisInformation(object):
     def __init__(self):
@@ -13067,50 +10603,37 @@ class AxisInformation(object):
         self.NoOfAxisSteps = None
         self.AxisSteps = []
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.EngineeringUnits.to_binary()
-        b += self.EURange.to_binary()
-        b += self.Title.to_binary()
-        b += self.AxisScaleType.to_binary()
-        b += struct.pack('!i', self.NoOfAxisSteps)
-        b += struct.pack('!i', len(self.AxisSteps)
-        b += struct.pack('!d', self.AxisSteps)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.EngineeringUnits.to_binary())
+        b.append(self.EURange.to_binary())
+        b.append(self.Title.to_binary())
+        b.append(self.AxisScaleType.to_binary())
+        b.append(struct.pack('!i', self.NoOfAxisSteps))
+        b.append(struct.pack('!i', len(self.AxisSteps))
+        b.append(struct.pack('!d', self.AxisSteps))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.EngineeringUnits.from_binary(data)
+        data = self.EURange.from_binary(data)
+        data = self.Title.from_binary(data)
+        data = self.AxisScaleType.from_binary(data)
+        self.NoOfAxisSteps = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.AxisSteps = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
 
 class XVType(object):
     def __init__(self):
@@ -13120,45 +10643,28 @@ class XVType(object):
         self.X = None
         self.Value = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += struct.pack('!d', self.X)
-        b += struct.pack('!f', self.Value)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(struct.pack('!d', self.X))
+        b.append(struct.pack('!f', self.Value))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        self.X = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.Value = struct.unpack(f, data[:4])
+        data = data[4:]
+        return data
 
 class ProgramDiagnosticDataType(object):
     def __init__(self):
@@ -13178,57 +10684,53 @@ class ProgramDiagnosticDataType(object):
         self.LastMethodCallTime = None
         self.LastMethodReturnStatus = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.CreateSessionId.to_binary()
-        b += self.CreateClientName.to_binary()
-        b += struct.pack('!d', self.InvocationCreationTime)
-        b += struct.pack('!d', self.LastTransitionTime)
-        b += self.LastMethodCall.to_binary()
-        b += self.LastMethodSessionId.to_binary()
-        b += struct.pack('!i', self.NoOfLastMethodInputArguments)
-        b += struct.pack('!i', len(self.LastMethodInputArguments)
-        b += self.LastMethodInputArguments.to_binary()
-        b += struct.pack('!i', self.NoOfLastMethodOutputArguments)
-        b += struct.pack('!i', len(self.LastMethodOutputArguments)
-        b += self.LastMethodOutputArguments.to_binary()
-        b += struct.pack('!d', self.LastMethodCallTime)
-        b += self.LastMethodReturnStatus.to_binary()
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.CreateSessionId.to_binary())
+        b.append(self.CreateClientName.to_binary())
+        b.append(struct.pack('!d', self.InvocationCreationTime))
+        b.append(struct.pack('!d', self.LastTransitionTime))
+        b.append(self.LastMethodCall.to_binary())
+        b.append(self.LastMethodSessionId.to_binary())
+        b.append(struct.pack('!i', self.NoOfLastMethodInputArguments))
+        b.append(struct.pack('!i', len(self.LastMethodInputArguments))
+        b.append(self.LastMethodInputArguments.to_binary())
+        b.append(struct.pack('!i', self.NoOfLastMethodOutputArguments))
+        b.append(struct.pack('!i', len(self.LastMethodOutputArguments))
+        b.append(self.LastMethodOutputArguments.to_binary())
+        b.append(struct.pack('!d', self.LastMethodCallTime))
+        b.append(self.LastMethodReturnStatus.to_binary())
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.CreateSessionId.from_binary(data)
+        data = self.CreateClientName.from_binary(data)
+        self.InvocationCreationTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        self.LastTransitionTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.LastMethodCall.from_binary(data)
+        data = self.LastMethodSessionId.from_binary(data)
+        self.NoOfLastMethodInputArguments = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.LastMethodInputArguments.from_binary(data)
+        self.NoOfLastMethodOutputArguments = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.LastMethodOutputArguments.from_binary(data)
+        self.LastMethodCallTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        data = self.LastMethodReturnStatus.from_binary(data)
+        return data
 
 class Annotation(object):
     def __init__(self):
@@ -13239,43 +10741,26 @@ class Annotation(object):
         self.UserName = None
         self.AnnotationTime = None
 
-    @property
-    def XmlBody(self):
-        return self.Encoding & (1 << 2)
-
-    @XmlBody.setter
-    def XmlBody(self, value):
-        return self.Encoding | (value << 2)
-
-    @property
-    def Reserved1(self):
-        return self.Encoding & (1 << 7)
-
-    @Reserved1.setter
-    def Reserved1(self, value):
-        return self.Encoding | (value << 7)
-
-    @property
-    def BinaryBody(self):
-        return self.Encoding & (1 << 1)
-
-    @BinaryBody.setter
-    def BinaryBody(self, value):
-        return self.Encoding | (value << 1)
-
-    @property
-    def TypeIdSpecified(self):
-        return self.Encoding & (1 << 0)
-
-    @TypeIdSpecified.setter
-    def TypeIdSpecified(self, value):
-        return self.Encoding | (value << 0)
-
     def to_binary(self):
-        b = bytes()
-        b += struct.pack('!B', self.Encoding)
-        b += struct.pack('!i', self.BodyLength)
-        b += self.Message.to_binary()
-        b += self.UserName.to_binary()
-        b += struct.pack('!d', self.AnnotationTime)
-        return b
+        b = []
+        if self.TypeId: self.Encoding |= (value << 0):
+        b.append(struct.pack('!B', self.Encoding))
+        if self.TypeId: b.append(self.TypeId.to_binary())
+        b.append(struct.pack('!i', self.BodyLength))
+        b.append(self.Message.to_binary())
+        b.append(self.UserName.to_binary())
+        b.append(struct.pack('!d', self.AnnotationTime))
+        return b.join()
+
+    def from_binary(self, data):
+        self.Encoding = struct.unpack(B, data[:1])
+        data = data[1:]
+        if self.Encoding & (1 << 0):
+            data = self.TypeId.from_binary(data)
+        self.BodyLength = struct.unpack(i, data[:4])
+        data = data[4:]
+        data = self.Message.from_binary(data)
+        data = self.UserName.from_binary(data)
+        self.AnnotationTime = struct.unpack(d, data[:8])
+        data = data[8:]
+        return data
