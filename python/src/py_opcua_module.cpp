@@ -395,7 +395,7 @@ BOOST_PYTHON_MODULE(opcua)
   to_python_converter<std::vector<EndpointDescription>, vector_to_python_converter<EndpointDescription>>();
 
   class_<ReferenceDescription>("ReferenceDescription")
-  .def_readwrite("reference_type_id", &ReferenceDescription::ReferenceTypeID)
+  .def_readwrite("reference_type_id", &ReferenceDescription::ReferenceTypeId)
   .def_readwrite("is_forward", &ReferenceDescription::IsForward)
   .def_readwrite("target_node_id", &ReferenceDescription::TargetNodeId)
   .def_readwrite("browse_name", &ReferenceDescription::BrowseName)

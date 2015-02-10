@@ -106,25 +106,25 @@ namespace OpcUa
   std::vector<Node> Node::GetChildren(const ReferenceID& refid) const
   {
     BrowseDescription description;
-    description.NodeToBrowse = Id;
-    description.Direction = BrowseDirection::Forward;
+    description.NodeId = Id;
+    description.BrowseDirection = BrowseDirection::Forward;
     description.IncludeSubtypes = true;
-    description.NodeClasses = NODE_CLASS_ALL;
+    description.NodeClassMask = NODE_CLASS_ALL;
     description.ResultMask = REFERENCE_ALL;
-    description.ReferenceTypeID =  refid;
+    description.ReferenceTypeId =  refid;
 
-    NodesQuery query;
+    BrowseParameters query;
     query.NodesToBrowse.push_back(description);
-    query.MaxReferenciesPerNode = 100;
+    query.MaxReferencesPerNode = 100;
     std::vector<Node> nodes;
     std::vector<BrowseResult> results = Server->Views()->Browse(query);
     if ( results.empty() )
     {
       return nodes;
     }
-    while(!results[0].Referencies.empty())
+    while(!results[0].References.empty())
     {
-      for (auto refIt : results[0].Referencies)
+      for (auto refIt : results[0].References)
       {
         Node node(Server, refIt.TargetNodeId);
         nodes.push_back(node);
@@ -207,7 +207,7 @@ namespace OpcUa
     bpath.StartingNode = Id;
     std::vector<BrowsePath> bpaths;
     bpaths.push_back(bpath);
-    TranslateBrowsePathsParameters params;
+    TranslateBrowsePathsToNodeIdsParameters params;
     params.BrowsePaths = bpaths;
 
     std::vector<BrowsePathResult> result = Server->Views()->TranslateBrowsePathsToNodeIds(params);

@@ -20,7 +20,7 @@
 #pragma once
 
 #include <opc/ua/protocol/types.h>
-#include <opc/ua/protocol/view.h>
+#include <opc/ua/protocol/protocol.h>
 #include <ostream>
 #include <limits>
 

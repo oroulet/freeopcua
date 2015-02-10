@@ -28,10 +28,10 @@ class MonitoredItemsDeserialization : public OpcUaBinaryDeserialization
 
 
 //-------------------------------------------------------
-// MonitoredItemsData
+// CreateMonitoredItemsResult
 //-------------------------------------------------------
 
-TEST_F(MonitoredItemsSerialization, DISABLED_MonitoredItemsData)
+TEST_F(MonitoredItemsSerialization, DISABLED_CreateMonitoredItemsResult)
 {
   using namespace OpcUa;
   using namespace OpcUa::Binary;
@@ -43,7 +43,7 @@ TEST_F(MonitoredItemsSerialization, DISABLED_MonitoredItemsData)
   monitoringResult.RevizedQueueSize = 3;
   //monitoringResult.ExtensionObjectHeader FilterResult;
 
-  MonitoredItemsData data;
+  CreateMonitoredItemsResult data;
   data.Results.push_back(monitoringResult);
 
   GetStream() << data << flush;
@@ -86,16 +86,16 @@ TEST_F(MonitoredItemsSerialization, DISABLED_CreateMonitoredItemsResponse)
   response.Data.Results.push_back(monitoringResult);
 
 
-  ASSERT_EQ(response.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(response.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(response.TypeID.FourByteData.Identifier, OpcUa::CREATE_MONITORED_ITEMS_RESPONSE);
+  ASSERT_EQ(response.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(response.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(response.TypeId.FourByteData.Identifier, OpcUa::CREATE_MONITORED_ITEMS_RESPONSE);
 
   FILL_TEST_RESPONSE_HEADER(response.Header);
 
   GetStream() << response << flush;
 
   const std::vector<char> expectedData = {
-    1, 0, (char)0xF2, 0x2, // TypeID
+    1, 0, (char)0xF2, 0x2, // TypeId
     // RequestHeader
     TEST_RESPONSE_HEADER_BINARY_DATA,
 

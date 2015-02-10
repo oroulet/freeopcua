@@ -34,14 +34,14 @@ namespace OpcUa
 {
   struct MonitoredItemData
   {
-    IntegerID MonitoredItemID;
+    IntegerId MonitoredItemID;
     Node TargetNode;
     AttributeID Attribute;
     MonitoringFilter Filter;
   };
 
-  typedef std::map<IntegerID, MonitoredItemData> AttValMap;
-  typedef std::map<IntegerID, EventFilter> SimpleAttOpMap;
+  typedef std::map<IntegerId, MonitoredItemData> AttValMap;
+  typedef std::map<IntegerId, EventFilter> SimpleAttOpMap;
 
   class SubscriptionHandler
   {
@@ -108,7 +108,7 @@ namespace OpcUa
       void CallStatusChangeCallback(const NotificationData& data);
 
       Services::SharedPtr Server;
-      SubscriptionData Data;
+      CreateSubscriptionResult Data;
       SubscriptionHandler& Client;
       uint32_t LastMonitoredItemHandle = 1;
       AttValMap AttributeValueMap; 

@@ -111,19 +111,19 @@ protected:
 
   OpcUa::NodeId CreateObjectTypeWithOneTypedObject()
   {
-    const OpcUa::NodeId& resultTypeID = CreateEmptyObjectType();
+    const OpcUa::NodeId& resultTypeId = CreateEmptyObjectType();
     const OpcUa::NodeId& objectTypeWithVar = CreateObjectTypeWithOneVariable();
     OpcUa::AddNodesItem object;
     object.BrowseName = OpcUa::QualifiedName("new_sub_object1");
     object.Class = OpcUa::NodeClass::Object;
-    object.ParentNodeId = resultTypeID;
+    object.ParentNodeId = resultTypeId;
     object.ReferenceTypeId = OpcUa::ObjectId::HasComponent;
     object.TypeDefinition = objectTypeWithVar;
     OpcUa::ObjectAttributes attrs;
     attrs.DisplayName = OpcUa::LocalizedText("new_sub_object");
     object.Attributes = attrs;
     Services->NodeManagement()->AddNodes({object});
-    return resultTypeID;
+    return resultTypeId;
   }
 
 protected:

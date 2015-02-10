@@ -10,11 +10,11 @@
 
 #include "binary_serialization.h"
 
-#include <opc/ua/protocol/attribute.h>
 #include <opc/ua/protocol/binary/stream.h>
 #include <opc/ua/protocol/nodeid.h>
 #include <opc/ua/protocol/string_utils.h>
 #include <opc/ua/protocol/types.h>
+#include <opc/ua/protocol/protocol.h>
 #include <opc/ua/protocol/variant.h>
 #include <opc/ua/protocol/variant_visitor.h>
 
@@ -308,11 +308,12 @@ namespace OpcUa
       return Compare<Variant>(*this, var);
     else if (t == typeid(std::vector<Variant>))
       return Compare<std::vector<Variant>>(*this, var);
-
+/* FIXME: do we need variant of diagnostic infor?
     else if (t == typeid(DiagnosticInfo))
       return Compare<DiagnosticInfo>(*this, var);
     else if (t == typeid(std::vector<DiagnosticInfo>))
       return Compare<std::vector<DiagnosticInfo>>(*this, var);
+      */
 
     throw std::logic_error(std::string("Unknown variant type '") + t.name() + std::string("'."));
   }

@@ -23,6 +23,174 @@ namespace OpcUa
     {
 
     template<>
+    void DataSerializer::Serialize<OpenFileMode>(const OpenFileMode& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<NodeClass>(const NodeClass& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<ApplicationType>(const ApplicationType& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<MessageSecurityMode>(const MessageSecurityMode& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<UserTokenType>(const UserTokenType& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<SecurityTokenRequestType>(const SecurityTokenRequestType& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<NodeAttributesMask>(const NodeAttributesMask& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<AttributeWriteMask>(const AttributeWriteMask& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<BrowseDirection>(const BrowseDirection& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<BrowseResultMask>(const BrowseResultMask& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<ComplianceLevel>(const ComplianceLevel& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<FilterOperator>(const FilterOperator& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<TimestampsToReturn>(const TimestampsToReturn& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<HistoryUpdateType>(const HistoryUpdateType& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<PerformUpdateType>(const PerformUpdateType& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<MonitoringMode>(const MonitoringMode& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<DataChangeTrigger>(const DataChangeTrigger& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<DeadbandType>(const DeadbandType& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<EnumeratedTestType>(const EnumeratedTestType& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<RedundancySupport>(const RedundancySupport& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<ServerState>(const ServerState& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<ModelChangeStructureVerbMask>(const ModelChangeStructureVerbMask& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<AxisScaleEnumeration>(const AxisScaleEnumeration& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
+    void DataSerializer::Serialize<ExceptionDeviationFormat>(const ExceptionDeviationFormat& data)
+    {
+        *this << static_cast<uint32_t>(data);
+    }
+
+
+    template<>
     void DataSerializer::Serialize<XmlElement>(const XmlElement& data)
     {
         *this << data.Length;
@@ -39,7 +207,7 @@ namespace OpcUa
         if ((data.Encoding) & (1<<(2))) *this << data.LocalizedText;
         if ((data.Encoding) & (1<<(4))) *this << data.AdditionalInfo;
         if ((data.Encoding) & (1<<(5))) *this << data.InnerStatusCode;
-        if ((data.Encoding) & (1<<(6))) *this << *data.InnerDiagnosticInfo;
+        if ((data.Encoding) & (1<<(6))) *this << data.InnerDiagnosticInfo;
     }
 
 
@@ -150,7 +318,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<FindServersParameters>(const FindServersParameters& data)
     {
-        *this << data.Header;
         *this << data.EndpointUrl;
         SerializeContainer(*this, data.LocaleIds);
         SerializeContainer(*this, data.ServerUris);
@@ -163,14 +330,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<FindServersData>(const FindServersData& data)
+    void DataSerializer::Serialize<FindServersResult>(const FindServersResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Servers);
     }
 
@@ -181,6 +348,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -219,7 +387,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<GetEndpointsParameters>(const GetEndpointsParameters& data)
     {
-        *this << data.Header;
         *this << data.EndpointUrl;
         SerializeContainer(*this, data.LocaleIds);
         SerializeContainer(*this, data.ProfileUris);
@@ -232,6 +399,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -267,7 +435,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<RegisterServerParameters>(const RegisterServerParameters& data)
     {
-        *this << data.Header;
         *this << data.Server;
     }
 
@@ -278,14 +445,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<RegisterServerData>(const RegisterServerData& data)
-    {
         *this << data.Header;
+        *this << data.Parameters;
     }
 
 
@@ -295,7 +456,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
     }
 
 
@@ -315,7 +476,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<OpenSecureChannelParameters>(const OpenSecureChannelParameters& data)
     {
-        *this << data.Header;
         *this << data.ClientProtocolVersion;
         *this << data.RequestType;
         *this << data.SecurityMode;
@@ -330,14 +490,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<OpenSecureChannelData>(const OpenSecureChannelData& data)
+    void DataSerializer::Serialize<OpenSecureChannelResult>(const OpenSecureChannelResult& data)
     {
-        *this << data.Header;
         *this << data.ServerProtocolVersion;
         *this << data.SecurityToken;
         *this << data.ServerNonce;
@@ -350,14 +510,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<CloseSecureChannelParameters>(const CloseSecureChannelParameters& data)
-    {
         *this << data.Header;
+        *this << data.Parameters;
     }
 
 
@@ -367,13 +521,6 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<CloseSecureChannelData>(const CloseSecureChannelData& data)
-    {
         *this << data.Header;
     }
 
@@ -384,7 +531,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
     }
 
 
@@ -413,7 +560,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<CreateSessionParameters>(const CreateSessionParameters& data)
     {
-        *this << data.Header;
         *this << data.ClientDescription;
         *this << data.ServerUri;
         *this << data.EndpointUrl;
@@ -431,14 +577,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<CreateSessionData>(const CreateSessionData& data)
+    void DataSerializer::Serialize<CreateSessionResult>(const CreateSessionResult& data)
     {
-        *this << data.Header;
         *this << data.SessionId;
         *this << data.AuthenticationToken;
         *this << data.RevisedSessionTimeout;
@@ -457,6 +603,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -520,7 +667,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<ActivateSessionParameters>(const ActivateSessionParameters& data)
     {
-        *this << data.Header;
         *this << data.ClientSignature;
         SerializeContainer(*this, data.ClientSoftwareCertificates);
         SerializeContainer(*this, data.LocaleIds);
@@ -535,14 +681,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<ActivateSessionData>(const ActivateSessionData& data)
+    void DataSerializer::Serialize<ActivateSessionResult>(const ActivateSessionResult& data)
     {
-        *this << data.Header;
         *this << data.ServerNonce;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
@@ -555,15 +701,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<CloseSessionParameters>(const CloseSessionParameters& data)
-    {
         *this << data.Header;
-        *this << data.DeleteSubscriptions;
+        *this << data.Parameters;
     }
 
 
@@ -573,14 +712,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<CloseSessionData>(const CloseSessionData& data)
-    {
         *this << data.Header;
+        *this << data.DeleteSubscriptions;
     }
 
 
@@ -590,14 +723,13 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
     }
 
 
     template<>
     void DataSerializer::Serialize<CancelParameters>(const CancelParameters& data)
     {
-        *this << data.Header;
         *this << data.RequestHandle;
     }
 
@@ -608,14 +740,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<CancelData>(const CancelData& data)
+    void DataSerializer::Serialize<CancelResult>(const CancelResult& data)
     {
-        *this << data.Header;
         *this << data.CancelCount;
     }
 
@@ -626,6 +758,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -789,7 +922,7 @@ namespace OpcUa
         *this << data.ReferenceTypeId;
         *this << data.RequestedNewNodeId;
         *this << data.BrowseName;
-        *this << data.Class;
+        *this << data.NodeClass;
         *this << data.NodeAttributes;
         *this << data.TypeDefinition;
     }
@@ -809,7 +942,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<AddNodesParameters>(const AddNodesParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.NodesToAdd);
     }
 
@@ -820,16 +952,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<AddNodesData>(const AddNodesData& data)
-    {
         *this << data.Header;
-        SerializeContainer(*this, data.Results);
-        SerializeContainer(*this, data.DiagnosticInfos);
+        *this << data.Parameters;
     }
 
 
@@ -839,7 +963,9 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
+        SerializeContainer(*this, data.Results);
+        SerializeContainer(*this, data.DiagnosticInfos);
     }
 
 
@@ -861,7 +987,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<AddReferencesParameters>(const AddReferencesParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.ReferencesToAdd);
     }
 
@@ -872,14 +997,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<AddReferencesData>(const AddReferencesData& data)
+    void DataSerializer::Serialize<AddReferencesResult>(const AddReferencesResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -891,6 +1016,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -901,7 +1027,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.DeleteTargetReferences;
     }
 
@@ -909,7 +1035,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<DeleteNodesParameters>(const DeleteNodesParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.NodesToDelete);
     }
 
@@ -920,14 +1045,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<DeleteNodesData>(const DeleteNodesData& data)
+    void DataSerializer::Serialize<DeleteNodesResult>(const DeleteNodesResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -939,6 +1064,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -960,7 +1086,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<DeleteReferencesParameters>(const DeleteReferencesParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.ReferencesToDelete);
     }
 
@@ -971,14 +1096,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<DeleteReferencesData>(const DeleteReferencesData& data)
+    void DataSerializer::Serialize<DeleteReferencesResult>(const DeleteReferencesResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -990,6 +1115,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1012,7 +1138,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.BrowseDirection;
         *this << data.ReferenceTypeId;
         *this << data.IncludeSubtypes;
@@ -1032,7 +1158,7 @@ namespace OpcUa
         *this << data.NodeId;
         *this << data.BrowseName;
         *this << data.DisplayName;
-        *this << data.Class;
+        *this << data.NodeClass;
         *this << data.TypeDefinition;
     }
 
@@ -1052,7 +1178,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<BrowseParameters>(const BrowseParameters& data)
     {
-        *this << data.Header;
         *this << data.View;
         *this << data.RequestedMaxReferencesPerNode;
         SerializeContainer(*this, data.NodesToBrowse);
@@ -1065,16 +1190,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<BrowseData>(const BrowseData& data)
-    {
         *this << data.Header;
-        SerializeContainer(*this, data.Results);
-        SerializeContainer(*this, data.DiagnosticInfos);
+        *this << data.Parameters;
     }
 
 
@@ -1084,14 +1201,15 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
+        SerializeContainer(*this, data.Results);
+        SerializeContainer(*this, data.DiagnosticInfos);
     }
 
 
     template<>
     void DataSerializer::Serialize<BrowseNextParameters>(const BrowseNextParameters& data)
     {
-        *this << data.Header;
         *this << data.ReleaseContinuationPoints;
         SerializeContainer(*this, data.ContinuationPoints);
     }
@@ -1103,14 +1221,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<BrowseNextData>(const BrowseNextData& data)
+    void DataSerializer::Serialize<BrowseNextResult>(const BrowseNextResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1122,6 +1240,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1185,7 +1304,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<TranslateBrowsePathsToNodeIdsParameters>(const TranslateBrowsePathsToNodeIdsParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.BrowsePaths);
     }
 
@@ -1196,14 +1314,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<TranslateBrowsePathsToNodeIdsData>(const TranslateBrowsePathsToNodeIdsData& data)
+    void DataSerializer::Serialize<TranslateBrowsePathsToNodeIdsResult>(const TranslateBrowsePathsToNodeIdsResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1215,6 +1333,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1222,7 +1341,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<RegisterNodesParameters>(const RegisterNodesParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.NodesToRegister);
     }
 
@@ -1233,14 +1351,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<RegisterNodesData>(const RegisterNodesData& data)
+    void DataSerializer::Serialize<RegisterNodesResult>(const RegisterNodesResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.RegisteredNodeIds);
     }
 
@@ -1251,6 +1369,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1258,7 +1377,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<UnregisterNodesParameters>(const UnregisterNodesParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.NodesToUnregister);
     }
 
@@ -1269,14 +1387,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<UnregisterNodesData>(const UnregisterNodesData& data)
-    {
         *this << data.Header;
+        *this << data.Parameters;
     }
 
 
@@ -1286,7 +1398,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
     }
 
 
@@ -1384,7 +1496,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.ReferenceTypeId;
         *this << data.IsForward;
         SerializeContainer(*this, data.ReferencedNodeIds);
@@ -1447,7 +1559,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.Alias;
         *this << data.BrowsePath;
         *this << data.AttributeId;
@@ -1506,7 +1618,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<QueryFirstParameters>(const QueryFirstParameters& data)
     {
-        *this << data.Header;
         *this << data.View;
         SerializeContainer(*this, data.NodeTypes);
         *this << data.Filter;
@@ -1521,14 +1632,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<QueryFirstData>(const QueryFirstData& data)
+    void DataSerializer::Serialize<QueryFirstResult>(const QueryFirstResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.QueryDataSets);
         *this << data.ContinuationPoint;
         SerializeContainer(*this, data.ParsingResults);
@@ -1543,6 +1654,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1550,7 +1662,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<QueryNextParameters>(const QueryNextParameters& data)
     {
-        *this << data.Header;
         *this << data.ReleaseContinuationPoint;
         *this << data.ContinuationPoint;
     }
@@ -1562,14 +1673,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<QueryNextData>(const QueryNextData& data)
+    void DataSerializer::Serialize<QueryNextResult>(const QueryNextResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.QueryDataSets);
         *this << data.RevisedContinuationPoint;
     }
@@ -1581,6 +1692,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1591,7 +1703,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.AttributeId;
         *this << data.IndexRange;
         *this << data.DataEncoding;
@@ -1601,10 +1713,9 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<ReadParameters>(const ReadParameters& data)
     {
-        *this << data.Header;
         *this << data.MaxAge;
         *this << data.TimestampsToReturn;
-        SerializeContainer(*this, data.NodesToRead);
+        SerializeContainer(*this, data.AttributesToRead);
     }
 
 
@@ -1614,14 +1725,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<ReadData>(const ReadData& data)
+    void DataSerializer::Serialize<ReadResult>(const ReadResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1633,6 +1744,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1643,7 +1755,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.IndexRange;
         *this << data.DataEncoding;
         *this << data.ContinuationPoint;
@@ -1732,11 +1844,10 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<HistoryReadParameters>(const HistoryReadParameters& data)
     {
-        *this << data.Header;
         *this << data.HistoryReadDetails;
         *this << data.TimestampsToReturn;
         *this << data.ReleaseContinuationPoints;
-        SerializeContainer(*this, data.NodesToRead);
+        SerializeContainer(*this, data.AttributesToRead);
     }
 
 
@@ -1746,16 +1857,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<HistoryReadData>(const HistoryReadData& data)
-    {
         *this << data.Header;
-        SerializeContainer(*this, data.Results);
-        SerializeContainer(*this, data.DiagnosticInfos);
+        *this << data.Parameters;
     }
 
 
@@ -1765,7 +1868,9 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
+        SerializeContainer(*this, data.Results);
+        SerializeContainer(*this, data.DiagnosticInfos);
     }
 
 
@@ -1775,7 +1880,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.AttributeId;
         *this << data.IndexRange;
         *this << data.Value;
@@ -1785,7 +1890,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<WriteParameters>(const WriteParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.NodesToWrite);
     }
 
@@ -1796,14 +1900,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<WriteData>(const WriteData& data)
+    void DataSerializer::Serialize<WriteResult>(const WriteResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1815,6 +1919,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -1825,7 +1930,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
     }
 
 
@@ -1835,7 +1940,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.PerformInsertReplace;
         SerializeContainer(*this, data.UpdateValues);
     }
@@ -1847,7 +1952,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.PerformInsertReplace;
         SerializeContainer(*this, data.UpdateValues);
     }
@@ -1859,7 +1964,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.IsDeleteModified;
         *this << data.StartTime;
         *this << data.EndTime;
@@ -1872,7 +1977,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         SerializeContainer(*this, data.ReqTimes);
     }
 
@@ -1883,7 +1988,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         SerializeContainer(*this, data.EventIds);
     }
 
@@ -1903,7 +2008,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<HistoryUpdateParameters>(const HistoryUpdateParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.HistoryUpdateDetails);
     }
 
@@ -1914,16 +2018,8 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<HistoryUpdateData>(const HistoryUpdateData& data)
-    {
         *this << data.Header;
-        SerializeContainer(*this, data.Results);
-        SerializeContainer(*this, data.DiagnosticInfos);
+        *this << data.Parameters;
     }
 
 
@@ -1933,14 +2029,15 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Parameters;
+        *this << data.Header;
+        SerializeContainer(*this, data.Results);
+        SerializeContainer(*this, data.DiagnosticInfos);
     }
 
 
     template<>
     void DataSerializer::Serialize<CallMethodParameters>(const CallMethodParameters& data)
     {
-        *this << data.ObjectId;
         *this << data.MethodId;
         SerializeContainer(*this, data.InputArguments);
     }
@@ -1952,6 +2049,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.ObjectId;
         *this << data.Parameters;
     }
 
@@ -1972,7 +2070,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<CallParameters>(const CallParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.MethodsToCall);
     }
 
@@ -1983,14 +2080,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<CallData>(const CallData& data)
+    void DataSerializer::Serialize<CallResult>(const CallResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2002,6 +2099,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2153,8 +2251,7 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<MonitoredItemCreateParameters>(const MonitoredItemCreateParameters& data)
     {
-        *this << data.ItemToMonitor;
-        *this << data.Mode;
+        *this << data.MonitoringMode;
         *this << data.RequestedParameters;
     }
 
@@ -2165,6 +2262,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.ItemToMonitor;
         *this << data.Parameters;
     }
 
@@ -2186,7 +2284,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<CreateMonitoredItemsParameters>(const CreateMonitoredItemsParameters& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         *this << data.TimestampsToReturn;
         SerializeContainer(*this, data.ItemsToCreate);
@@ -2199,14 +2296,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<CreateMonitoredItemsData>(const CreateMonitoredItemsData& data)
+    void DataSerializer::Serialize<CreateMonitoredItemsResult>(const CreateMonitoredItemsResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2218,6 +2315,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2225,7 +2323,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<MonitoredItemModifyParameters>(const MonitoredItemModifyParameters& data)
     {
-        *this << data.MonitoredItemId;
         *this << data.RequestedParameters;
     }
 
@@ -2236,6 +2333,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.MonitoredItemId;
         *this << data.Parameters;
     }
 
@@ -2256,7 +2354,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<ModifyMonitoredItemsParameters>(const ModifyMonitoredItemsParameters& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         *this << data.TimestampsToReturn;
         SerializeContainer(*this, data.ItemsToModify);
@@ -2269,14 +2366,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<ModifyMonitoredItemsData>(const ModifyMonitoredItemsData& data)
+    void DataSerializer::Serialize<ModifyMonitoredItemsResult>(const ModifyMonitoredItemsResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2288,6 +2385,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2295,9 +2393,8 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<SetMonitoringModeParameters>(const SetMonitoringModeParameters& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
-        *this << data.Mode;
+        *this << data.MonitoringMode;
         SerializeContainer(*this, data.MonitoredItemIds);
     }
 
@@ -2308,14 +2405,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<SetMonitoringModeData>(const SetMonitoringModeData& data)
+    void DataSerializer::Serialize<SetMonitoringModeResult>(const SetMonitoringModeResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2327,6 +2424,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2334,7 +2432,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<SetTriggeringParameters>(const SetTriggeringParameters& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         *this << data.TriggeringItemId;
         SerializeContainer(*this, data.LinksToAdd);
@@ -2348,14 +2445,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<SetTriggeringData>(const SetTriggeringData& data)
+    void DataSerializer::Serialize<SetTriggeringResult>(const SetTriggeringResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.AddResults);
         SerializeContainer(*this, data.AddDiagnosticInfos);
         SerializeContainer(*this, data.RemoveResults);
@@ -2369,6 +2466,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2376,7 +2474,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<DeleteMonitoredItemsParameters>(const DeleteMonitoredItemsParameters& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         SerializeContainer(*this, data.MonitoredItemIds);
     }
@@ -2388,14 +2485,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<DeleteMonitoredItemsData>(const DeleteMonitoredItemsData& data)
+    void DataSerializer::Serialize<DeleteMonitoredItemsResult>(const DeleteMonitoredItemsResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2407,6 +2504,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2414,7 +2512,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<CreateSubscriptionParameters>(const CreateSubscriptionParameters& data)
     {
-        *this << data.Header;
         *this << data.RequestedPublishingInterval;
         *this << data.RequestedLifetimeCount;
         *this << data.RequestedMaxKeepAliveCount;
@@ -2430,14 +2527,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<CreateSubscriptionData>(const CreateSubscriptionData& data)
+    void DataSerializer::Serialize<CreateSubscriptionResult>(const CreateSubscriptionResult& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         *this << data.RevisedPublishingInterval;
         *this << data.RevisedLifetimeCount;
@@ -2451,6 +2548,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2458,7 +2556,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<ModifySubscriptionParameters>(const ModifySubscriptionParameters& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         *this << data.RequestedPublishingInterval;
         *this << data.RequestedLifetimeCount;
@@ -2474,14 +2571,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<ModifySubscriptionData>(const ModifySubscriptionData& data)
+    void DataSerializer::Serialize<ModifySubscriptionResult>(const ModifySubscriptionResult& data)
     {
-        *this << data.Header;
         *this << data.RevisedPublishingInterval;
         *this << data.RevisedLifetimeCount;
         *this << data.RevisedMaxKeepAliveCount;
@@ -2494,6 +2591,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2501,7 +2599,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<SetPublishingModeParameters>(const SetPublishingModeParameters& data)
     {
-        *this << data.Header;
         *this << data.PublishingEnabled;
         SerializeContainer(*this, data.SubscriptionIds);
     }
@@ -2513,14 +2610,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<SetPublishingModeData>(const SetPublishingModeData& data)
+    void DataSerializer::Serialize<SetPublishingModeResult>(const SetPublishingModeResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2532,6 +2629,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2626,7 +2724,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
-        *this << data.Node;
+        *this << data.NodeId;
         *this << data.PerformInsertReplace;
         *this << data.Filter;
         SerializeContainer(*this, data.EventData);
@@ -2658,7 +2756,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<PublishParameters>(const PublishParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.SubscriptionAcknowledgements);
     }
 
@@ -2669,18 +2766,18 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<PublishData>(const PublishData& data)
+    void DataSerializer::Serialize<PublishResult>(const PublishResult& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         SerializeContainer(*this, data.AvailableSequenceNumbers);
         *this << data.MoreNotifications;
-        *this << data.Notification;
+        *this << data.NotificationMessage;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2692,6 +2789,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2699,7 +2797,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<RepublishParameters>(const RepublishParameters& data)
     {
-        *this << data.Header;
         *this << data.SubscriptionId;
         *this << data.RetransmitSequenceNumber;
     }
@@ -2711,15 +2808,15 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<RepublishData>(const RepublishData& data)
+    void DataSerializer::Serialize<RepublishResult>(const RepublishResult& data)
     {
-        *this << data.Header;
-        *this << data.Notification;
+        *this << data.NotificationMessage;
     }
 
 
@@ -2729,6 +2826,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2747,7 +2845,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<TransferSubscriptionsParameters>(const TransferSubscriptionsParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.SubscriptionIds);
         *this << data.SendInitialValues;
     }
@@ -2759,14 +2856,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<TransferSubscriptionsData>(const TransferSubscriptionsData& data)
+    void DataSerializer::Serialize<TransferSubscriptionsResult>(const TransferSubscriptionsResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2778,6 +2875,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2785,7 +2883,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<DeleteSubscriptionsParameters>(const DeleteSubscriptionsParameters& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.SubscriptionIds);
     }
 
@@ -2796,14 +2893,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<DeleteSubscriptionsData>(const DeleteSubscriptionsData& data)
+    void DataSerializer::Serialize<DeleteSubscriptionsResult>(const DeleteSubscriptionsResult& data)
     {
-        *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2815,6 +2912,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2841,8 +2939,8 @@ namespace OpcUa
         *this << data.Guid;
         *this << data.ByteString;
         *this << data.XmlElement;
-        *this << data.Node;
-        *this << data.ExpandedNode;
+        *this << data.NodeId;
+        *this << data.ExpandedNodeId;
         *this << data.Status;
         *this << data.DiagnosticInfo;
         *this << data.QualifiedName;
@@ -2901,7 +2999,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<TestStackParameters>(const TestStackParameters& data)
     {
-        *this << data.Header;
         *this << data.TestId;
         *this << data.Iteration;
         *this << data.Input;
@@ -2914,14 +3011,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<TestStackData>(const TestStackData& data)
+    void DataSerializer::Serialize<TestStackResult>(const TestStackResult& data)
     {
-        *this << data.Header;
         *this << data.Output;
     }
 
@@ -2932,6 +3029,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -2939,7 +3037,6 @@ namespace OpcUa
     template<>
     void DataSerializer::Serialize<TestStackExParameters>(const TestStackExParameters& data)
     {
-        *this << data.Header;
         *this << data.TestId;
         *this << data.Iteration;
         *this << data.Input;
@@ -2952,14 +3049,14 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
 
     template<>
-    void DataSerializer::Serialize<TestStackExData>(const TestStackExData& data)
+    void DataSerializer::Serialize<TestStackExResult>(const TestStackExResult& data)
     {
-        *this << data.Header;
         *this << data.Output;
     }
 
@@ -2970,6 +3067,7 @@ namespace OpcUa
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
         *this << data.BodyLength;
+        *this << data.Header;
         *this << data.Parameters;
     }
 
@@ -3324,174 +3422,6 @@ namespace OpcUa
         *this << data.Message;
         *this << data.UserName;
         *this << data.AnnotationTime;
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<OpenFileMode>(const OpenFileMode& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<NodeClass>(const NodeClass& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<ApplicationType>(const ApplicationType& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<MessageSecurityMode>(const MessageSecurityMode& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<UserTokenType>(const UserTokenType& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<SecurityTokenRequestType>(const SecurityTokenRequestType& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<NodeAttributesMask>(const NodeAttributesMask& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<AttributeWriteMask>(const AttributeWriteMask& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<BrowseDirection>(const BrowseDirection& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<BrowseResultMask>(const BrowseResultMask& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<ComplianceLevel>(const ComplianceLevel& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<FilterOperator>(const FilterOperator& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<TimestampsToReturn>(const TimestampsToReturn& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<HistoryUpdateType>(const HistoryUpdateType& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<PerformUpdateType>(const PerformUpdateType& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<MonitoringMode>(const MonitoringMode& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<DataChangeTrigger>(const DataChangeTrigger& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<DeadbandType>(const DeadbandType& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<EnumeratedTestType>(const EnumeratedTestType& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<RedundancySupport>(const RedundancySupport& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<ServerState>(const ServerState& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<ModelChangeStructureVerbMask>(const ModelChangeStructureVerbMask& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<AxisScaleEnumeration>(const AxisScaleEnumeration& data)
-    {
-        *this << static_cast<uint32_t>(data);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<ExceptionDeviationFormat>(const ExceptionDeviationFormat& data)
-    {
-        *this << static_cast<uint32_t>(data);
     }
 
 

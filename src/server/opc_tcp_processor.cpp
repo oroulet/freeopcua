@@ -268,7 +268,7 @@ namespace OpcUa
         case OpcUa::GET_ENDPOINTS_REQUEST:
         {
           if (Debug) std::clog << "opc_tcp_processor| Processing get endpoints request." << std::endl;
-          EndpointsFilter filter;
+          GetEndpointsParameters filter;
           istream >> filter;
 
           GetEndpointsResponse response;
@@ -304,7 +304,7 @@ namespace OpcUa
         case OpcUa::BROWSE_REQUEST:
         {
           if (Debug) std::clog << "opc_tcp_processor| Processing browse request." << std::endl;
-          NodesQuery query;
+          BrowseParameters query;
           istream >> query;
 
           BrowseResponse response;
@@ -393,7 +393,7 @@ namespace OpcUa
         case TRANSLATE_BROWSE_PATHS_TO_NODE_IDS_REQUEST:
         {
           if (Debug) std::clog << "opc_tcp_processor| Processing 'Translate Browse Paths To Node IDs' request." << std::endl;
-          TranslateBrowsePathsParameters params;
+          TranslateBrowsePathsToNodeIdsParameters params;
           istream >> params;
 
           if (Debug)
@@ -451,7 +451,7 @@ namespace OpcUa
           response.Session.AuthenticationToken = SessionID;
           response.Session.RevisedSessionTimeout = params.RequestedSessionTimeout;
           response.Session.MaxRequestMessageSize = 65536;
-          EndpointsFilter epf;
+          GetEndpointsParameters epf;
           response.Session.ServerEndpoints = Server->Endpoints()->GetEndpoints(epf);
 
 
@@ -538,7 +538,7 @@ namespace OpcUa
         case DELETE_SUBSCRIPTION_REQUEST:
         {
           if (Debug) std::clog << "opc_tcp_processor| Processing delete subscription request." << std::endl;
-          std::vector<IntegerID> ids;
+          std::vector<IntegerId> ids;
           istream >> ids;
 
           DeleteSubscriptions(ids); //remove from locale subscription lis
@@ -561,7 +561,7 @@ namespace OpcUa
         case CREATE_MONITORED_ITEMS_REQUEST:
         {
           if (Debug) std::clog << "opc_tcp_processor| Processing 'Create Monitored Items' request." << std::endl;
-          MonitoredItemsParameters params;
+          CreateMonitoredItemsParameters params;
           istream >> params;
 
           CreateMonitoredItemsResponse response;
@@ -732,8 +732,8 @@ namespace OpcUa
 
     void OpcTcpMessages::DeleteAllSubscriptions()
     {
-      std::vector<IntegerID> subs;
-      for (const IntegerID& subid: Subscriptions)
+      std::vector<IntegerId> subs;
+      for (const IntegerId& subid: Subscriptions)
       {
         subs.push_back(subid);
       }
@@ -741,12 +741,12 @@ namespace OpcUa
       Subscriptions.clear();
     }
 
-    void OpcTcpMessages::DeleteSubscriptions(const std::vector<IntegerID>& ids)
+    void OpcTcpMessages::DeleteSubscriptions(const std::vector<IntegerId>& ids)
     {
       for ( auto id : ids )
       {
         Subscriptions.erase(std::remove_if(Subscriptions.begin(), Subscriptions.end(),
-                      [&](const IntegerID d) { return ( d == id) ; }), Subscriptions.end());
+                      [&](const IntegerId d) { return ( d == id) ; }), Subscriptions.end());
       }
     }
 

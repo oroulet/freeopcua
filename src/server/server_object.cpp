@@ -34,7 +34,7 @@ namespace
   OpcUa::RelativePathElement GetHierarchicalElement(const std::string& browseName)
   {
     OpcUa::RelativePathElement element;
-    element.ReferenceTypeID = OpcUa::ObjectId::HierarchicalReferences;
+    element.ReferenceTypeId = OpcUa::ObjectId::HierarchicalReferences;
     element.IncludeSubtypes = true;
     element.TargetName.Name = browseName;
     return element;

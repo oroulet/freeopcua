@@ -9,8 +9,7 @@
 ///
 
 #include <opc/ua/protocol/binary/stream.h>
-#include <opc/ua/protocol/secure_channel.h>
-#include <opc/ua/protocol/types.h>
+#include <opc/ua/protocol/protocol.h>
 
 #include <algorithm>
 #include <stdexcept>
@@ -219,144 +218,11 @@ namespace OpcUa
     }
 
     template<>
-    std::size_t RawSize<AdditionalHeader>(const AdditionalHeader& header)
-    {
-      const std::size_t sizeofTypeID = RawSize(header.TypeID);
-      const std::size_t sizeofEncoding = 1;
-      return sizeofTypeID + sizeofEncoding;
-    }
-
-    template<>
-    std::size_t RawSize<RequestHeader>(const RequestHeader& header)
-    {
-      const std::size_t sizeofAuthenticationToken = RawSize(header.AuthenticationToken);
-      const std::size_t sizeofTimestamp = 8;
-      const std::size_t sizeofRequestHandle = 4;
-      const std::size_t sizeofReturnDiagnostics = 4;
-      const std::size_t sizeofAuditEntryId = 4 + header.AuditEntryId.size();
-      const std::size_t sizeofTimeout = 4;
-      const std::size_t sizeofAdditional = RawSize(header.Additional);
-
-      return sizeofAuthenticationToken + sizeofTimestamp + sizeofRequestHandle + sizeofReturnDiagnostics + sizeofAuditEntryId + sizeofTimeout + sizeofAdditional;
-    }
-
-    template<>
-    std::size_t RawSize<OpenSecureChannelRequest>(const OpenSecureChannelRequest& request)
-    {
-      const std::size_t sizeofTypeID = RawSize(request.TypeID);
-      const std::size_t sizeofHeader = RawSize(request.Header);
-      const std::size_t sizeofClientProtocolVersion = 4;
-      const std::size_t sizeofRequestType = 4;
-      const std::size_t sizeofSecurityMode = 4;
-      const std::size_t sizeofClientNonce = 4 + request.Parameters.ClientNonce.size();
-      const std::size_t sizeofRequestedLifetime = 4;
-
-      return sizeofTypeID + sizeofHeader + sizeofClientProtocolVersion + sizeofRequestType + sizeofSecurityMode + sizeofClientNonce + sizeofRequestedLifetime;
-    };
-
-    template<>
     std::size_t RawSize<SymmetricAlgorithmHeader>(const SymmetricAlgorithmHeader& header)
     {
       const std::size_t sizeofTokenID = 4;
       return sizeofTokenID;
     }
-
-    template<>
-    std::size_t RawSize<DiagnosticInfo>(const DiagnosticInfo& info)
-    {
-      const std::size_t sizeofEncodingMask = 1;
-      size_t size = sizeofEncodingMask;
-
-      if (info.EncodingMask & DIM_SYMBOLIC_ID)
-      {
-        const std::size_t sizeofSymbolicID = 4;
-        size += sizeofSymbolicID;
-      }
-      if (info.EncodingMask & DIM_NAMESPACE)
-      {
-        const std::size_t sizeofNamespace = 4;
-        size += sizeofNamespace;
-      }
-      if (info.EncodingMask & DIM_LOCALIZED_TEXT)
-      {
-        const std::size_t sizeofLocalizedText = 4;
-        size += sizeofLocalizedText;
-      }
-      if (info.EncodingMask & DIM_LOCALE)
-      {
-        const std::size_t sizeofLocale = 4;
-        size += sizeofLocale;
-      }
-      if (info.EncodingMask & DIM_ADDITIONAL_INFO)
-      {
-        const std::size_t sizeofAdditionalInfo = 4 + info.AdditionalInfo.size();
-        size += sizeofAdditionalInfo;
-      }
-      if (info.EncodingMask & DIM_INNER_STATUS_CODE)
-      {
-        const std::size_t sizeofInnerStatusCode= 4;
-        size += sizeofInnerStatusCode;
-      }
-      if ((info.EncodingMask & DIM_INNER_DIAGNOSTIC_INFO) && info.InnerDiagnostics)
-      {
-        size += RawSize(*info.InnerDiagnostics);
-      }
-
-      return size;
-    }
-
-    template<>
-    std::size_t RawSize<DiagnosticInfoList>(const DiagnosticInfoList& infos)
-    {
-      return RawSizeContainer(infos);
-    }
-
-    template<>
-    std::size_t RawSize<ResponseHeader>(const ResponseHeader& header)
-    {
-      const std::size_t sizeofTimestamp = 8;
-      const std::size_t sizeofRequestHandle = 4;
-      const std::size_t sizeofServiceResult = 4;
-
-      std::size_t sizeofDiagnostics = RawSize(header.InnerDiagnostics);
-      std::size_t sizeofStringTable = 4;
-      std::for_each(header.StringTable.begin(), header.StringTable.end(), [&] (const std::string& str) {sizeofStringTable += RawSize(str);});
-
-      const std::size_t sizeofAdditional = RawSize(header.Additional);
-      return sizeofTimestamp + sizeofRequestHandle + sizeofServiceResult + sizeofDiagnostics + sizeofStringTable + sizeofAdditional;
-    }
-
-    template<>
-    std::size_t RawSize<SecurityToken>(const SecurityToken&)
-    {
-      const std::size_t sizeofSecureChannelID = 4;
-      const std::size_t sizeofTokenID = 4;
-      const std::size_t sizeofCreatedAt = 8;
-      const std::size_t sizeofRevisedLifetime = 4;
-
-      return sizeofSecureChannelID + sizeofTokenID + sizeofCreatedAt + sizeofRevisedLifetime;
-    };
-
-    template<>
-    std::size_t RawSize<OpenSecureChannelResponse>(const OpenSecureChannelResponse& response)
-    {
-      const std::size_t sizeofTypeID = RawSize(response.TypeID);
-      const std::size_t sizeofHeader = RawSize(response.Header);
-      const std::size_t sizeofServerProtocolVersion = 4;
-      const std::size_t sizeofChannelSecurityToken = RawSize(response.ChannelSecurityToken);
-      const std::size_t sizeofServerNonce = 4 + response.ServerNonce.size();
-
-      return sizeofTypeID + sizeofHeader + sizeofServerProtocolVersion + sizeofChannelSecurityToken + sizeofServerNonce;
-    };
-
-    template<>
-    std::size_t RawSize<CloseSecureChannelRequest>(const CloseSecureChannelRequest& request)
-    {
-      const std::size_t sizeofTypeID = RawSize(request.TypeID);
-      const std::size_t sizeofHeader = RawSize(request.Header);
-      return sizeofTypeID + sizeofHeader;
-    }
-
 
     template<>
     std::size_t RawSize<LocalizedText>(const LocalizedText& text)
@@ -374,32 +240,13 @@ namespace OpcUa
     };
 
     template<>
-    std::size_t RawSize<MessageSecurityMode>(const MessageSecurityMode&)
-    {
-      return 4;
-    };
-
-    template<>
-    std::size_t RawSize<SignatureData>(const SignatureData& s)
-    {
-      return RawSize(s.Signature) + RawSize(s.Algorithm);
-    };
-
-    template<>
-    std::size_t RawSize<ExtensionObjectHeader>(const ExtensionObjectHeader& header)
-    {
-      const std::size_t sizeofEncoding = 1;
-      return RawSize(header.TypeID) + sizeofEncoding;
-    };
-
-    template<>
     std::size_t RawSize<QualifiedName>(const QualifiedName& name)
     {
       return RawSize(name.NamespaceIndex) + RawSize(name.Name);
     };
     template<>
 
-    std::size_t RawSize<IntegerID>(const IntegerID&)
+    std::size_t RawSize<IntegerId>(const IntegerId&)
     {
       return 4;
     };

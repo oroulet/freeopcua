@@ -48,22 +48,22 @@ protected:
   std::vector<ReferenceDescription> Browse(const NodeId& id) const
   {
     OpcUa::BrowseDescription description;
-    description.NodeToBrowse = id;
-    OpcUa::NodesQuery query;
+    description.NodeId = id;
+    OpcUa::BrowseParameters query;
     query.NodesToBrowse.push_back(description);
     auto result = NameSpace->Browse(query);
     if (result.empty())
     {
       return std::vector<ReferenceDescription>();
     }
-    return result[0].Referencies;
+    return result[0].References;
   }
 
   bool HasReference(std::vector<ReferenceDescription> refs, ReferenceID referenceID,  NodeId targetNode) const
   {
     for (const ReferenceDescription ref : refs)
     {
-      if (ref.TargetNodeId == targetNode && ref.ReferenceTypeID == referenceID)
+      if (ref.NodeId == targetNode && ref.ReferenceTypeId == referenceID)
       {
         return true;
       }
@@ -152,34 +152,34 @@ inline NodeId Node(T value)
 TEST_F(StandardNamespaceStructure, CanBrowseRootFolder_By_Organizes_RefType)
 {
   OpcUa::BrowseDescription description;
-  description.NodeToBrowse = ObjectId::RootFolder;
-  description.Direction = BrowseDirection::Forward;
-  description.ReferenceTypeID = ReferenceID::Organizes;
+  description.NodeId = ObjectId::RootFolder;
+  description.BrowseDirection = BrowseDirection::Forward;
+  description.ReferenceTypeId = ReferenceID::Organizes;
   description.IncludeSubtypes = true;
-  description.NodeClasses = NODE_CLASS_OBJECT;
+  description.NodeClassMask = NodeClass::Object;
   description.ResultMask = REFERENCE_ALL;
 
-  OpcUa::NodesQuery query;
+  OpcUa::BrowseParameters query;
   query.NodesToBrowse.push_back(description);
   std::vector<BrowseResult> results = NameSpace->Browse(query);
   ASSERT_EQ(results.size(), 1);
-  ASSERT_EQ(results[0].Referencies.size(), 3);
+  ASSERT_EQ(results[0].References.size(), 3);
 }
 
-TEST_F(StandardNamespaceStructure, CanBrowseRootFolder_By_HierarchicalReferencies_Subtypes)
+TEST_F(StandardNamespaceStructure, CanBrowseRootFolder_By_HierarchicalReferences_Subtypes)
 {
   OpcUa::BrowseDescription description;
-  description.NodeToBrowse = ObjectId::RootFolder;
-  description.Direction = BrowseDirection::Forward;
-  description.ReferenceTypeID = ReferenceID::HierarchicalReferences;
+  description.NodeId = ObjectId::RootFolder;
+  description.BrowseDirection = BrowseDirection::Forward;
+  description.ReferenceTypeId = ReferenceID::HierarchicalReferences;
   description.IncludeSubtypes = true;
-  description.NodeClasses = NODE_CLASS_OBJECT;
+  description.NodeClassMask = NodeClass::Object;
   description.ResultMask = REFERENCE_ALL;
-  OpcUa::NodesQuery query;
+  OpcUa::BrowseParameters query;
   query.NodesToBrowse.push_back(description);
   std::vector<BrowseResult> results = NameSpace->Browse(query);
   ASSERT_EQ(results.size(), 1);
-  ASSERT_EQ(results[0].Referencies.size(), 3);
+  ASSERT_EQ(results[0].References.size(), 3);
 }
 
 TEST_F(StandardNamespaceStructure, CheckRoot)

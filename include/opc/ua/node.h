@@ -75,7 +75,7 @@ namespace OpcUa
 
     
 
-    //TODO: How to get Referencies?
+    //TODO: How to get References?
 
     //The Read and Write methods read or write attributes of the node
     //FIXME: add possibility to read and write several nodes at once

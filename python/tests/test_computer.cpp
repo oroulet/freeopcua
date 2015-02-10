@@ -30,7 +30,7 @@ namespace
       return Applications;
     }
 
-    virtual std::vector<EndpointDescription> GetEndpoints(const EndpointsFilter& filter) const
+    virtual std::vector<EndpointDescription> GetEndpoints(const GetEndpointsParameters& filter) const
     {
       return Endpoints;
     }
@@ -163,16 +163,16 @@ namespace
   class TestViewServices : public ViewServices
   {
   public:
-    virtual std::vector<ReferenceDescription> Browse(const OpcUa::NodesQuery& query) const
+    virtual std::vector<ReferenceDescription> Browse(const OpcUa::BrowseParameters& query) const
     {
       ReferenceDescription ref;
       ref.BrowseName.Name = "Name";
       ref.BrowseName.NamespaceIndex = 1;
       ref.DisplayName.Text = "Text";
       ref.IsForward = true;
-      ref.ReferenceTypeID.Encoding = OpcUa::NodeIdEncoding::EV_STRING;
-      ref.ReferenceTypeID.StringData.NamespaceIndex = 2;
-      ref.ReferenceTypeID.StringData.Identifier = "Identifier";
+      ref.ReferenceTypeId.Encoding = OpcUa::NodeIdEncoding::EV_STRING;
+      ref.ReferenceTypeId.StringData.NamespaceIndex = 2;
+      ref.ReferenceTypeId.StringData.Identifier = "Identifier";
       ref.TargetNodeClass = OpcUa::NodeClass::Variable;
       ref.TargetNodeId.Encoding = OpcUa::NodeIdEncoding::EV_FOUR_BYTE;
       ref.TargetNodeId.FourByteData.NamespaceIndex = 3;
@@ -188,7 +188,7 @@ namespace
       return std::vector<ReferenceDescription>();
     }
 
-    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const
+    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsToNodeIdsParameters& params) const
     {
       throw std::logic_error("not implemented.");
     }

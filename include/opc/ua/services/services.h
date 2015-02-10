@@ -11,13 +11,12 @@
 #pragma once
 
 #include <opc/common/class_pointers.h>
-#include <opc/ua/protocol/session.h>
-#include <opc/ua/protocol/secure_channel.h>
-#include <opc/ua/services/attributes.h>
-#include <opc/ua/services/endpoints.h>
+#include <opc/ua/protocol/protocol.h>
 #include <opc/ua/services/node_management.h>
 #include <opc/ua/services/subscriptions.h>
 #include <opc/ua/services/view.h>
+#include <opc/ua/services/endpoints.h>
+#include <opc/ua/services/attributes.h>
 
 #include <memory>
 #include <vector>

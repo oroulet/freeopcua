@@ -13,8 +13,7 @@
 
 #include <opc/common/interface.h>
 #include <opc/common/class_pointers.h>
-#include <opc/ua/protocol/subscriptions.h>
-#include <opc/ua/protocol/monitored_items.h>
+#include <opc/ua/protocol/protocol.h>
 
 #include <functional>
 
@@ -27,13 +26,13 @@ namespace OpcUa
     DEFINE_CLASS_POINTERS(SubscriptionServices);
 
     public:
-      virtual SubscriptionData CreateSubscription(const CreateSubscriptionRequest&, std::function<void (PublishResult)> callbackPublish) = 0; 
-      virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerID>& subscriptions) = 0;
+      virtual CreateSubscriptionResult CreateSubscription(const CreateSubscriptionRequest&, std::function<void (PublishResult)> callbackPublish) = 0; 
+      virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerId>& subscriptions) = 0;
       virtual void Publish(const PublishRequest& request) = 0;
       virtual RepublishResponse Republish(const RepublishParameters& params) = 0;
 
       //FIXME: Spec says MonitoredItems methods should be in their own service
-      virtual MonitoredItemsData CreateMonitoredItems(const MonitoredItemsParameters& parameters) = 0; 
+      virtual CreateMonitoredItemsResult CreateMonitoredItems(const CreateMonitoredItemsParameters& parameters) = 0; 
       virtual std::vector<StatusCode> DeleteMonitoredItems(const DeleteMonitoredItemsParameters& params) = 0; 
   };
 

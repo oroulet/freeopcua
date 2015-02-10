@@ -30,29 +30,29 @@ namespace OpcUa
     //Structure to store description of a MonitoredItems
     struct MonitoredDataChange
     {
-      IntegerID MonitoredItemId;
+      IntegerId MonitoredItemId;
       MonitoringMode Mode;
       time_t LastTrigger;
       CreateMonitoredItemsResult Parameters;
-      IntegerID ClientHandle;
+      IntegerId ClientHandle;
       uint32_t CallbackHandle;
     };
 
     struct TriggeredDataChange
     {
-      IntegerID MonitoredItemId;
+      IntegerId MonitoredItemId;
       MonitoredItems Data;
     };
 
     struct TriggeredEvent
     {
-      IntegerID MonitoredItemId;
+      IntegerId MonitoredItemId;
       EventFieldList Data;
     };
 
     //typedef std::pair<NodeId, AttributeID> MonitoredItemsIndex;
-    typedef std::map<IntegerID, MonitoredDataChange> MonitoredDataChangeMap;
-    typedef std::map<NodeId, IntegerID> MonitoredEventsMap;
+    typedef std::map<IntegerId, MonitoredDataChange> MonitoredDataChangeMap;
+    typedef std::map<NodeId, IntegerId> MonitoredEventsMap;
 
     class AddressSpaceInMemory; //pre-declaration
 
@@ -60,25 +60,25 @@ namespace OpcUa
     class InternalSubscription : public std::enable_shared_from_this<InternalSubscription>
     {
       public:
-        InternalSubscription(SubscriptionServiceInternal& service, const SubscriptionData& data, const NodeId& SessionAuthenticationToken, std::function<void (PublishResult)> Callback, bool debug=false);
+        InternalSubscription(SubscriptionServiceInternal& service, const CreateSubscriptionResult& data, const NodeId& SessionAuthenticationToken, std::function<void (PublishResult)> Callback, bool debug=false);
         ~InternalSubscription();
         void Start();
         void Stop();
 
         void NewAcknowlegment(const SubscriptionAcknowledgement& ack);
-        std::vector<StatusCode> DeleteMonitoredItemsIds(const std::vector<IntegerID>& ids);
-        bool EnqueueEvent(IntegerID monitoreditemid, const Event& event);
-        bool EnqueueDataChange(IntegerID monitoreditemid, const DataValue& value);
+        std::vector<StatusCode> DeleteMonitoredItemsIds(const std::vector<IntegerId>& ids);
+        bool EnqueueEvent(IntegerId monitoreditemid, const Event& event);
+        bool EnqueueDataChange(IntegerId monitoreditemid, const DataValue& value);
         CreateMonitoredItemsResult CreateMonitoredItem(const MonitoredItemRequest& request);
-        void DataChangeCallback(const IntegerID&, const DataValue& value);
+        void DataChangeCallback(const IntegerId&, const DataValue& value);
         bool HasExpired();
         void TriggerEvent(NodeId node, Event event);
         RepublishResponse Republish(const RepublishParameters& params);
 
       private:
         void DeleteAllMonitoredItems(); 
-        bool DeleteMonitoredEvent(IntegerID handle);
-        bool DeleteMonitoredDataChange(IntegerID handle);
+        bool DeleteMonitoredEvent(IntegerId handle);
+        bool DeleteMonitoredDataChange(IntegerId handle);
         std::vector<PublishResult> PopPublishResult(); 
         bool HasPublishResult(); 
         NotificationData GetNotificationData();
@@ -90,7 +90,7 @@ namespace OpcUa
         SubscriptionServiceInternal& Service;
         Server::AddressSpace& AddressSpace;
         mutable boost::shared_mutex DbMutex;
-        SubscriptionData Data;
+        CreateSubscriptionResult Data;
         const NodeId CurrentSession;
         std::function<void (PublishResult)> Callback;
 

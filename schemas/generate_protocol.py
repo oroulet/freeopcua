@@ -8,12 +8,14 @@ import xml.etree.ElementTree as ET
 from IPython import embed
 
 NeedOverride = []
-NeedConstructor = ["RelativePathElement", "ReadValueId", "OpenSecureChannelParameters", "UserIdentityToken", "RequestHeader", "ResponseHeader", "ReadParameters"]
+NeedConstructor = ["RelativePathElement", "ReadValueId", "OpenSecureChannelParameters", "UserIdentityToken", "RequestHeader", "ResponseHeader", "ReadParameters", "UserIdentityToken", "BrowseDescription", "ReferenceDescription", "CreateSubscriptionParameters", "PublishResult", "NotificationMessage", "SetPublishingModeParameters"]
 IgnoredEnums = ["IdType", "NodeIdType"]
+#we want to implement som struct by hand, to make better interface or simply because they are too complicated 
 IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText"]
 #by default we split requests and respons in header and parameters, but some are so simple we do not split them
-NoSplitStruct = ["GetEndpointsResponse"]
-OverrideTypes = {"AttributeId": "AttributeID"}
+NoSplitStruct = ["GetEndpointsResponse", "CloseSessionRequest", "AddNodesResponse", "BrowseResponse", "HistoryReadResponse", "HistoryUpdateResponse", "RegisterServerResponse", "CloseSecureChannelRequest", "CloseSecureChannelResponse", "CloseSessionRequest", "CloseSessionResponse", "UnregisterNodesResponse"]
+OverrideTypes = {"AttributeId": "AttributeID",  "ResultMask": "BrowseResultMask", "NodeClassMask": "NodeClass"}
+OverrideNames = {"RequestHeader": "Header", "ResponseHeader": "Header", "StatusCode": "Status", "NodesToRead": "AttributesToRead"} # "MonitoringMode": "Mode",, "NotificationMessage": "Notification", "NodeIdType": "Type"}
 
 """
 def rename_field(s):
@@ -74,7 +76,12 @@ class Field(object):
             return False
         return True
 
-    def get_uatype(self):
+    def is_native_type(self):
+        if self.uatype in ("Char", "CharArray", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "Boolean", "Double", "Float", "Byte"):
+            return True
+        return False
+
+    def get_ctype(self):
         if self.uatype == "String":
             ty = "std::string"
         elif self.uatype == "CharArray":
@@ -100,7 +107,7 @@ class Field(object):
         elif self.uatype == "UInt64":
             ty = "uint64_t"
         elif self.uatype == "DateTime":
-            ty = "DateTime"
+            ty = "OpcUa::DateTime"
         elif self.uatype == "Boolean":
             ty = "bool"
         elif self.uatype == "Double":
@@ -108,11 +115,11 @@ class Field(object):
         elif self.uatype == "Float":
             ty = "float"
         elif self.uatype == "ByteString":
-            ty = "ByteString"
+            ty = "OpcUa::ByteString"
         elif self.uatype == "Byte":
             ty = "uint8_t"
         else:
-            ty = self.uatype
+            ty = "OpcUa::" + self.uatype
         if self.length:
             ty = "std::vector<{}>".format(ty)
         return ty
@@ -124,7 +131,7 @@ class Enum(object):
         self.values = []
         self.doc = None
 
-    def get_uatype(self):
+    def get_ctype(self):
         return "uint{}_t".format(self.uatype)
 
 class EnumValue(object):
@@ -157,12 +164,10 @@ def reorder_structs(model):
     waiting = {}
     newstructs = []
     for s in model.structs:
-        print("Looking at ", s.name)
         s.waitingfor = []
         ok = True
         for f in s.fields:
             if f.uatype not in types:
-                print("   field ", f.name, "missing type", f.uatype)
                 if f.uatype in waiting.keys():
                     waiting[f.uatype].append(s)
                     s.waitingfor.append(f.uatype)
@@ -176,12 +181,11 @@ def reorder_structs(model):
             waitings = waiting.pop(s.name, None)
             if waitings:
                 for s2 in waitings:
-                    print(s2.name, " was wauiting for ", s.name)
-                    print(s2.name, s2.waitingfor) 
                     s2.waitingfor.remove(s.name)
                     if not s2.waitingfor:
                         newstructs.append(s2)
-    print(len(model.structs), len(newstructs))
+    if len(model.structs) != len(newstructs):
+        print("Error while reordering structs, some structs could not be reinserted")
     model.structs = newstructs
 
 def override_types(model):
@@ -254,12 +258,12 @@ def fix_requests(model):
                 basename = struct.name.replace("Request", "") + "Parameters"
                 paramstruct.name = basename 
             else:
-                basename = struct.name.replace("Response", "") + "Data"
+                basename = struct.name.replace("Response", "") + "Result"
                 paramstruct.name = basename 
-            paramstruct.fields = struct.fields[3:]
+            paramstruct.fields = struct.fields[4:]
             paramstruct.bits = struct.bits
 
-            struct.fields = struct.fields[:3]
+            struct.fields = struct.fields[:4]
             #struct.bits = {}
             structs.append(paramstruct)
 
@@ -288,8 +292,8 @@ class Parser(object):
             elif tag == "EnumeratedType":
                 enum = self.parse_enum(child)
                 self.model.enums.append(enum)
-            else:
-                print("Not implemented node type: " + tag + "\n")
+            #else:
+                #print("Not implemented node type: " + tag + "\n")
         reorder_structs(self.model)
         return self.model
 
@@ -368,9 +372,10 @@ class Parser(object):
         base = self.model.get_struct(basename)
         for name, bit in base.bits.items():
             struct.bits[name] = bit
-        for field in base.fields:
-            if field.name != "Body":
-                struct.fields.append(field)
+        for idx, field in enumerate(base.fields):
+            if idx == ( len(base.fields) -1 ) and field.name == "Body":
+                continue
+            struct.fields.append(field)
 
 
 
@@ -404,6 +409,10 @@ class CodeGenerator(object):
         self.make_header_deserialize()
         self.make_header_constructors()
         
+        for enum in self.model.enums:
+            if not enum.name in IgnoredEnums:
+                self.make_enum_h(enum)
+                self.make_struct_ser(enum)
         for struct in self.model.structs:
             self.rename_fields(struct)
             if struct.name in NeedConstructor:
@@ -414,10 +423,6 @@ class CodeGenerator(object):
                 self.make_struct_h(struct)
                 self.make_struct_ser(struct)
                 self.make_constructors(struct)
-        for enum in self.model.enums:
-            if not enum.name in IgnoredEnums:
-                self.make_enum_h(enum)
-                self.make_struct_ser(enum)
 
         self.make_footer_h()
         self.make_footer_enum()
@@ -429,25 +434,10 @@ class CodeGenerator(object):
     def rename_fields(self, struct):
         ##gcc does not want member with same name as a type
         for field in struct.fields:
-            if field.name == field.get_uatype():
-                if field.name.endswith("Header"):
-                    field.name = "Header"
-                elif field.name == "ExpandedNodeId":
-                    field.name = "ExpandedNode"
-                elif field.name == "NodeId":
-                    field.name = "Node"
-                elif field.name in ("StatusCode"):
-                    field.name = "Status"
-                elif field.name in ("NodeClass"):
-                    field.name = "Class"
-                elif field.name in ("MonitoringMode"):
-                    field.name = "Mode"
-                elif field.name in ("NotificationMessage"):
-                    field.name = "Notification"
-                elif field.name in ("NodeIdType"):
-                    field.name = "Type"
-                else:
-                    print("Error name same as type: ", field.name, field.get_uatype(), field.uatype)
+            if field.name in OverrideNames:
+                field.name = OverrideNames[field.name]
+            #else:
+                #print("Error name same as type: ", field.name, field.get_ctype(), field.uatype)
 
     def make_struct_h(self, struct):
         self.write_h("")
@@ -457,11 +447,11 @@ class CodeGenerator(object):
             name = "_" + struct.name
         self.write_h("    struct %s \n    {""" % name)
         for field in struct.fields: 
-            if field.get_uatype() == struct.name:
+            if field.get_ctype() == "OpcUa::" + struct.name:
                 #we have a problem selv referensing struct
-                self.write_h("         std::shared_ptr<{}> {};".format(field.get_uatype(), field.name))
+                self.write_h("         std::shared_ptr<{}> {};".format(field.get_ctype(), field.name))
             else:
-                self.write_h("        " , field.get_uatype(), field.name + ";")
+                self.write_h("        " , field.get_ctype(), field.name + ";")
         if struct.needconstructor:
             self.write_h("\n        ", struct.name + "();")
         self.write_h("    };")
@@ -472,12 +462,12 @@ class CodeGenerator(object):
         self.write_size("    std::size_t RawSize<{}>(const {}& data)".format(struct.name, struct.name))
         self.write_size("    {")
         if type(struct) == Enum:
-            self.write_size("        return sizeof({});".format(struct.get_uatype()))
+            self.write_size("        return sizeof({});".format(struct.get_ctype()))
         else:
             tmp = []
             for field in struct.fields:
                 prefix = ""
-                if field.get_uatype() == struct.name:
+                if field.get_ctype() == struct.name:
                     prefix = "*"
                 if field.length:
                     tmp.append("RawSizeContainer({}data.{})".format(prefix, field.name))
@@ -494,7 +484,7 @@ class CodeGenerator(object):
         self.write_ser("    void DataSerializer::Serialize<{}>(const {}& data)".format(struct.name, struct.name))
         self.write_ser("    {")
         if type(struct) == Enum:
-            self.write_ser("        *this << static_cast<{}>(data);".format(struct.get_uatype()))
+            self.write_ser("        *this << static_cast<{}>(data);".format(struct.get_ctype()))
         else:
             for field in struct.fields:
                 switch = ""
@@ -506,7 +496,7 @@ class CodeGenerator(object):
                         idx = struct.bits[field.switchfield].idx
                         switch = "if ((data.{}) & (1<<({}))) ".format(container, idx)
                 prefix = ""
-                if field.get_uatype() == struct.name:
+                if field.get_ctype() == struct.name:
                     prefix = "*"
                 if field.length:
                     self.write_ser("        {}SerializeContainer(*this, {}data.{});".format(switch, prefix, field.name))
@@ -521,9 +511,10 @@ class CodeGenerator(object):
         self.write_deser("    void DataDeserializer::Deserialize<{}>({}& data)".format(struct.name, struct.name))
         self.write_deser("    {")
         if type(struct) == Enum:
-            self.write_deser("        {} tmp;".format(struct.get_uatype()))
+            self.write_deser("        {} tmp;".format(struct.get_ctype()))
             self.write_deser("        *this >> tmp;")
-            self.write_deser("        data = static_cast<{}(tmp);".format(struct.get_uatype()))
+            #self.write_deser("        data = static_cast<{}>(tmp);".format(struct.get_ctype()))
+            self.write_deser("        data = static_cast<{}>(tmp);".format(struct.name))
         else:
             for field in struct.fields:
                 switch = ""

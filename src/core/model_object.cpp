@@ -20,6 +20,7 @@
 #include "model_impl.h"
 
 #include <opc/ua/model.h>
+#include <opc/ua/protocol/binary/stream.h>
 
 namespace OpcUa
 {
@@ -31,8 +32,8 @@ namespace OpcUa
     {
       Id = objectId;
       ReadParameters attrs;
-      attrs.AttributesToRead.push_back(ReadValueId(objectId, AttributeID::DisplayName));
-      attrs.AttributesToRead.push_back(ReadValueId(objectId, AttributeID::BrowseName));
+      attrs.AttributesToRead.push_back(MakeReadValueId(objectId, AttributeID::DisplayName));
+      attrs.AttributesToRead.push_back(MakeReadValueId(objectId, AttributeID::BrowseName));
       std::vector<DataValue> values = services->Attributes()->Read(attrs);
       DisplayName = values[0].Value.As<LocalizedText>();
       BrowseName = values[1].Value.As<QualifiedName>();
@@ -66,13 +67,13 @@ namespace OpcUa
 
     std::vector<Variable> Object::GetVariables() const
     {
-      return Browse<Variable>(GetID(), NODE_CLASS_VARIABLE, GetServices());
+      return Browse<Variable>(GetID(), NodeClass::Variable, GetServices());
     }
 
     Variable Object::GetVariable(const QualifiedName& name) const
     {
       OpcUa::RelativePathElement element;
-      element.ReferenceTypeID = OpcUa::ObjectId::HierarchicalReferences;
+      element.ReferenceTypeId = OpcUa::ObjectId::HierarchicalReferences;
       element.IncludeSubtypes = true;
       element.TargetName = name;
 
@@ -85,8 +86,8 @@ namespace OpcUa
     {
       OpcUa::BrowsePath browsePath;
       browsePath.StartingNode = GetID();
-      browsePath.Path = relativePath;
-      OpcUa::TranslateBrowsePathsParameters params;
+      browsePath.RelativePath = relativePath;
+      OpcUa::TranslateBrowsePathsToNodeIdsParameters params;
       params.BrowsePaths.push_back(browsePath);
       const std::vector<OpcUa::BrowsePathResult>& result = GetServices()->Views()->TranslateBrowsePathsToNodeIds(params);
       if (result.size() != 1)
@@ -97,13 +98,13 @@ namespace OpcUa
       if (resultPath.Targets.size() != 1)
         throw std::runtime_error("object_model| Server returned too many target elements on TranslateBrowsePathsToNodeIds request.");
 
-      return Variable(resultPath.Targets.back().Node, GetServices());
+      return Variable(resultPath.Targets.back().TargetId, GetServices());
     }
 
 
     std::vector<Object> Object::GetObjects() const
     {
-      return Browse<Object>(GetID(), NODE_CLASS_OBJECT, GetServices());
+      return Browse<Object>(GetID(), NodeClass::Object, GetServices());
     }
 
     Object Object::GetObject(const QualifiedName& name) const
@@ -147,14 +148,16 @@ namespace OpcUa
       AddNodesItem newNodeRequest;
       newNodeRequest.BrowseName = browseName;
       newNodeRequest.RequestedNewNodeId = newNodeId;
-      newNodeRequest.Class = nodeClass;
+      newNodeRequest.NodeClass = nodeClass;
       newNodeRequest.ParentNodeId = parentNode;
       newNodeRequest.ReferenceTypeId = nodeClass == NodeClass::Object ? ObjectId::HasComponent : ObjectId::HasProperty;
       newNodeRequest.TypeDefinition = typeID;
       ObjectAttributes attrs;
       attrs.Description = LocalizedText(displayName);
       attrs.DisplayName = LocalizedText(displayName);
-      newNodeRequest.Attributes = attrs;
+      ExtensionObject obj;
+      obj << attrs;
+      newNodeRequest.NodeAttributes = obj;
 
       NodeManagementServices::SharedPtr nodes = GetServices()->NodeManagement();
       std::vector<AddNodesResult> newObjectNode = nodes->AddNodes({newNodeRequest});
@@ -184,18 +187,18 @@ namespace OpcUa
     {
       // ID of the new node.
       BrowseDescription desc;
-      desc.Direction = BrowseDirection::Forward;
+      desc.BrowseDirection = BrowseDirection::Forward;
       desc.IncludeSubtypes = true;
-      desc.NodeClasses =   NODE_CLASS_OBJECT | NODE_CLASS_VARIABLE | NODE_CLASS_METHOD;
-      desc.ReferenceTypeID = ObjectId::HierarchicalReferences;
-      desc.NodeToBrowse = id;
-      desc.ResultMask = REFERENCE_NODE_CLASS | REFERENCE_TYPE_DEFINITION | REFERENCE_BROWSE_NAME | REFERENCE_DISPLAY_NAME;
+      desc.NodeClassMask =   NodeClass::Object | NodeClass::Variable | NodeClass::Method;
+      desc.ReferenceTypeId = ObjectId::HierarchicalReferences;
+      desc.NodeId = id;
+      desc.ResultMask = BrowseResultMask::NodeClass | BrowseResultMask::TypeDefinition | BrowseResultMask::BrowseName | BrowseResultMask::DisplayName;
 
       // browse sub objects and variables.
-      NodesQuery query;
+      BrowseParameters query;
       query.NodesToBrowse.push_back(desc);
       ViewServices::SharedPtr views = GetServices()->Views();
-      return views->Browse(query)[0].Referencies; //FIME: this method should return BrowseResults
+      return views->Browse(query)[0].References; //FIME: this method should return BrowseResults
     }
 
     std::map<NodeId, std::vector<ReferenceDescription>> Object::CopyObjectsAndVariables(const NodeId& targetNode, const std::vector<ReferenceDescription>& refs)
@@ -275,7 +278,7 @@ namespace OpcUa
       newVariable.BrowseName = browseName;
       newVariable.DisplayName = attrs.Description;
       newVariable.DataType = value.Type();
-      newVariable.TypeID = newNodeRequest.TypeDefinition;
+      newVariable.TypeId = newNodeRequest.TypeDefinition;
       return newVariable;
     }
 
@@ -327,7 +330,7 @@ namespace OpcUa
       newNode.BrowseName = values[12].Value.As<QualifiedName>();
       newNode.Class = NodeClass::Variable;
       newNode.ParentNodeId = parentID;
-      newNode.ReferenceTypeId = ref.ReferenceTypeID;
+      newNode.ReferenceTypeId = ref.ReferenceTypeId;
       newNode.TypeDefinition = ref.TargetNodeTypeDefinition;
       newNode.Attributes = attrs;
       return newNode;
@@ -355,7 +358,7 @@ namespace OpcUa
       newNode.BrowseName = values[4].Value.As<QualifiedName>();
       newNode.Class = NodeClass::Object;
       newNode.ParentNodeId = parentID;
-      newNode.ReferenceTypeId = ref.ReferenceTypeID;
+      newNode.ReferenceTypeId = ref.ReferenceTypeId;
       newNode.TypeDefinition = ref.TargetNodeTypeDefinition;
       newNode.Attributes = attrs;
       return newNode;

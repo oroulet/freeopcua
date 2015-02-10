@@ -22,6 +22,8 @@
 #include <opc/ua/services/services.h>
 #include <opc/ua/protocol/object_ids.h> // Ids of standard nodes.
 
+#include <map>
+
 namespace OpcUa
 {
   namespace Model
@@ -41,7 +43,7 @@ namespace OpcUa
       QualifiedName GetBrowseName() const;
       LocalizedText GetDisplayName() const;
 
-      std::vector<Reference> GetReferencies() const;
+      std::vector<Reference> GetReferences() const;
 
     public:
       Services::SharedPtr GetServices() const
@@ -92,7 +94,7 @@ namespace OpcUa
 
     private:
       bool IsAbstract = false;
-      NodeId ParentTypeID;
+      NodeId ParentTypeId;
     };
 
     class VariableType : public Node
@@ -120,8 +122,8 @@ namespace OpcUa
     private:
       bool Abstract = false;
       DataValue DefaultValue;
-      NodeId ValueTypeID;
-      NodeId ParentTypeID;
+      NodeId ValueTypeId;
+      NodeId ParentTypeId;
     };
 
 
@@ -150,7 +152,7 @@ namespace OpcUa
       }
 
     private:
-      NodeId TypeID;
+      NodeId TypeId;
       VariantType DataType = VariantType::NUL;
     };
 
@@ -174,7 +176,7 @@ namespace OpcUa
 
     private:
       bool Abstract = false;
-      NodeId ParentTypeID;
+      NodeId ParentTypeId;
     };
 
 

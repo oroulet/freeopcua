@@ -23,6 +23,222 @@ namespace OpcUa
     {
 
     template<>
+    void DataDeserializer::Deserialize<OpenFileMode>(OpenFileMode& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<OpenFileMode>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<NodeClass>(NodeClass& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<NodeClass>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<ApplicationType>(ApplicationType& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<ApplicationType>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<MessageSecurityMode>(MessageSecurityMode& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<MessageSecurityMode>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<UserTokenType>(UserTokenType& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<UserTokenType>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<SecurityTokenRequestType>(SecurityTokenRequestType& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<SecurityTokenRequestType>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<NodeAttributesMask>(NodeAttributesMask& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<NodeAttributesMask>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<AttributeWriteMask>(AttributeWriteMask& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<AttributeWriteMask>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<BrowseDirection>(BrowseDirection& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<BrowseDirection>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<BrowseResultMask>(BrowseResultMask& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<BrowseResultMask>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<ComplianceLevel>(ComplianceLevel& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<ComplianceLevel>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<FilterOperator>(FilterOperator& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<FilterOperator>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<TimestampsToReturn>(TimestampsToReturn& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<TimestampsToReturn>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<HistoryUpdateType>(HistoryUpdateType& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<HistoryUpdateType>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<PerformUpdateType>(PerformUpdateType& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<PerformUpdateType>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<MonitoringMode>(MonitoringMode& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<MonitoringMode>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<DataChangeTrigger>(DataChangeTrigger& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<DataChangeTrigger>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<DeadbandType>(DeadbandType& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<DeadbandType>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<EnumeratedTestType>(EnumeratedTestType& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<EnumeratedTestType>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<RedundancySupport>(RedundancySupport& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<RedundancySupport>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<ServerState>(ServerState& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<ServerState>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<ModelChangeStructureVerbMask>(ModelChangeStructureVerbMask& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<ModelChangeStructureVerbMask>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<AxisScaleEnumeration>(AxisScaleEnumeration& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<AxisScaleEnumeration>(tmp);
+    }
+
+
+    template<>
+    void DataDeserializer::Deserialize<ExceptionDeviationFormat>(ExceptionDeviationFormat& data)
+    {
+        uint32_t tmp;
+        *this >> tmp;
+        data = static_cast<ExceptionDeviationFormat>(tmp);
+    }
+
+
+    template<>
     void DataDeserializer::Deserialize<XmlElement>(XmlElement& data)
     {
         *this >> data.Length;
@@ -150,7 +366,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<FindServersParameters>(FindServersParameters& data)
     {
-        *this >> data.Header;
         *this >> data.EndpointUrl;
         DeserializeContainer(*this, data.LocaleIds);
         DeserializeContainer(*this, data.ServerUris);
@@ -163,14 +378,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<FindServersData>(FindServersData& data)
+    void DataDeserializer::Deserialize<FindServersResult>(FindServersResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Servers);
     }
 
@@ -181,6 +396,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -219,7 +435,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<GetEndpointsParameters>(GetEndpointsParameters& data)
     {
-        *this >> data.Header;
         *this >> data.EndpointUrl;
         DeserializeContainer(*this, data.LocaleIds);
         DeserializeContainer(*this, data.ProfileUris);
@@ -232,6 +447,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -267,7 +483,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<RegisterServerParameters>(RegisterServerParameters& data)
     {
-        *this >> data.Header;
         *this >> data.Server;
     }
 
@@ -278,14 +493,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<RegisterServerData>(RegisterServerData& data)
-    {
         *this >> data.Header;
+        *this >> data.Parameters;
     }
 
 
@@ -295,7 +504,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
     }
 
 
@@ -315,7 +524,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<OpenSecureChannelParameters>(OpenSecureChannelParameters& data)
     {
-        *this >> data.Header;
         *this >> data.ClientProtocolVersion;
         *this >> data.RequestType;
         *this >> data.SecurityMode;
@@ -330,14 +538,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<OpenSecureChannelData>(OpenSecureChannelData& data)
+    void DataDeserializer::Deserialize<OpenSecureChannelResult>(OpenSecureChannelResult& data)
     {
-        *this >> data.Header;
         *this >> data.ServerProtocolVersion;
         *this >> data.SecurityToken;
         *this >> data.ServerNonce;
@@ -350,14 +558,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<CloseSecureChannelParameters>(CloseSecureChannelParameters& data)
-    {
         *this >> data.Header;
+        *this >> data.Parameters;
     }
 
 
@@ -367,13 +569,6 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<CloseSecureChannelData>(CloseSecureChannelData& data)
-    {
         *this >> data.Header;
     }
 
@@ -384,7 +579,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
     }
 
 
@@ -413,7 +608,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<CreateSessionParameters>(CreateSessionParameters& data)
     {
-        *this >> data.Header;
         *this >> data.ClientDescription;
         *this >> data.ServerUri;
         *this >> data.EndpointUrl;
@@ -431,14 +625,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<CreateSessionData>(CreateSessionData& data)
+    void DataDeserializer::Deserialize<CreateSessionResult>(CreateSessionResult& data)
     {
-        *this >> data.Header;
         *this >> data.SessionId;
         *this >> data.AuthenticationToken;
         *this >> data.RevisedSessionTimeout;
@@ -457,6 +651,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -520,7 +715,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<ActivateSessionParameters>(ActivateSessionParameters& data)
     {
-        *this >> data.Header;
         *this >> data.ClientSignature;
         DeserializeContainer(*this, data.ClientSoftwareCertificates);
         DeserializeContainer(*this, data.LocaleIds);
@@ -535,14 +729,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<ActivateSessionData>(ActivateSessionData& data)
+    void DataDeserializer::Deserialize<ActivateSessionResult>(ActivateSessionResult& data)
     {
-        *this >> data.Header;
         *this >> data.ServerNonce;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
@@ -555,15 +749,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<CloseSessionParameters>(CloseSessionParameters& data)
-    {
         *this >> data.Header;
-        *this >> data.DeleteSubscriptions;
+        *this >> data.Parameters;
     }
 
 
@@ -573,14 +760,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<CloseSessionData>(CloseSessionData& data)
-    {
         *this >> data.Header;
+        *this >> data.DeleteSubscriptions;
     }
 
 
@@ -590,14 +771,13 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
     }
 
 
     template<>
     void DataDeserializer::Deserialize<CancelParameters>(CancelParameters& data)
     {
-        *this >> data.Header;
         *this >> data.RequestHandle;
     }
 
@@ -608,14 +788,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<CancelData>(CancelData& data)
+    void DataDeserializer::Deserialize<CancelResult>(CancelResult& data)
     {
-        *this >> data.Header;
         *this >> data.CancelCount;
     }
 
@@ -626,6 +806,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -789,7 +970,7 @@ namespace OpcUa
         *this >> data.ReferenceTypeId;
         *this >> data.RequestedNewNodeId;
         *this >> data.BrowseName;
-        *this >> data.Class;
+        *this >> data.NodeClass;
         *this >> data.NodeAttributes;
         *this >> data.TypeDefinition;
     }
@@ -809,7 +990,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<AddNodesParameters>(AddNodesParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.NodesToAdd);
     }
 
@@ -820,16 +1000,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<AddNodesData>(AddNodesData& data)
-    {
         *this >> data.Header;
-        DeserializeContainer(*this, data.Results);
-        DeserializeContainer(*this, data.DiagnosticInfos);
+        *this >> data.Parameters;
     }
 
 
@@ -839,7 +1011,9 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
+        DeserializeContainer(*this, data.Results);
+        DeserializeContainer(*this, data.DiagnosticInfos);
     }
 
 
@@ -861,7 +1035,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<AddReferencesParameters>(AddReferencesParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.ReferencesToAdd);
     }
 
@@ -872,14 +1045,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<AddReferencesData>(AddReferencesData& data)
+    void DataDeserializer::Deserialize<AddReferencesResult>(AddReferencesResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -891,6 +1064,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -901,7 +1075,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.DeleteTargetReferences;
     }
 
@@ -909,7 +1083,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<DeleteNodesParameters>(DeleteNodesParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.NodesToDelete);
     }
 
@@ -920,14 +1093,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<DeleteNodesData>(DeleteNodesData& data)
+    void DataDeserializer::Deserialize<DeleteNodesResult>(DeleteNodesResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -939,6 +1112,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -960,7 +1134,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<DeleteReferencesParameters>(DeleteReferencesParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.ReferencesToDelete);
     }
 
@@ -971,14 +1144,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<DeleteReferencesData>(DeleteReferencesData& data)
+    void DataDeserializer::Deserialize<DeleteReferencesResult>(DeleteReferencesResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -990,6 +1163,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1012,7 +1186,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.BrowseDirection;
         *this >> data.ReferenceTypeId;
         *this >> data.IncludeSubtypes;
@@ -1032,7 +1206,7 @@ namespace OpcUa
         *this >> data.NodeId;
         *this >> data.BrowseName;
         *this >> data.DisplayName;
-        *this >> data.Class;
+        *this >> data.NodeClass;
         *this >> data.TypeDefinition;
     }
 
@@ -1052,7 +1226,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<BrowseParameters>(BrowseParameters& data)
     {
-        *this >> data.Header;
         *this >> data.View;
         *this >> data.RequestedMaxReferencesPerNode;
         DeserializeContainer(*this, data.NodesToBrowse);
@@ -1065,16 +1238,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<BrowseData>(BrowseData& data)
-    {
         *this >> data.Header;
-        DeserializeContainer(*this, data.Results);
-        DeserializeContainer(*this, data.DiagnosticInfos);
+        *this >> data.Parameters;
     }
 
 
@@ -1084,14 +1249,15 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
+        DeserializeContainer(*this, data.Results);
+        DeserializeContainer(*this, data.DiagnosticInfos);
     }
 
 
     template<>
     void DataDeserializer::Deserialize<BrowseNextParameters>(BrowseNextParameters& data)
     {
-        *this >> data.Header;
         *this >> data.ReleaseContinuationPoints;
         DeserializeContainer(*this, data.ContinuationPoints);
     }
@@ -1103,14 +1269,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<BrowseNextData>(BrowseNextData& data)
+    void DataDeserializer::Deserialize<BrowseNextResult>(BrowseNextResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1122,6 +1288,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1185,7 +1352,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<TranslateBrowsePathsToNodeIdsParameters>(TranslateBrowsePathsToNodeIdsParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.BrowsePaths);
     }
 
@@ -1196,14 +1362,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<TranslateBrowsePathsToNodeIdsData>(TranslateBrowsePathsToNodeIdsData& data)
+    void DataDeserializer::Deserialize<TranslateBrowsePathsToNodeIdsResult>(TranslateBrowsePathsToNodeIdsResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1215,6 +1381,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1222,7 +1389,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<RegisterNodesParameters>(RegisterNodesParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.NodesToRegister);
     }
 
@@ -1233,14 +1399,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<RegisterNodesData>(RegisterNodesData& data)
+    void DataDeserializer::Deserialize<RegisterNodesResult>(RegisterNodesResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.RegisteredNodeIds);
     }
 
@@ -1251,6 +1417,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1258,7 +1425,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<UnregisterNodesParameters>(UnregisterNodesParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.NodesToUnregister);
     }
 
@@ -1269,14 +1435,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<UnregisterNodesData>(UnregisterNodesData& data)
-    {
         *this >> data.Header;
+        *this >> data.Parameters;
     }
 
 
@@ -1286,7 +1446,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
     }
 
 
@@ -1384,7 +1544,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.ReferenceTypeId;
         *this >> data.IsForward;
         DeserializeContainer(*this, data.ReferencedNodeIds);
@@ -1447,7 +1607,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.Alias;
         *this >> data.BrowsePath;
         *this >> data.AttributeId;
@@ -1506,7 +1666,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<QueryFirstParameters>(QueryFirstParameters& data)
     {
-        *this >> data.Header;
         *this >> data.View;
         DeserializeContainer(*this, data.NodeTypes);
         *this >> data.Filter;
@@ -1521,14 +1680,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<QueryFirstData>(QueryFirstData& data)
+    void DataDeserializer::Deserialize<QueryFirstResult>(QueryFirstResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.QueryDataSets);
         *this >> data.ContinuationPoint;
         DeserializeContainer(*this, data.ParsingResults);
@@ -1543,6 +1702,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1550,7 +1710,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<QueryNextParameters>(QueryNextParameters& data)
     {
-        *this >> data.Header;
         *this >> data.ReleaseContinuationPoint;
         *this >> data.ContinuationPoint;
     }
@@ -1562,14 +1721,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<QueryNextData>(QueryNextData& data)
+    void DataDeserializer::Deserialize<QueryNextResult>(QueryNextResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.QueryDataSets);
         *this >> data.RevisedContinuationPoint;
     }
@@ -1581,6 +1740,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1591,7 +1751,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.AttributeId;
         *this >> data.IndexRange;
         *this >> data.DataEncoding;
@@ -1601,10 +1761,9 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<ReadParameters>(ReadParameters& data)
     {
-        *this >> data.Header;
         *this >> data.MaxAge;
         *this >> data.TimestampsToReturn;
-        DeserializeContainer(*this, data.NodesToRead);
+        DeserializeContainer(*this, data.AttributesToRead);
     }
 
 
@@ -1614,14 +1773,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<ReadData>(ReadData& data)
+    void DataDeserializer::Deserialize<ReadResult>(ReadResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1633,6 +1792,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1643,7 +1803,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.IndexRange;
         *this >> data.DataEncoding;
         *this >> data.ContinuationPoint;
@@ -1732,11 +1892,10 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<HistoryReadParameters>(HistoryReadParameters& data)
     {
-        *this >> data.Header;
         *this >> data.HistoryReadDetails;
         *this >> data.TimestampsToReturn;
         *this >> data.ReleaseContinuationPoints;
-        DeserializeContainer(*this, data.NodesToRead);
+        DeserializeContainer(*this, data.AttributesToRead);
     }
 
 
@@ -1746,16 +1905,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<HistoryReadData>(HistoryReadData& data)
-    {
         *this >> data.Header;
-        DeserializeContainer(*this, data.Results);
-        DeserializeContainer(*this, data.DiagnosticInfos);
+        *this >> data.Parameters;
     }
 
 
@@ -1765,7 +1916,9 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
+        DeserializeContainer(*this, data.Results);
+        DeserializeContainer(*this, data.DiagnosticInfos);
     }
 
 
@@ -1775,7 +1928,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.AttributeId;
         *this >> data.IndexRange;
         *this >> data.Value;
@@ -1785,7 +1938,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<WriteParameters>(WriteParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.NodesToWrite);
     }
 
@@ -1796,14 +1948,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<WriteData>(WriteData& data)
+    void DataDeserializer::Deserialize<WriteResult>(WriteResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -1815,6 +1967,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -1825,7 +1978,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
     }
 
 
@@ -1835,7 +1988,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.PerformInsertReplace;
         DeserializeContainer(*this, data.UpdateValues);
     }
@@ -1847,7 +2000,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.PerformInsertReplace;
         DeserializeContainer(*this, data.UpdateValues);
     }
@@ -1859,7 +2012,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.IsDeleteModified;
         *this >> data.StartTime;
         *this >> data.EndTime;
@@ -1872,7 +2025,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         DeserializeContainer(*this, data.ReqTimes);
     }
 
@@ -1883,7 +2036,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         DeserializeContainer(*this, data.EventIds);
     }
 
@@ -1903,7 +2056,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<HistoryUpdateParameters>(HistoryUpdateParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.HistoryUpdateDetails);
     }
 
@@ -1914,16 +2066,8 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<HistoryUpdateData>(HistoryUpdateData& data)
-    {
         *this >> data.Header;
-        DeserializeContainer(*this, data.Results);
-        DeserializeContainer(*this, data.DiagnosticInfos);
+        *this >> data.Parameters;
     }
 
 
@@ -1933,14 +2077,15 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Parameters;
+        *this >> data.Header;
+        DeserializeContainer(*this, data.Results);
+        DeserializeContainer(*this, data.DiagnosticInfos);
     }
 
 
     template<>
     void DataDeserializer::Deserialize<CallMethodParameters>(CallMethodParameters& data)
     {
-        *this >> data.ObjectId;
         *this >> data.MethodId;
         DeserializeContainer(*this, data.InputArguments);
     }
@@ -1952,6 +2097,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.ObjectId;
         *this >> data.Parameters;
     }
 
@@ -1972,7 +2118,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<CallParameters>(CallParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.MethodsToCall);
     }
 
@@ -1983,14 +2128,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<CallData>(CallData& data)
+    void DataDeserializer::Deserialize<CallResult>(CallResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2002,6 +2147,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2153,8 +2299,7 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<MonitoredItemCreateParameters>(MonitoredItemCreateParameters& data)
     {
-        *this >> data.ItemToMonitor;
-        *this >> data.Mode;
+        *this >> data.MonitoringMode;
         *this >> data.RequestedParameters;
     }
 
@@ -2165,6 +2310,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.ItemToMonitor;
         *this >> data.Parameters;
     }
 
@@ -2186,7 +2332,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<CreateMonitoredItemsParameters>(CreateMonitoredItemsParameters& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         *this >> data.TimestampsToReturn;
         DeserializeContainer(*this, data.ItemsToCreate);
@@ -2199,14 +2344,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<CreateMonitoredItemsData>(CreateMonitoredItemsData& data)
+    void DataDeserializer::Deserialize<CreateMonitoredItemsResult>(CreateMonitoredItemsResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2218,6 +2363,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2225,7 +2371,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<MonitoredItemModifyParameters>(MonitoredItemModifyParameters& data)
     {
-        *this >> data.MonitoredItemId;
         *this >> data.RequestedParameters;
     }
 
@@ -2236,6 +2381,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.MonitoredItemId;
         *this >> data.Parameters;
     }
 
@@ -2256,7 +2402,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<ModifyMonitoredItemsParameters>(ModifyMonitoredItemsParameters& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         *this >> data.TimestampsToReturn;
         DeserializeContainer(*this, data.ItemsToModify);
@@ -2269,14 +2414,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<ModifyMonitoredItemsData>(ModifyMonitoredItemsData& data)
+    void DataDeserializer::Deserialize<ModifyMonitoredItemsResult>(ModifyMonitoredItemsResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2288,6 +2433,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2295,9 +2441,8 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<SetMonitoringModeParameters>(SetMonitoringModeParameters& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
-        *this >> data.Mode;
+        *this >> data.MonitoringMode;
         DeserializeContainer(*this, data.MonitoredItemIds);
     }
 
@@ -2308,14 +2453,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<SetMonitoringModeData>(SetMonitoringModeData& data)
+    void DataDeserializer::Deserialize<SetMonitoringModeResult>(SetMonitoringModeResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2327,6 +2472,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2334,7 +2480,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<SetTriggeringParameters>(SetTriggeringParameters& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         *this >> data.TriggeringItemId;
         DeserializeContainer(*this, data.LinksToAdd);
@@ -2348,14 +2493,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<SetTriggeringData>(SetTriggeringData& data)
+    void DataDeserializer::Deserialize<SetTriggeringResult>(SetTriggeringResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.AddResults);
         DeserializeContainer(*this, data.AddDiagnosticInfos);
         DeserializeContainer(*this, data.RemoveResults);
@@ -2369,6 +2514,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2376,7 +2522,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<DeleteMonitoredItemsParameters>(DeleteMonitoredItemsParameters& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         DeserializeContainer(*this, data.MonitoredItemIds);
     }
@@ -2388,14 +2533,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<DeleteMonitoredItemsData>(DeleteMonitoredItemsData& data)
+    void DataDeserializer::Deserialize<DeleteMonitoredItemsResult>(DeleteMonitoredItemsResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2407,6 +2552,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2414,7 +2560,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<CreateSubscriptionParameters>(CreateSubscriptionParameters& data)
     {
-        *this >> data.Header;
         *this >> data.RequestedPublishingInterval;
         *this >> data.RequestedLifetimeCount;
         *this >> data.RequestedMaxKeepAliveCount;
@@ -2430,14 +2575,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<CreateSubscriptionData>(CreateSubscriptionData& data)
+    void DataDeserializer::Deserialize<CreateSubscriptionResult>(CreateSubscriptionResult& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         *this >> data.RevisedPublishingInterval;
         *this >> data.RevisedLifetimeCount;
@@ -2451,6 +2596,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2458,7 +2604,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<ModifySubscriptionParameters>(ModifySubscriptionParameters& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         *this >> data.RequestedPublishingInterval;
         *this >> data.RequestedLifetimeCount;
@@ -2474,14 +2619,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<ModifySubscriptionData>(ModifySubscriptionData& data)
+    void DataDeserializer::Deserialize<ModifySubscriptionResult>(ModifySubscriptionResult& data)
     {
-        *this >> data.Header;
         *this >> data.RevisedPublishingInterval;
         *this >> data.RevisedLifetimeCount;
         *this >> data.RevisedMaxKeepAliveCount;
@@ -2494,6 +2639,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2501,7 +2647,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<SetPublishingModeParameters>(SetPublishingModeParameters& data)
     {
-        *this >> data.Header;
         *this >> data.PublishingEnabled;
         DeserializeContainer(*this, data.SubscriptionIds);
     }
@@ -2513,14 +2658,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<SetPublishingModeData>(SetPublishingModeData& data)
+    void DataDeserializer::Deserialize<SetPublishingModeResult>(SetPublishingModeResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2532,6 +2677,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2626,7 +2772,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
-        *this >> data.Node;
+        *this >> data.NodeId;
         *this >> data.PerformInsertReplace;
         *this >> data.Filter;
         DeserializeContainer(*this, data.EventData);
@@ -2658,7 +2804,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<PublishParameters>(PublishParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.SubscriptionAcknowledgements);
     }
 
@@ -2669,18 +2814,18 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<PublishData>(PublishData& data)
+    void DataDeserializer::Deserialize<PublishResult>(PublishResult& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         DeserializeContainer(*this, data.AvailableSequenceNumbers);
         *this >> data.MoreNotifications;
-        *this >> data.Notification;
+        *this >> data.NotificationMessage;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2692,6 +2837,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2699,7 +2845,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<RepublishParameters>(RepublishParameters& data)
     {
-        *this >> data.Header;
         *this >> data.SubscriptionId;
         *this >> data.RetransmitSequenceNumber;
     }
@@ -2711,15 +2856,15 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<RepublishData>(RepublishData& data)
+    void DataDeserializer::Deserialize<RepublishResult>(RepublishResult& data)
     {
-        *this >> data.Header;
-        *this >> data.Notification;
+        *this >> data.NotificationMessage;
     }
 
 
@@ -2729,6 +2874,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2747,7 +2893,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<TransferSubscriptionsParameters>(TransferSubscriptionsParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.SubscriptionIds);
         *this >> data.SendInitialValues;
     }
@@ -2759,14 +2904,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<TransferSubscriptionsData>(TransferSubscriptionsData& data)
+    void DataDeserializer::Deserialize<TransferSubscriptionsResult>(TransferSubscriptionsResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2778,6 +2923,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2785,7 +2931,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<DeleteSubscriptionsParameters>(DeleteSubscriptionsParameters& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.SubscriptionIds);
     }
 
@@ -2796,14 +2941,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<DeleteSubscriptionsData>(DeleteSubscriptionsData& data)
+    void DataDeserializer::Deserialize<DeleteSubscriptionsResult>(DeleteSubscriptionsResult& data)
     {
-        *this >> data.Header;
         DeserializeContainer(*this, data.Results);
         DeserializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2815,6 +2960,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2841,8 +2987,8 @@ namespace OpcUa
         *this >> data.Guid;
         *this >> data.ByteString;
         *this >> data.XmlElement;
-        *this >> data.Node;
-        *this >> data.ExpandedNode;
+        *this >> data.NodeId;
+        *this >> data.ExpandedNodeId;
         *this >> data.Status;
         *this >> data.DiagnosticInfo;
         *this >> data.QualifiedName;
@@ -2901,7 +3047,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<TestStackParameters>(TestStackParameters& data)
     {
-        *this >> data.Header;
         *this >> data.TestId;
         *this >> data.Iteration;
         *this >> data.Input;
@@ -2914,14 +3059,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<TestStackData>(TestStackData& data)
+    void DataDeserializer::Deserialize<TestStackResult>(TestStackResult& data)
     {
-        *this >> data.Header;
         *this >> data.Output;
     }
 
@@ -2932,6 +3077,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -2939,7 +3085,6 @@ namespace OpcUa
     template<>
     void DataDeserializer::Deserialize<TestStackExParameters>(TestStackExParameters& data)
     {
-        *this >> data.Header;
         *this >> data.TestId;
         *this >> data.Iteration;
         *this >> data.Input;
@@ -2952,14 +3097,14 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
 
     template<>
-    void DataDeserializer::Deserialize<TestStackExData>(TestStackExData& data)
+    void DataDeserializer::Deserialize<TestStackExResult>(TestStackExResult& data)
     {
-        *this >> data.Header;
         *this >> data.Output;
     }
 
@@ -2970,6 +3115,7 @@ namespace OpcUa
         *this >> data.Encoding;
         if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
         *this >> data.BodyLength;
+        *this >> data.Header;
         *this >> data.Parameters;
     }
 
@@ -3324,222 +3470,6 @@ namespace OpcUa
         *this >> data.Message;
         *this >> data.UserName;
         *this >> data.AnnotationTime;
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<OpenFileMode>(OpenFileMode& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<NodeClass>(NodeClass& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<ApplicationType>(ApplicationType& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<MessageSecurityMode>(MessageSecurityMode& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<UserTokenType>(UserTokenType& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<SecurityTokenRequestType>(SecurityTokenRequestType& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<NodeAttributesMask>(NodeAttributesMask& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<AttributeWriteMask>(AttributeWriteMask& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<BrowseDirection>(BrowseDirection& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<BrowseResultMask>(BrowseResultMask& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<ComplianceLevel>(ComplianceLevel& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<FilterOperator>(FilterOperator& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<TimestampsToReturn>(TimestampsToReturn& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<HistoryUpdateType>(HistoryUpdateType& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<PerformUpdateType>(PerformUpdateType& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<MonitoringMode>(MonitoringMode& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<DataChangeTrigger>(DataChangeTrigger& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<DeadbandType>(DeadbandType& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<EnumeratedTestType>(EnumeratedTestType& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<RedundancySupport>(RedundancySupport& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<ServerState>(ServerState& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<ModelChangeStructureVerbMask>(ModelChangeStructureVerbMask& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<AxisScaleEnumeration>(AxisScaleEnumeration& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<ExceptionDeviationFormat>(ExceptionDeviationFormat& data)
-    {
-        uint32_t tmp;
-        *this >> tmp;
-        data = static_cast<uint32_t(tmp);
     }
 
 

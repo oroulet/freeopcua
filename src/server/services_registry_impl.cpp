@@ -53,7 +53,7 @@ namespace
       return std::vector<OpcUa::ApplicationDescription>();
     }
 
-    virtual std::vector<OpcUa::EndpointDescription> GetEndpoints(const EndpointsFilter& filter) const
+    virtual std::vector<OpcUa::EndpointDescription> GetEndpoints(const GetEndpointsParameters& filter) const
     {
       return std::vector<OpcUa::EndpointDescription>();
     }
@@ -80,7 +80,7 @@ namespace
     {
     }
 
-    virtual std::vector<BrowseResult> Browse(const NodesQuery& query) const
+    virtual std::vector<BrowseResult> Browse(const BrowseParameters& query) const
     {
       return std::vector<BrowseResult>();
     }
@@ -90,7 +90,7 @@ namespace
       return std::vector<BrowseResult>();
     }
 
-    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const
+    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsToNodeIdsParameters& params) const
     {
       return std::vector<BrowsePathResult>();
     }
@@ -108,19 +108,19 @@ namespace
       return std::vector<OpcUa::StatusCode>(filter.size(), StatusCode::BadNotImplemented);
     }
 
-    virtual SubscriptionData CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback=0)
+    virtual CreateSubscriptionResult CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback=0)
     {
-      return SubscriptionData();
+      return CreateSubscriptionResult();
     }
 
-    virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerID>& subscriptions)
+    virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerId>& subscriptions)
     {
       return std::vector<StatusCode>();
     }
 
-    virtual MonitoredItemsData CreateMonitoredItems(const MonitoredItemsParameters& parameters)
+    virtual CreateMonitoredItemsResult CreateMonitoredItems(const CreateMonitoredItemsParameters& parameters)
     {
-      return MonitoredItemsData();
+      return CreateMonitoredItemsResult();
     }
 
     virtual std::vector<StatusCode> DeleteMonitoredItems(const DeleteMonitoredItemsParameters& params)

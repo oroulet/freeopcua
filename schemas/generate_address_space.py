@@ -338,7 +338,7 @@ namespace OpcUa
             self.writecode(indent, 'ref.ReferenceTypeId = {};'.format(self.to_ref_type(ref.reftype)))
             self.writecode(indent, 'ref.SourceNodeId = ToNodeId("{}");'.format(obj.nodeid))
             self.writecode(indent, 'ref.TargetNodeClass = NodeClass::DataType;')
-            self.writecode(indent, 'ref.TargetNodeId = ToNodeId("{}");'.format(ref.target))
+            self.writecode(indent, 'ref.NodeId = ToNodeId("{}");'.format(ref.target))
             self.writecode(indent, "refs.push_back(ref);")
             self.writecode(indent, "}")
         self.writecode(indent, 'registry.AddReferences(refs);')

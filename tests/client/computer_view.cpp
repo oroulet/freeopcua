@@ -23,15 +23,15 @@ class View : public ::testing::Test
 protected:
   View()
   {
-    Query.Description.NodeToBrowse.Encoding = EV_TWO_BYTE;
-    Query.Description.NodeToBrowse.TwoByteData.Identifier = static_cast<uint8_t>(ObjectId::RootFolder); // TODO automatic cast
-    Query.Description.Direction = BrowseDirection::Forward;
-    Query.Description.ReferenceTypeID.Encoding = EV_TWO_BYTE;
-//    Params.Description.ReferenceTypeID.TwoByteData.Identifier = 33;
+    Query.Description.NodeId.Encoding = EV_TWO_BYTE;
+    Query.Description.NodeId.TwoByteData.Identifier = static_cast<uint8_t>(ObjectId::RootFolder); // TODO automatic cast
+    Query.Description.BrowseDirection = BrowseDirection::Forward;
+    Query.Description.ReferenceTypeId.Encoding = EV_TWO_BYTE;
+//    Params.Description.ReferenceTypeId.TwoByteData.Identifier = 33;
     Query.Description.IncludeSubtypes = true;
-    Query.Description.NodeClasses = NODE_CLASS_ALL;
+    Query.Description.NodeClassMask = NODE_CLASS_ALL;
     Query.Description.ResultMask = REFERENCE_ALL;
-    Query.MaxReferenciesCount = 1;
+    Query.MaxReferencesCount = 1;
   }
 
   virtual void SetUp()
@@ -61,7 +61,7 @@ protected:
   }
 
 protected:
-  OpcUa::NodesQuery Query;
+  OpcUa::BrowseParameters Query;
   std::unique_ptr<Services> Server;
   std::shared_ptr<ViewServices> Service;
 };

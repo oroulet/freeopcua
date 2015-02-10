@@ -141,7 +141,7 @@ TEST_F(AddressSpace, ValueCallbackIsCalled)
   ASSERT_EQ(code, OpcUa::StatusCode::Good);
 
   OpcUa::ReadParameters readParams;
-  readParams.AttributesToRead.push_back(OpcUa::ReadValueId(valueId, OpcUa::AttributeID::Value));
+  readParams.AttributesToRead.push_back(OpcUa::MakeReadValueId(valueId, OpcUa::AttributeID::Value));
   std::vector<OpcUa::DataValue> result = NameSpace->Read(readParams);
   ASSERT_EQ(result.size(), 1);
   EXPECT_TRUE(result[0].Encoding & OpcUa::DATA_VALUE);

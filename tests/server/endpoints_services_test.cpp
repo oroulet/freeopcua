@@ -60,7 +60,7 @@ TEST_F(EndpointsRegistry, RegisterEndpoints)
   OpcUa::Server::ServicesRegistry::SharedPtr services = Addons->GetAddon<OpcUa::Server::ServicesRegistry>(OpcUa::Server::ServicesRegistryAddonID);
   OpcUa::Services::SharedPtr computer = services->GetServer();
   std::vector<OpcUa::EndpointDescription> descriptions;
-  ASSERT_NO_THROW(descriptions = computer->Endpoints()->GetEndpoints(OpcUa::EndpointsFilter()));
+  ASSERT_NO_THROW(descriptions = computer->Endpoints()->GetEndpoints(OpcUa::GetEndpointsParameters()));
   ASSERT_EQ(descriptions.size(), 1);
   ASSERT_EQ(descriptions[0].EndpointURL, "url");
 }

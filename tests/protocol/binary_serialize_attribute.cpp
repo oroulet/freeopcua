@@ -162,7 +162,7 @@ TEST_F(OpcUaBinaryDeserialization, ReadValueId)
 // ReadRequest
 //-------------------------------------------------------
 
-OpcUa::ReadValueId CreateReadValueId()
+OpcUa::ReadValueId CreateMakeReadValueId()
 {
   using namespace OpcUa;
   OpcUa::ReadValueId attr;
@@ -184,21 +184,21 @@ TEST_F(OpcUaBinarySerialization, ReadRequest)
 
   ReadRequest request;
 
-  ASSERT_EQ(request.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(request.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(request.TypeID.FourByteData.Identifier, OpcUa::READ_REQUEST);
+  ASSERT_EQ(request.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(request.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(request.TypeId.FourByteData.Identifier, OpcUa::READ_REQUEST);
 
   FILL_TEST_REQUEST_HEADER(request.Header);
 
   request.Parameters.MaxAge = 1200000;
   request.Parameters.TimestampsType = TimestampsToReturn::Neither;
 
-  request.Parameters.AttributesToRead.push_back(CreateReadValueId());
+  request.Parameters.AttributesToRead.push_back(CreateMakeReadValueId());
 
   GetStream() << request << flush;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0x77, 0x2, // TypeID
+  1, 0, (char)0x77, 0x2, // TypeId
   // RequestHeader
   TEST_REQUEST_HEADER_BINARY_DATA,
 
@@ -225,7 +225,7 @@ TEST_F(OpcUaBinaryDeserialization, ReadRequest)
   using namespace OpcUa::Binary;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0x77, 0x2, // TypeID
+  1, 0, (char)0x77, 0x2, // TypeId
   // RequestHeader
   TEST_REQUEST_HEADER_BINARY_DATA,
 
@@ -245,9 +245,9 @@ TEST_F(OpcUaBinaryDeserialization, ReadRequest)
   ReadRequest request;
   GetStream() >> request;
 
-  ASSERT_EQ(request.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(request.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(request.TypeID.FourByteData.Identifier, OpcUa::READ_REQUEST);
+  ASSERT_EQ(request.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(request.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(request.TypeId.FourByteData.Identifier, OpcUa::READ_REQUEST);
 
   ASSERT_REQUEST_HEADER_EQ(request.Header);
 
@@ -256,7 +256,7 @@ TEST_F(OpcUaBinaryDeserialization, ReadRequest)
   
   ASSERT_EQ(request.Parameters.AttributesToRead.size(), 1);
 
-  ReadValueId attr = CreateReadValueId();
+  ReadValueId attr = CreateMakeReadValueId();
 
   ASSERT_EQ(request.Parameters.AttributesToRead[0].Node.Encoding, EV_TWO_BYTE);
   ASSERT_EQ(request.Parameters.AttributesToRead[0].Node.TwoByteData.Identifier, 1);
@@ -278,9 +278,9 @@ TEST_F(OpcUaBinarySerialization, ReadResponse)
 
   ReadResponse resp;
 
-  ASSERT_EQ(resp.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(resp.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(resp.TypeID.FourByteData.Identifier, OpcUa::READ_RESPONSE);
+  ASSERT_EQ(resp.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(resp.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(resp.TypeId.FourByteData.Identifier, OpcUa::READ_RESPONSE);
 
   FILL_TEST_RESPONSE_HEADER(resp.Header);
 
@@ -291,7 +291,7 @@ TEST_F(OpcUaBinarySerialization, ReadResponse)
   char encodingMask = static_cast<char>(OpcUa::DATA_VALUE);
   char variantMask = static_cast<char>(OpcUa::VariantType::QUALIFIED_NAME);
   const std::vector<char> expectedData = {
-  1, 0, (char)0x7A, 0x2, // TypeID
+  1, 0, (char)0x7A, 0x2, // TypeId
   // RequestHeader
   TEST_RESPONSE_HEADER_BINARY_DATA,
   1,0,0,0,
@@ -316,7 +316,7 @@ TEST_F(OpcUaBinaryDeserialization, ReadResponse_with_QualifiedName_as_value)
   char encodingMask = DATA_VALUE;
 
   const std::vector<char> expectedData = {
-      1, 0, (char)0x7A, 0x2, // TypeID
+      1, 0, (char)0x7A, 0x2, // TypeId
       // RequestHeader
       TEST_RESPONSE_HEADER_BINARY_DATA,
       1,0,0,0,
@@ -331,9 +331,9 @@ TEST_F(OpcUaBinaryDeserialization, ReadResponse_with_QualifiedName_as_value)
   ReadResponse resp;
   GetStream() >> resp;
 
-  ASSERT_EQ(resp.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(resp.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(resp.TypeID.FourByteData.Identifier, OpcUa::READ_RESPONSE);
+  ASSERT_EQ(resp.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(resp.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(resp.TypeId.FourByteData.Identifier, OpcUa::READ_RESPONSE);
 
   ASSERT_RESPONSE_HEADER_EQ(resp.Header);
   ASSERT_EQ(resp.Result.Results.size(), 1);
@@ -356,7 +356,7 @@ TEST_F(OpcUaBinaryDeserialization, ReadResponse)
      DATA_VALUE_Server_PICOSECONDS;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0x7A, 0x2, // TypeID
+  1, 0, (char)0x7A, 0x2, // TypeId
   // RequestHeader
   TEST_RESPONSE_HEADER_BINARY_DATA,
 
@@ -378,9 +378,9 @@ TEST_F(OpcUaBinaryDeserialization, ReadResponse)
   ReadResponse resp;
   GetStream() >> resp;
 
-  ASSERT_EQ(resp.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(resp.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(resp.TypeID.FourByteData.Identifier, OpcUa::READ_RESPONSE);
+  ASSERT_EQ(resp.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(resp.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(resp.TypeId.FourByteData.Identifier, OpcUa::READ_RESPONSE);
 
   ASSERT_RESPONSE_HEADER_EQ(resp.Header);
   ASSERT_EQ(resp.Result.Results.size(), 1);
@@ -454,9 +454,9 @@ TEST_F(OpcUaBinarySerialization, WriteRequest)
 
   WriteRequest request;
 
-  ASSERT_EQ(request.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(request.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(request.TypeID.FourByteData.Identifier, OpcUa::WRITE_REQUEST);
+  ASSERT_EQ(request.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(request.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(request.TypeId.FourByteData.Identifier, OpcUa::WRITE_REQUEST);
 
   FILL_TEST_REQUEST_HEADER(request.Header);
 
@@ -472,7 +472,7 @@ TEST_F(OpcUaBinarySerialization, WriteRequest)
   GetStream() << request << flush;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0xA1, 0x2, // TypeID
+  1, 0, (char)0xA1, 0x2, // TypeId
   // RequestHeader
   TEST_REQUEST_HEADER_BINARY_DATA,
 
@@ -495,7 +495,7 @@ TEST_F(OpcUaBinaryDeserialization, WriteRequest)
   using namespace OpcUa::Binary;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0xA1, 0x2, // TypeID
+  1, 0, (char)0xA1, 0x2, // TypeId
   // RequestHeader
   TEST_REQUEST_HEADER_BINARY_DATA,
 
@@ -513,9 +513,9 @@ TEST_F(OpcUaBinaryDeserialization, WriteRequest)
   GetStream() >> request;
 
 
-  ASSERT_EQ(request.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(request.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(request.TypeID.FourByteData.Identifier, OpcUa::WRITE_REQUEST);
+  ASSERT_EQ(request.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(request.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(request.TypeId.FourByteData.Identifier, OpcUa::WRITE_REQUEST);
 
   ASSERT_REQUEST_HEADER_EQ(request.Header);
 
@@ -540,9 +540,9 @@ TEST_F(OpcUaBinarySerialization, WriteResponse)
 
   WriteResponse resp;
 
-  ASSERT_EQ(resp.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(resp.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(resp.TypeID.FourByteData.Identifier, OpcUa::WRITE_RESPONSE);
+  ASSERT_EQ(resp.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(resp.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(resp.TypeId.FourByteData.Identifier, OpcUa::WRITE_RESPONSE);
 
   FILL_TEST_RESPONSE_HEADER(resp.Header);
 
@@ -556,7 +556,7 @@ TEST_F(OpcUaBinarySerialization, WriteResponse)
   GetStream() << resp << flush;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0xA4, 0x2, // TypeID
+  1, 0, (char)0xA4, 0x2, // TypeId
   // RequestHeader
   TEST_RESPONSE_HEADER_BINARY_DATA,
 
@@ -574,7 +574,7 @@ TEST_F(OpcUaBinaryDeserialization, WriteResponse)
   using namespace OpcUa::Binary;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0xA4, 0x2, // TypeID
+  1, 0, (char)0xA4, 0x2, // TypeId
   // RequestHeader
   TEST_RESPONSE_HEADER_BINARY_DATA,
 
@@ -587,9 +587,9 @@ TEST_F(OpcUaBinaryDeserialization, WriteResponse)
   GetStream() >> resp;
 
 
-  ASSERT_EQ(resp.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(resp.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(resp.TypeID.FourByteData.Identifier, OpcUa::WRITE_RESPONSE);
+  ASSERT_EQ(resp.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(resp.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(resp.TypeId.FourByteData.Identifier, OpcUa::WRITE_RESPONSE);
 
   ASSERT_RESPONSE_HEADER_EQ(resp.Header);
 

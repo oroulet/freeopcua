@@ -50,14 +50,14 @@ namespace OpcUa
     }
   };
 
-  class IntegerID
+  class IntegerId
   {
   public:
-    IntegerID();
-    IntegerID(const IntegerID& id);
-    explicit IntegerID(uint32_t num);
-    IntegerID& operator= (const IntegerID& id);
-    IntegerID& operator= (uint32_t value);
+    IntegerId();
+    IntegerId(const IntegerId& id);
+    explicit IntegerId(uint32_t num);
+    IntegerId& operator= (const IntegerId& id);
+    IntegerId& operator= (uint32_t value);
     operator uint32_t() const;
 
   private:
@@ -154,17 +154,6 @@ namespace OpcUa
     }
   };
 
-  struct AdditionalHeader
-  {
-    ExpandedNodeId TypeID;
-    uint8_t Encoding;
-
-    AdditionalHeader()
-      : Encoding(0)
-    {
-    }
-  };
-
   enum ExtensionObjectEncoding : uint8_t
   {
     NONE = 0,
@@ -176,7 +165,7 @@ namespace OpcUa
   //TODO serialization tests
   struct ExtensionObjectHeader
   {
-    ExpandedNodeId TypeID;
+    ExpandedNodeId TypeId;
     ExtensionObjectEncoding Encoding;
 
     ExtensionObjectHeader();

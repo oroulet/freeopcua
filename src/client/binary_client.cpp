@@ -35,7 +35,7 @@ namespace
   using namespace OpcUa;
   using namespace OpcUa::Binary;
 
-  typedef std::map<IntegerID, std::function<void (PublishResult)>> SubscriptionCallbackMap;
+  typedef std::map<IntegerId, std::function<void (PublishResult)>> SubscriptionCallbackMap;
 
   class BufferInputChannel : public OpcUa::InputChannel
   {
@@ -294,7 +294,7 @@ namespace
       return response.Data.Descriptions;
     }
 
-    virtual std::vector<EndpointDescription> GetEndpoints(const EndpointsFilter& filter) const
+    virtual std::vector<EndpointDescription> GetEndpoints(const GetEndpointsParameters& filter) const
     {
       if (Debug)  { std::cout << "binary_client| GetEndpoints -->" << std::endl; }
       OpcUa::GetEndpointsRequest request;
@@ -317,7 +317,7 @@ namespace
       return shared_from_this();
     }
 
-    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const
+    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsToNodeIdsParameters& params) const
     {
       if (Debug)  { std::cout << "binary_client| TranslateBrowsePathsToNodeIds -->" << std::endl; }
       TranslateBrowsePathsToNodeIdsRequest request;
@@ -329,13 +329,13 @@ namespace
     }
 
 
-    virtual std::vector<BrowseResult> Browse(const OpcUa::NodesQuery& query) const
+    virtual std::vector<BrowseResult> Browse(const OpcUa::BrowseParameters& query) const
     {
       if (Debug)  { 
         std::cout << "binary_client| Browse -->" ; 
         for ( BrowseDescription desc : query.NodesToBrowse )
         {
-          std::cout << desc.NodeToBrowse << "  ";
+          std::cout << desc.NodeId << "  ";
         }
         std::cout << std::endl; 
       }
@@ -444,7 +444,7 @@ namespace
       return shared_from_this();
     }
 
-    virtual SubscriptionData CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback)
+    virtual CreateSubscriptionResult CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback)
     {
       if (Debug)  { std::cout << "binary_client| CreateSubscription -->" << std::endl; }
       const CreateSubscriptionResponse response = Send<CreateSubscriptionResponse>(request);
@@ -454,7 +454,7 @@ namespace
       return response.Data;
     }
 
-    virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerID>& subscriptions)
+    virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerId>& subscriptions)
     {
       if (Debug)  { std::cout << "binary_client| DeleteSubscriptions -->" << std::endl; }
       DeleteSubscriptionRequest request;
@@ -464,7 +464,7 @@ namespace
       return response.Results;
     }
 
-    virtual MonitoredItemsData CreateMonitoredItems(const MonitoredItemsParameters& parameters)
+    virtual CreateMonitoredItemsResult CreateMonitoredItems(const CreateMonitoredItemsParameters& parameters)
     {
       if (Debug)  { std::cout << "binary_client| CreateMonitoredItems -->" << std::endl; }
       CreateMonitoredItemsRequest request;
@@ -732,7 +732,7 @@ private:
       RequestHeader header;
       header.AuthenticationToken = AuthenticationToken;
       header.RequestHandle = GetRequestHandle();
-      header.Timeout = 10000;
+      header.TimeoutHint = 10000;
       return header;
     }
 

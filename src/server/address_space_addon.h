@@ -42,9 +42,9 @@ namespace OpcUa
       virtual std::vector<StatusCode> AddReferences(const std::vector<AddReferencesItem>& items);
 
     public: // ViewServices
-      virtual std::vector<BrowseResult> Browse(const OpcUa::NodesQuery& query) const;
+      virtual std::vector<BrowseResult> Browse(const OpcUa::BrowseParameters& query) const;
       virtual std::vector<BrowseResult> BrowseNext() const;
-      virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const;
+      virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsToNodeIdsParameters& params) const;
 
     public: // AttribueServices
       virtual std::vector<DataValue> Read(const OpcUa::ReadParameters& filter) const;

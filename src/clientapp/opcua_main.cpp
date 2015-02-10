@@ -307,7 +307,7 @@ namespace
   void PrintEndpoints(OpcUa::Services& computer)
   {
     std::shared_ptr<OpcUa::EndpointServices> service = computer.Endpoints();
-    OpcUa::EndpointsFilter filter;
+    OpcUa::GetEndpointsParameters filter;
     std::vector<OpcUa::EndpointDescription> endpoints = service->GetEndpoints(filter);
     for(auto it = endpoints.begin(); it != endpoints.end(); ++it)
     {
@@ -339,8 +339,8 @@ namespace
     std::cout << tabs << "Target NodeId:" << std::endl;
     Print(desc.TargetNodeId, tabs1);
 
-    std::cout << tabs << "TypeID:" << std::endl;
-    Print(desc.ReferenceTypeID, tabs1);
+    std::cout << tabs << "TypeId:" << std::endl;
+    Print(desc.ReferenceTypeId, tabs1);
 
     std::cout << tabs << "Type definition ID:" << std::endl;
     Print(desc.TargetNodeTypeDefinition, tabs1);
@@ -349,16 +349,16 @@ namespace
   void Browse(OpcUa::ViewServices& view, OpcUa::NodeId nodeID)
   {
     OpcUa::BrowseDescription description;
-    description.NodeToBrowse = nodeID;
-    description.Direction = OpcUa::BrowseDirection::Forward;
+    description.NodeId = nodeID;
+    description.BrowseDirection = OpcUa::BrowseDirection::Forward;
     description.IncludeSubtypes = true;
-    description.NodeClasses = OpcUa::NODE_CLASS_ALL;
+    description.NodeClassMask = OpcUa::NODE_CLASS_ALL;
     description.ResultMask = OpcUa::REFERENCE_ALL;
 
-    OpcUa::NodesQuery query;
+    OpcUa::BrowseParameters query;
     query.View.Timestamp = OpcUa::DateTime::Current();
     query.NodesToBrowse.push_back(description);
-    query.MaxReferenciesPerNode = 100;
+    query.MaxReferencesPerNode = 100;
 
     std::vector<OpcUa::BrowseResult> results = view.Browse(query);
     while(true)
@@ -367,11 +367,11 @@ namespace
       {
         return;
       }
-      if (results[0].Referencies.empty())
+      if (results[0].References.empty())
       {
         break;
       }
-      for (auto refIt : results[0].Referencies)
+      for (auto refIt : results[0].References)
       {
         std::cout << "reference:" << std::endl;
         PrintReference(refIt, Tabs(2));
@@ -605,7 +605,7 @@ namespace
     request.Parameters.RequestedLifetimeCount = 1;
     request.Parameters.RequestedMaxKeepAliveCount = 1;
     request.Parameters.RequestedPublishingInterval = 1000;
-    const OpcUa::SubscriptionData data = subscriptions.CreateSubscription(request, [](PublishResult){});
+    const OpcUa::CreateSubscriptionResult data = subscriptions.CreateSubscription(request, [](PublishResult){});
     std::cout << "ID: " << data.ID << std::endl;
     std::cout << "RevisedPublishingInterval: " << data.RevisedPublishingInterval << std::endl;
     std::cout << "RevisedLifetimeCount: " << data.RevisedLifetimeCount << std::endl;

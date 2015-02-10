@@ -46,8 +46,8 @@ protected:
   std::vector<ReferenceDescription> Browse(const NodeId& id) const
   {
     OpcUa::BrowseDescription description;
-    description.NodeToBrowse = id;
-    OpcUa::NodesQuery query;
+    description.NodeId = id;
+    OpcUa::BrowseParameters query;
     query.NodesToBrowse.push_back(description);
     return NameSpace->Browse(query);
   }
@@ -56,7 +56,7 @@ protected:
   {
     for (const ReferenceDescription ref : refs)
     {
-      if (ref.TargetNodeId == targetNode && ref.ReferenceTypeID == referenceID)
+      if (ref.NodeId == targetNode && ref.ReferenceTypeId == referenceID)
       {
         return true;
       }

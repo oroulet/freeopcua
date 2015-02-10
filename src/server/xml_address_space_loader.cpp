@@ -980,9 +980,9 @@ namespace
         desc.BrowseName = ref.TargetBrowseName;
         desc.DisplayName = ref.TargetDisplayName;
         desc.IsForward = ref.IsForward;
-        desc.ReferenceTypeID = ref.ID;
+        desc.ReferenceTypeId = ref.ID;
         desc.TargetNodeClass = ref.TargetClass;
-        desc.TargetNodeId = ref.TargetNode;
+        desc.NodeId = ref.TargetNode;
         desc.TargetNodeTypeDefinition = ref.TargetType;
         //Registry.AddReference(node.ID, desc);
       }

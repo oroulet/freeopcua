@@ -39,7 +39,7 @@ namespace OpcUa
 
     class InternalSubscription;
 
-    typedef std::map <IntegerID, std::shared_ptr<InternalSubscription>> SubscriptionsIDMap; // Map SubscptioinID, SubscriptionData
+    typedef std::map <IntegerId, std::shared_ptr<InternalSubscription>> SubscriptionsIDMap; // Map SubscptioinID, CreateSubscriptionResult
 
 
     class SubscriptionServiceInternal : public Server::SubscriptionService
@@ -49,9 +49,9 @@ namespace OpcUa
 
        ~SubscriptionServiceInternal();
 
-        virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerID>& subscriptions);
-        virtual SubscriptionData CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback);
-        virtual MonitoredItemsData CreateMonitoredItems(const MonitoredItemsParameters& params);
+        virtual std::vector<StatusCode> DeleteSubscriptions(const std::vector<IntegerId>& subscriptions);
+        virtual CreateSubscriptionResult CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback);
+        virtual CreateMonitoredItemsResult CreateMonitoredItems(const CreateMonitoredItemsParameters& params);
         virtual std::vector<StatusCode> DeleteMonitoredItems(const DeleteMonitoredItemsParameters& params);
         virtual void Publish(const PublishRequest& request);
         virtual RepublishResponse Republish(const RepublishParameters& request);
@@ -67,7 +67,7 @@ namespace OpcUa
         Server::AddressSpace::SharedPtr AddressSpace;
         bool Debug;
         mutable boost::shared_mutex DbMutex;
-        SubscriptionsIDMap SubscriptionsMap; // Map SubscptioinID, SubscriptionData
+        SubscriptionsIDMap SubscriptionsMap; // Map SubscptioinID, CreateSubscriptionResult
         uint32_t LastSubscriptionID = 2;
         std::map<NodeId, uint32_t> PublishRequestQueues;
     };

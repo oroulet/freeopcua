@@ -37,7 +37,7 @@ protected:
 
 TEST_F(Endpoints, GetEndpoints)
 {
-  EndpointsFilter filter;
+  GetEndpointsParameters filter;
   const std::vector<EndpointDescription> endpoints = Server->GetEndpoints(filter);
   ASSERT_FALSE(endpoints.empty());
 }

@@ -111,7 +111,7 @@ namespace OpcUa
 
   std::vector<EndpointDescription> UaClient::GetServerEndpoints()
   {
-    EndpointsFilter filter;
+    GetEndpointsParameters filter;
     filter.EndpointURL = Endpoint.EndpointURL;
     filter.ProfileUries.push_back("http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary");
     filter.LocaleIDs.push_back("http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary");

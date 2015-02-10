@@ -72,7 +72,7 @@ namespace OpcUa
       return Registry->AddReferences(items);
     }
 
-    std::vector<BrowseResult> AddressSpaceAddon::Browse(const OpcUa::NodesQuery& query) const
+    std::vector<BrowseResult> AddressSpaceAddon::Browse(const OpcUa::BrowseParameters& query) const
     {
       return Registry->Browse(query);
     }
@@ -81,7 +81,7 @@ namespace OpcUa
       return Registry->BrowseNext();
     }
 
-    std::vector<BrowsePathResult> AddressSpaceAddon::TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const 
+    std::vector<BrowsePathResult> AddressSpaceAddon::TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsToNodeIdsParameters& params) const 
     {
       return Registry->TranslateBrowsePathsToNodeIds(params);
     }

@@ -4242,7 +4242,7 @@ class AddReferencesItem(object):
         self.ReferenceTypeId = None
         self.IsForward = None
         self.TargetServerUri = None
-        self.TargetNodeId = None
+        self.NodeId = None
         self.TargetNodeClass = None
 
     def to_binary(self):
@@ -4465,7 +4465,7 @@ class DeleteReferencesItem(object):
         self.SourceNodeId = None
         self.ReferenceTypeId = None
         self.IsForward = None
-        self.TargetNodeId = None
+        self.NodeId = None
         self.DeleteBidirectional = None
 
     def to_binary(self):

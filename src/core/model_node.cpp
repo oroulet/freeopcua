@@ -28,8 +28,8 @@ namespace OpcUa
       , OpcUaServices(services)
     {
       ReadParameters attrs;
-      attrs.AttributesToRead.push_back(ReadValueId(id, AttributeID::DisplayName));
-      attrs.AttributesToRead.push_back(ReadValueId(id, AttributeID::BrowseName));
+      attrs.AttributesToRead.push_back(MakeReadValueId(id, AttributeID::DisplayName));
+      attrs.AttributesToRead.push_back(MakeReadValueId(id, AttributeID::BrowseName));
       std::vector<DataValue> values = services->Attributes()->Read(attrs);
       DisplayName = values[0].Value.As<LocalizedText>();
       BrowseName = values[1].Value.As<QualifiedName>();
@@ -55,7 +55,7 @@ namespace OpcUa
       return DisplayName;
     }
 
-    std::vector<Reference> Node::GetReferencies() const
+    std::vector<Reference> Node::GetReferences() const
     {
       return std::vector<Reference>();
     }

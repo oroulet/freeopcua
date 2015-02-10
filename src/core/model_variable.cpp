@@ -30,9 +30,9 @@ namespace OpcUa
     {
       Id = variableID;
       ReadParameters attrs;
-      attrs.AttributesToRead.push_back(ReadValueId(variableID, AttributeID::DisplayName));
-      attrs.AttributesToRead.push_back(ReadValueId(variableID, AttributeID::BrowseName));
-      attrs.AttributesToRead.push_back(ReadValueId(variableID, AttributeID::DataType));
+      attrs.AttributesToRead.push_back(MakeReadValueId(variableID, AttributeID::DisplayName));
+      attrs.AttributesToRead.push_back(MakeReadValueId(variableID, AttributeID::BrowseName));
+      attrs.AttributesToRead.push_back(MakeReadValueId(variableID, AttributeID::DataType));
       std::vector<DataValue> values = services->Attributes()->Read(attrs);
       DisplayName = values[0].Value.As<LocalizedText>();
       BrowseName = values[1].Value.As<QualifiedName>();
@@ -42,7 +42,7 @@ namespace OpcUa
     DataValue Variable::GetValue() const
     {
       ReadParameters params;
-      params.AttributesToRead.push_back(ReadValueId(GetID(), AttributeID::Value));
+      params.AttributesToRead.push_back(MakeReadValueId(GetID(), AttributeID::Value));
       const std::vector<DataValue> result = GetServices()->Attributes()->Read(params);
       if (result.size() != 1)
       {
@@ -74,7 +74,7 @@ namespace OpcUa
 
     std::vector<Variable> Variable::Variables() const
     {
-      return Browse<Variable>(GetID(), NODE_CLASS_VARIABLE, GetServices());
+      return Browse<Variable>(GetID(), NodeClass::Variable, GetServices());
     }
   }
 }

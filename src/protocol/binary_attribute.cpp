@@ -24,7 +24,6 @@
 
 namespace OpcUa
 {
-  // TODO move to appropriate file
   ReadValueId::ReadValueId()
     : AttributeId(AttributeID::Value)
   {

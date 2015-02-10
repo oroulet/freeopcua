@@ -51,7 +51,7 @@ namespace OpcUa
     struct DataChangeCallbackData
     {
       std::function<Server::DataChangeCallback> Callback;
-      IntegerID ClientHandle;
+      IntegerId ClientHandle;
     };
 
     typedef std::map<uint32_t, DataChangeCallbackData> DataChangeCallbackMap;
@@ -86,8 +86,8 @@ namespace OpcUa
         //Services implementation
         virtual std::vector<AddNodesResult> AddNodes(const std::vector<AddNodesItem>& items);
         virtual std::vector<StatusCode> AddReferences(const std::vector<AddReferencesItem>& items);
-        virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const;
-        virtual std::vector<BrowseResult> Browse(const OpcUa::NodesQuery& query) const;
+        virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsToNodeIdsParameters& params) const;
+        virtual std::vector<BrowseResult> Browse(const OpcUa::BrowseParameters& query) const;
         virtual std::vector<BrowseResult> BrowseNext() const;
         virtual std::vector<DataValue> Read(const ReadParameters& params) const;
         virtual std::vector<StatusCode> Write(const std::vector<OpcUa::WriteValue>& values);

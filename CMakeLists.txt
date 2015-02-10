@@ -117,7 +117,6 @@ add_library(opcuaprotocol STATIC
     src/protocol/binary_data_value.cpp
     src/protocol/binary_messages.cpp
     src/protocol/binary_protocol.cpp
-    src/protocol/binary_node_management.cpp
     src/protocol/binary_raw_size.cpp
     src/protocol/binary_serialization.h
     src/protocol/binary_session.cpp
@@ -125,13 +124,15 @@ add_library(opcuaprotocol STATIC
     src/protocol/binary_variant.cpp
     src/protocol/binary_view.cpp
     src/protocol/input_from_buffer.cpp
-    src/protocol/monitored_items.cpp
     src/protocol/nodeid.cpp
     src/protocol/session.cpp
     src/protocol/status_codes.cpp
     src/protocol/string_utils.cpp
     src/protocol/string_utils_statuscode_tostring.cpp
     src/protocol/subscriptions.cpp
+    src/protocol/serialize_auto.cpp
+    src/protocol/deserialize_auto.cpp
+    src/protocol/rawsize_auto.cpp
 )
 
 target_compile_options(opcuaprotocol PUBLIC ${STATIC_LIBRARY_CXX_FLAGS})

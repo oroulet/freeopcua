@@ -40,7 +40,7 @@ namespace OpcUa
 
   void Subscription::Delete()
   {
-    std::vector<StatusCode> results = Server->Subscriptions()->DeleteSubscriptions(std::vector<IntegerID>({Data.ID}));
+    std::vector<StatusCode> results = Server->Subscriptions()->DeleteSubscriptions(std::vector<IntegerId>({Data.ID}));
     for (auto res: results)
     {
       CheckStatusCode(res);
@@ -53,24 +53,24 @@ namespace OpcUa
     if (Debug){ std::cout << "Subscription | Suscription::PublishCallback called with " <<result.Message.Data.size() << " notifications " << std::endl; }
     for (const NotificationData& data: result.Message.Data )
     {
-      if (data.Header.TypeID == ExpandedObjectId::DataChangeNotification)
+      if (data.Header.TypeId == ExpandedObjectId::DataChangeNotification)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type DataChange\n"; }
         CallDataChangeCallback(data);
       }
-      else if (data.Header.TypeID == ExpandedObjectId::EventNotificationList)
+      else if (data.Header.TypeId == ExpandedObjectId::EventNotificationList)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type Event\n"; }
         CallEventCallback(data);
       }
-      else if (data.Header.TypeID == ExpandedObjectId::StatusChangeNotification)
+      else if (data.Header.TypeId == ExpandedObjectId::StatusChangeNotification)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type StatusChange\n"; }
         CallStatusChangeCallback(data);
       }
       else
       {
-        std::cout << "Subscription | Error unknown notficiation type received: " << data.Header.TypeID <<std::endl;
+        std::cout << "Subscription | Error unknown notficiation type received: " << data.Header.TypeId <<std::endl;
       }
     }
     OpcUa::SubscriptionAcknowledgement ack;
@@ -205,7 +205,7 @@ namespace OpcUa
   {
     std::unique_lock<std::mutex> lock(Mutex); 
 
-    MonitoredItemsParameters itemsParams;
+    CreateMonitoredItemsParameters itemsParams;
     itemsParams.SubscriptionID = Data.ID;
 
     for (ReadValueId attr : attributes)
@@ -217,7 +217,7 @@ namespace OpcUa
       params.SamplingInterval = Data.RevisedPublishingInterval;
       params.QueueSize = 1;
       params.DiscardOldest = true;
-      params.ClientHandle = IntegerID(++LastMonitoredItemHandle);
+      params.ClientHandle = IntegerId(++LastMonitoredItemHandle);
       req.Parameters = params;
       itemsParams.ItemsToCreate.push_back(req);
     }
@@ -257,11 +257,11 @@ namespace OpcUa
 
     DeleteMonitoredItemsParameters params;
     params.SubscriptionId = Data.ID;
-    std::vector<IntegerID> mids;
+    std::vector<IntegerId> mids;
     for (auto id : handles)
     {
       if (Debug) std::cout << "Subscription | Sending unsubscribe for monitoreditemsid: " << id << std::endl;
-      mids.push_back(IntegerID(id));
+      mids.push_back(IntegerId(id));
       //Now trying to remove monitoreditem from our internal cache
       for ( auto pair : AttributeValueMap )
       {
@@ -293,7 +293,7 @@ namespace OpcUa
     {
       if (Debug) std::cout << "      property: "<< child.GetName() << std::endl;
       SimpleAttributeOperand op;
-      op.TypeID = eventtype.GetId();
+      op.TypeId = eventtype.GetId();
       op.Attribute = AttributeID::Value;
       op.BrowsePath = std::vector<QualifiedName>({child.GetName()});
       filter.SelectClauses.push_back(op);
@@ -305,7 +305,7 @@ namespace OpcUa
   {
     std::unique_lock<std::mutex> lock(Mutex); 
 
-    MonitoredItemsParameters itemsParams;
+    CreateMonitoredItemsParameters itemsParams;
     itemsParams.SubscriptionID = Data.ID;
 
     ReadValueId avid;
@@ -319,7 +319,7 @@ namespace OpcUa
     params.SamplingInterval = Data.RevisedPublishingInterval;
     params.QueueSize = std::numeric_limits<uint32_t>::max();
     params.DiscardOldest = true;
-    params.ClientHandle = IntegerID(++LastMonitoredItemHandle);
+    params.ClientHandle = IntegerId(++LastMonitoredItemHandle);
 
     MonitoringFilter filter(eventfilter);
     params.Filter = filter;

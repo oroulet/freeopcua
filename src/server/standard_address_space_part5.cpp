@@ -204,7 +204,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=69");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=104");
+        ref.NodeId = ToNodeId("i=104");
         refs.push_back(ref);
         }
         {
@@ -213,7 +213,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=69");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=105");
+        ref.NodeId = ToNodeId("i=105");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -241,7 +241,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=104");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -269,7 +269,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=105");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -297,7 +297,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=72");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=106");
+        ref.NodeId = ToNodeId("i=106");
         refs.push_back(ref);
         }
         {
@@ -306,7 +306,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=72");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=107");
+        ref.NodeId = ToNodeId("i=107");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -334,7 +334,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=106");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -362,7 +362,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=107");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -416,7 +416,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=77");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=111");
+        ref.NodeId = ToNodeId("i=111");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -445,7 +445,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=111");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -470,7 +470,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=78");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=112");
+        ref.NodeId = ToNodeId("i=112");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -513,7 +513,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=80");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=113");
+        ref.NodeId = ToNodeId("i=113");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -556,7 +556,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=83");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=114");
+        ref.NodeId = ToNodeId("i=114");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -599,7 +599,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=79");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=116");
+        ref.NodeId = ToNodeId("i=116");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -642,7 +642,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11508");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11509");
+        ref.NodeId = ToNodeId("i=11509");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -685,7 +685,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11510");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11511");
+        ref.NodeId = ToNodeId("i=11511");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -792,7 +792,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::Organizes;
         ref.SourceNodeId = ToNodeId("i=88");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=58");
+        ref.NodeId = ToNodeId("i=58");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -819,7 +819,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::Organizes;
         ref.SourceNodeId = ToNodeId("i=89");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=62");
+        ref.NodeId = ToNodeId("i=62");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -846,7 +846,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::Organizes;
         ref.SourceNodeId = ToNodeId("i=90");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=24");
+        ref.NodeId = ToNodeId("i=24");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -873,7 +873,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::Organizes;
         ref.SourceNodeId = ToNodeId("i=91");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=31");
+        ref.NodeId = ToNodeId("i=31");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -931,7 +931,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2005");
+        ref.NodeId = ToNodeId("i=2005");
         refs.push_back(ref);
         }
         {
@@ -940,7 +940,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2006");
+        ref.NodeId = ToNodeId("i=2006");
         refs.push_back(ref);
         }
         {
@@ -949,7 +949,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2007");
+        ref.NodeId = ToNodeId("i=2007");
         refs.push_back(ref);
         }
         {
@@ -958,7 +958,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2008");
+        ref.NodeId = ToNodeId("i=2008");
         refs.push_back(ref);
         }
         {
@@ -967,7 +967,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2742");
+        ref.NodeId = ToNodeId("i=2742");
         refs.push_back(ref);
         }
         {
@@ -976,7 +976,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2009");
+        ref.NodeId = ToNodeId("i=2009");
         refs.push_back(ref);
         }
         {
@@ -985,7 +985,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2010");
+        ref.NodeId = ToNodeId("i=2010");
         refs.push_back(ref);
         }
         {
@@ -994,7 +994,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2011");
+        ref.NodeId = ToNodeId("i=2011");
         refs.push_back(ref);
         }
         {
@@ -1003,7 +1003,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2012");
+        ref.NodeId = ToNodeId("i=2012");
         refs.push_back(ref);
         }
         {
@@ -1012,7 +1012,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11527");
+        ref.NodeId = ToNodeId("i=11527");
         refs.push_back(ref);
         }
         {
@@ -1021,7 +1021,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2004");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11489");
+        ref.NodeId = ToNodeId("i=11489");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1050,7 +1050,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2005");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1079,7 +1079,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2006");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1108,7 +1108,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2007");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3074");
+        ref.NodeId = ToNodeId("i=3074");
         refs.push_back(ref);
         }
         {
@@ -1117,7 +1117,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2007");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3075");
+        ref.NodeId = ToNodeId("i=3075");
         refs.push_back(ref);
         }
         {
@@ -1126,7 +1126,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2007");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3076");
+        ref.NodeId = ToNodeId("i=3076");
         refs.push_back(ref);
         }
         {
@@ -1135,7 +1135,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2007");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3077");
+        ref.NodeId = ToNodeId("i=3077");
         refs.push_back(ref);
         }
         {
@@ -1144,7 +1144,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2007");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3084");
+        ref.NodeId = ToNodeId("i=3084");
         refs.push_back(ref);
         }
         {
@@ -1153,7 +1153,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2007");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3085");
+        ref.NodeId = ToNodeId("i=3085");
         refs.push_back(ref);
         }
         {
@@ -1162,7 +1162,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2007");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1189,7 +1189,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3074");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1216,7 +1216,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3075");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1243,7 +1243,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3076");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1270,7 +1270,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3078");
+        ref.NodeId = ToNodeId("i=3078");
         refs.push_back(ref);
         }
         {
@@ -1279,7 +1279,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3079");
+        ref.NodeId = ToNodeId("i=3079");
         refs.push_back(ref);
         }
         {
@@ -1288,7 +1288,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3080");
+        ref.NodeId = ToNodeId("i=3080");
         refs.push_back(ref);
         }
         {
@@ -1297,7 +1297,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3081");
+        ref.NodeId = ToNodeId("i=3081");
         refs.push_back(ref);
         }
         {
@@ -1306,7 +1306,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3082");
+        ref.NodeId = ToNodeId("i=3082");
         refs.push_back(ref);
         }
         {
@@ -1315,7 +1315,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3083");
+        ref.NodeId = ToNodeId("i=3083");
         refs.push_back(ref);
         }
         {
@@ -1324,7 +1324,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1352,7 +1352,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3078");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1380,7 +1380,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3079");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1408,7 +1408,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3080");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1436,7 +1436,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3081");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1464,7 +1464,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3082");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1492,7 +1492,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3083");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1519,7 +1519,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3084");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1546,7 +1546,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3085");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1575,7 +1575,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2008");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1604,7 +1604,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2742");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1631,7 +1631,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3086");
+        ref.NodeId = ToNodeId("i=3086");
         refs.push_back(ref);
         }
         {
@@ -1640,7 +1640,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3087");
+        ref.NodeId = ToNodeId("i=3087");
         refs.push_back(ref);
         }
         {
@@ -1649,7 +1649,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3088");
+        ref.NodeId = ToNodeId("i=3088");
         refs.push_back(ref);
         }
         {
@@ -1658,7 +1658,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3089");
+        ref.NodeId = ToNodeId("i=3089");
         refs.push_back(ref);
         }
         {
@@ -1667,7 +1667,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3090");
+        ref.NodeId = ToNodeId("i=3090");
         refs.push_back(ref);
         }
         {
@@ -1676,7 +1676,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3091");
+        ref.NodeId = ToNodeId("i=3091");
         refs.push_back(ref);
         }
         {
@@ -1685,7 +1685,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3092");
+        ref.NodeId = ToNodeId("i=3092");
         refs.push_back(ref);
         }
         {
@@ -1694,7 +1694,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3093");
+        ref.NodeId = ToNodeId("i=3093");
         refs.push_back(ref);
         }
         {
@@ -1703,7 +1703,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3094");
+        ref.NodeId = ToNodeId("i=3094");
         refs.push_back(ref);
         }
         {
@@ -1712,7 +1712,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2009");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1740,7 +1740,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3086");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1768,7 +1768,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3087");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1796,7 +1796,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3088");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1824,7 +1824,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3089");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1852,7 +1852,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3090");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1880,7 +1880,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3091");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1908,7 +1908,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3092");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1935,7 +1935,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3093");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1962,7 +1962,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3094");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -1989,7 +1989,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2010");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3095");
+        ref.NodeId = ToNodeId("i=3095");
         refs.push_back(ref);
         }
         {
@@ -1998,7 +1998,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2010");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3110");
+        ref.NodeId = ToNodeId("i=3110");
         refs.push_back(ref);
         }
         {
@@ -2007,7 +2007,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2010");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3111");
+        ref.NodeId = ToNodeId("i=3111");
         refs.push_back(ref);
         }
         {
@@ -2016,7 +2016,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2010");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3114");
+        ref.NodeId = ToNodeId("i=3114");
         refs.push_back(ref);
         }
         {
@@ -2025,7 +2025,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2010");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2053,7 +2053,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3096");
+        ref.NodeId = ToNodeId("i=3096");
         refs.push_back(ref);
         }
         {
@@ -2062,7 +2062,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3097");
+        ref.NodeId = ToNodeId("i=3097");
         refs.push_back(ref);
         }
         {
@@ -2071,7 +2071,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3098");
+        ref.NodeId = ToNodeId("i=3098");
         refs.push_back(ref);
         }
         {
@@ -2080,7 +2080,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3099");
+        ref.NodeId = ToNodeId("i=3099");
         refs.push_back(ref);
         }
         {
@@ -2089,7 +2089,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3100");
+        ref.NodeId = ToNodeId("i=3100");
         refs.push_back(ref);
         }
         {
@@ -2098,7 +2098,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3101");
+        ref.NodeId = ToNodeId("i=3101");
         refs.push_back(ref);
         }
         {
@@ -2107,7 +2107,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3102");
+        ref.NodeId = ToNodeId("i=3102");
         refs.push_back(ref);
         }
         {
@@ -2116,7 +2116,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3104");
+        ref.NodeId = ToNodeId("i=3104");
         refs.push_back(ref);
         }
         {
@@ -2125,7 +2125,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3105");
+        ref.NodeId = ToNodeId("i=3105");
         refs.push_back(ref);
         }
         {
@@ -2134,7 +2134,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3106");
+        ref.NodeId = ToNodeId("i=3106");
         refs.push_back(ref);
         }
         {
@@ -2143,7 +2143,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3107");
+        ref.NodeId = ToNodeId("i=3107");
         refs.push_back(ref);
         }
         {
@@ -2152,7 +2152,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3108");
+        ref.NodeId = ToNodeId("i=3108");
         refs.push_back(ref);
         }
         {
@@ -2161,7 +2161,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2188,7 +2188,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3096");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2215,7 +2215,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3097");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2242,7 +2242,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2269,7 +2269,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3099");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2296,7 +2296,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3100");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2323,7 +2323,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3101");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2350,7 +2350,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3102");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2377,7 +2377,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3104");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2404,7 +2404,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3105");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2431,7 +2431,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3106");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2458,7 +2458,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3107");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2485,7 +2485,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3108");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2513,7 +2513,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3110");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2540,7 +2540,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3111");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3112");
+        ref.NodeId = ToNodeId("i=3112");
         refs.push_back(ref);
         }
         {
@@ -2549,7 +2549,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3111");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3113");
+        ref.NodeId = ToNodeId("i=3113");
         refs.push_back(ref);
         }
         {
@@ -2558,7 +2558,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3111");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2586,7 +2586,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3112");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2614,7 +2614,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3113");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2644,7 +2644,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3114");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2671,7 +2671,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2011");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2698,7 +2698,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2012");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3115");
+        ref.NodeId = ToNodeId("i=3115");
         refs.push_back(ref);
         }
         {
@@ -2707,7 +2707,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2012");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2735,7 +2735,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3115");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2762,7 +2762,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11527");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2789,7 +2789,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11490");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2816,7 +2816,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11491");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2842,7 +2842,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2014");
+        ref.NodeId = ToNodeId("i=2014");
         refs.push_back(ref);
         }
         {
@@ -2851,7 +2851,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2016");
+        ref.NodeId = ToNodeId("i=2016");
         refs.push_back(ref);
         }
         {
@@ -2860,7 +2860,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2017");
+        ref.NodeId = ToNodeId("i=2017");
         refs.push_back(ref);
         }
         {
@@ -2869,7 +2869,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2732");
+        ref.NodeId = ToNodeId("i=2732");
         refs.push_back(ref);
         }
         {
@@ -2878,7 +2878,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2733");
+        ref.NodeId = ToNodeId("i=2733");
         refs.push_back(ref);
         }
         {
@@ -2887,7 +2887,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2734");
+        ref.NodeId = ToNodeId("i=2734");
         refs.push_back(ref);
         }
         {
@@ -2896,7 +2896,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3049");
+        ref.NodeId = ToNodeId("i=3049");
         refs.push_back(ref);
         }
         {
@@ -2905,7 +2905,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11549");
+        ref.NodeId = ToNodeId("i=11549");
         refs.push_back(ref);
         }
         {
@@ -2914,7 +2914,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11550");
+        ref.NodeId = ToNodeId("i=11550");
         refs.push_back(ref);
         }
         {
@@ -2923,7 +2923,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11551");
+        ref.NodeId = ToNodeId("i=11551");
         refs.push_back(ref);
         }
         {
@@ -2932,7 +2932,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2019");
+        ref.NodeId = ToNodeId("i=2019");
         refs.push_back(ref);
         }
         {
@@ -2941,7 +2941,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2754");
+        ref.NodeId = ToNodeId("i=2754");
         refs.push_back(ref);
         }
         {
@@ -2950,7 +2950,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2013");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11562");
+        ref.NodeId = ToNodeId("i=11562");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -2978,7 +2978,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2014");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3006,7 +3006,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2016");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3034,7 +3034,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2017");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3062,7 +3062,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2732");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3090,7 +3090,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2733");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3118,7 +3118,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2734");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3146,7 +3146,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3049");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3174,7 +3174,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11549");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3202,7 +3202,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11550");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3229,7 +3229,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11551");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3256,7 +3256,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2019");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3283,7 +3283,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2754");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3310,7 +3310,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11562");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11508");
+        ref.NodeId = ToNodeId("i=11508");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3336,7 +3336,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2020");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2021");
+        ref.NodeId = ToNodeId("i=2021");
         refs.push_back(ref);
         }
         {
@@ -3345,7 +3345,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2020");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2022");
+        ref.NodeId = ToNodeId("i=2022");
         refs.push_back(ref);
         }
         {
@@ -3354,7 +3354,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2020");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2023");
+        ref.NodeId = ToNodeId("i=2023");
         refs.push_back(ref);
         }
         {
@@ -3363,7 +3363,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2020");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2744");
+        ref.NodeId = ToNodeId("i=2744");
         refs.push_back(ref);
         }
         {
@@ -3372,7 +3372,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2020");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2025");
+        ref.NodeId = ToNodeId("i=2025");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3400,7 +3400,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3116");
+        ref.NodeId = ToNodeId("i=3116");
         refs.push_back(ref);
         }
         {
@@ -3409,7 +3409,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3117");
+        ref.NodeId = ToNodeId("i=3117");
         refs.push_back(ref);
         }
         {
@@ -3418,7 +3418,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3118");
+        ref.NodeId = ToNodeId("i=3118");
         refs.push_back(ref);
         }
         {
@@ -3427,7 +3427,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3119");
+        ref.NodeId = ToNodeId("i=3119");
         refs.push_back(ref);
         }
         {
@@ -3436,7 +3436,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3120");
+        ref.NodeId = ToNodeId("i=3120");
         refs.push_back(ref);
         }
         {
@@ -3445,7 +3445,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3121");
+        ref.NodeId = ToNodeId("i=3121");
         refs.push_back(ref);
         }
         {
@@ -3454,7 +3454,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3122");
+        ref.NodeId = ToNodeId("i=3122");
         refs.push_back(ref);
         }
         {
@@ -3463,7 +3463,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3124");
+        ref.NodeId = ToNodeId("i=3124");
         refs.push_back(ref);
         }
         {
@@ -3472,7 +3472,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3125");
+        ref.NodeId = ToNodeId("i=3125");
         refs.push_back(ref);
         }
         {
@@ -3481,7 +3481,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3126");
+        ref.NodeId = ToNodeId("i=3126");
         refs.push_back(ref);
         }
         {
@@ -3490,7 +3490,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3127");
+        ref.NodeId = ToNodeId("i=3127");
         refs.push_back(ref);
         }
         {
@@ -3499,7 +3499,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3128");
+        ref.NodeId = ToNodeId("i=3128");
         refs.push_back(ref);
         }
         {
@@ -3508,7 +3508,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2021");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3535,7 +3535,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3116");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3562,7 +3562,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3117");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3589,7 +3589,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3118");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3616,7 +3616,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3119");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3643,7 +3643,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3120");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3670,7 +3670,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3121");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3697,7 +3697,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3122");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3724,7 +3724,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3124");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3751,7 +3751,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3125");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3778,7 +3778,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3126");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3805,7 +3805,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3127");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3832,7 +3832,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3128");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3860,7 +3860,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2022");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3888,7 +3888,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2023");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3915,7 +3915,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2744");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3129");
+        ref.NodeId = ToNodeId("i=3129");
         refs.push_back(ref);
         }
         {
@@ -3924,7 +3924,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2744");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3130");
+        ref.NodeId = ToNodeId("i=3130");
         refs.push_back(ref);
         }
         {
@@ -3933,7 +3933,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2744");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3961,7 +3961,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3129");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -3989,7 +3989,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3130");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4019,7 +4019,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2025");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4045,7 +4045,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2026");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2027");
+        ref.NodeId = ToNodeId("i=2027");
         refs.push_back(ref);
         }
         {
@@ -4054,7 +4054,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2026");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2028");
+        ref.NodeId = ToNodeId("i=2028");
         refs.push_back(ref);
         }
         {
@@ -4063,7 +4063,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2026");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12097");
+        ref.NodeId = ToNodeId("i=12097");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4091,7 +4091,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2027");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4119,7 +4119,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2028");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4145,7 +4145,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12097");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12098");
+        ref.NodeId = ToNodeId("i=12098");
         refs.push_back(ref);
         }
         {
@@ -4154,7 +4154,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12097");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12142");
+        ref.NodeId = ToNodeId("i=12142");
         refs.push_back(ref);
         }
         {
@@ -4163,7 +4163,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12097");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12152");
+        ref.NodeId = ToNodeId("i=12152");
         refs.push_back(ref);
         }
         {
@@ -4172,7 +4172,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12097");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11508");
+        ref.NodeId = ToNodeId("i=11508");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4200,7 +4200,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12099");
+        ref.NodeId = ToNodeId("i=12099");
         refs.push_back(ref);
         }
         {
@@ -4209,7 +4209,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12100");
+        ref.NodeId = ToNodeId("i=12100");
         refs.push_back(ref);
         }
         {
@@ -4218,7 +4218,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12101");
+        ref.NodeId = ToNodeId("i=12101");
         refs.push_back(ref);
         }
         {
@@ -4227,7 +4227,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12102");
+        ref.NodeId = ToNodeId("i=12102");
         refs.push_back(ref);
         }
         {
@@ -4236,7 +4236,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12103");
+        ref.NodeId = ToNodeId("i=12103");
         refs.push_back(ref);
         }
         {
@@ -4245,7 +4245,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12104");
+        ref.NodeId = ToNodeId("i=12104");
         refs.push_back(ref);
         }
         {
@@ -4254,7 +4254,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12105");
+        ref.NodeId = ToNodeId("i=12105");
         refs.push_back(ref);
         }
         {
@@ -4263,7 +4263,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12106");
+        ref.NodeId = ToNodeId("i=12106");
         refs.push_back(ref);
         }
         {
@@ -4272,7 +4272,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12107");
+        ref.NodeId = ToNodeId("i=12107");
         refs.push_back(ref);
         }
         {
@@ -4281,7 +4281,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12108");
+        ref.NodeId = ToNodeId("i=12108");
         refs.push_back(ref);
         }
         {
@@ -4290,7 +4290,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12109");
+        ref.NodeId = ToNodeId("i=12109");
         refs.push_back(ref);
         }
         {
@@ -4299,7 +4299,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12110");
+        ref.NodeId = ToNodeId("i=12110");
         refs.push_back(ref);
         }
         {
@@ -4308,7 +4308,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12111");
+        ref.NodeId = ToNodeId("i=12111");
         refs.push_back(ref);
         }
         {
@@ -4317,7 +4317,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12112");
+        ref.NodeId = ToNodeId("i=12112");
         refs.push_back(ref);
         }
         {
@@ -4326,7 +4326,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12113");
+        ref.NodeId = ToNodeId("i=12113");
         refs.push_back(ref);
         }
         {
@@ -4335,7 +4335,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12114");
+        ref.NodeId = ToNodeId("i=12114");
         refs.push_back(ref);
         }
         {
@@ -4344,7 +4344,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12115");
+        ref.NodeId = ToNodeId("i=12115");
         refs.push_back(ref);
         }
         {
@@ -4353,7 +4353,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12116");
+        ref.NodeId = ToNodeId("i=12116");
         refs.push_back(ref);
         }
         {
@@ -4362,7 +4362,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12117");
+        ref.NodeId = ToNodeId("i=12117");
         refs.push_back(ref);
         }
         {
@@ -4371,7 +4371,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12118");
+        ref.NodeId = ToNodeId("i=12118");
         refs.push_back(ref);
         }
         {
@@ -4380,7 +4380,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12119");
+        ref.NodeId = ToNodeId("i=12119");
         refs.push_back(ref);
         }
         {
@@ -4389,7 +4389,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12120");
+        ref.NodeId = ToNodeId("i=12120");
         refs.push_back(ref);
         }
         {
@@ -4398,7 +4398,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12121");
+        ref.NodeId = ToNodeId("i=12121");
         refs.push_back(ref);
         }
         {
@@ -4407,7 +4407,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12122");
+        ref.NodeId = ToNodeId("i=12122");
         refs.push_back(ref);
         }
         {
@@ -4416,7 +4416,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12123");
+        ref.NodeId = ToNodeId("i=12123");
         refs.push_back(ref);
         }
         {
@@ -4425,7 +4425,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12124");
+        ref.NodeId = ToNodeId("i=12124");
         refs.push_back(ref);
         }
         {
@@ -4434,7 +4434,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12125");
+        ref.NodeId = ToNodeId("i=12125");
         refs.push_back(ref);
         }
         {
@@ -4443,7 +4443,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12126");
+        ref.NodeId = ToNodeId("i=12126");
         refs.push_back(ref);
         }
         {
@@ -4452,7 +4452,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12127");
+        ref.NodeId = ToNodeId("i=12127");
         refs.push_back(ref);
         }
         {
@@ -4461,7 +4461,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12128");
+        ref.NodeId = ToNodeId("i=12128");
         refs.push_back(ref);
         }
         {
@@ -4470,7 +4470,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12129");
+        ref.NodeId = ToNodeId("i=12129");
         refs.push_back(ref);
         }
         {
@@ -4479,7 +4479,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12130");
+        ref.NodeId = ToNodeId("i=12130");
         refs.push_back(ref);
         }
         {
@@ -4488,7 +4488,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12131");
+        ref.NodeId = ToNodeId("i=12131");
         refs.push_back(ref);
         }
         {
@@ -4497,7 +4497,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12132");
+        ref.NodeId = ToNodeId("i=12132");
         refs.push_back(ref);
         }
         {
@@ -4506,7 +4506,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12133");
+        ref.NodeId = ToNodeId("i=12133");
         refs.push_back(ref);
         }
         {
@@ -4515,7 +4515,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12134");
+        ref.NodeId = ToNodeId("i=12134");
         refs.push_back(ref);
         }
         {
@@ -4524,7 +4524,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12135");
+        ref.NodeId = ToNodeId("i=12135");
         refs.push_back(ref);
         }
         {
@@ -4533,7 +4533,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12136");
+        ref.NodeId = ToNodeId("i=12136");
         refs.push_back(ref);
         }
         {
@@ -4542,7 +4542,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12137");
+        ref.NodeId = ToNodeId("i=12137");
         refs.push_back(ref);
         }
         {
@@ -4551,7 +4551,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12138");
+        ref.NodeId = ToNodeId("i=12138");
         refs.push_back(ref);
         }
         {
@@ -4560,7 +4560,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12139");
+        ref.NodeId = ToNodeId("i=12139");
         refs.push_back(ref);
         }
         {
@@ -4569,7 +4569,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12140");
+        ref.NodeId = ToNodeId("i=12140");
         refs.push_back(ref);
         }
         {
@@ -4578,7 +4578,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12141");
+        ref.NodeId = ToNodeId("i=12141");
         refs.push_back(ref);
         }
         {
@@ -4587,7 +4587,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4614,7 +4614,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12099");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4641,7 +4641,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12100");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4668,7 +4668,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12101");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4695,7 +4695,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12102");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4722,7 +4722,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12103");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4749,7 +4749,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12104");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4776,7 +4776,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12105");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4803,7 +4803,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12106");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4830,7 +4830,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12107");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4857,7 +4857,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12108");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4884,7 +4884,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12109");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4911,7 +4911,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12110");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4938,7 +4938,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12111");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4965,7 +4965,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12112");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -4992,7 +4992,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12113");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5019,7 +5019,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12114");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5046,7 +5046,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12115");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5073,7 +5073,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12116");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5100,7 +5100,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12117");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5127,7 +5127,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12118");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5154,7 +5154,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12119");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5181,7 +5181,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12120");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5208,7 +5208,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12121");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5235,7 +5235,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12122");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5262,7 +5262,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12123");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5289,7 +5289,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12124");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5316,7 +5316,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12125");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5343,7 +5343,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12126");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5370,7 +5370,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12127");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5397,7 +5397,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12128");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5424,7 +5424,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12129");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5451,7 +5451,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12130");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5478,7 +5478,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12131");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5505,7 +5505,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12132");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5532,7 +5532,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12133");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5559,7 +5559,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12134");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5586,7 +5586,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12135");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5613,7 +5613,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12136");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5640,7 +5640,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12137");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5667,7 +5667,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5694,7 +5694,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12139");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5721,7 +5721,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12140");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5748,7 +5748,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12141");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5776,7 +5776,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12143");
+        ref.NodeId = ToNodeId("i=12143");
         refs.push_back(ref);
         }
         {
@@ -5785,7 +5785,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12144");
+        ref.NodeId = ToNodeId("i=12144");
         refs.push_back(ref);
         }
         {
@@ -5794,7 +5794,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12145");
+        ref.NodeId = ToNodeId("i=12145");
         refs.push_back(ref);
         }
         {
@@ -5803,7 +5803,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12146");
+        ref.NodeId = ToNodeId("i=12146");
         refs.push_back(ref);
         }
         {
@@ -5812,7 +5812,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12147");
+        ref.NodeId = ToNodeId("i=12147");
         refs.push_back(ref);
         }
         {
@@ -5821,7 +5821,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12148");
+        ref.NodeId = ToNodeId("i=12148");
         refs.push_back(ref);
         }
         {
@@ -5830,7 +5830,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12149");
+        ref.NodeId = ToNodeId("i=12149");
         refs.push_back(ref);
         }
         {
@@ -5839,7 +5839,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12150");
+        ref.NodeId = ToNodeId("i=12150");
         refs.push_back(ref);
         }
         {
@@ -5848,7 +5848,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12151");
+        ref.NodeId = ToNodeId("i=12151");
         refs.push_back(ref);
         }
         {
@@ -5857,7 +5857,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5884,7 +5884,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12143");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5911,7 +5911,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12144");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5938,7 +5938,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12145");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5965,7 +5965,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12146");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -5992,7 +5992,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12147");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6019,7 +6019,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12148");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6046,7 +6046,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12149");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6073,7 +6073,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6100,7 +6100,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12151");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6128,7 +6128,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12152");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6154,7 +6154,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2029");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2030");
+        ref.NodeId = ToNodeId("i=2030");
         refs.push_back(ref);
         }
         {
@@ -6163,7 +6163,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2029");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2031");
+        ref.NodeId = ToNodeId("i=2031");
         refs.push_back(ref);
         }
         {
@@ -6172,7 +6172,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2029");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2032");
+        ref.NodeId = ToNodeId("i=2032");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6200,7 +6200,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3131");
+        ref.NodeId = ToNodeId("i=3131");
         refs.push_back(ref);
         }
         {
@@ -6209,7 +6209,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3132");
+        ref.NodeId = ToNodeId("i=3132");
         refs.push_back(ref);
         }
         {
@@ -6218,7 +6218,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3133");
+        ref.NodeId = ToNodeId("i=3133");
         refs.push_back(ref);
         }
         {
@@ -6227,7 +6227,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3134");
+        ref.NodeId = ToNodeId("i=3134");
         refs.push_back(ref);
         }
         {
@@ -6236,7 +6236,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3135");
+        ref.NodeId = ToNodeId("i=3135");
         refs.push_back(ref);
         }
         {
@@ -6245,7 +6245,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3136");
+        ref.NodeId = ToNodeId("i=3136");
         refs.push_back(ref);
         }
         {
@@ -6254,7 +6254,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3137");
+        ref.NodeId = ToNodeId("i=3137");
         refs.push_back(ref);
         }
         {
@@ -6263,7 +6263,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3138");
+        ref.NodeId = ToNodeId("i=3138");
         refs.push_back(ref);
         }
         {
@@ -6272,7 +6272,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3139");
+        ref.NodeId = ToNodeId("i=3139");
         refs.push_back(ref);
         }
         {
@@ -6281,7 +6281,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3140");
+        ref.NodeId = ToNodeId("i=3140");
         refs.push_back(ref);
         }
         {
@@ -6290,7 +6290,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3141");
+        ref.NodeId = ToNodeId("i=3141");
         refs.push_back(ref);
         }
         {
@@ -6299,7 +6299,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3142");
+        ref.NodeId = ToNodeId("i=3142");
         refs.push_back(ref);
         }
         {
@@ -6308,7 +6308,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3143");
+        ref.NodeId = ToNodeId("i=3143");
         refs.push_back(ref);
         }
         {
@@ -6317,7 +6317,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8898");
+        ref.NodeId = ToNodeId("i=8898");
         refs.push_back(ref);
         }
         {
@@ -6326,7 +6326,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11891");
+        ref.NodeId = ToNodeId("i=11891");
         refs.push_back(ref);
         }
         {
@@ -6335,7 +6335,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3151");
+        ref.NodeId = ToNodeId("i=3151");
         refs.push_back(ref);
         }
         {
@@ -6344,7 +6344,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3152");
+        ref.NodeId = ToNodeId("i=3152");
         refs.push_back(ref);
         }
         {
@@ -6353,7 +6353,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3153");
+        ref.NodeId = ToNodeId("i=3153");
         refs.push_back(ref);
         }
         {
@@ -6362,7 +6362,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3154");
+        ref.NodeId = ToNodeId("i=3154");
         refs.push_back(ref);
         }
         {
@@ -6371,7 +6371,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3155");
+        ref.NodeId = ToNodeId("i=3155");
         refs.push_back(ref);
         }
         {
@@ -6380,7 +6380,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3156");
+        ref.NodeId = ToNodeId("i=3156");
         refs.push_back(ref);
         }
         {
@@ -6389,7 +6389,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3157");
+        ref.NodeId = ToNodeId("i=3157");
         refs.push_back(ref);
         }
         {
@@ -6398,7 +6398,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3158");
+        ref.NodeId = ToNodeId("i=3158");
         refs.push_back(ref);
         }
         {
@@ -6407,7 +6407,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3159");
+        ref.NodeId = ToNodeId("i=3159");
         refs.push_back(ref);
         }
         {
@@ -6416,7 +6416,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3160");
+        ref.NodeId = ToNodeId("i=3160");
         refs.push_back(ref);
         }
         {
@@ -6425,7 +6425,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3161");
+        ref.NodeId = ToNodeId("i=3161");
         refs.push_back(ref);
         }
         {
@@ -6434,7 +6434,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3162");
+        ref.NodeId = ToNodeId("i=3162");
         refs.push_back(ref);
         }
         {
@@ -6443,7 +6443,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3163");
+        ref.NodeId = ToNodeId("i=3163");
         refs.push_back(ref);
         }
         {
@@ -6452,7 +6452,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3164");
+        ref.NodeId = ToNodeId("i=3164");
         refs.push_back(ref);
         }
         {
@@ -6461,7 +6461,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3165");
+        ref.NodeId = ToNodeId("i=3165");
         refs.push_back(ref);
         }
         {
@@ -6470,7 +6470,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3166");
+        ref.NodeId = ToNodeId("i=3166");
         refs.push_back(ref);
         }
         {
@@ -6479,7 +6479,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3167");
+        ref.NodeId = ToNodeId("i=3167");
         refs.push_back(ref);
         }
         {
@@ -6488,7 +6488,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3168");
+        ref.NodeId = ToNodeId("i=3168");
         refs.push_back(ref);
         }
         {
@@ -6497,7 +6497,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3169");
+        ref.NodeId = ToNodeId("i=3169");
         refs.push_back(ref);
         }
         {
@@ -6506,7 +6506,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3170");
+        ref.NodeId = ToNodeId("i=3170");
         refs.push_back(ref);
         }
         {
@@ -6515,7 +6515,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3171");
+        ref.NodeId = ToNodeId("i=3171");
         refs.push_back(ref);
         }
         {
@@ -6524,7 +6524,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3172");
+        ref.NodeId = ToNodeId("i=3172");
         refs.push_back(ref);
         }
         {
@@ -6533,7 +6533,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3173");
+        ref.NodeId = ToNodeId("i=3173");
         refs.push_back(ref);
         }
         {
@@ -6542,7 +6542,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3174");
+        ref.NodeId = ToNodeId("i=3174");
         refs.push_back(ref);
         }
         {
@@ -6551,7 +6551,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3175");
+        ref.NodeId = ToNodeId("i=3175");
         refs.push_back(ref);
         }
         {
@@ -6560,7 +6560,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3176");
+        ref.NodeId = ToNodeId("i=3176");
         refs.push_back(ref);
         }
         {
@@ -6569,7 +6569,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3177");
+        ref.NodeId = ToNodeId("i=3177");
         refs.push_back(ref);
         }
         {
@@ -6578,7 +6578,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3178");
+        ref.NodeId = ToNodeId("i=3178");
         refs.push_back(ref);
         }
         {
@@ -6587,7 +6587,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2030");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6614,7 +6614,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3131");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6641,7 +6641,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3132");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6668,7 +6668,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3133");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6695,7 +6695,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3134");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6722,7 +6722,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3135");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6749,7 +6749,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3136");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6776,7 +6776,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3137");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6803,7 +6803,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6830,7 +6830,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3139");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6857,7 +6857,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3140");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6884,7 +6884,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3141");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6911,7 +6911,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6938,7 +6938,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3143");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6965,7 +6965,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8898");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -6992,7 +6992,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11891");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7019,7 +7019,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3151");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7046,7 +7046,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3152");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7073,7 +7073,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3153");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7100,7 +7100,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3154");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7127,7 +7127,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3155");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7154,7 +7154,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3156");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7181,7 +7181,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3157");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7208,7 +7208,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3158");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7235,7 +7235,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3159");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7262,7 +7262,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3160");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7289,7 +7289,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3161");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7316,7 +7316,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3162");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7343,7 +7343,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3163");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7370,7 +7370,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3164");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7397,7 +7397,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3165");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7424,7 +7424,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3166");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7451,7 +7451,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3167");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7478,7 +7478,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3168");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7505,7 +7505,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3169");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7532,7 +7532,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3170");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7559,7 +7559,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3171");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7586,7 +7586,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7613,7 +7613,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3173");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7640,7 +7640,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3174");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7667,7 +7667,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3175");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7694,7 +7694,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3176");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7721,7 +7721,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3177");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7748,7 +7748,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3178");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7776,7 +7776,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3179");
+        ref.NodeId = ToNodeId("i=3179");
         refs.push_back(ref);
         }
         {
@@ -7785,7 +7785,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3180");
+        ref.NodeId = ToNodeId("i=3180");
         refs.push_back(ref);
         }
         {
@@ -7794,7 +7794,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3181");
+        ref.NodeId = ToNodeId("i=3181");
         refs.push_back(ref);
         }
         {
@@ -7803,7 +7803,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3182");
+        ref.NodeId = ToNodeId("i=3182");
         refs.push_back(ref);
         }
         {
@@ -7812,7 +7812,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3183");
+        ref.NodeId = ToNodeId("i=3183");
         refs.push_back(ref);
         }
         {
@@ -7821,7 +7821,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3184");
+        ref.NodeId = ToNodeId("i=3184");
         refs.push_back(ref);
         }
         {
@@ -7830,7 +7830,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3185");
+        ref.NodeId = ToNodeId("i=3185");
         refs.push_back(ref);
         }
         {
@@ -7839,7 +7839,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3186");
+        ref.NodeId = ToNodeId("i=3186");
         refs.push_back(ref);
         }
         {
@@ -7848,7 +7848,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3187");
+        ref.NodeId = ToNodeId("i=3187");
         refs.push_back(ref);
         }
         {
@@ -7857,7 +7857,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2031");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7884,7 +7884,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3179");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7911,7 +7911,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3180");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7938,7 +7938,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3181");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7965,7 +7965,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3182");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -7992,7 +7992,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3183");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8019,7 +8019,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3184");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8046,7 +8046,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3185");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8073,7 +8073,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3186");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8100,7 +8100,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3187");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8128,7 +8128,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2032");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8169,7 +8169,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2034");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2035");
+        ref.NodeId = ToNodeId("i=2035");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8197,7 +8197,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2035");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8223,7 +8223,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2036");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2037");
+        ref.NodeId = ToNodeId("i=2037");
         refs.push_back(ref);
         }
         {
@@ -8232,7 +8232,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2036");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2038");
+        ref.NodeId = ToNodeId("i=2038");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8260,7 +8260,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2037");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8288,7 +8288,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2038");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8314,7 +8314,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2039");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2040");
+        ref.NodeId = ToNodeId("i=2040");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8342,7 +8342,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2040");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8367,7 +8367,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11945");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11948");
+        ref.NodeId = ToNodeId("i=11948");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8394,7 +8394,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11948");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8420,7 +8420,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11565");
+        ref.NodeId = ToNodeId("i=11565");
         refs.push_back(ref);
         }
         {
@@ -8429,7 +8429,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12161");
+        ref.NodeId = ToNodeId("i=12161");
         refs.push_back(ref);
         }
         {
@@ -8438,7 +8438,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12162");
+        ref.NodeId = ToNodeId("i=12162");
         refs.push_back(ref);
         }
         {
@@ -8447,7 +8447,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11567");
+        ref.NodeId = ToNodeId("i=11567");
         refs.push_back(ref);
         }
         {
@@ -8456,7 +8456,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12163");
+        ref.NodeId = ToNodeId("i=12163");
         refs.push_back(ref);
         }
         {
@@ -8465,7 +8465,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12164");
+        ref.NodeId = ToNodeId("i=12164");
         refs.push_back(ref);
         }
         {
@@ -8474,7 +8474,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11569");
+        ref.NodeId = ToNodeId("i=11569");
         refs.push_back(ref);
         }
         {
@@ -8483,7 +8483,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11570");
+        ref.NodeId = ToNodeId("i=11570");
         refs.push_back(ref);
         }
         {
@@ -8492,7 +8492,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11571");
+        ref.NodeId = ToNodeId("i=11571");
         refs.push_back(ref);
         }
         {
@@ -8501,7 +8501,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11572");
+        ref.NodeId = ToNodeId("i=11572");
         refs.push_back(ref);
         }
         {
@@ -8510,7 +8510,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11573");
+        ref.NodeId = ToNodeId("i=11573");
         refs.push_back(ref);
         }
         {
@@ -8519,7 +8519,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11564");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11574");
+        ref.NodeId = ToNodeId("i=11574");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8547,7 +8547,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11565");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8575,7 +8575,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12161");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8603,7 +8603,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12162");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8631,7 +8631,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11567");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8659,7 +8659,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12163");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8687,7 +8687,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12164");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8715,7 +8715,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11569");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8743,7 +8743,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11570");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8771,7 +8771,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11571");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8799,7 +8799,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11572");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8827,7 +8827,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11573");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8855,7 +8855,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11574");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8881,7 +8881,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11576");
+        ref.NodeId = ToNodeId("i=11576");
         refs.push_back(ref);
         }
         {
@@ -8890,7 +8890,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11577");
+        ref.NodeId = ToNodeId("i=11577");
         refs.push_back(ref);
         }
         {
@@ -8899,7 +8899,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11578");
+        ref.NodeId = ToNodeId("i=11578");
         refs.push_back(ref);
         }
         {
@@ -8908,7 +8908,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11579");
+        ref.NodeId = ToNodeId("i=11579");
         refs.push_back(ref);
         }
         {
@@ -8917,7 +8917,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11580");
+        ref.NodeId = ToNodeId("i=11580");
         refs.push_back(ref);
         }
         {
@@ -8926,7 +8926,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11583");
+        ref.NodeId = ToNodeId("i=11583");
         refs.push_back(ref);
         }
         {
@@ -8935,7 +8935,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11585");
+        ref.NodeId = ToNodeId("i=11585");
         refs.push_back(ref);
         }
         {
@@ -8944,7 +8944,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11588");
+        ref.NodeId = ToNodeId("i=11588");
         refs.push_back(ref);
         }
         {
@@ -8953,7 +8953,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11590");
+        ref.NodeId = ToNodeId("i=11590");
         refs.push_back(ref);
         }
         {
@@ -8962,7 +8962,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11575");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11593");
+        ref.NodeId = ToNodeId("i=11593");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -8990,7 +8990,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11576");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9018,7 +9018,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11577");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9046,7 +9046,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11578");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9074,7 +9074,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11579");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9101,7 +9101,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11581");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9128,7 +9128,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11582");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9155,7 +9155,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11584");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9182,7 +9182,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11586");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9209,7 +9209,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11587");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9236,7 +9236,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11589");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9263,7 +9263,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11591");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9290,7 +9290,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11592");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9317,7 +9317,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11594");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9343,7 +9343,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11595");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11615");
+        ref.NodeId = ToNodeId("i=11615");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9369,7 +9369,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11617");
+        ref.NodeId = ToNodeId("i=11617");
         refs.push_back(ref);
         }
         {
@@ -9378,7 +9378,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11618");
+        ref.NodeId = ToNodeId("i=11618");
         refs.push_back(ref);
         }
         {
@@ -9387,7 +9387,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11619");
+        ref.NodeId = ToNodeId("i=11619");
         refs.push_back(ref);
         }
         {
@@ -9396,7 +9396,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11620");
+        ref.NodeId = ToNodeId("i=11620");
         refs.push_back(ref);
         }
         {
@@ -9405,7 +9405,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11621");
+        ref.NodeId = ToNodeId("i=11621");
         refs.push_back(ref);
         }
         {
@@ -9414,7 +9414,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11622");
+        ref.NodeId = ToNodeId("i=11622");
         refs.push_back(ref);
         }
         {
@@ -9423,7 +9423,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11623");
+        ref.NodeId = ToNodeId("i=11623");
         refs.push_back(ref);
         }
         {
@@ -9432,7 +9432,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11616");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11624");
+        ref.NodeId = ToNodeId("i=11624");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9460,7 +9460,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9488,7 +9488,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11618");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9516,7 +9516,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11619");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9544,7 +9544,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11620");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9572,7 +9572,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11621");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9600,7 +9600,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11622");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9628,7 +9628,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11623");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9655,7 +9655,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11625");
+        ref.NodeId = ToNodeId("i=11625");
         refs.push_back(ref);
         }
         {
@@ -9664,7 +9664,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11626");
+        ref.NodeId = ToNodeId("i=11626");
         refs.push_back(ref);
         }
         {
@@ -9673,7 +9673,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11627");
+        ref.NodeId = ToNodeId("i=11627");
         refs.push_back(ref);
         }
         {
@@ -9682,7 +9682,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11628");
+        ref.NodeId = ToNodeId("i=11628");
         refs.push_back(ref);
         }
         {
@@ -9691,7 +9691,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11629");
+        ref.NodeId = ToNodeId("i=11629");
         refs.push_back(ref);
         }
         {
@@ -9700,7 +9700,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11632");
+        ref.NodeId = ToNodeId("i=11632");
         refs.push_back(ref);
         }
         {
@@ -9709,7 +9709,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11634");
+        ref.NodeId = ToNodeId("i=11634");
         refs.push_back(ref);
         }
         {
@@ -9718,7 +9718,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11637");
+        ref.NodeId = ToNodeId("i=11637");
         refs.push_back(ref);
         }
         {
@@ -9727,7 +9727,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11639");
+        ref.NodeId = ToNodeId("i=11639");
         refs.push_back(ref);
         }
         {
@@ -9736,7 +9736,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11642");
+        ref.NodeId = ToNodeId("i=11642");
         refs.push_back(ref);
         }
         {
@@ -9745,7 +9745,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11624");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9773,7 +9773,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11625");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9801,7 +9801,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11626");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9829,7 +9829,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11627");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9857,7 +9857,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11628");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9884,7 +9884,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11630");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9911,7 +9911,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11631");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9938,7 +9938,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11633");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9965,7 +9965,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11635");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -9992,7 +9992,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11636");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10019,7 +10019,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11638");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10046,7 +10046,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11640");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10073,7 +10073,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11641");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10100,7 +10100,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11643");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10126,7 +10126,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11645");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11646");
+        ref.NodeId = ToNodeId("i=11646");
         refs.push_back(ref);
         }
         {
@@ -10135,7 +10135,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11645");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11675");
+        ref.NodeId = ToNodeId("i=11675");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10161,7 +10161,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11647");
+        ref.NodeId = ToNodeId("i=11647");
         refs.push_back(ref);
         }
         {
@@ -10170,7 +10170,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11648");
+        ref.NodeId = ToNodeId("i=11648");
         refs.push_back(ref);
         }
         {
@@ -10179,7 +10179,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11649");
+        ref.NodeId = ToNodeId("i=11649");
         refs.push_back(ref);
         }
         {
@@ -10188,7 +10188,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11650");
+        ref.NodeId = ToNodeId("i=11650");
         refs.push_back(ref);
         }
         {
@@ -10197,7 +10197,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11651");
+        ref.NodeId = ToNodeId("i=11651");
         refs.push_back(ref);
         }
         {
@@ -10206,7 +10206,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11652");
+        ref.NodeId = ToNodeId("i=11652");
         refs.push_back(ref);
         }
         {
@@ -10215,7 +10215,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11653");
+        ref.NodeId = ToNodeId("i=11653");
         refs.push_back(ref);
         }
         {
@@ -10224,7 +10224,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11646");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11508");
+        ref.NodeId = ToNodeId("i=11508");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10252,7 +10252,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11647");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10280,7 +10280,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11648");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10308,7 +10308,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11649");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10336,7 +10336,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11650");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10364,7 +10364,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11651");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10392,7 +10392,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11652");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10420,7 +10420,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11653");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10447,7 +10447,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11676");
+        ref.NodeId = ToNodeId("i=11676");
         refs.push_back(ref);
         }
         {
@@ -10456,7 +10456,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11677");
+        ref.NodeId = ToNodeId("i=11677");
         refs.push_back(ref);
         }
         {
@@ -10465,7 +10465,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11678");
+        ref.NodeId = ToNodeId("i=11678");
         refs.push_back(ref);
         }
         {
@@ -10474,7 +10474,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11679");
+        ref.NodeId = ToNodeId("i=11679");
         refs.push_back(ref);
         }
         {
@@ -10483,7 +10483,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11680");
+        ref.NodeId = ToNodeId("i=11680");
         refs.push_back(ref);
         }
         {
@@ -10492,7 +10492,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11683");
+        ref.NodeId = ToNodeId("i=11683");
         refs.push_back(ref);
         }
         {
@@ -10501,7 +10501,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11685");
+        ref.NodeId = ToNodeId("i=11685");
         refs.push_back(ref);
         }
         {
@@ -10510,7 +10510,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11688");
+        ref.NodeId = ToNodeId("i=11688");
         refs.push_back(ref);
         }
         {
@@ -10519,7 +10519,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11690");
+        ref.NodeId = ToNodeId("i=11690");
         refs.push_back(ref);
         }
         {
@@ -10528,7 +10528,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11693");
+        ref.NodeId = ToNodeId("i=11693");
         refs.push_back(ref);
         }
         {
@@ -10537,7 +10537,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11675");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10565,7 +10565,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11676");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10593,7 +10593,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11677");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10621,7 +10621,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11678");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10649,7 +10649,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11679");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10676,7 +10676,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11681");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10703,7 +10703,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11682");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10730,7 +10730,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11684");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10757,7 +10757,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11686");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10784,7 +10784,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11687");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10811,7 +10811,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11689");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10838,7 +10838,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11691");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10865,7 +10865,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11692");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10892,7 +10892,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11694");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -10918,7 +10918,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2042");
+        ref.NodeId = ToNodeId("i=2042");
         refs.push_back(ref);
         }
         {
@@ -10927,7 +10927,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2043");
+        ref.NodeId = ToNodeId("i=2043");
         refs.push_back(ref);
         }
         {
@@ -10936,7 +10936,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2044");
+        ref.NodeId = ToNodeId("i=2044");
         refs.push_back(ref);
         }
         {
@@ -10945,7 +10945,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2045");
+        ref.NodeId = ToNodeId("i=2045");
         refs.push_back(ref);
         }
         {
@@ -10954,7 +10954,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2046");
+        ref.NodeId = ToNodeId("i=2046");
         refs.push_back(ref);
         }
         {
@@ -10963,7 +10963,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2047");
+        ref.NodeId = ToNodeId("i=2047");
         refs.push_back(ref);
         }
         {
@@ -10972,7 +10972,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3190");
+        ref.NodeId = ToNodeId("i=3190");
         refs.push_back(ref);
         }
         {
@@ -10981,7 +10981,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2050");
+        ref.NodeId = ToNodeId("i=2050");
         refs.push_back(ref);
         }
         {
@@ -10990,7 +10990,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2041");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2051");
+        ref.NodeId = ToNodeId("i=2051");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11018,7 +11018,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2042");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11046,7 +11046,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2043");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11074,7 +11074,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2044");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11102,7 +11102,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2045");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11130,7 +11130,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2046");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11158,7 +11158,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2047");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11186,7 +11186,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3190");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11214,7 +11214,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2050");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11242,7 +11242,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2051");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11268,7 +11268,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2052");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2053");
+        ref.NodeId = ToNodeId("i=2053");
         refs.push_back(ref);
         }
         {
@@ -11277,7 +11277,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2052");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2054");
+        ref.NodeId = ToNodeId("i=2054");
         refs.push_back(ref);
         }
         {
@@ -11286,7 +11286,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2052");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2055");
+        ref.NodeId = ToNodeId("i=2055");
         refs.push_back(ref);
         }
         {
@@ -11295,7 +11295,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2052");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2056");
+        ref.NodeId = ToNodeId("i=2056");
         refs.push_back(ref);
         }
         {
@@ -11304,7 +11304,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2052");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2057");
+        ref.NodeId = ToNodeId("i=2057");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11332,7 +11332,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2053");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11360,7 +11360,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2054");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11388,7 +11388,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2055");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11416,7 +11416,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2056");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11444,7 +11444,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2057");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11485,7 +11485,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2059");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2745");
+        ref.NodeId = ToNodeId("i=2745");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11513,7 +11513,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2745");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11539,7 +11539,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2060");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2061");
+        ref.NodeId = ToNodeId("i=2061");
         refs.push_back(ref);
         }
         {
@@ -11548,7 +11548,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2060");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2746");
+        ref.NodeId = ToNodeId("i=2746");
         refs.push_back(ref);
         }
         {
@@ -11557,7 +11557,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2060");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2062");
+        ref.NodeId = ToNodeId("i=2062");
         refs.push_back(ref);
         }
         {
@@ -11566,7 +11566,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2060");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2063");
+        ref.NodeId = ToNodeId("i=2063");
         refs.push_back(ref);
         }
         {
@@ -11575,7 +11575,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2060");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2065");
+        ref.NodeId = ToNodeId("i=2065");
         refs.push_back(ref);
         }
         {
@@ -11584,7 +11584,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2060");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2066");
+        ref.NodeId = ToNodeId("i=2066");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11612,7 +11612,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2061");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11640,7 +11640,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2746");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11668,7 +11668,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2062");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11696,7 +11696,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2063");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11724,7 +11724,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2065");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11752,7 +11752,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2066");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11778,7 +11778,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2069");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2070");
+        ref.NodeId = ToNodeId("i=2070");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11806,7 +11806,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2070");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11832,7 +11832,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2071");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2072");
+        ref.NodeId = ToNodeId("i=2072");
         refs.push_back(ref);
         }
         {
@@ -11841,7 +11841,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2071");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2073");
+        ref.NodeId = ToNodeId("i=2073");
         refs.push_back(ref);
         }
         {
@@ -11850,7 +11850,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2071");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2747");
+        ref.NodeId = ToNodeId("i=2747");
         refs.push_back(ref);
         }
         {
@@ -11859,7 +11859,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2071");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2074");
+        ref.NodeId = ToNodeId("i=2074");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11887,7 +11887,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2072");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11915,7 +11915,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2073");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11943,7 +11943,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2747");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11971,7 +11971,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2074");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -11996,7 +11996,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2748");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2749");
+        ref.NodeId = ToNodeId("i=2749");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12023,7 +12023,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2749");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12048,7 +12048,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2075");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2076");
+        ref.NodeId = ToNodeId("i=2076");
         refs.push_back(ref);
         }
         {
@@ -12057,7 +12057,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2075");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2077");
+        ref.NodeId = ToNodeId("i=2077");
         refs.push_back(ref);
         }
         {
@@ -12066,7 +12066,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2075");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11485");
+        ref.NodeId = ToNodeId("i=11485");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12093,7 +12093,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2076");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12120,7 +12120,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2077");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12147,7 +12147,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11485");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12172,7 +12172,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2078");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2079");
+        ref.NodeId = ToNodeId("i=2079");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12199,7 +12199,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2079");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12224,7 +12224,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2080");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2081");
+        ref.NodeId = ToNodeId("i=2081");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12251,7 +12251,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2081");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12276,7 +12276,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2082");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2083");
+        ref.NodeId = ToNodeId("i=2083");
         refs.push_back(ref);
         }
         {
@@ -12285,7 +12285,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2082");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2084");
+        ref.NodeId = ToNodeId("i=2084");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12312,7 +12312,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2083");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12339,7 +12339,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2084");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12448,7 +12448,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2091");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2092");
+        ref.NodeId = ToNodeId("i=2092");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12475,7 +12475,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2092");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12500,7 +12500,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2093");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2094");
+        ref.NodeId = ToNodeId("i=2094");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12527,7 +12527,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2094");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12552,7 +12552,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2095");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2096");
+        ref.NodeId = ToNodeId("i=2096");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12579,7 +12579,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2096");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12604,7 +12604,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2097");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2098");
+        ref.NodeId = ToNodeId("i=2098");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12631,7 +12631,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2098");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12670,7 +12670,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2100");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2750");
+        ref.NodeId = ToNodeId("i=2750");
         refs.push_back(ref);
         }
         {
@@ -12679,7 +12679,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2100");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2101");
+        ref.NodeId = ToNodeId("i=2101");
         refs.push_back(ref);
         }
         {
@@ -12688,7 +12688,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2100");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2102");
+        ref.NodeId = ToNodeId("i=2102");
         refs.push_back(ref);
         }
         {
@@ -12697,7 +12697,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2100");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2103");
+        ref.NodeId = ToNodeId("i=2103");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12724,7 +12724,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2750");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12751,7 +12751,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2101");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12778,7 +12778,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2102");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12805,7 +12805,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2103");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12830,7 +12830,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2104");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2751");
+        ref.NodeId = ToNodeId("i=2751");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12857,7 +12857,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2751");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12882,7 +12882,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2127");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2128");
+        ref.NodeId = ToNodeId("i=2128");
         refs.push_back(ref);
         }
         {
@@ -12891,7 +12891,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2127");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2129");
+        ref.NodeId = ToNodeId("i=2129");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12918,7 +12918,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2128");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12945,7 +12945,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2129");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -12998,7 +12998,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11446");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11696");
+        ref.NodeId = ToNodeId("i=11696");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13025,7 +13025,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11696");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13064,7 +13064,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2133");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2134");
+        ref.NodeId = ToNodeId("i=2134");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13091,7 +13091,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2134");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13116,7 +13116,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2738");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2739");
+        ref.NodeId = ToNodeId("i=2739");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13143,7 +13143,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2739");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13228,7 +13228,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2139");
+        ref.NodeId = ToNodeId("i=2139");
         refs.push_back(ref);
         }
         {
@@ -13237,7 +13237,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2140");
+        ref.NodeId = ToNodeId("i=2140");
         refs.push_back(ref);
         }
         {
@@ -13246,7 +13246,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2141");
+        ref.NodeId = ToNodeId("i=2141");
         refs.push_back(ref);
         }
         {
@@ -13255,7 +13255,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2142");
+        ref.NodeId = ToNodeId("i=2142");
         refs.push_back(ref);
         }
         {
@@ -13264,7 +13264,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2752");
+        ref.NodeId = ToNodeId("i=2752");
         refs.push_back(ref);
         }
         {
@@ -13273,7 +13273,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2138");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2753");
+        ref.NodeId = ToNodeId("i=2753");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13300,7 +13300,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2139");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13327,7 +13327,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2140");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13354,7 +13354,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2141");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13381,7 +13381,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3698");
+        ref.NodeId = ToNodeId("i=3698");
         refs.push_back(ref);
         }
         {
@@ -13390,7 +13390,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3699");
+        ref.NodeId = ToNodeId("i=3699");
         refs.push_back(ref);
         }
         {
@@ -13399,7 +13399,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3700");
+        ref.NodeId = ToNodeId("i=3700");
         refs.push_back(ref);
         }
         {
@@ -13408,7 +13408,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3701");
+        ref.NodeId = ToNodeId("i=3701");
         refs.push_back(ref);
         }
         {
@@ -13417,7 +13417,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3702");
+        ref.NodeId = ToNodeId("i=3702");
         refs.push_back(ref);
         }
         {
@@ -13426,7 +13426,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3703");
+        ref.NodeId = ToNodeId("i=3703");
         refs.push_back(ref);
         }
         {
@@ -13435,7 +13435,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2142");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13463,7 +13463,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3698");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13491,7 +13491,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3699");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13519,7 +13519,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3700");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13547,7 +13547,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3701");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13575,7 +13575,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3702");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13603,7 +13603,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3703");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13630,7 +13630,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2752");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13657,7 +13657,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2753");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13684,7 +13684,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3051");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3052");
+        ref.NodeId = ToNodeId("i=3052");
         refs.push_back(ref);
         }
         {
@@ -13693,7 +13693,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3051");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3053");
+        ref.NodeId = ToNodeId("i=3053");
         refs.push_back(ref);
         }
         {
@@ -13702,7 +13702,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3051");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3054");
+        ref.NodeId = ToNodeId("i=3054");
         refs.push_back(ref);
         }
         {
@@ -13711,7 +13711,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3051");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3055");
+        ref.NodeId = ToNodeId("i=3055");
         refs.push_back(ref);
         }
         {
@@ -13720,7 +13720,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3051");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3056");
+        ref.NodeId = ToNodeId("i=3056");
         refs.push_back(ref);
         }
         {
@@ -13729,7 +13729,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3051");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3057");
+        ref.NodeId = ToNodeId("i=3057");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13757,7 +13757,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3052");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13785,7 +13785,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3053");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13813,7 +13813,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3054");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13841,7 +13841,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3055");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13869,7 +13869,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3056");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13897,7 +13897,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3057");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -13924,7 +13924,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2151");
+        ref.NodeId = ToNodeId("i=2151");
         refs.push_back(ref);
         }
         {
@@ -13933,7 +13933,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2152");
+        ref.NodeId = ToNodeId("i=2152");
         refs.push_back(ref);
         }
         {
@@ -13942,7 +13942,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2153");
+        ref.NodeId = ToNodeId("i=2153");
         refs.push_back(ref);
         }
         {
@@ -13951,7 +13951,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2154");
+        ref.NodeId = ToNodeId("i=2154");
         refs.push_back(ref);
         }
         {
@@ -13960,7 +13960,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2155");
+        ref.NodeId = ToNodeId("i=2155");
         refs.push_back(ref);
         }
         {
@@ -13969,7 +13969,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2156");
+        ref.NodeId = ToNodeId("i=2156");
         refs.push_back(ref);
         }
         {
@@ -13978,7 +13978,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2157");
+        ref.NodeId = ToNodeId("i=2157");
         refs.push_back(ref);
         }
         {
@@ -13987,7 +13987,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2159");
+        ref.NodeId = ToNodeId("i=2159");
         refs.push_back(ref);
         }
         {
@@ -13996,7 +13996,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2160");
+        ref.NodeId = ToNodeId("i=2160");
         refs.push_back(ref);
         }
         {
@@ -14005,7 +14005,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2161");
+        ref.NodeId = ToNodeId("i=2161");
         refs.push_back(ref);
         }
         {
@@ -14014,7 +14014,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2162");
+        ref.NodeId = ToNodeId("i=2162");
         refs.push_back(ref);
         }
         {
@@ -14023,7 +14023,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2150");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2163");
+        ref.NodeId = ToNodeId("i=2163");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14050,7 +14050,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2151");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14077,7 +14077,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2152");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14104,7 +14104,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2153");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14131,7 +14131,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2154");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14158,7 +14158,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2155");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14185,7 +14185,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2156");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14212,7 +14212,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2157");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14239,7 +14239,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2159");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14266,7 +14266,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2160");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14293,7 +14293,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2161");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14320,7 +14320,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2162");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14347,7 +14347,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2163");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14390,7 +14390,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2165");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2166");
+        ref.NodeId = ToNodeId("i=2166");
         refs.push_back(ref);
         }
         {
@@ -14399,7 +14399,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2165");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11697");
+        ref.NodeId = ToNodeId("i=11697");
         refs.push_back(ref);
         }
         {
@@ -14408,7 +14408,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2165");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11698");
+        ref.NodeId = ToNodeId("i=11698");
         refs.push_back(ref);
         }
         {
@@ -14417,7 +14417,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2165");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11699");
+        ref.NodeId = ToNodeId("i=11699");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14444,7 +14444,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2166");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14471,7 +14471,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11697");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14498,7 +14498,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11698");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14525,7 +14525,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11699");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14568,7 +14568,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2173");
+        ref.NodeId = ToNodeId("i=2173");
         refs.push_back(ref);
         }
         {
@@ -14577,7 +14577,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2174");
+        ref.NodeId = ToNodeId("i=2174");
         refs.push_back(ref);
         }
         {
@@ -14586,7 +14586,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2175");
+        ref.NodeId = ToNodeId("i=2175");
         refs.push_back(ref);
         }
         {
@@ -14595,7 +14595,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2176");
+        ref.NodeId = ToNodeId("i=2176");
         refs.push_back(ref);
         }
         {
@@ -14604,7 +14604,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2177");
+        ref.NodeId = ToNodeId("i=2177");
         refs.push_back(ref);
         }
         {
@@ -14613,7 +14613,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8888");
+        ref.NodeId = ToNodeId("i=8888");
         refs.push_back(ref);
         }
         {
@@ -14622,7 +14622,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2179");
+        ref.NodeId = ToNodeId("i=2179");
         refs.push_back(ref);
         }
         {
@@ -14631,7 +14631,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2180");
+        ref.NodeId = ToNodeId("i=2180");
         refs.push_back(ref);
         }
         {
@@ -14640,7 +14640,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2181");
+        ref.NodeId = ToNodeId("i=2181");
         refs.push_back(ref);
         }
         {
@@ -14649,7 +14649,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2182");
+        ref.NodeId = ToNodeId("i=2182");
         refs.push_back(ref);
         }
         {
@@ -14658,7 +14658,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2183");
+        ref.NodeId = ToNodeId("i=2183");
         refs.push_back(ref);
         }
         {
@@ -14667,7 +14667,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2184");
+        ref.NodeId = ToNodeId("i=2184");
         refs.push_back(ref);
         }
         {
@@ -14676,7 +14676,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2185");
+        ref.NodeId = ToNodeId("i=2185");
         refs.push_back(ref);
         }
         {
@@ -14685,7 +14685,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2186");
+        ref.NodeId = ToNodeId("i=2186");
         refs.push_back(ref);
         }
         {
@@ -14694,7 +14694,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2187");
+        ref.NodeId = ToNodeId("i=2187");
         refs.push_back(ref);
         }
         {
@@ -14703,7 +14703,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2188");
+        ref.NodeId = ToNodeId("i=2188");
         refs.push_back(ref);
         }
         {
@@ -14712,7 +14712,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2189");
+        ref.NodeId = ToNodeId("i=2189");
         refs.push_back(ref);
         }
         {
@@ -14721,7 +14721,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2190");
+        ref.NodeId = ToNodeId("i=2190");
         refs.push_back(ref);
         }
         {
@@ -14730,7 +14730,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2191");
+        ref.NodeId = ToNodeId("i=2191");
         refs.push_back(ref);
         }
         {
@@ -14739,7 +14739,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2998");
+        ref.NodeId = ToNodeId("i=2998");
         refs.push_back(ref);
         }
         {
@@ -14748,7 +14748,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2193");
+        ref.NodeId = ToNodeId("i=2193");
         refs.push_back(ref);
         }
         {
@@ -14757,7 +14757,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8889");
+        ref.NodeId = ToNodeId("i=8889");
         refs.push_back(ref);
         }
         {
@@ -14766,7 +14766,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8890");
+        ref.NodeId = ToNodeId("i=8890");
         refs.push_back(ref);
         }
         {
@@ -14775,7 +14775,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8891");
+        ref.NodeId = ToNodeId("i=8891");
         refs.push_back(ref);
         }
         {
@@ -14784,7 +14784,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8892");
+        ref.NodeId = ToNodeId("i=8892");
         refs.push_back(ref);
         }
         {
@@ -14793,7 +14793,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8893");
+        ref.NodeId = ToNodeId("i=8893");
         refs.push_back(ref);
         }
         {
@@ -14802,7 +14802,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8894");
+        ref.NodeId = ToNodeId("i=8894");
         refs.push_back(ref);
         }
         {
@@ -14811,7 +14811,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8895");
+        ref.NodeId = ToNodeId("i=8895");
         refs.push_back(ref);
         }
         {
@@ -14820,7 +14820,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8896");
+        ref.NodeId = ToNodeId("i=8896");
         refs.push_back(ref);
         }
         {
@@ -14829,7 +14829,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8897");
+        ref.NodeId = ToNodeId("i=8897");
         refs.push_back(ref);
         }
         {
@@ -14838,7 +14838,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2172");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8902");
+        ref.NodeId = ToNodeId("i=8902");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14865,7 +14865,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2173");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14892,7 +14892,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2174");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14919,7 +14919,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2175");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14946,7 +14946,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2176");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -14973,7 +14973,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2177");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15000,7 +15000,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8888");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15027,7 +15027,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2179");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15054,7 +15054,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2180");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15081,7 +15081,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2181");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15108,7 +15108,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2182");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15135,7 +15135,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2183");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15162,7 +15162,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2184");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15189,7 +15189,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2185");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15216,7 +15216,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2186");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15243,7 +15243,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2187");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15270,7 +15270,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2188");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15297,7 +15297,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2189");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15324,7 +15324,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2190");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15351,7 +15351,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2191");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15378,7 +15378,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2998");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15405,7 +15405,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2193");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15432,7 +15432,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8889");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15459,7 +15459,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8890");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15486,7 +15486,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8891");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15513,7 +15513,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8892");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15540,7 +15540,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8893");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15567,7 +15567,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8894");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15594,7 +15594,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8895");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15621,7 +15621,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8896");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15648,7 +15648,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8897");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15675,7 +15675,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8902");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -15718,7 +15718,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2198");
+        ref.NodeId = ToNodeId("i=2198");
         refs.push_back(ref);
         }
         {
@@ -15727,7 +15727,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2199");
+        ref.NodeId = ToNodeId("i=2199");
         refs.push_back(ref);
         }
         {
@@ -15736,7 +15736,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2200");
+        ref.NodeId = ToNodeId("i=2200");
         refs.push_back(ref);
         }
         {
@@ -15745,7 +15745,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2201");
+        ref.NodeId = ToNodeId("i=2201");
         refs.push_back(ref);
         }
         {
@@ -15754,7 +15754,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2202");
+        ref.NodeId = ToNodeId("i=2202");
         refs.push_back(ref);
         }
         {
@@ -15763,7 +15763,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2203");
+        ref.NodeId = ToNodeId("i=2203");
         refs.push_back(ref);
         }
         {
@@ -15772,7 +15772,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2204");
+        ref.NodeId = ToNodeId("i=2204");
         refs.push_back(ref);
         }
         {
@@ -15781,7 +15781,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3050");
+        ref.NodeId = ToNodeId("i=3050");
         refs.push_back(ref);
         }
         {
@@ -15790,7 +15790,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2205");
+        ref.NodeId = ToNodeId("i=2205");
         refs.push_back(ref);
         }
         {
@@ -15799,7 +15799,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2206");
+        ref.NodeId = ToNodeId("i=2206");
         refs.push_back(ref);
         }
         {
@@ -15808,7 +15808,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2207");
+        ref.NodeId = ToNodeId("i=2207");
         refs.push_back(ref);
         }
         {
@@ -15817,7 +15817,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2208");
+        ref.NodeId = ToNodeId("i=2208");
         refs.push_back(ref);
         }
         {
@@ -15826,7 +15826,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2209");
+        ref.NodeId = ToNodeId("i=2209");
         refs.push_back(ref);
         }
         {
@@ -15835,7 +15835,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8900");
+        ref.NodeId = ToNodeId("i=8900");
         refs.push_back(ref);
         }
         {
@@ -15844,7 +15844,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11892");
+        ref.NodeId = ToNodeId("i=11892");
         refs.push_back(ref);
         }
         {
@@ -15853,7 +15853,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2217");
+        ref.NodeId = ToNodeId("i=2217");
         refs.push_back(ref);
         }
         {
@@ -15862,7 +15862,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2218");
+        ref.NodeId = ToNodeId("i=2218");
         refs.push_back(ref);
         }
         {
@@ -15871,7 +15871,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2219");
+        ref.NodeId = ToNodeId("i=2219");
         refs.push_back(ref);
         }
         {
@@ -15880,7 +15880,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2220");
+        ref.NodeId = ToNodeId("i=2220");
         refs.push_back(ref);
         }
         {
@@ -15889,7 +15889,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2221");
+        ref.NodeId = ToNodeId("i=2221");
         refs.push_back(ref);
         }
         {
@@ -15898,7 +15898,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2222");
+        ref.NodeId = ToNodeId("i=2222");
         refs.push_back(ref);
         }
         {
@@ -15907,7 +15907,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2223");
+        ref.NodeId = ToNodeId("i=2223");
         refs.push_back(ref);
         }
         {
@@ -15916,7 +15916,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2224");
+        ref.NodeId = ToNodeId("i=2224");
         refs.push_back(ref);
         }
         {
@@ -15925,7 +15925,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2225");
+        ref.NodeId = ToNodeId("i=2225");
         refs.push_back(ref);
         }
         {
@@ -15934,7 +15934,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2226");
+        ref.NodeId = ToNodeId("i=2226");
         refs.push_back(ref);
         }
         {
@@ -15943,7 +15943,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2227");
+        ref.NodeId = ToNodeId("i=2227");
         refs.push_back(ref);
         }
         {
@@ -15952,7 +15952,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2228");
+        ref.NodeId = ToNodeId("i=2228");
         refs.push_back(ref);
         }
         {
@@ -15961,7 +15961,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2229");
+        ref.NodeId = ToNodeId("i=2229");
         refs.push_back(ref);
         }
         {
@@ -15970,7 +15970,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2230");
+        ref.NodeId = ToNodeId("i=2230");
         refs.push_back(ref);
         }
         {
@@ -15979,7 +15979,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2231");
+        ref.NodeId = ToNodeId("i=2231");
         refs.push_back(ref);
         }
         {
@@ -15988,7 +15988,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2232");
+        ref.NodeId = ToNodeId("i=2232");
         refs.push_back(ref);
         }
         {
@@ -15997,7 +15997,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2233");
+        ref.NodeId = ToNodeId("i=2233");
         refs.push_back(ref);
         }
         {
@@ -16006,7 +16006,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2234");
+        ref.NodeId = ToNodeId("i=2234");
         refs.push_back(ref);
         }
         {
@@ -16015,7 +16015,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2235");
+        ref.NodeId = ToNodeId("i=2235");
         refs.push_back(ref);
         }
         {
@@ -16024,7 +16024,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2236");
+        ref.NodeId = ToNodeId("i=2236");
         refs.push_back(ref);
         }
         {
@@ -16033,7 +16033,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2237");
+        ref.NodeId = ToNodeId("i=2237");
         refs.push_back(ref);
         }
         {
@@ -16042,7 +16042,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2238");
+        ref.NodeId = ToNodeId("i=2238");
         refs.push_back(ref);
         }
         {
@@ -16051,7 +16051,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2239");
+        ref.NodeId = ToNodeId("i=2239");
         refs.push_back(ref);
         }
         {
@@ -16060,7 +16060,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2240");
+        ref.NodeId = ToNodeId("i=2240");
         refs.push_back(ref);
         }
         {
@@ -16069,7 +16069,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2241");
+        ref.NodeId = ToNodeId("i=2241");
         refs.push_back(ref);
         }
         {
@@ -16078,7 +16078,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2242");
+        ref.NodeId = ToNodeId("i=2242");
         refs.push_back(ref);
         }
         {
@@ -16087,7 +16087,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2730");
+        ref.NodeId = ToNodeId("i=2730");
         refs.push_back(ref);
         }
         {
@@ -16096,7 +16096,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2197");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2731");
+        ref.NodeId = ToNodeId("i=2731");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16123,7 +16123,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2198");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16150,7 +16150,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2199");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16177,7 +16177,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2200");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16204,7 +16204,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2201");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16231,7 +16231,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2202");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16258,7 +16258,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2203");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16285,7 +16285,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2204");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16312,7 +16312,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3050");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16339,7 +16339,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2205");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16366,7 +16366,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2206");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16393,7 +16393,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2207");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16420,7 +16420,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2208");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16447,7 +16447,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2209");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16474,7 +16474,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=8900");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16501,7 +16501,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11892");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16528,7 +16528,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2217");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16555,7 +16555,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2218");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16582,7 +16582,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2219");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16609,7 +16609,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2220");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16636,7 +16636,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2221");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16663,7 +16663,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2222");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16690,7 +16690,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2223");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16717,7 +16717,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2224");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16744,7 +16744,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2225");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16771,7 +16771,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2226");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16798,7 +16798,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2227");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16825,7 +16825,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2228");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16852,7 +16852,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2229");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16879,7 +16879,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2230");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16906,7 +16906,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2231");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16933,7 +16933,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2232");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16960,7 +16960,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2233");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -16987,7 +16987,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2234");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17014,7 +17014,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2235");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17041,7 +17041,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2236");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17068,7 +17068,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2237");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17095,7 +17095,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2238");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17122,7 +17122,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2239");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17149,7 +17149,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2240");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17176,7 +17176,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2241");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17203,7 +17203,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2242");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17230,7 +17230,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2730");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17257,7 +17257,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2731");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17300,7 +17300,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2245");
+        ref.NodeId = ToNodeId("i=2245");
         refs.push_back(ref);
         }
         {
@@ -17309,7 +17309,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2246");
+        ref.NodeId = ToNodeId("i=2246");
         refs.push_back(ref);
         }
         {
@@ -17318,7 +17318,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2247");
+        ref.NodeId = ToNodeId("i=2247");
         refs.push_back(ref);
         }
         {
@@ -17327,7 +17327,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2248");
+        ref.NodeId = ToNodeId("i=2248");
         refs.push_back(ref);
         }
         {
@@ -17336,7 +17336,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2249");
+        ref.NodeId = ToNodeId("i=2249");
         refs.push_back(ref);
         }
         {
@@ -17345,7 +17345,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2250");
+        ref.NodeId = ToNodeId("i=2250");
         refs.push_back(ref);
         }
         {
@@ -17354,7 +17354,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2251");
+        ref.NodeId = ToNodeId("i=2251");
         refs.push_back(ref);
         }
         {
@@ -17363,7 +17363,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2252");
+        ref.NodeId = ToNodeId("i=2252");
         refs.push_back(ref);
         }
         {
@@ -17372,7 +17372,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2244");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3058");
+        ref.NodeId = ToNodeId("i=3058");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17399,7 +17399,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2245");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17426,7 +17426,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2246");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17453,7 +17453,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2247");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17480,7 +17480,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2248");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17507,7 +17507,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2249");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17534,7 +17534,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2250");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17561,7 +17561,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2251");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17588,7 +17588,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17615,7 +17615,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3058");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17642,7 +17642,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11487");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11488");
+        ref.NodeId = ToNodeId("i=11488");
         refs.push_back(ref);
         }
         {
@@ -17651,7 +17651,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11487");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11701");
+        ref.NodeId = ToNodeId("i=11701");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17678,7 +17678,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11488");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17705,7 +17705,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11701");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17731,7 +17731,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::Organizes;
         ref.SourceNodeId = ToNodeId("i=3048");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2041");
+        ref.NodeId = ToNodeId("i=2041");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17757,7 +17757,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2254");
+        ref.NodeId = ToNodeId("i=2254");
         refs.push_back(ref);
         }
         {
@@ -17766,7 +17766,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2255");
+        ref.NodeId = ToNodeId("i=2255");
         refs.push_back(ref);
         }
         {
@@ -17775,7 +17775,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2256");
+        ref.NodeId = ToNodeId("i=2256");
         refs.push_back(ref);
         }
         {
@@ -17784,7 +17784,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2267");
+        ref.NodeId = ToNodeId("i=2267");
         refs.push_back(ref);
         }
         {
@@ -17793,7 +17793,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2994");
+        ref.NodeId = ToNodeId("i=2994");
         refs.push_back(ref);
         }
         {
@@ -17802,7 +17802,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2268");
+        ref.NodeId = ToNodeId("i=2268");
         refs.push_back(ref);
         }
         {
@@ -17811,7 +17811,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2274");
+        ref.NodeId = ToNodeId("i=2274");
         refs.push_back(ref);
         }
         {
@@ -17820,7 +17820,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2295");
+        ref.NodeId = ToNodeId("i=2295");
         refs.push_back(ref);
         }
         {
@@ -17829,7 +17829,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2296");
+        ref.NodeId = ToNodeId("i=2296");
         refs.push_back(ref);
         }
         {
@@ -17838,7 +17838,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11715");
+        ref.NodeId = ToNodeId("i=11715");
         refs.push_back(ref);
         }
         {
@@ -17847,7 +17847,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2253");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11492");
+        ref.NodeId = ToNodeId("i=11492");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -17912,7 +17912,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2256");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2257");
+        ref.NodeId = ToNodeId("i=2257");
         refs.push_back(ref);
         }
         {
@@ -17921,7 +17921,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2256");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2258");
+        ref.NodeId = ToNodeId("i=2258");
         refs.push_back(ref);
         }
         {
@@ -17930,7 +17930,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2256");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2259");
+        ref.NodeId = ToNodeId("i=2259");
         refs.push_back(ref);
         }
         {
@@ -17939,7 +17939,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2256");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2260");
+        ref.NodeId = ToNodeId("i=2260");
         refs.push_back(ref);
         }
         {
@@ -17948,7 +17948,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2256");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2992");
+        ref.NodeId = ToNodeId("i=2992");
         refs.push_back(ref);
         }
         {
@@ -17957,7 +17957,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2256");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2993");
+        ref.NodeId = ToNodeId("i=2993");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -18032,7 +18032,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2260");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2262");
+        ref.NodeId = ToNodeId("i=2262");
         refs.push_back(ref);
         }
         {
@@ -18041,7 +18041,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2260");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2263");
+        ref.NodeId = ToNodeId("i=2263");
         refs.push_back(ref);
         }
         {
@@ -18050,7 +18050,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2260");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2261");
+        ref.NodeId = ToNodeId("i=2261");
         refs.push_back(ref);
         }
         {
@@ -18059,7 +18059,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2260");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2264");
+        ref.NodeId = ToNodeId("i=2264");
         refs.push_back(ref);
         }
         {
@@ -18068,7 +18068,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2260");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2265");
+        ref.NodeId = ToNodeId("i=2265");
         refs.push_back(ref);
         }
         {
@@ -18077,7 +18077,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2260");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2266");
+        ref.NodeId = ToNodeId("i=2266");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -18274,7 +18274,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2269");
+        ref.NodeId = ToNodeId("i=2269");
         refs.push_back(ref);
         }
         {
@@ -18283,7 +18283,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2271");
+        ref.NodeId = ToNodeId("i=2271");
         refs.push_back(ref);
         }
         {
@@ -18292,7 +18292,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2272");
+        ref.NodeId = ToNodeId("i=2272");
         refs.push_back(ref);
         }
         {
@@ -18301,7 +18301,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2735");
+        ref.NodeId = ToNodeId("i=2735");
         refs.push_back(ref);
         }
         {
@@ -18310,7 +18310,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2736");
+        ref.NodeId = ToNodeId("i=2736");
         refs.push_back(ref);
         }
         {
@@ -18319,7 +18319,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2737");
+        ref.NodeId = ToNodeId("i=2737");
         refs.push_back(ref);
         }
         {
@@ -18328,7 +18328,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3704");
+        ref.NodeId = ToNodeId("i=3704");
         refs.push_back(ref);
         }
         {
@@ -18337,7 +18337,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11702");
+        ref.NodeId = ToNodeId("i=11702");
         refs.push_back(ref);
         }
         {
@@ -18346,7 +18346,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11703");
+        ref.NodeId = ToNodeId("i=11703");
         refs.push_back(ref);
         }
         {
@@ -18355,7 +18355,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11704");
+        ref.NodeId = ToNodeId("i=11704");
         refs.push_back(ref);
         }
         {
@@ -18364,7 +18364,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2996");
+        ref.NodeId = ToNodeId("i=2996");
         refs.push_back(ref);
         }
         {
@@ -18373,7 +18373,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2268");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2997");
+        ref.NodeId = ToNodeId("i=2997");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -18553,7 +18553,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11705");
+        ref.NodeId = ToNodeId("i=11705");
         refs.push_back(ref);
         }
         {
@@ -18562,7 +18562,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12165");
+        ref.NodeId = ToNodeId("i=12165");
         refs.push_back(ref);
         }
         {
@@ -18571,7 +18571,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12166");
+        ref.NodeId = ToNodeId("i=12166");
         refs.push_back(ref);
         }
         {
@@ -18580,7 +18580,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11707");
+        ref.NodeId = ToNodeId("i=11707");
         refs.push_back(ref);
         }
         {
@@ -18589,7 +18589,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12167");
+        ref.NodeId = ToNodeId("i=12167");
         refs.push_back(ref);
         }
         {
@@ -18598,7 +18598,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12168");
+        ref.NodeId = ToNodeId("i=12168");
         refs.push_back(ref);
         }
         {
@@ -18607,7 +18607,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11709");
+        ref.NodeId = ToNodeId("i=11709");
         refs.push_back(ref);
         }
         {
@@ -18616,7 +18616,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11710");
+        ref.NodeId = ToNodeId("i=11710");
         refs.push_back(ref);
         }
         {
@@ -18625,7 +18625,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11711");
+        ref.NodeId = ToNodeId("i=11711");
         refs.push_back(ref);
         }
         {
@@ -18634,7 +18634,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11712");
+        ref.NodeId = ToNodeId("i=11712");
         refs.push_back(ref);
         }
         {
@@ -18643,7 +18643,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11713");
+        ref.NodeId = ToNodeId("i=11713");
         refs.push_back(ref);
         }
         {
@@ -18652,7 +18652,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11704");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11714");
+        ref.NodeId = ToNodeId("i=11714");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -18915,7 +18915,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2274");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2275");
+        ref.NodeId = ToNodeId("i=2275");
         refs.push_back(ref);
         }
         {
@@ -18924,7 +18924,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2274");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2289");
+        ref.NodeId = ToNodeId("i=2289");
         refs.push_back(ref);
         }
         {
@@ -18933,7 +18933,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2274");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2290");
+        ref.NodeId = ToNodeId("i=2290");
         refs.push_back(ref);
         }
         {
@@ -18942,7 +18942,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2274");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3706");
+        ref.NodeId = ToNodeId("i=3706");
         refs.push_back(ref);
         }
         {
@@ -18951,7 +18951,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2274");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2294");
+        ref.NodeId = ToNodeId("i=2294");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -18979,7 +18979,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2276");
+        ref.NodeId = ToNodeId("i=2276");
         refs.push_back(ref);
         }
         {
@@ -18988,7 +18988,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2277");
+        ref.NodeId = ToNodeId("i=2277");
         refs.push_back(ref);
         }
         {
@@ -18997,7 +18997,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2278");
+        ref.NodeId = ToNodeId("i=2278");
         refs.push_back(ref);
         }
         {
@@ -19006,7 +19006,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2279");
+        ref.NodeId = ToNodeId("i=2279");
         refs.push_back(ref);
         }
         {
@@ -19015,7 +19015,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3705");
+        ref.NodeId = ToNodeId("i=3705");
         refs.push_back(ref);
         }
         {
@@ -19024,7 +19024,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2281");
+        ref.NodeId = ToNodeId("i=2281");
         refs.push_back(ref);
         }
         {
@@ -19033,7 +19033,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2282");
+        ref.NodeId = ToNodeId("i=2282");
         refs.push_back(ref);
         }
         {
@@ -19042,7 +19042,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2284");
+        ref.NodeId = ToNodeId("i=2284");
         refs.push_back(ref);
         }
         {
@@ -19051,7 +19051,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2285");
+        ref.NodeId = ToNodeId("i=2285");
         refs.push_back(ref);
         }
         {
@@ -19060,7 +19060,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2286");
+        ref.NodeId = ToNodeId("i=2286");
         refs.push_back(ref);
         }
         {
@@ -19069,7 +19069,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2287");
+        ref.NodeId = ToNodeId("i=2287");
         refs.push_back(ref);
         }
         {
@@ -19078,7 +19078,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2275");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2288");
+        ref.NodeId = ToNodeId("i=2288");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19331,7 +19331,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3706");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3707");
+        ref.NodeId = ToNodeId("i=3707");
         refs.push_back(ref);
         }
         {
@@ -19340,7 +19340,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=3706");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3708");
+        ref.NodeId = ToNodeId("i=3708");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19436,7 +19436,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2296");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3709");
+        ref.NodeId = ToNodeId("i=3709");
         refs.push_back(ref);
         }
         {
@@ -19445,7 +19445,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2296");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11312");
+        ref.NodeId = ToNodeId("i=11312");
         refs.push_back(ref);
         }
         {
@@ -19454,7 +19454,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2296");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11313");
+        ref.NodeId = ToNodeId("i=11313");
         refs.push_back(ref);
         }
         {
@@ -19463,7 +19463,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2296");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11314");
+        ref.NodeId = ToNodeId("i=11314");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19616,7 +19616,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2299");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2769");
+        ref.NodeId = ToNodeId("i=2769");
         refs.push_back(ref);
         }
         {
@@ -19625,7 +19625,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2299");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2770");
+        ref.NodeId = ToNodeId("i=2770");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19652,7 +19652,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2769");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3720");
+        ref.NodeId = ToNodeId("i=3720");
         refs.push_back(ref);
         }
         {
@@ -19661,7 +19661,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2769");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19688,7 +19688,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3720");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19715,7 +19715,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2770");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3724");
+        ref.NodeId = ToNodeId("i=3724");
         refs.push_back(ref);
         }
         {
@@ -19724,7 +19724,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2770");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19751,7 +19751,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3724");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19778,7 +19778,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2755");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2756");
+        ref.NodeId = ToNodeId("i=2756");
         refs.push_back(ref);
         }
         {
@@ -19787,7 +19787,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2755");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2757");
+        ref.NodeId = ToNodeId("i=2757");
         refs.push_back(ref);
         }
         {
@@ -19796,7 +19796,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2755");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2758");
+        ref.NodeId = ToNodeId("i=2758");
         refs.push_back(ref);
         }
         {
@@ -19805,7 +19805,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2755");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2759");
+        ref.NodeId = ToNodeId("i=2759");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19832,7 +19832,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2756");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19859,7 +19859,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2757");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19886,7 +19886,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2758");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19913,7 +19913,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2759");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -19940,7 +19940,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2762");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2763");
+        ref.NodeId = ToNodeId("i=2763");
         refs.push_back(ref);
         }
         {
@@ -19949,7 +19949,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2762");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2764");
+        ref.NodeId = ToNodeId("i=2764");
         refs.push_back(ref);
         }
         {
@@ -19958,7 +19958,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2762");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2765");
+        ref.NodeId = ToNodeId("i=2765");
         refs.push_back(ref);
         }
         {
@@ -19967,7 +19967,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2762");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2766");
+        ref.NodeId = ToNodeId("i=2766");
         refs.push_back(ref);
         }
         {
@@ -19976,7 +19976,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2762");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11456");
+        ref.NodeId = ToNodeId("i=11456");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20003,7 +20003,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2763");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20030,7 +20030,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2764");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20057,7 +20057,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2765");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20084,7 +20084,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2766");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20111,7 +20111,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11456");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20136,7 +20136,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2771");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2772");
+        ref.NodeId = ToNodeId("i=2772");
         refs.push_back(ref);
         }
         {
@@ -20145,7 +20145,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2771");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2773");
+        ref.NodeId = ToNodeId("i=2773");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20172,7 +20172,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2772");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3728");
+        ref.NodeId = ToNodeId("i=3728");
         refs.push_back(ref);
         }
         {
@@ -20181,7 +20181,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2772");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20208,7 +20208,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3728");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20235,7 +20235,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2773");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3732");
+        ref.NodeId = ToNodeId("i=3732");
         refs.push_back(ref);
         }
         {
@@ -20244,7 +20244,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2773");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=80");
+        ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20271,7 +20271,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3732");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20298,7 +20298,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2760");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2761");
+        ref.NodeId = ToNodeId("i=2761");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20325,7 +20325,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2761");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20352,7 +20352,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2767");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2768");
+        ref.NodeId = ToNodeId("i=2768");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20379,7 +20379,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2768");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20404,7 +20404,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2307");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2308");
+        ref.NodeId = ToNodeId("i=2308");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20431,7 +20431,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2308");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20470,7 +20470,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2310");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2312");
+        ref.NodeId = ToNodeId("i=2312");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20497,7 +20497,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2312");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20522,7 +20522,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2311");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2774");
+        ref.NodeId = ToNodeId("i=2774");
         refs.push_back(ref);
         }
         {
@@ -20531,7 +20531,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2311");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2775");
+        ref.NodeId = ToNodeId("i=2775");
         refs.push_back(ref);
         }
         {
@@ -20540,7 +20540,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=2311");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2776");
+        ref.NodeId = ToNodeId("i=2776");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20567,7 +20567,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2774");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3754");
+        ref.NodeId = ToNodeId("i=3754");
         refs.push_back(ref);
         }
         {
@@ -20576,7 +20576,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2774");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20603,7 +20603,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3754");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20630,7 +20630,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2775");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3746");
+        ref.NodeId = ToNodeId("i=3746");
         refs.push_back(ref);
         }
         {
@@ -20639,7 +20639,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2775");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20666,7 +20666,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3746");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20693,7 +20693,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2776");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=3750");
+        ref.NodeId = ToNodeId("i=3750");
         refs.push_back(ref);
         }
         {
@@ -20702,7 +20702,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2776");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20729,7 +20729,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=3750");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20754,7 +20754,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2315");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2777");
+        ref.NodeId = ToNodeId("i=2777");
         refs.push_back(ref);
         }
         {
@@ -20763,7 +20763,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2315");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=2778");
+        ref.NodeId = ToNodeId("i=2778");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20790,7 +20790,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2777");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20817,7 +20817,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2778");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20856,7 +20856,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=851");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7611");
+        ref.NodeId = ToNodeId("i=7611");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20883,7 +20883,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=7611");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20908,7 +20908,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=852");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7612");
+        ref.NodeId = ToNodeId("i=7612");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -20935,7 +20935,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=7612");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=78");
+        ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21143,7 +21143,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=339");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8327");
+        ref.NodeId = ToNodeId("i=8327");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21169,7 +21169,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=854");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8843");
+        ref.NodeId = ToNodeId("i=8843");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21195,7 +21195,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=11949");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11951");
+        ref.NodeId = ToNodeId("i=11951");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21221,7 +21221,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=11950");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11954");
+        ref.NodeId = ToNodeId("i=11954");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21247,7 +21247,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=857");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8846");
+        ref.NodeId = ToNodeId("i=8846");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21273,7 +21273,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=860");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8849");
+        ref.NodeId = ToNodeId("i=8849");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21299,7 +21299,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=863");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8852");
+        ref.NodeId = ToNodeId("i=8852");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21325,7 +21325,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=866");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8855");
+        ref.NodeId = ToNodeId("i=8855");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21351,7 +21351,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=869");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8858");
+        ref.NodeId = ToNodeId("i=8858");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21377,7 +21377,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=872");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8861");
+        ref.NodeId = ToNodeId("i=8861");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21403,7 +21403,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=300");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8294");
+        ref.NodeId = ToNodeId("i=8294");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21429,7 +21429,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=875");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8864");
+        ref.NodeId = ToNodeId("i=8864");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21455,7 +21455,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=878");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8867");
+        ref.NodeId = ToNodeId("i=8867");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21481,7 +21481,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=898");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8870");
+        ref.NodeId = ToNodeId("i=8870");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -21509,7 +21509,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8254");
+        ref.NodeId = ToNodeId("i=8254");
         refs.push_back(ref);
         }
         {
@@ -21518,7 +21518,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8285");
+        ref.NodeId = ToNodeId("i=8285");
         refs.push_back(ref);
         }
         {
@@ -21527,7 +21527,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8291");
+        ref.NodeId = ToNodeId("i=8291");
         refs.push_back(ref);
         }
         {
@@ -21536,7 +21536,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8918");
+        ref.NodeId = ToNodeId("i=8918");
         refs.push_back(ref);
         }
         {
@@ -21545,7 +21545,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8300");
+        ref.NodeId = ToNodeId("i=8300");
         refs.push_back(ref);
         }
         {
@@ -21554,7 +21554,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8297");
+        ref.NodeId = ToNodeId("i=8297");
         refs.push_back(ref);
         }
         {
@@ -21563,7 +21563,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8303");
+        ref.NodeId = ToNodeId("i=8303");
         refs.push_back(ref);
         }
         {
@@ -21572,7 +21572,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8417");
+        ref.NodeId = ToNodeId("i=8417");
         refs.push_back(ref);
         }
         {
@@ -21581,7 +21581,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8333");
+        ref.NodeId = ToNodeId("i=8333");
         refs.push_back(ref);
         }
         {
@@ -21590,7 +21590,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8306");
+        ref.NodeId = ToNodeId("i=8306");
         refs.push_back(ref);
         }
         {
@@ -21599,7 +21599,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8309");
+        ref.NodeId = ToNodeId("i=8309");
         refs.push_back(ref);
         }
         {
@@ -21608,7 +21608,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8312");
+        ref.NodeId = ToNodeId("i=8312");
         refs.push_back(ref);
         }
         {
@@ -21617,7 +21617,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8315");
+        ref.NodeId = ToNodeId("i=8315");
         refs.push_back(ref);
         }
         {
@@ -21626,7 +21626,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8318");
+        ref.NodeId = ToNodeId("i=8318");
         refs.push_back(ref);
         }
         {
@@ -21635,7 +21635,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8363");
+        ref.NodeId = ToNodeId("i=8363");
         refs.push_back(ref);
         }
         {
@@ -21644,7 +21644,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8366");
+        ref.NodeId = ToNodeId("i=8366");
         refs.push_back(ref);
         }
         {
@@ -21653,7 +21653,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8369");
+        ref.NodeId = ToNodeId("i=8369");
         refs.push_back(ref);
         }
         {
@@ -21662,7 +21662,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8372");
+        ref.NodeId = ToNodeId("i=8372");
         refs.push_back(ref);
         }
         {
@@ -21671,7 +21671,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8321");
+        ref.NodeId = ToNodeId("i=8321");
         refs.push_back(ref);
         }
         {
@@ -21680,7 +21680,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8324");
+        ref.NodeId = ToNodeId("i=8324");
         refs.push_back(ref);
         }
         {
@@ -21689,7 +21689,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8330");
+        ref.NodeId = ToNodeId("i=8330");
         refs.push_back(ref);
         }
         {
@@ -21698,7 +21698,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8564");
+        ref.NodeId = ToNodeId("i=8564");
         refs.push_back(ref);
         }
         {
@@ -21707,7 +21707,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8567");
+        ref.NodeId = ToNodeId("i=8567");
         refs.push_back(ref);
         }
         {
@@ -21716,7 +21716,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8570");
+        ref.NodeId = ToNodeId("i=8570");
         refs.push_back(ref);
         }
         {
@@ -21725,7 +21725,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8573");
+        ref.NodeId = ToNodeId("i=8573");
         refs.push_back(ref);
         }
         {
@@ -21734,7 +21734,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8576");
+        ref.NodeId = ToNodeId("i=8576");
         refs.push_back(ref);
         }
         {
@@ -21743,7 +21743,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8579");
+        ref.NodeId = ToNodeId("i=8579");
         refs.push_back(ref);
         }
         {
@@ -21752,7 +21752,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8582");
+        ref.NodeId = ToNodeId("i=8582");
         refs.push_back(ref);
         }
         {
@@ -21761,7 +21761,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8639");
+        ref.NodeId = ToNodeId("i=8639");
         refs.push_back(ref);
         }
         {
@@ -21770,7 +21770,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8702");
+        ref.NodeId = ToNodeId("i=8702");
         refs.push_back(ref);
         }
         {
@@ -21779,7 +21779,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8708");
+        ref.NodeId = ToNodeId("i=8708");
         refs.push_back(ref);
         }
         {
@@ -21788,7 +21788,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8711");
+        ref.NodeId = ToNodeId("i=8711");
         refs.push_back(ref);
         }
         {
@@ -21797,7 +21797,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8807");
+        ref.NodeId = ToNodeId("i=8807");
         refs.push_back(ref);
         }
         {
@@ -21806,7 +21806,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8384");
+        ref.NodeId = ToNodeId("i=8384");
         refs.push_back(ref);
         }
         {
@@ -21815,7 +21815,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8387");
+        ref.NodeId = ToNodeId("i=8387");
         refs.push_back(ref);
         }
         {
@@ -21824,7 +21824,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8390");
+        ref.NodeId = ToNodeId("i=8390");
         refs.push_back(ref);
         }
         {
@@ -21833,7 +21833,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8327");
+        ref.NodeId = ToNodeId("i=8327");
         refs.push_back(ref);
         }
         {
@@ -21842,7 +21842,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8843");
+        ref.NodeId = ToNodeId("i=8843");
         refs.push_back(ref);
         }
         {
@@ -21851,7 +21851,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11951");
+        ref.NodeId = ToNodeId("i=11951");
         refs.push_back(ref);
         }
         {
@@ -21860,7 +21860,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11954");
+        ref.NodeId = ToNodeId("i=11954");
         refs.push_back(ref);
         }
         {
@@ -21869,7 +21869,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8846");
+        ref.NodeId = ToNodeId("i=8846");
         refs.push_back(ref);
         }
         {
@@ -21878,7 +21878,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8849");
+        ref.NodeId = ToNodeId("i=8849");
         refs.push_back(ref);
         }
         {
@@ -21887,7 +21887,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8852");
+        ref.NodeId = ToNodeId("i=8852");
         refs.push_back(ref);
         }
         {
@@ -21896,7 +21896,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8855");
+        ref.NodeId = ToNodeId("i=8855");
         refs.push_back(ref);
         }
         {
@@ -21905,7 +21905,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8858");
+        ref.NodeId = ToNodeId("i=8858");
         refs.push_back(ref);
         }
         {
@@ -21914,7 +21914,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8861");
+        ref.NodeId = ToNodeId("i=8861");
         refs.push_back(ref);
         }
         {
@@ -21923,7 +21923,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8294");
+        ref.NodeId = ToNodeId("i=8294");
         refs.push_back(ref);
         }
         {
@@ -21932,7 +21932,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8864");
+        ref.NodeId = ToNodeId("i=8864");
         refs.push_back(ref);
         }
         {
@@ -21941,7 +21941,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8867");
+        ref.NodeId = ToNodeId("i=8867");
         refs.push_back(ref);
         }
         {
@@ -21950,7 +21950,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8870");
+        ref.NodeId = ToNodeId("i=8870");
         refs.push_back(ref);
         }
         {
@@ -21959,7 +21959,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8873");
+        ref.NodeId = ToNodeId("i=8873");
         refs.push_back(ref);
         }
         {
@@ -21968,7 +21968,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8876");
+        ref.NodeId = ToNodeId("i=8876");
         refs.push_back(ref);
         }
         {
@@ -21977,7 +21977,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12175");
+        ref.NodeId = ToNodeId("i=12175");
         refs.push_back(ref);
         }
         {
@@ -21986,7 +21986,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12178");
+        ref.NodeId = ToNodeId("i=12178");
         refs.push_back(ref);
         }
         {
@@ -21995,7 +21995,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12083");
+        ref.NodeId = ToNodeId("i=12083");
         refs.push_back(ref);
         }
         {
@@ -22004,7 +22004,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12086");
+        ref.NodeId = ToNodeId("i=12086");
         refs.push_back(ref);
         }
         {
@@ -22013,7 +22013,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8882");
+        ref.NodeId = ToNodeId("i=8882");
         refs.push_back(ref);
         }
         {
@@ -22022,7 +22022,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=8252");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8879");
+        ref.NodeId = ToNodeId("i=8879");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23035,7 +23035,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=340");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7692");
+        ref.NodeId = ToNodeId("i=7692");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23061,7 +23061,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=855");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8208");
+        ref.NodeId = ToNodeId("i=8208");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23087,7 +23087,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=11957");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11959");
+        ref.NodeId = ToNodeId("i=11959");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23113,7 +23113,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=11958");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11962");
+        ref.NodeId = ToNodeId("i=11962");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23139,7 +23139,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=858");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8211");
+        ref.NodeId = ToNodeId("i=8211");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23165,7 +23165,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=861");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8214");
+        ref.NodeId = ToNodeId("i=8214");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23191,7 +23191,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=864");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8217");
+        ref.NodeId = ToNodeId("i=8217");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23217,7 +23217,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=867");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8220");
+        ref.NodeId = ToNodeId("i=8220");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23243,7 +23243,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=870");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8223");
+        ref.NodeId = ToNodeId("i=8223");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23269,7 +23269,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=873");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8226");
+        ref.NodeId = ToNodeId("i=8226");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23295,7 +23295,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=301");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7659");
+        ref.NodeId = ToNodeId("i=7659");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23321,7 +23321,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=876");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8229");
+        ref.NodeId = ToNodeId("i=8229");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23347,7 +23347,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=879");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8232");
+        ref.NodeId = ToNodeId("i=8232");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23373,7 +23373,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=899");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8235");
+        ref.NodeId = ToNodeId("i=8235");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);
@@ -23401,7 +23401,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7619");
+        ref.NodeId = ToNodeId("i=7619");
         refs.push_back(ref);
         }
         {
@@ -23410,7 +23410,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7650");
+        ref.NodeId = ToNodeId("i=7650");
         refs.push_back(ref);
         }
         {
@@ -23419,7 +23419,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7656");
+        ref.NodeId = ToNodeId("i=7656");
         refs.push_back(ref);
         }
         {
@@ -23428,7 +23428,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8914");
+        ref.NodeId = ToNodeId("i=8914");
         refs.push_back(ref);
         }
         {
@@ -23437,7 +23437,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7665");
+        ref.NodeId = ToNodeId("i=7665");
         refs.push_back(ref);
         }
         {
@@ -23446,7 +23446,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7662");
+        ref.NodeId = ToNodeId("i=7662");
         refs.push_back(ref);
         }
         {
@@ -23455,7 +23455,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7668");
+        ref.NodeId = ToNodeId("i=7668");
         refs.push_back(ref);
         }
         {
@@ -23464,7 +23464,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7782");
+        ref.NodeId = ToNodeId("i=7782");
         refs.push_back(ref);
         }
         {
@@ -23473,7 +23473,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7698");
+        ref.NodeId = ToNodeId("i=7698");
         refs.push_back(ref);
         }
         {
@@ -23482,7 +23482,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7671");
+        ref.NodeId = ToNodeId("i=7671");
         refs.push_back(ref);
         }
         {
@@ -23491,7 +23491,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7674");
+        ref.NodeId = ToNodeId("i=7674");
         refs.push_back(ref);
         }
         {
@@ -23500,7 +23500,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7677");
+        ref.NodeId = ToNodeId("i=7677");
         refs.push_back(ref);
         }
         {
@@ -23509,7 +23509,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7680");
+        ref.NodeId = ToNodeId("i=7680");
         refs.push_back(ref);
         }
         {
@@ -23518,7 +23518,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7683");
+        ref.NodeId = ToNodeId("i=7683");
         refs.push_back(ref);
         }
         {
@@ -23527,7 +23527,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7728");
+        ref.NodeId = ToNodeId("i=7728");
         refs.push_back(ref);
         }
         {
@@ -23536,7 +23536,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7731");
+        ref.NodeId = ToNodeId("i=7731");
         refs.push_back(ref);
         }
         {
@@ -23545,7 +23545,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7734");
+        ref.NodeId = ToNodeId("i=7734");
         refs.push_back(ref);
         }
         {
@@ -23554,7 +23554,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7737");
+        ref.NodeId = ToNodeId("i=7737");
         refs.push_back(ref);
         }
         {
@@ -23563,7 +23563,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7686");
+        ref.NodeId = ToNodeId("i=7686");
         refs.push_back(ref);
         }
         {
@@ -23572,7 +23572,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7689");
+        ref.NodeId = ToNodeId("i=7689");
         refs.push_back(ref);
         }
         {
@@ -23581,7 +23581,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7695");
+        ref.NodeId = ToNodeId("i=7695");
         refs.push_back(ref);
         }
         {
@@ -23590,7 +23590,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7929");
+        ref.NodeId = ToNodeId("i=7929");
         refs.push_back(ref);
         }
         {
@@ -23599,7 +23599,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7932");
+        ref.NodeId = ToNodeId("i=7932");
         refs.push_back(ref);
         }
         {
@@ -23608,7 +23608,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7935");
+        ref.NodeId = ToNodeId("i=7935");
         refs.push_back(ref);
         }
         {
@@ -23617,7 +23617,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7938");
+        ref.NodeId = ToNodeId("i=7938");
         refs.push_back(ref);
         }
         {
@@ -23626,7 +23626,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7941");
+        ref.NodeId = ToNodeId("i=7941");
         refs.push_back(ref);
         }
         {
@@ -23635,7 +23635,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7944");
+        ref.NodeId = ToNodeId("i=7944");
         refs.push_back(ref);
         }
         {
@@ -23644,7 +23644,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7947");
+        ref.NodeId = ToNodeId("i=7947");
         refs.push_back(ref);
         }
         {
@@ -23653,7 +23653,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8004");
+        ref.NodeId = ToNodeId("i=8004");
         refs.push_back(ref);
         }
         {
@@ -23662,7 +23662,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8067");
+        ref.NodeId = ToNodeId("i=8067");
         refs.push_back(ref);
         }
         {
@@ -23671,7 +23671,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8073");
+        ref.NodeId = ToNodeId("i=8073");
         refs.push_back(ref);
         }
         {
@@ -23680,7 +23680,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8076");
+        ref.NodeId = ToNodeId("i=8076");
         refs.push_back(ref);
         }
         {
@@ -23689,7 +23689,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8172");
+        ref.NodeId = ToNodeId("i=8172");
         refs.push_back(ref);
         }
         {
@@ -23698,7 +23698,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7749");
+        ref.NodeId = ToNodeId("i=7749");
         refs.push_back(ref);
         }
         {
@@ -23707,7 +23707,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7752");
+        ref.NodeId = ToNodeId("i=7752");
         refs.push_back(ref);
         }
         {
@@ -23716,7 +23716,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7755");
+        ref.NodeId = ToNodeId("i=7755");
         refs.push_back(ref);
         }
         {
@@ -23725,7 +23725,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7692");
+        ref.NodeId = ToNodeId("i=7692");
         refs.push_back(ref);
         }
         {
@@ -23734,7 +23734,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8208");
+        ref.NodeId = ToNodeId("i=8208");
         refs.push_back(ref);
         }
         {
@@ -23743,7 +23743,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11959");
+        ref.NodeId = ToNodeId("i=11959");
         refs.push_back(ref);
         }
         {
@@ -23752,7 +23752,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=11962");
+        ref.NodeId = ToNodeId("i=11962");
         refs.push_back(ref);
         }
         {
@@ -23761,7 +23761,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8211");
+        ref.NodeId = ToNodeId("i=8211");
         refs.push_back(ref);
         }
         {
@@ -23770,7 +23770,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8214");
+        ref.NodeId = ToNodeId("i=8214");
         refs.push_back(ref);
         }
         {
@@ -23779,7 +23779,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8217");
+        ref.NodeId = ToNodeId("i=8217");
         refs.push_back(ref);
         }
         {
@@ -23788,7 +23788,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8220");
+        ref.NodeId = ToNodeId("i=8220");
         refs.push_back(ref);
         }
         {
@@ -23797,7 +23797,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8223");
+        ref.NodeId = ToNodeId("i=8223");
         refs.push_back(ref);
         }
         {
@@ -23806,7 +23806,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8226");
+        ref.NodeId = ToNodeId("i=8226");
         refs.push_back(ref);
         }
         {
@@ -23815,7 +23815,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=7659");
+        ref.NodeId = ToNodeId("i=7659");
         refs.push_back(ref);
         }
         {
@@ -23824,7 +23824,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8229");
+        ref.NodeId = ToNodeId("i=8229");
         refs.push_back(ref);
         }
         {
@@ -23833,7 +23833,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8232");
+        ref.NodeId = ToNodeId("i=8232");
         refs.push_back(ref);
         }
         {
@@ -23842,7 +23842,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8235");
+        ref.NodeId = ToNodeId("i=8235");
         refs.push_back(ref);
         }
         {
@@ -23851,7 +23851,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8238");
+        ref.NodeId = ToNodeId("i=8238");
         refs.push_back(ref);
         }
         {
@@ -23860,7 +23860,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8241");
+        ref.NodeId = ToNodeId("i=8241");
         refs.push_back(ref);
         }
         {
@@ -23869,7 +23869,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12183");
+        ref.NodeId = ToNodeId("i=12183");
         refs.push_back(ref);
         }
         {
@@ -23878,7 +23878,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12186");
+        ref.NodeId = ToNodeId("i=12186");
         refs.push_back(ref);
         }
         {
@@ -23887,7 +23887,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12091");
+        ref.NodeId = ToNodeId("i=12091");
         refs.push_back(ref);
         }
         {
@@ -23896,7 +23896,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=12094");
+        ref.NodeId = ToNodeId("i=12094");
         refs.push_back(ref);
         }
         {
@@ -23905,7 +23905,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8247");
+        ref.NodeId = ToNodeId("i=8247");
         refs.push_back(ref);
         }
         {
@@ -23914,7 +23914,7 @@ namespace OpcUa
         ref.ReferenceTypeId = ReferenceID::HasComponent;
         ref.SourceNodeId = ToNodeId("i=7617");
         ref.TargetNodeClass = NodeClass::DataType;
-        ref.TargetNodeId = ToNodeId("i=8244");
+        ref.NodeId = ToNodeId("i=8244");
         refs.push_back(ref);
         }
         registry.AddReferences(refs);

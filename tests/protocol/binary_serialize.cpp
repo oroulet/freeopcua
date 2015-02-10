@@ -521,11 +521,11 @@ TEST_F(OpcUaBinarySerialization, AdditionalHeader)
   using namespace OpcUa;
   using namespace OpcUa::Binary;
   AdditionalHeader header;
-  header.TypeID.Encoding = static_cast<NodeIdEncoding>(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_Server_INDEX_FLAG);
-  header.TypeID.StringData.NamespaceIndex = 0x1;
-  header.TypeID.StringData.Identifier = "id";
-  header.TypeID.NamespaceURI = "uri";
-  header.TypeID.ServerIndex = 1;
+  header.TypeId.Encoding = static_cast<NodeIdEncoding>(EV_STRING | EV_NAMESPACE_URI_FLAG | EV_Server_INDEX_FLAG);
+  header.TypeId.StringData.NamespaceIndex = 0x1;
+  header.TypeId.StringData.Identifier = "id";
+  header.TypeId.NamespaceURI = "uri";
+  header.TypeId.ServerIndex = 1;
   header.Encoding = 1;
 
   const std::vector<char> expectedData = {
@@ -762,7 +762,7 @@ TEST_F(OpcUaBinarySerialization, OpenSequreChannelRequest)
   GetStream() << request << flush;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0xbe, 0x1, // TypeID
+  1, 0, (char)0xbe, 0x1, // TypeId
 
   // RequestHeader
   TEST_REQUEST_HEADER_BINARY_DATA,
@@ -819,9 +819,9 @@ TEST_F(OpcUaBinarySerialization, OpenSecureChannelResponse)
 
   OpenSecureChannelResponse response;
 
-  ASSERT_EQ(response.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(response.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(response.TypeID.FourByteData.Identifier, OpcUa::OPEN_SECURE_CHANNEL_RESPONSE);
+  ASSERT_EQ(response.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(response.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(response.TypeId.FourByteData.Identifier, OpcUa::OPEN_SECURE_CHANNEL_RESPONSE);
 
   FILL_TEST_RESPONSE_HEADER(response.Header);
 
@@ -835,7 +835,7 @@ TEST_F(OpcUaBinarySerialization, OpenSecureChannelResponse)
   GetStream() << response << flush;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0xC1, 0x1, // TypeID
+  1, 0, (char)0xC1, 0x1, // TypeId
 
   // ResponseHeader
   TEST_RESPONSE_HEADER_BINARY_DATA,
@@ -864,16 +864,16 @@ TEST_F(OpcUaBinarySerialization, CloseSequreChannelRequest)
 
   CloseSecureChannelRequest request;
 
-  ASSERT_EQ(request.TypeID.Encoding, EV_FOUR_BYTE);
-  ASSERT_EQ(request.TypeID.FourByteData.NamespaceIndex, 0);
-  ASSERT_EQ(request.TypeID.FourByteData.Identifier, OpcUa::CLOSE_SECURE_CHANNEL_REQUEST);
+  ASSERT_EQ(request.TypeId.Encoding, EV_FOUR_BYTE);
+  ASSERT_EQ(request.TypeId.FourByteData.NamespaceIndex, 0);
+  ASSERT_EQ(request.TypeId.FourByteData.Identifier, OpcUa::CLOSE_SECURE_CHANNEL_REQUEST);
 
   FILL_TEST_REQUEST_HEADER(request.Header);
   
   GetStream() << request << flush;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0xc4, 0x1, // TypeID
+  1, 0, (char)0xc4, 0x1, // TypeId
 
   // RequestHeader
   TEST_REQUEST_HEADER_BINARY_DATA,
@@ -918,7 +918,7 @@ TEST_F(OpcUaBinarySerialization, ExtensionObjectHeader)
   GetStream() << header << flush;
 
   const std::vector<char> expectedData = {
-  1, 0, (char)0x41, 0x1, // TypeID
+  1, 0, (char)0x41, 0x1, // TypeId
   HAS_BINARY_BODY
   };
 
@@ -952,15 +952,15 @@ TEST_F(OpcUaBinarySerialization, QualifiedName)
 }
 
 //-------------------------------------------------------------------
-// IntegerID
+// IntegerId
 //-------------------------------------------------------------------
 
-TEST_F(OpcUaBinarySerialization, IntegerID)
+TEST_F(OpcUaBinarySerialization, IntegerId)
 {
   using namespace OpcUa;
   using namespace OpcUa::Binary;
 
-  IntegerID id(5);
+  IntegerId id(5);
 
   GetStream() << id << flush;
 

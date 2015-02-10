@@ -165,6 +165,16 @@ namespace OpcUa
     {
     }
 
+     BrowseDescription::BrowseDescription()
+        : TypeId(ObjectId::BrowseDescription_Encoding_DefaultBinary)
+    {
+    }
+
+     ReferenceDescription::ReferenceDescription()
+        : TypeId(ObjectId::ReferenceDescription_Encoding_DefaultBinary)
+    {
+    }
+
      BrowseRequest::BrowseRequest()
         : TypeId(ObjectId::BrowseRequest_Encoding_DefaultBinary)
     {
@@ -365,6 +375,11 @@ namespace OpcUa
     {
     }
 
+     CreateSubscriptionParameters::CreateSubscriptionParameters()
+        : TypeId(ObjectId::CreateSubscriptionParameters_Encoding_DefaultBinary)
+    {
+    }
+
      CreateSubscriptionRequest::CreateSubscriptionRequest()
         : TypeId(ObjectId::CreateSubscriptionRequest_Encoding_DefaultBinary)
     {
@@ -385,6 +400,11 @@ namespace OpcUa
     {
     }
 
+     SetPublishingModeParameters::SetPublishingModeParameters()
+        : TypeId(ObjectId::SetPublishingModeParameters_Encoding_DefaultBinary)
+    {
+    }
+
      SetPublishingModeRequest::SetPublishingModeRequest()
         : TypeId(ObjectId::SetPublishingModeRequest_Encoding_DefaultBinary)
     {
@@ -395,8 +415,18 @@ namespace OpcUa
     {
     }
 
+     NotificationMessage::NotificationMessage()
+        : TypeId(ObjectId::NotificationMessage_Encoding_DefaultBinary)
+    {
+    }
+
      PublishRequest::PublishRequest()
         : TypeId(ObjectId::PublishRequest_Encoding_DefaultBinary)
+    {
+    }
+
+     PublishResult::PublishResult()
+        : TypeId(ObjectId::PublishResult_Encoding_DefaultBinary)
     {
     }
 

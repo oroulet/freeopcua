@@ -11,9 +11,8 @@
 #include "binary_serialization.h"
 
 #include <opc/ua/protocol/binary/stream.h>
-#include <opc/ua/protocol/session.h>
-#include <opc/ua/protocol/types.h>
-#include <opc/ua/protocol/extension_identifiers.h>
+#include <opc/ua/protocol/protocol.h>
+#include <opc/ua/protocol/object_ids.h>
 
 #include <algorithm>
 #include <memory>
@@ -23,13 +22,14 @@ namespace OpcUa
 {
 
   UserIdentityToken::UserIdentityToken()
-    : Header(USER_IDENTIFY_TOKEN_ANONYMOUS, HAS_BINARY_BODY)
+    : Encoding(HAS_BINARY_BODY),
+      TypeId(ObjectId::AnonymousIdentityToken_Encoding_DefaultBinary)
   {
-    Anonymous.Data = {9,0,0,0,'a', 'n', 'o', 'n', 'y', 'm', 'o', 'u', 's'};
+    PolicyId = {9,0,0,0,'a', 'n', 'o', 'n', 'y', 'm', 'o', 'u', 's'};
   }
 
   CloseSessionRequest::CloseSessionRequest()
-    : TypeID(CLOSE_SESSION_REQUEST)
+    : TypeId(CLOSE_SESSION_REQUEST)
     , DeleteSubscriptions(true)
   {
   }

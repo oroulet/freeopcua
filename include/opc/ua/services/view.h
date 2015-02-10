@@ -13,8 +13,7 @@
 
 #include <opc/common/interface.h>
 #include <opc/common/class_pointers.h>
-#include <opc/ua/protocol/types.h>
-#include <opc/ua/protocol/view.h>
+#include <opc/ua/protocol/protocol.h>
 
 #include <vector>
 
@@ -27,9 +26,9 @@ namespace OpcUa
     DEFINE_CLASS_POINTERS(ViewServices);
 
   public:
-    virtual std::vector<BrowseResult> Browse(const OpcUa::NodesQuery& query) const = 0;
+    virtual std::vector<BrowseResult> Browse(const OpcUa::BrowseParameters& query) const = 0;
     virtual std::vector<BrowseResult> BrowseNext() const = 0;
-    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsParameters& params) const = 0;
+    virtual std::vector<BrowsePathResult> TranslateBrowsePathsToNodeIds(const TranslateBrowsePathsToNodeIdsParameters& params) const = 0;
   };
 
 } // namespace OpcUa

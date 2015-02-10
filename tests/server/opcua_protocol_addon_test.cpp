@@ -77,7 +77,7 @@ TEST_F(OpcUaProtocolAddonTest, CanListEndpoints)
   std::shared_ptr<OpcUa::Services> computer = computerAddon->GetServices();
   std::shared_ptr<OpcUa::EndpointServices> endpoints = computer->Endpoints();
   std::vector<OpcUa::EndpointDescription> desc;
-  ASSERT_NO_THROW(desc = endpoints->GetEndpoints(OpcUa::EndpointsFilter()));
+  ASSERT_NO_THROW(desc = endpoints->GetEndpoints(OpcUa::GetEndpointsParameters()));
   ASSERT_EQ(desc.size(), 1);
   endpoints.reset();
   computer.reset();
@@ -102,18 +102,18 @@ TEST_F(OpcUaProtocolAddonTest, CanBrowseRootFolder)
   std::shared_ptr<OpcUa::ViewServices> views = computer->Views();
 
   OpcUa::BrowseDescription description;
-  description.NodeToBrowse = OpcUa::ObjectId::RootFolder;
-  description.Direction = OpcUa::BrowseDirection::Forward;
-  description.ReferenceTypeID = OpcUa::ReferenceID::Organizes;
+  description.NodeId = OpcUa::ObjectId::RootFolder;
+  description.BrowseDirection = OpcUa::BrowseDirection::Forward;
+  description.ReferenceTypeId = OpcUa::ReferenceID::Organizes;
   description.IncludeSubtypes = true;
-  description.NodeClasses = OpcUa::NODE_CLASS_OBJECT;
+  description.NodeClassMask = OpcUa::NodeClass::Object;
   description.ResultMask = OpcUa::REFERENCE_ALL;
-  OpcUa::NodesQuery query;
+  OpcUa::BrowseParameters query;
   query.NodesToBrowse.push_back(description);
 
   std::vector<OpcUa::BrowseResult> results = views->Browse(query);
   ASSERT_EQ(results.size(), 1);
-  ASSERT_EQ(results[0].Referencies.size(), 3);
+  ASSERT_EQ(results[0].References.size(), 3);
 
   views.reset();
   computer.reset();
@@ -154,7 +154,7 @@ TEST_F(OpcUaProtocolAddonTest, ManipulateSubscriptions)
 
   OpcUa::CreateSubscriptionRequest req;
   req.Parameters = params;
-  OpcUa::SubscriptionData data;
+  OpcUa::CreateSubscriptionResult data;
   ASSERT_NO_THROW(data = subscriptions->CreateSubscription(req, [](OpcUa::PublishResult){
 
   }));
@@ -170,7 +170,7 @@ TEST_F(OpcUaProtocolAddonTest, CanReadAttributes)
   std::shared_ptr<OpcUa::AttributeServices> attributes = computer->Attributes();
 
   OpcUa::ReadParameters params;
-  params.AttributesToRead.push_back(OpcUa::ReadValueId(OpcUa::ObjectId::RootFolder, OpcUa::AttributeID::BrowseName));
+  params.AttributesToRead.push_back(OpcUa::MakeReadValueId(OpcUa::ObjectId::RootFolder, OpcUa::AttributeID::BrowseName));
 
   std::vector<OpcUa::DataValue> values = attributes->Read(params);
   ASSERT_EQ(values.size(), 1);

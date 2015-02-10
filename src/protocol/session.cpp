@@ -1,4 +1,4 @@
-#include <opc/ua/protocol/session.h>
+#include <opc/ua/protocol/protocol.h>
 
 namespace OpcUa
 {

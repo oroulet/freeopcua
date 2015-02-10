@@ -111,19 +111,19 @@ protected:
 
   OpcUa::NodeId CreateObjectTypeWithOneTypedObject()
   {
-    const OpcUa::NodeId& resultTypeID = CreateEmptyObjectType();
+    const OpcUa::NodeId& resultTypeId = CreateEmptyObjectType();
     const OpcUa::NodeId& objectTypeWithVar = CreateObjectTypeWithOneVariable();
     OpcUa::AddNodesItem object;
     object.BrowseName = OpcUa::QualifiedName("sub_object");
     object.Class = OpcUa::NodeClass::Object;
-    object.ParentNodeId = resultTypeID;
+    object.ParentNodeId = resultTypeId;
     object.ReferenceTypeId = OpcUa::ObjectId::HasComponent;
     object.TypeDefinition = objectTypeWithVar;
     OpcUa::ObjectAttributes attrs;
     attrs.DisplayName = OpcUa::LocalizedText("sub_object");
     object.Attributes = attrs;
     Services->NodeManagement()->AddNodes({object});
-    return resultTypeID;
+    return resultTypeId;
   }
 
 protected:
@@ -248,7 +248,7 @@ TEST_F(ModelObject, CanInstantiateObjectTypeWithOneTypedObject)
 OpcUa::RelativePathElement GetHierarchicalElement(const std::string& browseName)
 {
   OpcUa::RelativePathElement element;
-  element.ReferenceTypeID = OpcUa::ObjectId::HierarchicalReferences;
+  element.ReferenceTypeId = OpcUa::ObjectId::HierarchicalReferences;
   element.IncludeSubtypes = true;
   element.TargetName.Name = browseName;
   return element;

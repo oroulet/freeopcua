@@ -42,7 +42,7 @@ namespace OpcUa
     {
       if (Debug) std::cout << "SubscriptionService | Deleting all subscriptions." << std::endl;
 
-      std::vector<IntegerID> ids(SubscriptionsMap.size());
+      std::vector<IntegerId> ids(SubscriptionsMap.size());
       {
         boost::shared_lock<boost::shared_mutex> lock(DbMutex);
         std::transform(SubscriptionsMap.begin(), SubscriptionsMap.end(), ids.begin(), [](const SubscriptionsIDMap::value_type& i){return i.first;});
@@ -51,12 +51,12 @@ namespace OpcUa
       DeleteSubscriptions(ids);
     }
 
-    std::vector<StatusCode> SubscriptionServiceInternal::DeleteSubscriptions(const std::vector<IntegerID>& subscriptions)
+    std::vector<StatusCode> SubscriptionServiceInternal::DeleteSubscriptions(const std::vector<IntegerId>& subscriptions)
     {
       boost::unique_lock<boost::shared_mutex> lock(DbMutex);
 
       std::vector<StatusCode> result;
-      for (const IntegerID& subid: subscriptions)
+      for (const IntegerId& subid: subscriptions)
       {
         SubscriptionsIDMap::iterator itsub = SubscriptionsMap.find(subid);
         if ( itsub == SubscriptionsMap.end())
@@ -75,11 +75,11 @@ namespace OpcUa
       return result;
     }
 
-    SubscriptionData SubscriptionServiceInternal::CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback)
+    CreateSubscriptionResult SubscriptionServiceInternal::CreateSubscription(const CreateSubscriptionRequest& request, std::function<void (PublishResult)> callback)
     {
       boost::unique_lock<boost::shared_mutex> lock(DbMutex);
 
-      SubscriptionData data;
+      CreateSubscriptionResult data;
       data.ID = ++LastSubscriptionID;
       data.RevisedLifetimeCount = request.Parameters.RequestedLifetimeCount;
       data.RevisedPublishingInterval = request.Parameters.RequestedPublishingInterval;
@@ -92,11 +92,11 @@ namespace OpcUa
       return data;
     }
 
-    MonitoredItemsData SubscriptionServiceInternal::CreateMonitoredItems(const MonitoredItemsParameters& params)
+    CreateMonitoredItemsResult SubscriptionServiceInternal::CreateMonitoredItems(const CreateMonitoredItemsParameters& params)
     {
       boost::unique_lock<boost::shared_mutex> lock(DbMutex);
 
-      MonitoredItemsData data;
+      CreateMonitoredItemsResult data;
 
       SubscriptionsIDMap::iterator itsub = SubscriptionsMap.find(params.SubscriptionID);
       if ( itsub == SubscriptionsMap.end()) //SubscriptionID does not exist, return errors for all items
