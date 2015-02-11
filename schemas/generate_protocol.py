@@ -2,6 +2,7 @@
 Generate address space c++ code from xml file specification
 """
 import sys
+from copy import copy
 
 import xml.etree.ElementTree as ET
 
@@ -218,6 +219,7 @@ def add_encoding_field(model):
                     container = "Encoding"
                     idx = 0
                     f = Field()
+                    f.sourcetype = field.sourcetype
                     f.name = "Encoding"
                     f.uatype = "UInt8"
                     newfields.append(f)
@@ -304,6 +306,8 @@ class Parser(object):
             if key == "Name":
                 struct.name = val
             elif key == "BaseType":
+                if ":" in val:
+                    prefix, val = val.split(":")
                 struct.basetype = val
                 self.add_basetype_members(struct)
             else:
@@ -368,13 +372,15 @@ class Parser(object):
 
 
     def add_basetype_members(self, struct):
-        basename = struct.basetype.split(":")[1]
-        base = self.model.get_struct(basename)
+        base = self.model.get_struct(struct.basetype)
         for name, bit in base.bits.items():
             struct.bits[name] = bit
         for idx, field in enumerate(base.fields):
             if idx == ( len(base.fields) -1 ) and field.name == "Body":
                 continue
+            field = copy(field)
+            if not field.sourcetype:
+                field.sourcetype = base.name
             struct.fields.append(field)
 
 
@@ -443,10 +449,15 @@ class CodeGenerator(object):
         self.write_h("")
         if struct.doc: self.write_h("    //", struct.doc)
         name = struct.name
+        base = ""
         if struct.needoverride:
             name = "_" + struct.name
-        self.write_h("    struct %s \n    {""" % name)
+        if struct.basetype:
+            base = " : public " + struct.basetype
+        self.write_h("    struct %s %s\n    {""" % (name, base))
         for field in struct.fields: 
+            if field.sourcetype:
+                continue
             if field.get_ctype() == "OpcUa::" + struct.name:
                 #we have a problem selv referensing struct
                 self.write_h("         std::shared_ptr<{}> {};".format(field.get_ctype(), field.name))
@@ -461,20 +472,29 @@ class CodeGenerator(object):
         self.write_size("    template<>")
         self.write_size("    std::size_t RawSize<{}>(const {}& data)".format(struct.name, struct.name))
         self.write_size("    {")
+        #FIXME: add contional fields!! and size of Nody for Bodies!!!
+
         if type(struct) == Enum:
             self.write_size("        return sizeof({});".format(struct.get_ctype()))
         else:
-            tmp = []
+            self.write_size("        size_t size = 0;")
             for field in struct.fields:
+                switch = ""
+                if field.switchfield:
+                    if field.switchvalue:
+                        switch = "if ((data.{}) & (1<<({}))) ".format(field.switchfield, field.switchvalue)
+                    else:
+                        container = struct.bits[field.switchfield].container
+                        idx = struct.bits[field.switchfield].idx
+                        switch = "if ((data.{}) & (1<<({}))) ".format(container, idx)
                 prefix = ""
                 if field.get_ctype() == struct.name:
                     prefix = "*"
                 if field.length:
-                    tmp.append("RawSizeContainer({}data.{})".format(prefix, field.name))
+                    self.write_size("        {}size += RawSizeContainer({}data.{})".format(switch, prefix, field.name))
                 else:
-                    tmp.append("RawSize({}data.{})".format(prefix, field.name))
-            tmp = " + ".join(tmp)
-            self.write_size("        return " + tmp + ";")
+                    self.write_size("        {}size += RawSize({}data.{})".format(switch, prefix, field.name))
+            self.write_size("        return size;")
         self.write_size("    }")
         self.write_size("")
 

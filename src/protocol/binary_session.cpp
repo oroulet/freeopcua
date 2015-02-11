@@ -22,16 +22,16 @@ namespace OpcUa
 {
 
   UserIdentityToken::UserIdentityToken()
-    : Encoding(HAS_BINARY_BODY),
-      TypeId(ObjectId::AnonymousIdentityToken_Encoding_DefaultBinary)
   {
+    Encoding = HAS_BINARY_BODY;
+    TypeId = ObjectId::AnonymousIdentityToken_Encoding_DefaultBinary;
     PolicyId = {9,0,0,0,'a', 'n', 'o', 'n', 'y', 'm', 'o', 'u', 's'};
   }
 
   CloseSessionRequest::CloseSessionRequest()
-    : TypeId(CLOSE_SESSION_REQUEST)
-    , DeleteSubscriptions(true)
+    : DeleteSubscriptions(true)
   {
+    TypeId = CLOSE_SESSION_REQUEST;
   }
 
 } // namespace OpcUa

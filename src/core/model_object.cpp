@@ -155,9 +155,7 @@ namespace OpcUa
       ObjectAttributes attrs;
       attrs.Description = LocalizedText(displayName);
       attrs.DisplayName = LocalizedText(displayName);
-      ExtensionObject obj;
-      obj << attrs;
-      newNodeRequest.NodeAttributes = obj;
+      newNodeRequest.NodeAttributes = attrs;
 
       NodeManagementServices::SharedPtr nodes = GetServices()->NodeManagement();
       std::vector<AddNodesResult> newObjectNode = nodes->AddNodes({newNodeRequest});
