@@ -216,7 +216,6 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
         SerializeContainer(*this, data.Body);
     }
 
@@ -226,7 +225,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Name;
         *this << data.DataType;
         *this << data.ValueRank;
@@ -240,7 +241,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Value;
         *this << data.DisplayName;
         *this << data.Description;
@@ -252,7 +255,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Offset;
         *this << data.DaylightSavingInOffset;
     }
@@ -263,7 +268,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ApplicationUri;
         *this << data.ProductUri;
         *this << data.ApplicationName;
@@ -279,7 +286,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.AuthenticationToken;
         *this << data.Timestamp;
         *this << data.RequestHandle;
@@ -295,7 +304,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Timestamp;
         *this << data.RequestHandle;
         *this << data.ServiceResult;
@@ -310,7 +321,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
     }
 
@@ -329,7 +342,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -347,7 +362,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -358,7 +375,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.PolicyId;
         *this << data.TokenType;
         *this << data.IssuedTokenType;
@@ -372,7 +391,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.EndpointUrl;
         *this << data.Server;
         *this << data.ServerCertificate;
@@ -398,7 +419,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -409,7 +432,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         SerializeContainer(*this, data.Endpoints);
     }
@@ -420,7 +445,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ServerUri;
         *this << data.ProductUri;
         SerializeContainer(*this, data.ServerNames);
@@ -444,7 +471,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -455,7 +484,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
     }
 
@@ -465,7 +496,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ChannelId;
         *this << data.TokenId;
         *this << data.CreatedAt;
@@ -489,7 +522,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -509,7 +544,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -520,7 +557,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
     }
 
@@ -530,7 +569,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
     }
 
@@ -540,7 +581,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.CertificateData;
         *this << data.Signature;
     }
@@ -551,7 +594,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Algorithm;
         *this << data.Signature;
     }
@@ -576,7 +621,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -602,7 +649,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -613,7 +662,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.PolicyId;
     }
 
@@ -623,7 +674,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.PolicyId;
     }
 
@@ -633,7 +686,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.PolicyId;
         *this << data.UserName;
         *this << data.Password;
@@ -646,7 +701,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.PolicyId;
         *this << data.CertificateData;
     }
@@ -657,7 +714,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.PolicyId;
         *this << data.TokenData;
         *this << data.EncryptionAlgorithm;
@@ -680,7 +739,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -700,7 +761,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -711,7 +774,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.DeleteSubscriptions;
     }
@@ -722,7 +787,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
     }
 
@@ -739,7 +806,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -757,7 +826,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -768,7 +839,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -782,7 +855,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -797,7 +872,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -819,7 +896,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -835,7 +914,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -850,7 +931,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -869,7 +952,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -886,7 +971,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -901,7 +988,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SpecifiedAttributes;
         *this << data.DisplayName;
         *this << data.Description;
@@ -917,7 +1006,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ParentNodeId;
         *this << data.ReferenceTypeId;
         *this << data.RequestedNewNodeId;
@@ -933,7 +1024,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.AddedNodeId;
     }
@@ -951,7 +1044,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -962,7 +1057,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
@@ -974,7 +1071,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SourceNodeId;
         *this << data.ReferenceTypeId;
         *this << data.IsForward;
@@ -996,7 +1095,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1015,7 +1116,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1026,7 +1129,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.DeleteTargetReferences;
     }
@@ -1044,7 +1149,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1063,7 +1170,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1074,7 +1183,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SourceNodeId;
         *this << data.ReferenceTypeId;
         *this << data.IsForward;
@@ -1095,7 +1206,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1114,7 +1227,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1125,7 +1240,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ViewId;
         *this << data.Timestamp;
         *this << data.ViewVersion;
@@ -1137,7 +1254,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.BrowseDirection;
         *this << data.ReferenceTypeId;
@@ -1152,7 +1271,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ReferenceTypeId;
         *this << data.IsForward;
         *this << data.NodeId;
@@ -1168,7 +1289,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.ContinuationPoint;
         SerializeContainer(*this, data.References);
@@ -1189,7 +1312,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1200,7 +1325,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
@@ -1220,7 +1347,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1239,7 +1368,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1250,7 +1381,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ReferenceTypeId;
         *this << data.IsInverse;
         *this << data.IncludeSubtypes;
@@ -1263,7 +1396,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.Elements);
     }
 
@@ -1273,7 +1408,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.StartingNode;
         *this << data.RelativePath;
     }
@@ -1284,7 +1421,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.TargetId;
         *this << data.RemainingPathIndex;
     }
@@ -1295,7 +1434,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         SerializeContainer(*this, data.Targets);
     }
@@ -1313,7 +1454,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1332,7 +1475,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1350,7 +1495,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1368,7 +1515,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1386,7 +1535,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1397,7 +1548,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
     }
 
@@ -1407,7 +1560,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.OperationTimeout;
         *this << data.UseBinaryEncoding;
         *this << data.MaxStringLength;
@@ -1425,7 +1580,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.OrganizationUri;
         *this << data.ProfileId;
         *this << data.ComplianceTool;
@@ -1440,7 +1597,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ProductName;
         *this << data.ProductUri;
         *this << data.VendorName;
@@ -1459,7 +1618,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.RelativePath;
         *this << data.AttributeId;
         *this << data.IndexRange;
@@ -1471,7 +1632,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.TypeDefinitionNode;
         *this << data.IncludeSubTypes;
         SerializeContainer(*this, data.DataToReturn);
@@ -1483,7 +1646,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.TypeDefinitionNode;
         SerializeContainer(*this, data.Values);
@@ -1495,7 +1660,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.ReferenceTypeId;
         *this << data.IsForward;
@@ -1508,7 +1675,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.FilterOperator;
         SerializeContainer(*this, data.FilterOperands);
     }
@@ -1519,7 +1688,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.Elements);
     }
 
@@ -1529,7 +1700,7 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        SerializeContainer(*this, data.Body);
     }
 
 
@@ -1538,7 +1709,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Index;
     }
 
@@ -1548,7 +1721,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Value;
     }
 
@@ -1558,7 +1733,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.Alias;
         *this << data.BrowsePath;
@@ -1572,7 +1749,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.TypeDefinitionId;
         SerializeContainer(*this, data.BrowsePath);
         *this << data.AttributeId;
@@ -1585,7 +1764,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         SerializeContainer(*this, data.OperandStatusCodes);
         SerializeContainer(*this, data.OperandDiagnosticInfos);
@@ -1597,7 +1778,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.ElementResults);
         SerializeContainer(*this, data.ElementDiagnosticInfos);
     }
@@ -1608,7 +1791,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         SerializeContainer(*this, data.DataStatusCodes);
         SerializeContainer(*this, data.DataDiagnosticInfos);
@@ -1631,7 +1816,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1653,7 +1840,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1672,7 +1861,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1691,7 +1882,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1702,7 +1895,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.AttributeId;
         *this << data.IndexRange;
@@ -1724,7 +1919,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1743,7 +1940,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1754,7 +1953,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.IndexRange;
         *this << data.DataEncoding;
@@ -1767,7 +1968,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.ContinuationPoint;
         *this << data.HistoryData;
@@ -1779,7 +1982,7 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        SerializeContainer(*this, data.Body);
     }
 
 
@@ -1788,7 +1991,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.IsReadModified;
         *this << data.StartTime;
         *this << data.EndTime;
@@ -1802,7 +2007,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.ReqTimes);
         *this << data.UseSimpleBounds;
     }
@@ -1813,7 +2020,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.DataValues);
     }
 
@@ -1823,7 +2032,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ModificationTime;
         *this << data.UpdateType;
         *this << data.UserName;
@@ -1835,7 +2046,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.DataValues);
         SerializeContainer(*this, data.ModificationInfos);
     }
@@ -1856,7 +2069,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1867,7 +2082,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
@@ -1879,7 +2096,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.AttributeId;
         *this << data.IndexRange;
@@ -1899,7 +2118,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1918,7 +2139,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -1929,7 +2152,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
     }
 
@@ -1939,7 +2164,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.PerformInsertReplace;
         SerializeContainer(*this, data.UpdateValues);
@@ -1951,7 +2178,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.PerformInsertReplace;
         SerializeContainer(*this, data.UpdateValues);
@@ -1963,7 +2192,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.IsDeleteModified;
         *this << data.StartTime;
@@ -1976,7 +2207,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         SerializeContainer(*this, data.ReqTimes);
     }
@@ -1987,7 +2220,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         SerializeContainer(*this, data.EventIds);
     }
@@ -1998,7 +2233,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         SerializeContainer(*this, data.OperationResults);
         SerializeContainer(*this, data.DiagnosticInfos);
@@ -2017,7 +2254,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2028,7 +2267,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         SerializeContainer(*this, data.Results);
         SerializeContainer(*this, data.DiagnosticInfos);
@@ -2048,7 +2289,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ObjectId;
         *this << data.Parameters;
     }
@@ -2059,7 +2302,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         SerializeContainer(*this, data.InputArgumentResults);
         SerializeContainer(*this, data.InputArgumentDiagnosticInfos);
@@ -2079,7 +2324,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2098,7 +2345,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2109,7 +2358,7 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        SerializeContainer(*this, data.Body);
     }
 
 
@@ -2118,7 +2367,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Trigger;
         *this << data.DeadbandType;
         *this << data.DeadbandValue;
@@ -2130,7 +2381,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.SelectClauses);
         *this << data.WhereClause;
     }
@@ -2141,7 +2394,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NumValuesPerNode;
         *this << data.StartTime;
         *this << data.EndTime;
@@ -2154,7 +2409,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.UseServerCapabilitiesDefaults;
         *this << data.TreatUncertainAsBad;
         *this << data.PercentDataBad;
@@ -2168,7 +2425,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.StartTime;
         *this << data.EndTime;
         *this << data.ProcessingInterval;
@@ -2182,7 +2441,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.StartTime;
         *this << data.AggregateType;
         *this << data.ProcessingInterval;
@@ -2195,7 +2456,7 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        SerializeContainer(*this, data.Body);
     }
 
 
@@ -2204,7 +2465,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.SelectClauseResults);
         SerializeContainer(*this, data.SelectClauseDiagnosticInfos);
         *this << data.WhereClauseResult;
@@ -2216,7 +2479,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.EventFilterResult;
     }
@@ -2227,7 +2492,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.RevisedStartTime;
         *this << data.RevisedProcessingInterval;
         *this << data.RevisedAggregateConfiguration;
@@ -2239,7 +2506,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ClientHandle;
         *this << data.SamplingInterval;
         *this << data.Filter;
@@ -2261,7 +2530,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ItemToMonitor;
         *this << data.Parameters;
     }
@@ -2272,7 +2543,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.MonitoredItemId;
         *this << data.RevisedSamplingInterval;
@@ -2295,7 +2568,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2314,7 +2589,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2332,7 +2609,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.MonitoredItemId;
         *this << data.Parameters;
     }
@@ -2343,7 +2622,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.RevisedSamplingInterval;
         *this << data.RevisedQueueSize;
@@ -2365,7 +2646,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2384,7 +2667,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2404,7 +2689,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2423,7 +2710,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2444,7 +2733,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2465,7 +2756,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2484,7 +2777,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2503,7 +2798,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2526,7 +2823,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2547,7 +2846,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2570,7 +2871,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2590,7 +2893,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2609,7 +2914,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2628,7 +2935,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2639,7 +2948,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SequenceNumber;
         *this << data.PublishTime;
         SerializeContainer(*this, data.NotificationData);
@@ -2651,7 +2962,7 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        SerializeContainer(*this, data.Body);
     }
 
 
@@ -2660,7 +2971,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ClientHandle;
         *this << data.Value;
     }
@@ -2671,7 +2984,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.MonitoredItems);
         SerializeContainer(*this, data.DiagnosticInfos);
     }
@@ -2682,7 +2997,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ClientHandle;
         SerializeContainer(*this, data.EventFields);
     }
@@ -2693,7 +3010,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.Events);
     }
 
@@ -2703,7 +3022,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.EventFields);
     }
 
@@ -2713,7 +3034,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.Events);
     }
 
@@ -2723,7 +3046,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NodeId;
         *this << data.PerformInsertReplace;
         *this << data.Filter;
@@ -2736,7 +3061,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.DiagnosticInfo;
     }
@@ -2747,7 +3074,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SubscriptionId;
         *this << data.SequenceNumber;
     }
@@ -2765,7 +3094,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2788,7 +3119,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2807,7 +3140,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2825,7 +3160,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2836,7 +3173,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         SerializeContainer(*this, data.AvailableSequenceNumbers);
     }
@@ -2855,7 +3194,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2874,7 +3215,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2892,7 +3235,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2911,7 +3256,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -2922,7 +3269,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Boolean;
         *this << data.SByte;
         *this << data.Byte;
@@ -2956,7 +3305,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.Booleans);
         SerializeContainer(*this, data.SBytes);
         SerializeContainer(*this, data.Int16s);
@@ -2990,7 +3341,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Field1;
         *this << data.Field2;
     }
@@ -3010,7 +3363,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -3028,7 +3383,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -3048,7 +3405,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -3066,7 +3425,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Header;
         *this << data.Parameters;
     }
@@ -3077,7 +3438,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ProductUri;
         *this << data.ManufacturerName;
         *this << data.ProductName;
@@ -3092,7 +3455,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ServerId;
         *this << data.ServiceLevel;
         *this << data.ServerState;
@@ -3104,7 +3469,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         SerializeContainer(*this, data.EndpointUrlList);
     }
 
@@ -3114,7 +3481,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ServerUri;
         SerializeContainer(*this, data.NetworkPaths);
     }
@@ -3125,7 +3494,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SamplingInterval;
         *this << data.MonitoredItemCount;
         *this << data.MaxMonitoredItemCount;
@@ -3138,7 +3509,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.ServerViewCount;
         *this << data.CurrentSessionCount;
         *this << data.CumulatedSessionCount;
@@ -3159,7 +3532,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.StartTime;
         *this << data.CurrentTime;
         *this << data.State;
@@ -3174,7 +3549,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SessionId;
         *this << data.ClientUserIdOfSession;
         SerializeContainer(*this, data.ClientUserIdHistory);
@@ -3191,7 +3568,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.TotalCount;
         *this << data.ErrorCount;
     }
@@ -3202,7 +3581,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SessionId;
         *this << data.SessionName;
         *this << data.ClientDescription;
@@ -3254,7 +3635,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Status;
         *this << data.DiagnosticInfo;
     }
@@ -3265,7 +3648,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.SessionId;
         *this << data.SubscriptionId;
         *this << data.Priority;
@@ -3305,7 +3690,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Affected;
         *this << data.AffectedType;
         *this << data.Verb;
@@ -3317,7 +3704,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Affected;
         *this << data.AffectedType;
     }
@@ -3328,7 +3717,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Low;
         *this << data.High;
     }
@@ -3339,7 +3730,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.NamespaceUri;
         *this << data.UnitId;
         *this << data.DisplayName;
@@ -3352,7 +3745,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Real;
         *this << data.Imaginary;
     }
@@ -3363,7 +3758,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Real;
         *this << data.Imaginary;
     }
@@ -3374,7 +3771,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.EngineeringUnits;
         *this << data.EURange;
         *this << data.Title;
@@ -3388,7 +3787,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.X;
         *this << data.Value;
     }
@@ -3399,7 +3800,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.CreateSessionId;
         *this << data.CreateClientName;
         *this << data.InvocationCreationTime;
@@ -3418,7 +3821,9 @@ namespace OpcUa
     {
         *this << data.Encoding;
         if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        *this << data.BodyLength;
+        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
+        *this << bodylength;
         *this << data.Message;
         *this << data.UserName;
         *this << data.AnnotationTime;

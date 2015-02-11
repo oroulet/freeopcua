@@ -194,8 +194,8 @@ namespace OpcUa
     std::size_t RawSize<XmlElement>(const XmlElement& data)
     {
         size_t size = 0;
-        size += RawSize(data.Length)
-        size += RawSizeContainer(data.Value)
+        size += RawSize(data.Length);
+        size += RawSizeContainer(data.Value);
         return size;
     }
 
@@ -204,13 +204,13 @@ namespace OpcUa
     std::size_t RawSize<DiagnosticInfo>(const DiagnosticInfo& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.SymbolicId)
-        if ((data.Encoding) & (1<<(1))) size += RawSize(data.NamespaceURI)
-        if ((data.Encoding) & (1<<(2))) size += RawSize(data.LocalizedText)
-        if ((data.Encoding) & (1<<(4))) size += RawSize(data.AdditionalInfo)
-        if ((data.Encoding) & (1<<(5))) size += RawSize(data.InnerStatusCode)
-        if ((data.Encoding) & (1<<(6))) size += RawSize(data.InnerDiagnosticInfo)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.SymbolicId);
+        if ((data.Encoding) & (1<<(1))) size += RawSize(data.NamespaceURI);
+        if ((data.Encoding) & (1<<(2))) size += RawSize(data.LocalizedText);
+        if ((data.Encoding) & (1<<(4))) size += RawSize(data.AdditionalInfo);
+        if ((data.Encoding) & (1<<(5))) size += RawSize(data.InnerStatusCode);
+        if ((data.Encoding) & (1<<(6))) size += RawSize(data.InnerDiagnosticInfo);
         return size;
     }
 
@@ -219,10 +219,9 @@ namespace OpcUa
     std::size_t RawSize<ExtensionObject>(const ExtensionObject& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.Body)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
         return size;
     }
 
@@ -231,14 +230,14 @@ namespace OpcUa
     std::size_t RawSize<Argument>(const Argument& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Name)
-        size += RawSize(data.DataType)
-        size += RawSize(data.ValueRank)
-        size += RawSizeContainer(data.ArrayDimensions)
-        size += RawSize(data.Description)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Name);
+        size += RawSize(data.DataType);
+        size += RawSize(data.ValueRank);
+        size += RawSizeContainer(data.ArrayDimensions);
+        size += RawSize(data.Description);
         return size;
     }
 
@@ -247,12 +246,12 @@ namespace OpcUa
     std::size_t RawSize<EnumValueType>(const EnumValueType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Value)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Value);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
         return size;
     }
 
@@ -261,11 +260,11 @@ namespace OpcUa
     std::size_t RawSize<TimeZoneDataType>(const TimeZoneDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Offset)
-        size += RawSize(data.DaylightSavingInOffset)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Offset);
+        size += RawSize(data.DaylightSavingInOffset);
         return size;
     }
 
@@ -274,16 +273,16 @@ namespace OpcUa
     std::size_t RawSize<ApplicationDescription>(const ApplicationDescription& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ApplicationUri)
-        size += RawSize(data.ProductUri)
-        size += RawSize(data.ApplicationName)
-        size += RawSize(data.ApplicationType)
-        size += RawSize(data.GatewayServerUri)
-        size += RawSize(data.DiscoveryProfileUri)
-        size += RawSizeContainer(data.DiscoveryUrls)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ApplicationUri);
+        size += RawSize(data.ProductUri);
+        size += RawSize(data.ApplicationName);
+        size += RawSize(data.ApplicationType);
+        size += RawSize(data.GatewayServerUri);
+        size += RawSize(data.DiscoveryProfileUri);
+        size += RawSizeContainer(data.DiscoveryUrls);
         return size;
     }
 
@@ -292,16 +291,16 @@ namespace OpcUa
     std::size_t RawSize<RequestHeader>(const RequestHeader& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.AuthenticationToken)
-        size += RawSize(data.Timestamp)
-        size += RawSize(data.RequestHandle)
-        size += RawSize(data.ReturnDiagnostics)
-        size += RawSize(data.AuditEntryId)
-        size += RawSize(data.TimeoutHint)
-        size += RawSize(data.AdditionalHeader)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.AuthenticationToken);
+        size += RawSize(data.Timestamp);
+        size += RawSize(data.RequestHandle);
+        size += RawSize(data.ReturnDiagnostics);
+        size += RawSize(data.AuditEntryId);
+        size += RawSize(data.TimeoutHint);
+        size += RawSize(data.AdditionalHeader);
         return size;
     }
 
@@ -310,15 +309,15 @@ namespace OpcUa
     std::size_t RawSize<ResponseHeader>(const ResponseHeader& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Timestamp)
-        size += RawSize(data.RequestHandle)
-        size += RawSize(data.ServiceResult)
-        size += RawSize(data.ServiceDiagnostics)
-        size += RawSizeContainer(data.StringTable)
-        size += RawSize(data.AdditionalHeader)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Timestamp);
+        size += RawSize(data.RequestHandle);
+        size += RawSize(data.ServiceResult);
+        size += RawSize(data.ServiceDiagnostics);
+        size += RawSizeContainer(data.StringTable);
+        size += RawSize(data.AdditionalHeader);
         return size;
     }
 
@@ -327,10 +326,10 @@ namespace OpcUa
     std::size_t RawSize<ServiceFault>(const ServiceFault& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
         return size;
     }
 
@@ -339,9 +338,9 @@ namespace OpcUa
     std::size_t RawSize<FindServersParameters>(const FindServersParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.EndpointUrl)
-        size += RawSizeContainer(data.LocaleIds)
-        size += RawSizeContainer(data.ServerUris)
+        size += RawSize(data.EndpointUrl);
+        size += RawSizeContainer(data.LocaleIds);
+        size += RawSizeContainer(data.ServerUris);
         return size;
     }
 
@@ -350,11 +349,11 @@ namespace OpcUa
     std::size_t RawSize<FindServersRequest>(const FindServersRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -363,7 +362,7 @@ namespace OpcUa
     std::size_t RawSize<FindServersResult>(const FindServersResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Servers)
+        size += RawSizeContainer(data.Servers);
         return size;
     }
 
@@ -372,11 +371,11 @@ namespace OpcUa
     std::size_t RawSize<FindServersResponse>(const FindServersResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -385,14 +384,14 @@ namespace OpcUa
     std::size_t RawSize<UserTokenPolicy>(const UserTokenPolicy& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.PolicyId)
-        size += RawSize(data.TokenType)
-        size += RawSize(data.IssuedTokenType)
-        size += RawSize(data.IssuerEndpointUrl)
-        size += RawSize(data.SecurityPolicyUri)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.PolicyId);
+        size += RawSize(data.TokenType);
+        size += RawSize(data.IssuedTokenType);
+        size += RawSize(data.IssuerEndpointUrl);
+        size += RawSize(data.SecurityPolicyUri);
         return size;
     }
 
@@ -401,17 +400,17 @@ namespace OpcUa
     std::size_t RawSize<EndpointDescription>(const EndpointDescription& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.EndpointUrl)
-        size += RawSize(data.Server)
-        size += RawSize(data.ServerCertificate)
-        size += RawSize(data.SecurityMode)
-        size += RawSize(data.SecurityPolicyUri)
-        size += RawSizeContainer(data.UserIdentityTokens)
-        size += RawSize(data.TransportProfileUri)
-        size += RawSize(data.SecurityLevel)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.EndpointUrl);
+        size += RawSize(data.Server);
+        size += RawSize(data.ServerCertificate);
+        size += RawSize(data.SecurityMode);
+        size += RawSize(data.SecurityPolicyUri);
+        size += RawSizeContainer(data.UserIdentityTokens);
+        size += RawSize(data.TransportProfileUri);
+        size += RawSize(data.SecurityLevel);
         return size;
     }
 
@@ -420,9 +419,9 @@ namespace OpcUa
     std::size_t RawSize<GetEndpointsParameters>(const GetEndpointsParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.EndpointUrl)
-        size += RawSizeContainer(data.LocaleIds)
-        size += RawSizeContainer(data.ProfileUris)
+        size += RawSize(data.EndpointUrl);
+        size += RawSizeContainer(data.LocaleIds);
+        size += RawSizeContainer(data.ProfileUris);
         return size;
     }
 
@@ -431,11 +430,11 @@ namespace OpcUa
     std::size_t RawSize<GetEndpointsRequest>(const GetEndpointsRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -444,11 +443,11 @@ namespace OpcUa
     std::size_t RawSize<GetEndpointsResponse>(const GetEndpointsResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSizeContainer(data.Endpoints)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSizeContainer(data.Endpoints);
         return size;
     }
 
@@ -457,17 +456,17 @@ namespace OpcUa
     std::size_t RawSize<RegisteredServer>(const RegisteredServer& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ServerUri)
-        size += RawSize(data.ProductUri)
-        size += RawSizeContainer(data.ServerNames)
-        size += RawSize(data.ServerType)
-        size += RawSize(data.GatewayServerUri)
-        size += RawSizeContainer(data.DiscoveryUrls)
-        size += RawSize(data.SemaphoreFilePath)
-        size += RawSize(data.IsOnline)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ServerUri);
+        size += RawSize(data.ProductUri);
+        size += RawSizeContainer(data.ServerNames);
+        size += RawSize(data.ServerType);
+        size += RawSize(data.GatewayServerUri);
+        size += RawSizeContainer(data.DiscoveryUrls);
+        size += RawSize(data.SemaphoreFilePath);
+        size += RawSize(data.IsOnline);
         return size;
     }
 
@@ -476,7 +475,7 @@ namespace OpcUa
     std::size_t RawSize<RegisterServerParameters>(const RegisterServerParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.Server)
+        size += RawSize(data.Server);
         return size;
     }
 
@@ -485,11 +484,11 @@ namespace OpcUa
     std::size_t RawSize<RegisterServerRequest>(const RegisterServerRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -498,10 +497,10 @@ namespace OpcUa
     std::size_t RawSize<RegisterServerResponse>(const RegisterServerResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
         return size;
     }
 
@@ -510,13 +509,13 @@ namespace OpcUa
     std::size_t RawSize<ChannelSecurityToken>(const ChannelSecurityToken& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ChannelId)
-        size += RawSize(data.TokenId)
-        size += RawSize(data.CreatedAt)
-        size += RawSize(data.RevisedLifetime)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ChannelId);
+        size += RawSize(data.TokenId);
+        size += RawSize(data.CreatedAt);
+        size += RawSize(data.RevisedLifetime);
         return size;
     }
 
@@ -525,11 +524,11 @@ namespace OpcUa
     std::size_t RawSize<OpenSecureChannelParameters>(const OpenSecureChannelParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.ClientProtocolVersion)
-        size += RawSize(data.RequestType)
-        size += RawSize(data.SecurityMode)
-        size += RawSize(data.ClientNonce)
-        size += RawSize(data.RequestedLifetime)
+        size += RawSize(data.ClientProtocolVersion);
+        size += RawSize(data.RequestType);
+        size += RawSize(data.SecurityMode);
+        size += RawSize(data.ClientNonce);
+        size += RawSize(data.RequestedLifetime);
         return size;
     }
 
@@ -538,11 +537,11 @@ namespace OpcUa
     std::size_t RawSize<OpenSecureChannelRequest>(const OpenSecureChannelRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -551,9 +550,9 @@ namespace OpcUa
     std::size_t RawSize<OpenSecureChannelResult>(const OpenSecureChannelResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.ServerProtocolVersion)
-        size += RawSize(data.SecurityToken)
-        size += RawSize(data.ServerNonce)
+        size += RawSize(data.ServerProtocolVersion);
+        size += RawSize(data.SecurityToken);
+        size += RawSize(data.ServerNonce);
         return size;
     }
 
@@ -562,11 +561,11 @@ namespace OpcUa
     std::size_t RawSize<OpenSecureChannelResponse>(const OpenSecureChannelResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -575,10 +574,10 @@ namespace OpcUa
     std::size_t RawSize<CloseSecureChannelRequest>(const CloseSecureChannelRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
         return size;
     }
 
@@ -587,10 +586,10 @@ namespace OpcUa
     std::size_t RawSize<CloseSecureChannelResponse>(const CloseSecureChannelResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
         return size;
     }
 
@@ -599,11 +598,11 @@ namespace OpcUa
     std::size_t RawSize<SignedSoftwareCertificate>(const SignedSoftwareCertificate& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.CertificateData)
-        size += RawSize(data.Signature)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.CertificateData);
+        size += RawSize(data.Signature);
         return size;
     }
 
@@ -612,11 +611,11 @@ namespace OpcUa
     std::size_t RawSize<SignatureData>(const SignatureData& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Algorithm)
-        size += RawSize(data.Signature)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Algorithm);
+        size += RawSize(data.Signature);
         return size;
     }
 
@@ -625,14 +624,14 @@ namespace OpcUa
     std::size_t RawSize<CreateSessionParameters>(const CreateSessionParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.ClientDescription)
-        size += RawSize(data.ServerUri)
-        size += RawSize(data.EndpointUrl)
-        size += RawSize(data.SessionName)
-        size += RawSize(data.ClientNonce)
-        size += RawSize(data.ClientCertificate)
-        size += RawSize(data.RequestedSessionTimeout)
-        size += RawSize(data.MaxResponseMessageSize)
+        size += RawSize(data.ClientDescription);
+        size += RawSize(data.ServerUri);
+        size += RawSize(data.EndpointUrl);
+        size += RawSize(data.SessionName);
+        size += RawSize(data.ClientNonce);
+        size += RawSize(data.ClientCertificate);
+        size += RawSize(data.RequestedSessionTimeout);
+        size += RawSize(data.MaxResponseMessageSize);
         return size;
     }
 
@@ -641,11 +640,11 @@ namespace OpcUa
     std::size_t RawSize<CreateSessionRequest>(const CreateSessionRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -654,15 +653,15 @@ namespace OpcUa
     std::size_t RawSize<CreateSessionResult>(const CreateSessionResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.SessionId)
-        size += RawSize(data.AuthenticationToken)
-        size += RawSize(data.RevisedSessionTimeout)
-        size += RawSize(data.ServerNonce)
-        size += RawSize(data.ServerCertificate)
-        size += RawSizeContainer(data.ServerEndpoints)
-        size += RawSizeContainer(data.ServerSoftwareCertificates)
-        size += RawSize(data.ServerSignature)
-        size += RawSize(data.MaxRequestMessageSize)
+        size += RawSize(data.SessionId);
+        size += RawSize(data.AuthenticationToken);
+        size += RawSize(data.RevisedSessionTimeout);
+        size += RawSize(data.ServerNonce);
+        size += RawSize(data.ServerCertificate);
+        size += RawSizeContainer(data.ServerEndpoints);
+        size += RawSizeContainer(data.ServerSoftwareCertificates);
+        size += RawSize(data.ServerSignature);
+        size += RawSize(data.MaxRequestMessageSize);
         return size;
     }
 
@@ -671,11 +670,11 @@ namespace OpcUa
     std::size_t RawSize<CreateSessionResponse>(const CreateSessionResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -684,10 +683,10 @@ namespace OpcUa
     std::size_t RawSize<UserIdentityToken>(const UserIdentityToken& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.PolicyId)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.PolicyId);
         return size;
     }
 
@@ -696,10 +695,10 @@ namespace OpcUa
     std::size_t RawSize<AnonymousIdentityToken>(const AnonymousIdentityToken& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.PolicyId)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.PolicyId);
         return size;
     }
 
@@ -708,13 +707,13 @@ namespace OpcUa
     std::size_t RawSize<UserNameIdentityToken>(const UserNameIdentityToken& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.PolicyId)
-        size += RawSize(data.UserName)
-        size += RawSize(data.Password)
-        size += RawSize(data.EncryptionAlgorithm)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.PolicyId);
+        size += RawSize(data.UserName);
+        size += RawSize(data.Password);
+        size += RawSize(data.EncryptionAlgorithm);
         return size;
     }
 
@@ -723,11 +722,11 @@ namespace OpcUa
     std::size_t RawSize<X509IdentityToken>(const X509IdentityToken& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.PolicyId)
-        size += RawSize(data.CertificateData)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.PolicyId);
+        size += RawSize(data.CertificateData);
         return size;
     }
 
@@ -736,12 +735,12 @@ namespace OpcUa
     std::size_t RawSize<IssuedIdentityToken>(const IssuedIdentityToken& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.PolicyId)
-        size += RawSize(data.TokenData)
-        size += RawSize(data.EncryptionAlgorithm)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.PolicyId);
+        size += RawSize(data.TokenData);
+        size += RawSize(data.EncryptionAlgorithm);
         return size;
     }
 
@@ -750,11 +749,11 @@ namespace OpcUa
     std::size_t RawSize<ActivateSessionParameters>(const ActivateSessionParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.ClientSignature)
-        size += RawSizeContainer(data.ClientSoftwareCertificates)
-        size += RawSizeContainer(data.LocaleIds)
-        size += RawSize(data.UserIdentityToken)
-        size += RawSize(data.UserTokenSignature)
+        size += RawSize(data.ClientSignature);
+        size += RawSizeContainer(data.ClientSoftwareCertificates);
+        size += RawSizeContainer(data.LocaleIds);
+        size += RawSize(data.UserIdentityToken);
+        size += RawSize(data.UserTokenSignature);
         return size;
     }
 
@@ -763,11 +762,11 @@ namespace OpcUa
     std::size_t RawSize<ActivateSessionRequest>(const ActivateSessionRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -776,9 +775,9 @@ namespace OpcUa
     std::size_t RawSize<ActivateSessionResult>(const ActivateSessionResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.ServerNonce)
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.ServerNonce);
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -787,11 +786,11 @@ namespace OpcUa
     std::size_t RawSize<ActivateSessionResponse>(const ActivateSessionResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -800,11 +799,11 @@ namespace OpcUa
     std::size_t RawSize<CloseSessionRequest>(const CloseSessionRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.DeleteSubscriptions)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.DeleteSubscriptions);
         return size;
     }
 
@@ -813,10 +812,10 @@ namespace OpcUa
     std::size_t RawSize<CloseSessionResponse>(const CloseSessionResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
         return size;
     }
 
@@ -825,7 +824,7 @@ namespace OpcUa
     std::size_t RawSize<CancelParameters>(const CancelParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.RequestHandle)
+        size += RawSize(data.RequestHandle);
         return size;
     }
 
@@ -834,11 +833,11 @@ namespace OpcUa
     std::size_t RawSize<CancelRequest>(const CancelRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -847,7 +846,7 @@ namespace OpcUa
     std::size_t RawSize<CancelResult>(const CancelResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.CancelCount)
+        size += RawSize(data.CancelCount);
         return size;
     }
 
@@ -856,11 +855,11 @@ namespace OpcUa
     std::size_t RawSize<CancelResponse>(const CancelResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -869,14 +868,14 @@ namespace OpcUa
     std::size_t RawSize<NodeAttributes>(const NodeAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
         return size;
     }
 
@@ -885,15 +884,15 @@ namespace OpcUa
     std::size_t RawSize<ObjectAttributes>(const ObjectAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.EventNotifier)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.EventNotifier);
         return size;
     }
 
@@ -902,22 +901,22 @@ namespace OpcUa
     std::size_t RawSize<VariableAttributes>(const VariableAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.Value)
-        size += RawSize(data.DataType)
-        size += RawSize(data.ValueRank)
-        size += RawSizeContainer(data.ArrayDimensions)
-        size += RawSize(data.AccessLevel)
-        size += RawSize(data.UserAccessLevel)
-        size += RawSize(data.MinimumSamplingInterval)
-        size += RawSize(data.Historizing)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.Value);
+        size += RawSize(data.DataType);
+        size += RawSize(data.ValueRank);
+        size += RawSizeContainer(data.ArrayDimensions);
+        size += RawSize(data.AccessLevel);
+        size += RawSize(data.UserAccessLevel);
+        size += RawSize(data.MinimumSamplingInterval);
+        size += RawSize(data.Historizing);
         return size;
     }
 
@@ -926,16 +925,16 @@ namespace OpcUa
     std::size_t RawSize<MethodAttributes>(const MethodAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.Executable)
-        size += RawSize(data.UserExecutable)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.Executable);
+        size += RawSize(data.UserExecutable);
         return size;
     }
 
@@ -944,15 +943,15 @@ namespace OpcUa
     std::size_t RawSize<ObjectTypeAttributes>(const ObjectTypeAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.IsAbstract)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.IsAbstract);
         return size;
     }
 
@@ -961,19 +960,19 @@ namespace OpcUa
     std::size_t RawSize<VariableTypeAttributes>(const VariableTypeAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.Value)
-        size += RawSize(data.DataType)
-        size += RawSize(data.ValueRank)
-        size += RawSizeContainer(data.ArrayDimensions)
-        size += RawSize(data.IsAbstract)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.Value);
+        size += RawSize(data.DataType);
+        size += RawSize(data.ValueRank);
+        size += RawSizeContainer(data.ArrayDimensions);
+        size += RawSize(data.IsAbstract);
         return size;
     }
 
@@ -982,17 +981,17 @@ namespace OpcUa
     std::size_t RawSize<ReferenceTypeAttributes>(const ReferenceTypeAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.IsAbstract)
-        size += RawSize(data.Symmetric)
-        size += RawSize(data.InverseName)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.IsAbstract);
+        size += RawSize(data.Symmetric);
+        size += RawSize(data.InverseName);
         return size;
     }
 
@@ -1001,15 +1000,15 @@ namespace OpcUa
     std::size_t RawSize<DataTypeAttributes>(const DataTypeAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.IsAbstract)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.IsAbstract);
         return size;
     }
 
@@ -1018,16 +1017,16 @@ namespace OpcUa
     std::size_t RawSize<ViewAttributes>(const ViewAttributes& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SpecifiedAttributes)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
-        size += RawSize(data.WriteMask)
-        size += RawSize(data.UserWriteMask)
-        size += RawSize(data.ContainsNoLoops)
-        size += RawSize(data.EventNotifier)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SpecifiedAttributes);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
+        size += RawSize(data.WriteMask);
+        size += RawSize(data.UserWriteMask);
+        size += RawSize(data.ContainsNoLoops);
+        size += RawSize(data.EventNotifier);
         return size;
     }
 
@@ -1036,16 +1035,16 @@ namespace OpcUa
     std::size_t RawSize<AddNodesItem>(const AddNodesItem& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ParentNodeId)
-        size += RawSize(data.ReferenceTypeId)
-        size += RawSize(data.RequestedNewNodeId)
-        size += RawSize(data.BrowseName)
-        size += RawSize(data.NodeClass)
-        size += RawSize(data.NodeAttributes)
-        size += RawSize(data.TypeDefinition)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ParentNodeId);
+        size += RawSize(data.ReferenceTypeId);
+        size += RawSize(data.RequestedNewNodeId);
+        size += RawSize(data.BrowseName);
+        size += RawSize(data.NodeClass);
+        size += RawSize(data.NodeAttributes);
+        size += RawSize(data.TypeDefinition);
         return size;
     }
 
@@ -1054,11 +1053,11 @@ namespace OpcUa
     std::size_t RawSize<AddNodesResult>(const AddNodesResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.AddedNodeId)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.AddedNodeId);
         return size;
     }
 
@@ -1067,7 +1066,7 @@ namespace OpcUa
     std::size_t RawSize<AddNodesParameters>(const AddNodesParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.NodesToAdd)
+        size += RawSizeContainer(data.NodesToAdd);
         return size;
     }
 
@@ -1076,11 +1075,11 @@ namespace OpcUa
     std::size_t RawSize<AddNodesRequest>(const AddNodesRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1089,12 +1088,12 @@ namespace OpcUa
     std::size_t RawSize<AddNodesResponse>(const AddNodesResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -1103,15 +1102,15 @@ namespace OpcUa
     std::size_t RawSize<AddReferencesItem>(const AddReferencesItem& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SourceNodeId)
-        size += RawSize(data.ReferenceTypeId)
-        size += RawSize(data.IsForward)
-        size += RawSize(data.TargetServerUri)
-        size += RawSize(data.TargetNodeId)
-        size += RawSize(data.TargetNodeClass)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SourceNodeId);
+        size += RawSize(data.ReferenceTypeId);
+        size += RawSize(data.IsForward);
+        size += RawSize(data.TargetServerUri);
+        size += RawSize(data.TargetNodeId);
+        size += RawSize(data.TargetNodeClass);
         return size;
     }
 
@@ -1120,7 +1119,7 @@ namespace OpcUa
     std::size_t RawSize<AddReferencesParameters>(const AddReferencesParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.ReferencesToAdd)
+        size += RawSizeContainer(data.ReferencesToAdd);
         return size;
     }
 
@@ -1129,11 +1128,11 @@ namespace OpcUa
     std::size_t RawSize<AddReferencesRequest>(const AddReferencesRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1142,8 +1141,8 @@ namespace OpcUa
     std::size_t RawSize<AddReferencesResult>(const AddReferencesResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -1152,11 +1151,11 @@ namespace OpcUa
     std::size_t RawSize<AddReferencesResponse>(const AddReferencesResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1165,11 +1164,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteNodesItem>(const DeleteNodesItem& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.DeleteTargetReferences)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.DeleteTargetReferences);
         return size;
     }
 
@@ -1178,7 +1177,7 @@ namespace OpcUa
     std::size_t RawSize<DeleteNodesParameters>(const DeleteNodesParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.NodesToDelete)
+        size += RawSizeContainer(data.NodesToDelete);
         return size;
     }
 
@@ -1187,11 +1186,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteNodesRequest>(const DeleteNodesRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1200,8 +1199,8 @@ namespace OpcUa
     std::size_t RawSize<DeleteNodesResult>(const DeleteNodesResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -1210,11 +1209,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteNodesResponse>(const DeleteNodesResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1223,14 +1222,14 @@ namespace OpcUa
     std::size_t RawSize<DeleteReferencesItem>(const DeleteReferencesItem& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SourceNodeId)
-        size += RawSize(data.ReferenceTypeId)
-        size += RawSize(data.IsForward)
-        size += RawSize(data.TargetNodeId)
-        size += RawSize(data.DeleteBidirectional)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SourceNodeId);
+        size += RawSize(data.ReferenceTypeId);
+        size += RawSize(data.IsForward);
+        size += RawSize(data.TargetNodeId);
+        size += RawSize(data.DeleteBidirectional);
         return size;
     }
 
@@ -1239,7 +1238,7 @@ namespace OpcUa
     std::size_t RawSize<DeleteReferencesParameters>(const DeleteReferencesParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.ReferencesToDelete)
+        size += RawSizeContainer(data.ReferencesToDelete);
         return size;
     }
 
@@ -1248,11 +1247,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteReferencesRequest>(const DeleteReferencesRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1261,8 +1260,8 @@ namespace OpcUa
     std::size_t RawSize<DeleteReferencesResult>(const DeleteReferencesResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -1271,11 +1270,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteReferencesResponse>(const DeleteReferencesResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1284,12 +1283,12 @@ namespace OpcUa
     std::size_t RawSize<ViewDescription>(const ViewDescription& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ViewId)
-        size += RawSize(data.Timestamp)
-        size += RawSize(data.ViewVersion)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ViewId);
+        size += RawSize(data.Timestamp);
+        size += RawSize(data.ViewVersion);
         return size;
     }
 
@@ -1298,15 +1297,15 @@ namespace OpcUa
     std::size_t RawSize<BrowseDescription>(const BrowseDescription& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.BrowseDirection)
-        size += RawSize(data.ReferenceTypeId)
-        size += RawSize(data.IncludeSubtypes)
-        size += RawSize(data.NodeClassMask)
-        size += RawSize(data.ResultMask)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.BrowseDirection);
+        size += RawSize(data.ReferenceTypeId);
+        size += RawSize(data.IncludeSubtypes);
+        size += RawSize(data.NodeClassMask);
+        size += RawSize(data.ResultMask);
         return size;
     }
 
@@ -1315,16 +1314,16 @@ namespace OpcUa
     std::size_t RawSize<ReferenceDescription>(const ReferenceDescription& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ReferenceTypeId)
-        size += RawSize(data.IsForward)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.BrowseName)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.NodeClass)
-        size += RawSize(data.TypeDefinition)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ReferenceTypeId);
+        size += RawSize(data.IsForward);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.BrowseName);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.NodeClass);
+        size += RawSize(data.TypeDefinition);
         return size;
     }
 
@@ -1333,12 +1332,12 @@ namespace OpcUa
     std::size_t RawSize<BrowseResult>(const BrowseResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.ContinuationPoint)
-        size += RawSizeContainer(data.References)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.ContinuationPoint);
+        size += RawSizeContainer(data.References);
         return size;
     }
 
@@ -1347,9 +1346,9 @@ namespace OpcUa
     std::size_t RawSize<BrowseParameters>(const BrowseParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.View)
-        size += RawSize(data.RequestedMaxReferencesPerNode)
-        size += RawSizeContainer(data.NodesToBrowse)
+        size += RawSize(data.View);
+        size += RawSize(data.RequestedMaxReferencesPerNode);
+        size += RawSizeContainer(data.NodesToBrowse);
         return size;
     }
 
@@ -1358,11 +1357,11 @@ namespace OpcUa
     std::size_t RawSize<BrowseRequest>(const BrowseRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1371,12 +1370,12 @@ namespace OpcUa
     std::size_t RawSize<BrowseResponse>(const BrowseResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -1385,8 +1384,8 @@ namespace OpcUa
     std::size_t RawSize<BrowseNextParameters>(const BrowseNextParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.ReleaseContinuationPoints)
-        size += RawSizeContainer(data.ContinuationPoints)
+        size += RawSize(data.ReleaseContinuationPoints);
+        size += RawSizeContainer(data.ContinuationPoints);
         return size;
     }
 
@@ -1395,11 +1394,11 @@ namespace OpcUa
     std::size_t RawSize<BrowseNextRequest>(const BrowseNextRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1408,8 +1407,8 @@ namespace OpcUa
     std::size_t RawSize<BrowseNextResult>(const BrowseNextResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -1418,11 +1417,11 @@ namespace OpcUa
     std::size_t RawSize<BrowseNextResponse>(const BrowseNextResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1431,13 +1430,13 @@ namespace OpcUa
     std::size_t RawSize<RelativePathElement>(const RelativePathElement& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ReferenceTypeId)
-        size += RawSize(data.IsInverse)
-        size += RawSize(data.IncludeSubtypes)
-        size += RawSize(data.TargetName)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ReferenceTypeId);
+        size += RawSize(data.IsInverse);
+        size += RawSize(data.IncludeSubtypes);
+        size += RawSize(data.TargetName);
         return size;
     }
 
@@ -1446,10 +1445,10 @@ namespace OpcUa
     std::size_t RawSize<RelativePath>(const RelativePath& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.Elements)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.Elements);
         return size;
     }
 
@@ -1458,11 +1457,11 @@ namespace OpcUa
     std::size_t RawSize<BrowsePath>(const BrowsePath& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.StartingNode)
-        size += RawSize(data.RelativePath)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.StartingNode);
+        size += RawSize(data.RelativePath);
         return size;
     }
 
@@ -1471,11 +1470,11 @@ namespace OpcUa
     std::size_t RawSize<BrowsePathTarget>(const BrowsePathTarget& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.TargetId)
-        size += RawSize(data.RemainingPathIndex)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.TargetId);
+        size += RawSize(data.RemainingPathIndex);
         return size;
     }
 
@@ -1484,11 +1483,11 @@ namespace OpcUa
     std::size_t RawSize<BrowsePathResult>(const BrowsePathResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSizeContainer(data.Targets)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSizeContainer(data.Targets);
         return size;
     }
 
@@ -1497,7 +1496,7 @@ namespace OpcUa
     std::size_t RawSize<TranslateBrowsePathsToNodeIdsParameters>(const TranslateBrowsePathsToNodeIdsParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.BrowsePaths)
+        size += RawSizeContainer(data.BrowsePaths);
         return size;
     }
 
@@ -1506,11 +1505,11 @@ namespace OpcUa
     std::size_t RawSize<TranslateBrowsePathsToNodeIdsRequest>(const TranslateBrowsePathsToNodeIdsRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1519,8 +1518,8 @@ namespace OpcUa
     std::size_t RawSize<TranslateBrowsePathsToNodeIdsResult>(const TranslateBrowsePathsToNodeIdsResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -1529,11 +1528,11 @@ namespace OpcUa
     std::size_t RawSize<TranslateBrowsePathsToNodeIdsResponse>(const TranslateBrowsePathsToNodeIdsResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1542,7 +1541,7 @@ namespace OpcUa
     std::size_t RawSize<RegisterNodesParameters>(const RegisterNodesParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.NodesToRegister)
+        size += RawSizeContainer(data.NodesToRegister);
         return size;
     }
 
@@ -1551,11 +1550,11 @@ namespace OpcUa
     std::size_t RawSize<RegisterNodesRequest>(const RegisterNodesRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1564,7 +1563,7 @@ namespace OpcUa
     std::size_t RawSize<RegisterNodesResult>(const RegisterNodesResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.RegisteredNodeIds)
+        size += RawSizeContainer(data.RegisteredNodeIds);
         return size;
     }
 
@@ -1573,11 +1572,11 @@ namespace OpcUa
     std::size_t RawSize<RegisterNodesResponse>(const RegisterNodesResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1586,7 +1585,7 @@ namespace OpcUa
     std::size_t RawSize<UnregisterNodesParameters>(const UnregisterNodesParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.NodesToUnregister)
+        size += RawSizeContainer(data.NodesToUnregister);
         return size;
     }
 
@@ -1595,11 +1594,11 @@ namespace OpcUa
     std::size_t RawSize<UnregisterNodesRequest>(const UnregisterNodesRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1608,10 +1607,10 @@ namespace OpcUa
     std::size_t RawSize<UnregisterNodesResponse>(const UnregisterNodesResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
         return size;
     }
 
@@ -1620,18 +1619,18 @@ namespace OpcUa
     std::size_t RawSize<EndpointConfiguration>(const EndpointConfiguration& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.OperationTimeout)
-        size += RawSize(data.UseBinaryEncoding)
-        size += RawSize(data.MaxStringLength)
-        size += RawSize(data.MaxByteStringLength)
-        size += RawSize(data.MaxArrayLength)
-        size += RawSize(data.MaxMessageSize)
-        size += RawSize(data.MaxBufferSize)
-        size += RawSize(data.ChannelLifetime)
-        size += RawSize(data.SecurityTokenLifetime)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.OperationTimeout);
+        size += RawSize(data.UseBinaryEncoding);
+        size += RawSize(data.MaxStringLength);
+        size += RawSize(data.MaxByteStringLength);
+        size += RawSize(data.MaxArrayLength);
+        size += RawSize(data.MaxMessageSize);
+        size += RawSize(data.MaxBufferSize);
+        size += RawSize(data.ChannelLifetime);
+        size += RawSize(data.SecurityTokenLifetime);
         return size;
     }
 
@@ -1640,15 +1639,15 @@ namespace OpcUa
     std::size_t RawSize<SupportedProfile>(const SupportedProfile& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.OrganizationUri)
-        size += RawSize(data.ProfileId)
-        size += RawSize(data.ComplianceTool)
-        size += RawSize(data.ComplianceDate)
-        size += RawSize(data.ComplianceLevel)
-        size += RawSizeContainer(data.UnsupportedUnitIds)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.OrganizationUri);
+        size += RawSize(data.ProfileId);
+        size += RawSize(data.ComplianceTool);
+        size += RawSize(data.ComplianceDate);
+        size += RawSize(data.ComplianceLevel);
+        size += RawSizeContainer(data.UnsupportedUnitIds);
         return size;
     }
 
@@ -1657,19 +1656,19 @@ namespace OpcUa
     std::size_t RawSize<SoftwareCertificate>(const SoftwareCertificate& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ProductName)
-        size += RawSize(data.ProductUri)
-        size += RawSize(data.VendorName)
-        size += RawSize(data.VendorProductCertificate)
-        size += RawSize(data.SoftwareVersion)
-        size += RawSize(data.BuildNumber)
-        size += RawSize(data.BuildDate)
-        size += RawSize(data.IssuedBy)
-        size += RawSize(data.IssueDate)
-        size += RawSizeContainer(data.SupportedProfiles)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ProductName);
+        size += RawSize(data.ProductUri);
+        size += RawSize(data.VendorName);
+        size += RawSize(data.VendorProductCertificate);
+        size += RawSize(data.SoftwareVersion);
+        size += RawSize(data.BuildNumber);
+        size += RawSize(data.BuildDate);
+        size += RawSize(data.IssuedBy);
+        size += RawSize(data.IssueDate);
+        size += RawSizeContainer(data.SupportedProfiles);
         return size;
     }
 
@@ -1678,12 +1677,12 @@ namespace OpcUa
     std::size_t RawSize<QueryDataDescription>(const QueryDataDescription& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.RelativePath)
-        size += RawSize(data.AttributeId)
-        size += RawSize(data.IndexRange)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.RelativePath);
+        size += RawSize(data.AttributeId);
+        size += RawSize(data.IndexRange);
         return size;
     }
 
@@ -1692,12 +1691,12 @@ namespace OpcUa
     std::size_t RawSize<NodeTypeDescription>(const NodeTypeDescription& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.TypeDefinitionNode)
-        size += RawSize(data.IncludeSubTypes)
-        size += RawSizeContainer(data.DataToReturn)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.TypeDefinitionNode);
+        size += RawSize(data.IncludeSubTypes);
+        size += RawSizeContainer(data.DataToReturn);
         return size;
     }
 
@@ -1706,12 +1705,12 @@ namespace OpcUa
     std::size_t RawSize<QueryDataSet>(const QueryDataSet& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.TypeDefinitionNode)
-        size += RawSizeContainer(data.Values)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.TypeDefinitionNode);
+        size += RawSizeContainer(data.Values);
         return size;
     }
 
@@ -1720,13 +1719,13 @@ namespace OpcUa
     std::size_t RawSize<NodeReference>(const NodeReference& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.ReferenceTypeId)
-        size += RawSize(data.IsForward)
-        size += RawSizeContainer(data.ReferencedNodeIds)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.ReferenceTypeId);
+        size += RawSize(data.IsForward);
+        size += RawSizeContainer(data.ReferencedNodeIds);
         return size;
     }
 
@@ -1735,11 +1734,11 @@ namespace OpcUa
     std::size_t RawSize<ContentFilterElement>(const ContentFilterElement& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.FilterOperator)
-        size += RawSizeContainer(data.FilterOperands)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.FilterOperator);
+        size += RawSizeContainer(data.FilterOperands);
         return size;
     }
 
@@ -1748,10 +1747,10 @@ namespace OpcUa
     std::size_t RawSize<ContentFilter>(const ContentFilter& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.Elements)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.Elements);
         return size;
     }
 
@@ -1760,9 +1759,9 @@ namespace OpcUa
     std::size_t RawSize<FilterOperand>(const FilterOperand& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
         return size;
     }
 
@@ -1771,10 +1770,10 @@ namespace OpcUa
     std::size_t RawSize<ElementOperand>(const ElementOperand& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Index)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Index);
         return size;
     }
 
@@ -1783,10 +1782,10 @@ namespace OpcUa
     std::size_t RawSize<LiteralOperand>(const LiteralOperand& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Value)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Value);
         return size;
     }
 
@@ -1795,14 +1794,14 @@ namespace OpcUa
     std::size_t RawSize<AttributeOperand>(const AttributeOperand& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.Alias)
-        size += RawSize(data.BrowsePath)
-        size += RawSize(data.AttributeId)
-        size += RawSize(data.IndexRange)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.Alias);
+        size += RawSize(data.BrowsePath);
+        size += RawSize(data.AttributeId);
+        size += RawSize(data.IndexRange);
         return size;
     }
 
@@ -1811,13 +1810,13 @@ namespace OpcUa
     std::size_t RawSize<SimpleAttributeOperand>(const SimpleAttributeOperand& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.TypeDefinitionId)
-        size += RawSizeContainer(data.BrowsePath)
-        size += RawSize(data.AttributeId)
-        size += RawSize(data.IndexRange)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.TypeDefinitionId);
+        size += RawSizeContainer(data.BrowsePath);
+        size += RawSize(data.AttributeId);
+        size += RawSize(data.IndexRange);
         return size;
     }
 
@@ -1826,12 +1825,12 @@ namespace OpcUa
     std::size_t RawSize<ContentFilterElementResult>(const ContentFilterElementResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSizeContainer(data.OperandStatusCodes)
-        size += RawSizeContainer(data.OperandDiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSizeContainer(data.OperandStatusCodes);
+        size += RawSizeContainer(data.OperandDiagnosticInfos);
         return size;
     }
 
@@ -1840,11 +1839,11 @@ namespace OpcUa
     std::size_t RawSize<ContentFilterResult>(const ContentFilterResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.ElementResults)
-        size += RawSizeContainer(data.ElementDiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.ElementResults);
+        size += RawSizeContainer(data.ElementDiagnosticInfos);
         return size;
     }
 
@@ -1853,12 +1852,12 @@ namespace OpcUa
     std::size_t RawSize<ParsingResult>(const ParsingResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSizeContainer(data.DataStatusCodes)
-        size += RawSizeContainer(data.DataDiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSizeContainer(data.DataStatusCodes);
+        size += RawSizeContainer(data.DataDiagnosticInfos);
         return size;
     }
 
@@ -1867,11 +1866,11 @@ namespace OpcUa
     std::size_t RawSize<QueryFirstParameters>(const QueryFirstParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.View)
-        size += RawSizeContainer(data.NodeTypes)
-        size += RawSize(data.Filter)
-        size += RawSize(data.MaxDataSetsToReturn)
-        size += RawSize(data.MaxReferencesToReturn)
+        size += RawSize(data.View);
+        size += RawSizeContainer(data.NodeTypes);
+        size += RawSize(data.Filter);
+        size += RawSize(data.MaxDataSetsToReturn);
+        size += RawSize(data.MaxReferencesToReturn);
         return size;
     }
 
@@ -1880,11 +1879,11 @@ namespace OpcUa
     std::size_t RawSize<QueryFirstRequest>(const QueryFirstRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1893,11 +1892,11 @@ namespace OpcUa
     std::size_t RawSize<QueryFirstResult>(const QueryFirstResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.QueryDataSets)
-        size += RawSize(data.ContinuationPoint)
-        size += RawSizeContainer(data.ParsingResults)
-        size += RawSizeContainer(data.DiagnosticInfos)
-        size += RawSize(data.FilterResult)
+        size += RawSizeContainer(data.QueryDataSets);
+        size += RawSize(data.ContinuationPoint);
+        size += RawSizeContainer(data.ParsingResults);
+        size += RawSizeContainer(data.DiagnosticInfos);
+        size += RawSize(data.FilterResult);
         return size;
     }
 
@@ -1906,11 +1905,11 @@ namespace OpcUa
     std::size_t RawSize<QueryFirstResponse>(const QueryFirstResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1919,8 +1918,8 @@ namespace OpcUa
     std::size_t RawSize<QueryNextParameters>(const QueryNextParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.ReleaseContinuationPoint)
-        size += RawSize(data.ContinuationPoint)
+        size += RawSize(data.ReleaseContinuationPoint);
+        size += RawSize(data.ContinuationPoint);
         return size;
     }
 
@@ -1929,11 +1928,11 @@ namespace OpcUa
     std::size_t RawSize<QueryNextRequest>(const QueryNextRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1942,8 +1941,8 @@ namespace OpcUa
     std::size_t RawSize<QueryNextResult>(const QueryNextResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.QueryDataSets)
-        size += RawSize(data.RevisedContinuationPoint)
+        size += RawSizeContainer(data.QueryDataSets);
+        size += RawSize(data.RevisedContinuationPoint);
         return size;
     }
 
@@ -1952,11 +1951,11 @@ namespace OpcUa
     std::size_t RawSize<QueryNextResponse>(const QueryNextResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -1965,13 +1964,13 @@ namespace OpcUa
     std::size_t RawSize<ReadValueId>(const ReadValueId& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.AttributeId)
-        size += RawSize(data.IndexRange)
-        size += RawSize(data.DataEncoding)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.AttributeId);
+        size += RawSize(data.IndexRange);
+        size += RawSize(data.DataEncoding);
         return size;
     }
 
@@ -1980,9 +1979,9 @@ namespace OpcUa
     std::size_t RawSize<ReadParameters>(const ReadParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.MaxAge)
-        size += RawSize(data.TimestampsToReturn)
-        size += RawSizeContainer(data.AttributesToRead)
+        size += RawSize(data.MaxAge);
+        size += RawSize(data.TimestampsToReturn);
+        size += RawSizeContainer(data.AttributesToRead);
         return size;
     }
 
@@ -1991,11 +1990,11 @@ namespace OpcUa
     std::size_t RawSize<ReadRequest>(const ReadRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2004,8 +2003,8 @@ namespace OpcUa
     std::size_t RawSize<ReadResult>(const ReadResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2014,11 +2013,11 @@ namespace OpcUa
     std::size_t RawSize<ReadResponse>(const ReadResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2027,13 +2026,13 @@ namespace OpcUa
     std::size_t RawSize<HistoryReadValueId>(const HistoryReadValueId& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.IndexRange)
-        size += RawSize(data.DataEncoding)
-        size += RawSize(data.ContinuationPoint)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.IndexRange);
+        size += RawSize(data.DataEncoding);
+        size += RawSize(data.ContinuationPoint);
         return size;
     }
 
@@ -2042,12 +2041,12 @@ namespace OpcUa
     std::size_t RawSize<HistoryReadResult>(const HistoryReadResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.ContinuationPoint)
-        size += RawSize(data.HistoryData)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.ContinuationPoint);
+        size += RawSize(data.HistoryData);
         return size;
     }
 
@@ -2056,9 +2055,9 @@ namespace OpcUa
     std::size_t RawSize<HistoryReadDetails>(const HistoryReadDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
         return size;
     }
 
@@ -2067,14 +2066,14 @@ namespace OpcUa
     std::size_t RawSize<ReadRawModifiedDetails>(const ReadRawModifiedDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.IsReadModified)
-        size += RawSize(data.StartTime)
-        size += RawSize(data.EndTime)
-        size += RawSize(data.NumValuesPerNode)
-        size += RawSize(data.ReturnBounds)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.IsReadModified);
+        size += RawSize(data.StartTime);
+        size += RawSize(data.EndTime);
+        size += RawSize(data.NumValuesPerNode);
+        size += RawSize(data.ReturnBounds);
         return size;
     }
 
@@ -2083,11 +2082,11 @@ namespace OpcUa
     std::size_t RawSize<ReadAtTimeDetails>(const ReadAtTimeDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.ReqTimes)
-        size += RawSize(data.UseSimpleBounds)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.ReqTimes);
+        size += RawSize(data.UseSimpleBounds);
         return size;
     }
 
@@ -2096,10 +2095,10 @@ namespace OpcUa
     std::size_t RawSize<HistoryData>(const HistoryData& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.DataValues)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.DataValues);
         return size;
     }
 
@@ -2108,12 +2107,12 @@ namespace OpcUa
     std::size_t RawSize<ModificationInfo>(const ModificationInfo& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ModificationTime)
-        size += RawSize(data.UpdateType)
-        size += RawSize(data.UserName)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ModificationTime);
+        size += RawSize(data.UpdateType);
+        size += RawSize(data.UserName);
         return size;
     }
 
@@ -2122,11 +2121,11 @@ namespace OpcUa
     std::size_t RawSize<HistoryModifiedData>(const HistoryModifiedData& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.DataValues)
-        size += RawSizeContainer(data.ModificationInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.DataValues);
+        size += RawSizeContainer(data.ModificationInfos);
         return size;
     }
 
@@ -2135,10 +2134,10 @@ namespace OpcUa
     std::size_t RawSize<HistoryReadParameters>(const HistoryReadParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.HistoryReadDetails)
-        size += RawSize(data.TimestampsToReturn)
-        size += RawSize(data.ReleaseContinuationPoints)
-        size += RawSizeContainer(data.AttributesToRead)
+        size += RawSize(data.HistoryReadDetails);
+        size += RawSize(data.TimestampsToReturn);
+        size += RawSize(data.ReleaseContinuationPoints);
+        size += RawSizeContainer(data.AttributesToRead);
         return size;
     }
 
@@ -2147,11 +2146,11 @@ namespace OpcUa
     std::size_t RawSize<HistoryReadRequest>(const HistoryReadRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2160,12 +2159,12 @@ namespace OpcUa
     std::size_t RawSize<HistoryReadResponse>(const HistoryReadResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2174,13 +2173,13 @@ namespace OpcUa
     std::size_t RawSize<WriteValue>(const WriteValue& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.AttributeId)
-        size += RawSize(data.IndexRange)
-        size += RawSize(data.Value)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.AttributeId);
+        size += RawSize(data.IndexRange);
+        size += RawSize(data.Value);
         return size;
     }
 
@@ -2189,7 +2188,7 @@ namespace OpcUa
     std::size_t RawSize<WriteParameters>(const WriteParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.NodesToWrite)
+        size += RawSizeContainer(data.NodesToWrite);
         return size;
     }
 
@@ -2198,11 +2197,11 @@ namespace OpcUa
     std::size_t RawSize<WriteRequest>(const WriteRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2211,8 +2210,8 @@ namespace OpcUa
     std::size_t RawSize<WriteResult>(const WriteResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2221,11 +2220,11 @@ namespace OpcUa
     std::size_t RawSize<WriteResponse>(const WriteResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2234,10 +2233,10 @@ namespace OpcUa
     std::size_t RawSize<HistoryUpdateDetails>(const HistoryUpdateDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
         return size;
     }
 
@@ -2246,12 +2245,12 @@ namespace OpcUa
     std::size_t RawSize<UpdateDataDetails>(const UpdateDataDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.PerformInsertReplace)
-        size += RawSizeContainer(data.UpdateValues)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.PerformInsertReplace);
+        size += RawSizeContainer(data.UpdateValues);
         return size;
     }
 
@@ -2260,12 +2259,12 @@ namespace OpcUa
     std::size_t RawSize<UpdateStructureDataDetails>(const UpdateStructureDataDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.PerformInsertReplace)
-        size += RawSizeContainer(data.UpdateValues)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.PerformInsertReplace);
+        size += RawSizeContainer(data.UpdateValues);
         return size;
     }
 
@@ -2274,13 +2273,13 @@ namespace OpcUa
     std::size_t RawSize<DeleteRawModifiedDetails>(const DeleteRawModifiedDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.IsDeleteModified)
-        size += RawSize(data.StartTime)
-        size += RawSize(data.EndTime)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.IsDeleteModified);
+        size += RawSize(data.StartTime);
+        size += RawSize(data.EndTime);
         return size;
     }
 
@@ -2289,11 +2288,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteAtTimeDetails>(const DeleteAtTimeDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSizeContainer(data.ReqTimes)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSizeContainer(data.ReqTimes);
         return size;
     }
 
@@ -2302,11 +2301,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteEventDetails>(const DeleteEventDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSizeContainer(data.EventIds)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSizeContainer(data.EventIds);
         return size;
     }
 
@@ -2315,12 +2314,12 @@ namespace OpcUa
     std::size_t RawSize<HistoryUpdateResult>(const HistoryUpdateResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSizeContainer(data.OperationResults)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSizeContainer(data.OperationResults);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2329,7 +2328,7 @@ namespace OpcUa
     std::size_t RawSize<HistoryUpdateParameters>(const HistoryUpdateParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.HistoryUpdateDetails)
+        size += RawSizeContainer(data.HistoryUpdateDetails);
         return size;
     }
 
@@ -2338,11 +2337,11 @@ namespace OpcUa
     std::size_t RawSize<HistoryUpdateRequest>(const HistoryUpdateRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2351,12 +2350,12 @@ namespace OpcUa
     std::size_t RawSize<HistoryUpdateResponse>(const HistoryUpdateResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2365,8 +2364,8 @@ namespace OpcUa
     std::size_t RawSize<CallMethodParameters>(const CallMethodParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.MethodId)
-        size += RawSizeContainer(data.InputArguments)
+        size += RawSize(data.MethodId);
+        size += RawSizeContainer(data.InputArguments);
         return size;
     }
 
@@ -2375,11 +2374,11 @@ namespace OpcUa
     std::size_t RawSize<CallMethodRequest>(const CallMethodRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ObjectId)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ObjectId);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2388,13 +2387,13 @@ namespace OpcUa
     std::size_t RawSize<CallMethodResult>(const CallMethodResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSizeContainer(data.InputArgumentResults)
-        size += RawSizeContainer(data.InputArgumentDiagnosticInfos)
-        size += RawSizeContainer(data.OutputArguments)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSizeContainer(data.InputArgumentResults);
+        size += RawSizeContainer(data.InputArgumentDiagnosticInfos);
+        size += RawSizeContainer(data.OutputArguments);
         return size;
     }
 
@@ -2403,7 +2402,7 @@ namespace OpcUa
     std::size_t RawSize<CallParameters>(const CallParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.MethodsToCall)
+        size += RawSizeContainer(data.MethodsToCall);
         return size;
     }
 
@@ -2412,11 +2411,11 @@ namespace OpcUa
     std::size_t RawSize<CallRequest>(const CallRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2425,8 +2424,8 @@ namespace OpcUa
     std::size_t RawSize<CallResult>(const CallResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2435,11 +2434,11 @@ namespace OpcUa
     std::size_t RawSize<CallResponse>(const CallResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2448,9 +2447,9 @@ namespace OpcUa
     std::size_t RawSize<MonitoringFilter>(const MonitoringFilter& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
         return size;
     }
 
@@ -2459,12 +2458,12 @@ namespace OpcUa
     std::size_t RawSize<DataChangeFilter>(const DataChangeFilter& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Trigger)
-        size += RawSize(data.DeadbandType)
-        size += RawSize(data.DeadbandValue)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Trigger);
+        size += RawSize(data.DeadbandType);
+        size += RawSize(data.DeadbandValue);
         return size;
     }
 
@@ -2473,11 +2472,11 @@ namespace OpcUa
     std::size_t RawSize<EventFilter>(const EventFilter& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.SelectClauses)
-        size += RawSize(data.WhereClause)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.SelectClauses);
+        size += RawSize(data.WhereClause);
         return size;
     }
 
@@ -2486,13 +2485,13 @@ namespace OpcUa
     std::size_t RawSize<ReadEventDetails>(const ReadEventDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NumValuesPerNode)
-        size += RawSize(data.StartTime)
-        size += RawSize(data.EndTime)
-        size += RawSize(data.Filter)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NumValuesPerNode);
+        size += RawSize(data.StartTime);
+        size += RawSize(data.EndTime);
+        size += RawSize(data.Filter);
         return size;
     }
 
@@ -2501,14 +2500,14 @@ namespace OpcUa
     std::size_t RawSize<AggregateConfiguration>(const AggregateConfiguration& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.UseServerCapabilitiesDefaults)
-        size += RawSize(data.TreatUncertainAsBad)
-        size += RawSize(data.PercentDataBad)
-        size += RawSize(data.PercentDataGood)
-        size += RawSize(data.UseSlopedExtrapolation)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.UseServerCapabilitiesDefaults);
+        size += RawSize(data.TreatUncertainAsBad);
+        size += RawSize(data.PercentDataBad);
+        size += RawSize(data.PercentDataGood);
+        size += RawSize(data.UseSlopedExtrapolation);
         return size;
     }
 
@@ -2517,14 +2516,14 @@ namespace OpcUa
     std::size_t RawSize<ReadProcessedDetails>(const ReadProcessedDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.StartTime)
-        size += RawSize(data.EndTime)
-        size += RawSize(data.ProcessingInterval)
-        size += RawSizeContainer(data.AggregateType)
-        size += RawSize(data.AggregateConfiguration)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.StartTime);
+        size += RawSize(data.EndTime);
+        size += RawSize(data.ProcessingInterval);
+        size += RawSizeContainer(data.AggregateType);
+        size += RawSize(data.AggregateConfiguration);
         return size;
     }
 
@@ -2533,13 +2532,13 @@ namespace OpcUa
     std::size_t RawSize<AggregateFilter>(const AggregateFilter& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.StartTime)
-        size += RawSize(data.AggregateType)
-        size += RawSize(data.ProcessingInterval)
-        size += RawSize(data.AggregateConfiguration)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.StartTime);
+        size += RawSize(data.AggregateType);
+        size += RawSize(data.ProcessingInterval);
+        size += RawSize(data.AggregateConfiguration);
         return size;
     }
 
@@ -2548,9 +2547,9 @@ namespace OpcUa
     std::size_t RawSize<MonitoringFilterResult>(const MonitoringFilterResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
         return size;
     }
 
@@ -2559,12 +2558,12 @@ namespace OpcUa
     std::size_t RawSize<EventFilterResult>(const EventFilterResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.SelectClauseResults)
-        size += RawSizeContainer(data.SelectClauseDiagnosticInfos)
-        size += RawSize(data.WhereClauseResult)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.SelectClauseResults);
+        size += RawSizeContainer(data.SelectClauseDiagnosticInfos);
+        size += RawSize(data.WhereClauseResult);
         return size;
     }
 
@@ -2573,11 +2572,11 @@ namespace OpcUa
     std::size_t RawSize<HistoryUpdateEventResult>(const HistoryUpdateEventResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.EventFilterResult)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.EventFilterResult);
         return size;
     }
 
@@ -2586,12 +2585,12 @@ namespace OpcUa
     std::size_t RawSize<AggregateFilterResult>(const AggregateFilterResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.RevisedStartTime)
-        size += RawSize(data.RevisedProcessingInterval)
-        size += RawSize(data.RevisedAggregateConfiguration)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.RevisedStartTime);
+        size += RawSize(data.RevisedProcessingInterval);
+        size += RawSize(data.RevisedAggregateConfiguration);
         return size;
     }
 
@@ -2600,14 +2599,14 @@ namespace OpcUa
     std::size_t RawSize<MonitoringParameters>(const MonitoringParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ClientHandle)
-        size += RawSize(data.SamplingInterval)
-        size += RawSize(data.Filter)
-        size += RawSize(data.QueueSize)
-        size += RawSize(data.DiscardOldest)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ClientHandle);
+        size += RawSize(data.SamplingInterval);
+        size += RawSize(data.Filter);
+        size += RawSize(data.QueueSize);
+        size += RawSize(data.DiscardOldest);
         return size;
     }
 
@@ -2616,8 +2615,8 @@ namespace OpcUa
     std::size_t RawSize<MonitoredItemCreateParameters>(const MonitoredItemCreateParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.MonitoringMode)
-        size += RawSize(data.RequestedParameters)
+        size += RawSize(data.MonitoringMode);
+        size += RawSize(data.RequestedParameters);
         return size;
     }
 
@@ -2626,11 +2625,11 @@ namespace OpcUa
     std::size_t RawSize<MonitoredItemCreateRequest>(const MonitoredItemCreateRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ItemToMonitor)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ItemToMonitor);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2639,14 +2638,14 @@ namespace OpcUa
     std::size_t RawSize<MonitoredItemCreateResult>(const MonitoredItemCreateResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.MonitoredItemId)
-        size += RawSize(data.RevisedSamplingInterval)
-        size += RawSize(data.RevisedQueueSize)
-        size += RawSize(data.FilterResult)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.MonitoredItemId);
+        size += RawSize(data.RevisedSamplingInterval);
+        size += RawSize(data.RevisedQueueSize);
+        size += RawSize(data.FilterResult);
         return size;
     }
 
@@ -2655,9 +2654,9 @@ namespace OpcUa
     std::size_t RawSize<CreateMonitoredItemsParameters>(const CreateMonitoredItemsParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.TimestampsToReturn)
-        size += RawSizeContainer(data.ItemsToCreate)
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.TimestampsToReturn);
+        size += RawSizeContainer(data.ItemsToCreate);
         return size;
     }
 
@@ -2666,11 +2665,11 @@ namespace OpcUa
     std::size_t RawSize<CreateMonitoredItemsRequest>(const CreateMonitoredItemsRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2679,8 +2678,8 @@ namespace OpcUa
     std::size_t RawSize<CreateMonitoredItemsResult>(const CreateMonitoredItemsResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2689,11 +2688,11 @@ namespace OpcUa
     std::size_t RawSize<CreateMonitoredItemsResponse>(const CreateMonitoredItemsResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2702,7 +2701,7 @@ namespace OpcUa
     std::size_t RawSize<MonitoredItemModifyParameters>(const MonitoredItemModifyParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.RequestedParameters)
+        size += RawSize(data.RequestedParameters);
         return size;
     }
 
@@ -2711,11 +2710,11 @@ namespace OpcUa
     std::size_t RawSize<MonitoredItemModifyRequest>(const MonitoredItemModifyRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.MonitoredItemId)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.MonitoredItemId);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2724,13 +2723,13 @@ namespace OpcUa
     std::size_t RawSize<MonitoredItemModifyResult>(const MonitoredItemModifyResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.RevisedSamplingInterval)
-        size += RawSize(data.RevisedQueueSize)
-        size += RawSize(data.FilterResult)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.RevisedSamplingInterval);
+        size += RawSize(data.RevisedQueueSize);
+        size += RawSize(data.FilterResult);
         return size;
     }
 
@@ -2739,9 +2738,9 @@ namespace OpcUa
     std::size_t RawSize<ModifyMonitoredItemsParameters>(const ModifyMonitoredItemsParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.TimestampsToReturn)
-        size += RawSizeContainer(data.ItemsToModify)
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.TimestampsToReturn);
+        size += RawSizeContainer(data.ItemsToModify);
         return size;
     }
 
@@ -2750,11 +2749,11 @@ namespace OpcUa
     std::size_t RawSize<ModifyMonitoredItemsRequest>(const ModifyMonitoredItemsRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2763,8 +2762,8 @@ namespace OpcUa
     std::size_t RawSize<ModifyMonitoredItemsResult>(const ModifyMonitoredItemsResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2773,11 +2772,11 @@ namespace OpcUa
     std::size_t RawSize<ModifyMonitoredItemsResponse>(const ModifyMonitoredItemsResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2786,9 +2785,9 @@ namespace OpcUa
     std::size_t RawSize<SetMonitoringModeParameters>(const SetMonitoringModeParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.MonitoringMode)
-        size += RawSizeContainer(data.MonitoredItemIds)
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.MonitoringMode);
+        size += RawSizeContainer(data.MonitoredItemIds);
         return size;
     }
 
@@ -2797,11 +2796,11 @@ namespace OpcUa
     std::size_t RawSize<SetMonitoringModeRequest>(const SetMonitoringModeRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2810,8 +2809,8 @@ namespace OpcUa
     std::size_t RawSize<SetMonitoringModeResult>(const SetMonitoringModeResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2820,11 +2819,11 @@ namespace OpcUa
     std::size_t RawSize<SetMonitoringModeResponse>(const SetMonitoringModeResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2833,10 +2832,10 @@ namespace OpcUa
     std::size_t RawSize<SetTriggeringParameters>(const SetTriggeringParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.TriggeringItemId)
-        size += RawSizeContainer(data.LinksToAdd)
-        size += RawSizeContainer(data.LinksToRemove)
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.TriggeringItemId);
+        size += RawSizeContainer(data.LinksToAdd);
+        size += RawSizeContainer(data.LinksToRemove);
         return size;
     }
 
@@ -2845,11 +2844,11 @@ namespace OpcUa
     std::size_t RawSize<SetTriggeringRequest>(const SetTriggeringRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2858,10 +2857,10 @@ namespace OpcUa
     std::size_t RawSize<SetTriggeringResult>(const SetTriggeringResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.AddResults)
-        size += RawSizeContainer(data.AddDiagnosticInfos)
-        size += RawSizeContainer(data.RemoveResults)
-        size += RawSizeContainer(data.RemoveDiagnosticInfos)
+        size += RawSizeContainer(data.AddResults);
+        size += RawSizeContainer(data.AddDiagnosticInfos);
+        size += RawSizeContainer(data.RemoveResults);
+        size += RawSizeContainer(data.RemoveDiagnosticInfos);
         return size;
     }
 
@@ -2870,11 +2869,11 @@ namespace OpcUa
     std::size_t RawSize<SetTriggeringResponse>(const SetTriggeringResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2883,8 +2882,8 @@ namespace OpcUa
     std::size_t RawSize<DeleteMonitoredItemsParameters>(const DeleteMonitoredItemsParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSizeContainer(data.MonitoredItemIds)
+        size += RawSize(data.SubscriptionId);
+        size += RawSizeContainer(data.MonitoredItemIds);
         return size;
     }
 
@@ -2893,11 +2892,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteMonitoredItemsRequest>(const DeleteMonitoredItemsRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2906,8 +2905,8 @@ namespace OpcUa
     std::size_t RawSize<DeleteMonitoredItemsResult>(const DeleteMonitoredItemsResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -2916,11 +2915,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteMonitoredItemsResponse>(const DeleteMonitoredItemsResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2929,12 +2928,12 @@ namespace OpcUa
     std::size_t RawSize<CreateSubscriptionParameters>(const CreateSubscriptionParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.RequestedPublishingInterval)
-        size += RawSize(data.RequestedLifetimeCount)
-        size += RawSize(data.RequestedMaxKeepAliveCount)
-        size += RawSize(data.MaxNotificationsPerPublish)
-        size += RawSize(data.PublishingEnabled)
-        size += RawSize(data.Priority)
+        size += RawSize(data.RequestedPublishingInterval);
+        size += RawSize(data.RequestedLifetimeCount);
+        size += RawSize(data.RequestedMaxKeepAliveCount);
+        size += RawSize(data.MaxNotificationsPerPublish);
+        size += RawSize(data.PublishingEnabled);
+        size += RawSize(data.Priority);
         return size;
     }
 
@@ -2943,11 +2942,11 @@ namespace OpcUa
     std::size_t RawSize<CreateSubscriptionRequest>(const CreateSubscriptionRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2956,10 +2955,10 @@ namespace OpcUa
     std::size_t RawSize<CreateSubscriptionResult>(const CreateSubscriptionResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.RevisedPublishingInterval)
-        size += RawSize(data.RevisedLifetimeCount)
-        size += RawSize(data.RevisedMaxKeepAliveCount)
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.RevisedPublishingInterval);
+        size += RawSize(data.RevisedLifetimeCount);
+        size += RawSize(data.RevisedMaxKeepAliveCount);
         return size;
     }
 
@@ -2968,11 +2967,11 @@ namespace OpcUa
     std::size_t RawSize<CreateSubscriptionResponse>(const CreateSubscriptionResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -2981,12 +2980,12 @@ namespace OpcUa
     std::size_t RawSize<ModifySubscriptionParameters>(const ModifySubscriptionParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.RequestedPublishingInterval)
-        size += RawSize(data.RequestedLifetimeCount)
-        size += RawSize(data.RequestedMaxKeepAliveCount)
-        size += RawSize(data.MaxNotificationsPerPublish)
-        size += RawSize(data.Priority)
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.RequestedPublishingInterval);
+        size += RawSize(data.RequestedLifetimeCount);
+        size += RawSize(data.RequestedMaxKeepAliveCount);
+        size += RawSize(data.MaxNotificationsPerPublish);
+        size += RawSize(data.Priority);
         return size;
     }
 
@@ -2995,11 +2994,11 @@ namespace OpcUa
     std::size_t RawSize<ModifySubscriptionRequest>(const ModifySubscriptionRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3008,9 +3007,9 @@ namespace OpcUa
     std::size_t RawSize<ModifySubscriptionResult>(const ModifySubscriptionResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.RevisedPublishingInterval)
-        size += RawSize(data.RevisedLifetimeCount)
-        size += RawSize(data.RevisedMaxKeepAliveCount)
+        size += RawSize(data.RevisedPublishingInterval);
+        size += RawSize(data.RevisedLifetimeCount);
+        size += RawSize(data.RevisedMaxKeepAliveCount);
         return size;
     }
 
@@ -3019,11 +3018,11 @@ namespace OpcUa
     std::size_t RawSize<ModifySubscriptionResponse>(const ModifySubscriptionResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3032,8 +3031,8 @@ namespace OpcUa
     std::size_t RawSize<SetPublishingModeParameters>(const SetPublishingModeParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.PublishingEnabled)
-        size += RawSizeContainer(data.SubscriptionIds)
+        size += RawSize(data.PublishingEnabled);
+        size += RawSizeContainer(data.SubscriptionIds);
         return size;
     }
 
@@ -3042,11 +3041,11 @@ namespace OpcUa
     std::size_t RawSize<SetPublishingModeRequest>(const SetPublishingModeRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3055,8 +3054,8 @@ namespace OpcUa
     std::size_t RawSize<SetPublishingModeResult>(const SetPublishingModeResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -3065,11 +3064,11 @@ namespace OpcUa
     std::size_t RawSize<SetPublishingModeResponse>(const SetPublishingModeResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3078,12 +3077,12 @@ namespace OpcUa
     std::size_t RawSize<NotificationMessage>(const NotificationMessage& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SequenceNumber)
-        size += RawSize(data.PublishTime)
-        size += RawSizeContainer(data.NotificationData)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SequenceNumber);
+        size += RawSize(data.PublishTime);
+        size += RawSizeContainer(data.NotificationData);
         return size;
     }
 
@@ -3092,9 +3091,9 @@ namespace OpcUa
     std::size_t RawSize<NotificationData>(const NotificationData& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
         return size;
     }
 
@@ -3103,11 +3102,11 @@ namespace OpcUa
     std::size_t RawSize<MonitoredItemNotification>(const MonitoredItemNotification& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ClientHandle)
-        size += RawSize(data.Value)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ClientHandle);
+        size += RawSize(data.Value);
         return size;
     }
 
@@ -3116,11 +3115,11 @@ namespace OpcUa
     std::size_t RawSize<DataChangeNotification>(const DataChangeNotification& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.MonitoredItems)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.MonitoredItems);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -3129,11 +3128,11 @@ namespace OpcUa
     std::size_t RawSize<EventFieldList>(const EventFieldList& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ClientHandle)
-        size += RawSizeContainer(data.EventFields)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ClientHandle);
+        size += RawSizeContainer(data.EventFields);
         return size;
     }
 
@@ -3142,10 +3141,10 @@ namespace OpcUa
     std::size_t RawSize<EventNotificationList>(const EventNotificationList& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.Events)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.Events);
         return size;
     }
 
@@ -3154,10 +3153,10 @@ namespace OpcUa
     std::size_t RawSize<HistoryEventFieldList>(const HistoryEventFieldList& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.EventFields)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.EventFields);
         return size;
     }
 
@@ -3166,10 +3165,10 @@ namespace OpcUa
     std::size_t RawSize<HistoryEvent>(const HistoryEvent& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.Events)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.Events);
         return size;
     }
 
@@ -3178,13 +3177,13 @@ namespace OpcUa
     std::size_t RawSize<UpdateEventDetails>(const UpdateEventDetails& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.PerformInsertReplace)
-        size += RawSize(data.Filter)
-        size += RawSizeContainer(data.EventData)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.PerformInsertReplace);
+        size += RawSize(data.Filter);
+        size += RawSizeContainer(data.EventData);
         return size;
     }
 
@@ -3193,11 +3192,11 @@ namespace OpcUa
     std::size_t RawSize<StatusChangeNotification>(const StatusChangeNotification& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.DiagnosticInfo)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.DiagnosticInfo);
         return size;
     }
 
@@ -3206,11 +3205,11 @@ namespace OpcUa
     std::size_t RawSize<SubscriptionAcknowledgement>(const SubscriptionAcknowledgement& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.SequenceNumber)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.SequenceNumber);
         return size;
     }
 
@@ -3219,7 +3218,7 @@ namespace OpcUa
     std::size_t RawSize<PublishParameters>(const PublishParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.SubscriptionAcknowledgements)
+        size += RawSizeContainer(data.SubscriptionAcknowledgements);
         return size;
     }
 
@@ -3228,11 +3227,11 @@ namespace OpcUa
     std::size_t RawSize<PublishRequest>(const PublishRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3241,12 +3240,12 @@ namespace OpcUa
     std::size_t RawSize<PublishResult>(const PublishResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSizeContainer(data.AvailableSequenceNumbers)
-        size += RawSize(data.MoreNotifications)
-        size += RawSize(data.NotificationMessage)
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSize(data.SubscriptionId);
+        size += RawSizeContainer(data.AvailableSequenceNumbers);
+        size += RawSize(data.MoreNotifications);
+        size += RawSize(data.NotificationMessage);
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -3255,11 +3254,11 @@ namespace OpcUa
     std::size_t RawSize<PublishResponse>(const PublishResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3268,8 +3267,8 @@ namespace OpcUa
     std::size_t RawSize<RepublishParameters>(const RepublishParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.RetransmitSequenceNumber)
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.RetransmitSequenceNumber);
         return size;
     }
 
@@ -3278,11 +3277,11 @@ namespace OpcUa
     std::size_t RawSize<RepublishRequest>(const RepublishRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3291,7 +3290,7 @@ namespace OpcUa
     std::size_t RawSize<RepublishResult>(const RepublishResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.NotificationMessage)
+        size += RawSize(data.NotificationMessage);
         return size;
     }
 
@@ -3300,11 +3299,11 @@ namespace OpcUa
     std::size_t RawSize<RepublishResponse>(const RepublishResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3313,11 +3312,11 @@ namespace OpcUa
     std::size_t RawSize<TransferResult>(const TransferResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSizeContainer(data.AvailableSequenceNumbers)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSizeContainer(data.AvailableSequenceNumbers);
         return size;
     }
 
@@ -3326,8 +3325,8 @@ namespace OpcUa
     std::size_t RawSize<TransferSubscriptionsParameters>(const TransferSubscriptionsParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.SubscriptionIds)
-        size += RawSize(data.SendInitialValues)
+        size += RawSizeContainer(data.SubscriptionIds);
+        size += RawSize(data.SendInitialValues);
         return size;
     }
 
@@ -3336,11 +3335,11 @@ namespace OpcUa
     std::size_t RawSize<TransferSubscriptionsRequest>(const TransferSubscriptionsRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3349,8 +3348,8 @@ namespace OpcUa
     std::size_t RawSize<TransferSubscriptionsResult>(const TransferSubscriptionsResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -3359,11 +3358,11 @@ namespace OpcUa
     std::size_t RawSize<TransferSubscriptionsResponse>(const TransferSubscriptionsResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3372,7 +3371,7 @@ namespace OpcUa
     std::size_t RawSize<DeleteSubscriptionsParameters>(const DeleteSubscriptionsParameters& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.SubscriptionIds)
+        size += RawSizeContainer(data.SubscriptionIds);
         return size;
     }
 
@@ -3381,11 +3380,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteSubscriptionsRequest>(const DeleteSubscriptionsRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3394,8 +3393,8 @@ namespace OpcUa
     std::size_t RawSize<DeleteSubscriptionsResult>(const DeleteSubscriptionsResult& data)
     {
         size_t size = 0;
-        size += RawSizeContainer(data.Results)
-        size += RawSizeContainer(data.DiagnosticInfos)
+        size += RawSizeContainer(data.Results);
+        size += RawSizeContainer(data.DiagnosticInfos);
         return size;
     }
 
@@ -3404,11 +3403,11 @@ namespace OpcUa
     std::size_t RawSize<DeleteSubscriptionsResponse>(const DeleteSubscriptionsResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3417,34 +3416,34 @@ namespace OpcUa
     std::size_t RawSize<ScalarTestType>(const ScalarTestType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Boolean)
-        size += RawSize(data.SByte)
-        size += RawSize(data.Byte)
-        size += RawSize(data.Int16)
-        size += RawSize(data.UInt16)
-        size += RawSize(data.Int32)
-        size += RawSize(data.UInt32)
-        size += RawSize(data.Int64)
-        size += RawSize(data.UInt64)
-        size += RawSize(data.Float)
-        size += RawSize(data.Double)
-        size += RawSize(data.String)
-        size += RawSize(data.DateTime)
-        size += RawSize(data.Guid)
-        size += RawSize(data.ByteString)
-        size += RawSize(data.XmlElement)
-        size += RawSize(data.NodeId)
-        size += RawSize(data.ExpandedNodeId)
-        size += RawSize(data.Status)
-        size += RawSize(data.DiagnosticInfo)
-        size += RawSize(data.QualifiedName)
-        size += RawSize(data.LocalizedText)
-        size += RawSize(data.ExtensionObject)
-        size += RawSize(data.DataValue)
-        size += RawSize(data.EnumeratedValue)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Boolean);
+        size += RawSize(data.SByte);
+        size += RawSize(data.Byte);
+        size += RawSize(data.Int16);
+        size += RawSize(data.UInt16);
+        size += RawSize(data.Int32);
+        size += RawSize(data.UInt32);
+        size += RawSize(data.Int64);
+        size += RawSize(data.UInt64);
+        size += RawSize(data.Float);
+        size += RawSize(data.Double);
+        size += RawSize(data.String);
+        size += RawSize(data.DateTime);
+        size += RawSize(data.Guid);
+        size += RawSize(data.ByteString);
+        size += RawSize(data.XmlElement);
+        size += RawSize(data.NodeId);
+        size += RawSize(data.ExpandedNodeId);
+        size += RawSize(data.Status);
+        size += RawSize(data.DiagnosticInfo);
+        size += RawSize(data.QualifiedName);
+        size += RawSize(data.LocalizedText);
+        size += RawSize(data.ExtensionObject);
+        size += RawSize(data.DataValue);
+        size += RawSize(data.EnumeratedValue);
         return size;
     }
 
@@ -3453,34 +3452,34 @@ namespace OpcUa
     std::size_t RawSize<ArrayTestType>(const ArrayTestType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.Booleans)
-        size += RawSizeContainer(data.SBytes)
-        size += RawSizeContainer(data.Int16s)
-        size += RawSizeContainer(data.UInt16s)
-        size += RawSizeContainer(data.Int32s)
-        size += RawSizeContainer(data.UInt32s)
-        size += RawSizeContainer(data.Int64s)
-        size += RawSizeContainer(data.UInt64s)
-        size += RawSizeContainer(data.Floats)
-        size += RawSizeContainer(data.Doubles)
-        size += RawSizeContainer(data.Strings)
-        size += RawSizeContainer(data.DateTimes)
-        size += RawSizeContainer(data.Guids)
-        size += RawSizeContainer(data.ByteStrings)
-        size += RawSizeContainer(data.XmlElements)
-        size += RawSizeContainer(data.NodeIds)
-        size += RawSizeContainer(data.ExpandedNodeIds)
-        size += RawSizeContainer(data.StatusCodes)
-        size += RawSizeContainer(data.DiagnosticInfos)
-        size += RawSizeContainer(data.QualifiedNames)
-        size += RawSizeContainer(data.LocalizedTexts)
-        size += RawSizeContainer(data.ExtensionObjects)
-        size += RawSizeContainer(data.DataValues)
-        size += RawSizeContainer(data.Variants)
-        size += RawSizeContainer(data.EnumeratedValues)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.Booleans);
+        size += RawSizeContainer(data.SBytes);
+        size += RawSizeContainer(data.Int16s);
+        size += RawSizeContainer(data.UInt16s);
+        size += RawSizeContainer(data.Int32s);
+        size += RawSizeContainer(data.UInt32s);
+        size += RawSizeContainer(data.Int64s);
+        size += RawSizeContainer(data.UInt64s);
+        size += RawSizeContainer(data.Floats);
+        size += RawSizeContainer(data.Doubles);
+        size += RawSizeContainer(data.Strings);
+        size += RawSizeContainer(data.DateTimes);
+        size += RawSizeContainer(data.Guids);
+        size += RawSizeContainer(data.ByteStrings);
+        size += RawSizeContainer(data.XmlElements);
+        size += RawSizeContainer(data.NodeIds);
+        size += RawSizeContainer(data.ExpandedNodeIds);
+        size += RawSizeContainer(data.StatusCodes);
+        size += RawSizeContainer(data.DiagnosticInfos);
+        size += RawSizeContainer(data.QualifiedNames);
+        size += RawSizeContainer(data.LocalizedTexts);
+        size += RawSizeContainer(data.ExtensionObjects);
+        size += RawSizeContainer(data.DataValues);
+        size += RawSizeContainer(data.Variants);
+        size += RawSizeContainer(data.EnumeratedValues);
         return size;
     }
 
@@ -3489,11 +3488,11 @@ namespace OpcUa
     std::size_t RawSize<CompositeTestType>(const CompositeTestType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Field1)
-        size += RawSize(data.Field2)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Field1);
+        size += RawSize(data.Field2);
         return size;
     }
 
@@ -3502,9 +3501,9 @@ namespace OpcUa
     std::size_t RawSize<TestStackParameters>(const TestStackParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.TestId)
-        size += RawSize(data.Iteration)
-        size += RawSize(data.Input)
+        size += RawSize(data.TestId);
+        size += RawSize(data.Iteration);
+        size += RawSize(data.Input);
         return size;
     }
 
@@ -3513,11 +3512,11 @@ namespace OpcUa
     std::size_t RawSize<TestStackRequest>(const TestStackRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3526,7 +3525,7 @@ namespace OpcUa
     std::size_t RawSize<TestStackResult>(const TestStackResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Output)
+        size += RawSize(data.Output);
         return size;
     }
 
@@ -3535,11 +3534,11 @@ namespace OpcUa
     std::size_t RawSize<TestStackResponse>(const TestStackResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3548,9 +3547,9 @@ namespace OpcUa
     std::size_t RawSize<TestStackExParameters>(const TestStackExParameters& data)
     {
         size_t size = 0;
-        size += RawSize(data.TestId)
-        size += RawSize(data.Iteration)
-        size += RawSize(data.Input)
+        size += RawSize(data.TestId);
+        size += RawSize(data.Iteration);
+        size += RawSize(data.Input);
         return size;
     }
 
@@ -3559,11 +3558,11 @@ namespace OpcUa
     std::size_t RawSize<TestStackExRequest>(const TestStackExRequest& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3572,7 +3571,7 @@ namespace OpcUa
     std::size_t RawSize<TestStackExResult>(const TestStackExResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Output)
+        size += RawSize(data.Output);
         return size;
     }
 
@@ -3581,11 +3580,11 @@ namespace OpcUa
     std::size_t RawSize<TestStackExResponse>(const TestStackExResponse& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Header)
-        size += RawSize(data.Parameters)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Header);
+        size += RawSize(data.Parameters);
         return size;
     }
 
@@ -3594,15 +3593,15 @@ namespace OpcUa
     std::size_t RawSize<BuildInfo>(const BuildInfo& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ProductUri)
-        size += RawSize(data.ManufacturerName)
-        size += RawSize(data.ProductName)
-        size += RawSize(data.SoftwareVersion)
-        size += RawSize(data.BuildNumber)
-        size += RawSize(data.BuildDate)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ProductUri);
+        size += RawSize(data.ManufacturerName);
+        size += RawSize(data.ProductName);
+        size += RawSize(data.SoftwareVersion);
+        size += RawSize(data.BuildNumber);
+        size += RawSize(data.BuildDate);
         return size;
     }
 
@@ -3611,12 +3610,12 @@ namespace OpcUa
     std::size_t RawSize<RedundantServerDataType>(const RedundantServerDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ServerId)
-        size += RawSize(data.ServiceLevel)
-        size += RawSize(data.ServerState)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ServerId);
+        size += RawSize(data.ServiceLevel);
+        size += RawSize(data.ServerState);
         return size;
     }
 
@@ -3625,10 +3624,10 @@ namespace OpcUa
     std::size_t RawSize<EndpointUrlListDataType>(const EndpointUrlListDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSizeContainer(data.EndpointUrlList)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSizeContainer(data.EndpointUrlList);
         return size;
     }
 
@@ -3637,11 +3636,11 @@ namespace OpcUa
     std::size_t RawSize<NetworkGroupDataType>(const NetworkGroupDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ServerUri)
-        size += RawSizeContainer(data.NetworkPaths)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ServerUri);
+        size += RawSizeContainer(data.NetworkPaths);
         return size;
     }
 
@@ -3650,13 +3649,13 @@ namespace OpcUa
     std::size_t RawSize<SamplingIntervalDiagnosticsDataType>(const SamplingIntervalDiagnosticsDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SamplingInterval)
-        size += RawSize(data.MonitoredItemCount)
-        size += RawSize(data.MaxMonitoredItemCount)
-        size += RawSize(data.DisabledMonitoredItemCount)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SamplingInterval);
+        size += RawSize(data.MonitoredItemCount);
+        size += RawSize(data.MaxMonitoredItemCount);
+        size += RawSize(data.DisabledMonitoredItemCount);
         return size;
     }
 
@@ -3665,21 +3664,21 @@ namespace OpcUa
     std::size_t RawSize<ServerDiagnosticsSummaryDataType>(const ServerDiagnosticsSummaryDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.ServerViewCount)
-        size += RawSize(data.CurrentSessionCount)
-        size += RawSize(data.CumulatedSessionCount)
-        size += RawSize(data.SecurityRejectedSessionCount)
-        size += RawSize(data.RejectedSessionCount)
-        size += RawSize(data.SessionTimeoutCount)
-        size += RawSize(data.SessionAbortCount)
-        size += RawSize(data.CurrentSubscriptionCount)
-        size += RawSize(data.CumulatedSubscriptionCount)
-        size += RawSize(data.PublishingIntervalCount)
-        size += RawSize(data.SecurityRejectedRequestsCount)
-        size += RawSize(data.RejectedRequestsCount)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.ServerViewCount);
+        size += RawSize(data.CurrentSessionCount);
+        size += RawSize(data.CumulatedSessionCount);
+        size += RawSize(data.SecurityRejectedSessionCount);
+        size += RawSize(data.RejectedSessionCount);
+        size += RawSize(data.SessionTimeoutCount);
+        size += RawSize(data.SessionAbortCount);
+        size += RawSize(data.CurrentSubscriptionCount);
+        size += RawSize(data.CumulatedSubscriptionCount);
+        size += RawSize(data.PublishingIntervalCount);
+        size += RawSize(data.SecurityRejectedRequestsCount);
+        size += RawSize(data.RejectedRequestsCount);
         return size;
     }
 
@@ -3688,15 +3687,15 @@ namespace OpcUa
     std::size_t RawSize<ServerStatusDataType>(const ServerStatusDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.StartTime)
-        size += RawSize(data.CurrentTime)
-        size += RawSize(data.State)
-        size += RawSize(data.BuildInfo)
-        size += RawSize(data.SecondsTillShutdown)
-        size += RawSize(data.ShutdownReason)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.StartTime);
+        size += RawSize(data.CurrentTime);
+        size += RawSize(data.State);
+        size += RawSize(data.BuildInfo);
+        size += RawSize(data.SecondsTillShutdown);
+        size += RawSize(data.ShutdownReason);
         return size;
     }
 
@@ -3705,17 +3704,17 @@ namespace OpcUa
     std::size_t RawSize<SessionSecurityDiagnosticsDataType>(const SessionSecurityDiagnosticsDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SessionId)
-        size += RawSize(data.ClientUserIdOfSession)
-        size += RawSizeContainer(data.ClientUserIdHistory)
-        size += RawSize(data.AuthenticationMechanism)
-        size += RawSize(data.TransportProtocol)
-        size += RawSize(data.SecurityMode)
-        size += RawSize(data.SecurityPolicyUri)
-        size += RawSize(data.ClientCertificate)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SessionId);
+        size += RawSize(data.ClientUserIdOfSession);
+        size += RawSizeContainer(data.ClientUserIdHistory);
+        size += RawSize(data.AuthenticationMechanism);
+        size += RawSize(data.TransportProtocol);
+        size += RawSize(data.SecurityMode);
+        size += RawSize(data.SecurityPolicyUri);
+        size += RawSize(data.ClientCertificate);
         return size;
     }
 
@@ -3724,11 +3723,11 @@ namespace OpcUa
     std::size_t RawSize<ServiceCounterDataType>(const ServiceCounterDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.TotalCount)
-        size += RawSize(data.ErrorCount)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.TotalCount);
+        size += RawSize(data.ErrorCount);
         return size;
     }
 
@@ -3737,52 +3736,52 @@ namespace OpcUa
     std::size_t RawSize<SessionDiagnosticsDataType>(const SessionDiagnosticsDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SessionId)
-        size += RawSize(data.SessionName)
-        size += RawSize(data.ClientDescription)
-        size += RawSize(data.ServerUri)
-        size += RawSize(data.EndpointUrl)
-        size += RawSizeContainer(data.LocaleIds)
-        size += RawSize(data.ActualSessionTimeout)
-        size += RawSize(data.MaxResponseMessageSize)
-        size += RawSize(data.ClientConnectionTime)
-        size += RawSize(data.ClientLastContactTime)
-        size += RawSize(data.CurrentSubscriptionsCount)
-        size += RawSize(data.CurrentMonitoredItemsCount)
-        size += RawSize(data.CurrentPublishRequestsInQueue)
-        size += RawSize(data.TotalRequestCount)
-        size += RawSize(data.UnauthorizedRequestCount)
-        size += RawSize(data.ReadCount)
-        size += RawSize(data.HistoryReadCount)
-        size += RawSize(data.WriteCount)
-        size += RawSize(data.HistoryUpdateCount)
-        size += RawSize(data.CallCount)
-        size += RawSize(data.CreateMonitoredItemsCount)
-        size += RawSize(data.ModifyMonitoredItemsCount)
-        size += RawSize(data.SetMonitoringModeCount)
-        size += RawSize(data.SetTriggeringCount)
-        size += RawSize(data.DeleteMonitoredItemsCount)
-        size += RawSize(data.CreateSubscriptionCount)
-        size += RawSize(data.ModifySubscriptionCount)
-        size += RawSize(data.SetPublishingModeCount)
-        size += RawSize(data.PublishCount)
-        size += RawSize(data.RepublishCount)
-        size += RawSize(data.TransferSubscriptionsCount)
-        size += RawSize(data.DeleteSubscriptionsCount)
-        size += RawSize(data.AddNodesCount)
-        size += RawSize(data.AddReferencesCount)
-        size += RawSize(data.DeleteNodesCount)
-        size += RawSize(data.DeleteReferencesCount)
-        size += RawSize(data.BrowseCount)
-        size += RawSize(data.BrowseNextCount)
-        size += RawSize(data.TranslateBrowsePathsToNodeIdsCount)
-        size += RawSize(data.QueryFirstCount)
-        size += RawSize(data.QueryNextCount)
-        size += RawSize(data.RegisterNodesCount)
-        size += RawSize(data.UnregisterNodesCount)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SessionId);
+        size += RawSize(data.SessionName);
+        size += RawSize(data.ClientDescription);
+        size += RawSize(data.ServerUri);
+        size += RawSize(data.EndpointUrl);
+        size += RawSizeContainer(data.LocaleIds);
+        size += RawSize(data.ActualSessionTimeout);
+        size += RawSize(data.MaxResponseMessageSize);
+        size += RawSize(data.ClientConnectionTime);
+        size += RawSize(data.ClientLastContactTime);
+        size += RawSize(data.CurrentSubscriptionsCount);
+        size += RawSize(data.CurrentMonitoredItemsCount);
+        size += RawSize(data.CurrentPublishRequestsInQueue);
+        size += RawSize(data.TotalRequestCount);
+        size += RawSize(data.UnauthorizedRequestCount);
+        size += RawSize(data.ReadCount);
+        size += RawSize(data.HistoryReadCount);
+        size += RawSize(data.WriteCount);
+        size += RawSize(data.HistoryUpdateCount);
+        size += RawSize(data.CallCount);
+        size += RawSize(data.CreateMonitoredItemsCount);
+        size += RawSize(data.ModifyMonitoredItemsCount);
+        size += RawSize(data.SetMonitoringModeCount);
+        size += RawSize(data.SetTriggeringCount);
+        size += RawSize(data.DeleteMonitoredItemsCount);
+        size += RawSize(data.CreateSubscriptionCount);
+        size += RawSize(data.ModifySubscriptionCount);
+        size += RawSize(data.SetPublishingModeCount);
+        size += RawSize(data.PublishCount);
+        size += RawSize(data.RepublishCount);
+        size += RawSize(data.TransferSubscriptionsCount);
+        size += RawSize(data.DeleteSubscriptionsCount);
+        size += RawSize(data.AddNodesCount);
+        size += RawSize(data.AddReferencesCount);
+        size += RawSize(data.DeleteNodesCount);
+        size += RawSize(data.DeleteReferencesCount);
+        size += RawSize(data.BrowseCount);
+        size += RawSize(data.BrowseNextCount);
+        size += RawSize(data.TranslateBrowsePathsToNodeIdsCount);
+        size += RawSize(data.QueryFirstCount);
+        size += RawSize(data.QueryNextCount);
+        size += RawSize(data.RegisterNodesCount);
+        size += RawSize(data.UnregisterNodesCount);
         return size;
     }
 
@@ -3791,11 +3790,11 @@ namespace OpcUa
     std::size_t RawSize<StatusResult>(const StatusResult& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Status)
-        size += RawSize(data.DiagnosticInfo)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Status);
+        size += RawSize(data.DiagnosticInfo);
         return size;
     }
 
@@ -3804,40 +3803,40 @@ namespace OpcUa
     std::size_t RawSize<SubscriptionDiagnosticsDataType>(const SubscriptionDiagnosticsDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.SessionId)
-        size += RawSize(data.SubscriptionId)
-        size += RawSize(data.Priority)
-        size += RawSize(data.PublishingInterval)
-        size += RawSize(data.MaxKeepAliveCount)
-        size += RawSize(data.MaxLifetimeCount)
-        size += RawSize(data.MaxNotificationsPerPublish)
-        size += RawSize(data.PublishingEnabled)
-        size += RawSize(data.ModifyCount)
-        size += RawSize(data.EnableCount)
-        size += RawSize(data.DisableCount)
-        size += RawSize(data.RepublishRequestCount)
-        size += RawSize(data.RepublishMessageRequestCount)
-        size += RawSize(data.RepublishMessageCount)
-        size += RawSize(data.TransferRequestCount)
-        size += RawSize(data.TransferredToAltClientCount)
-        size += RawSize(data.TransferredToSameClientCount)
-        size += RawSize(data.PublishRequestCount)
-        size += RawSize(data.DataChangeNotificationsCount)
-        size += RawSize(data.EventNotificationsCount)
-        size += RawSize(data.NotificationsCount)
-        size += RawSize(data.LatePublishRequestCount)
-        size += RawSize(data.CurrentKeepAliveCount)
-        size += RawSize(data.CurrentLifetimeCount)
-        size += RawSize(data.UnacknowledgedMessageCount)
-        size += RawSize(data.DiscardedMessageCount)
-        size += RawSize(data.MonitoredItemCount)
-        size += RawSize(data.DisabledMonitoredItemCount)
-        size += RawSize(data.MonitoringQueueOverflowCount)
-        size += RawSize(data.NextSequenceNumber)
-        size += RawSize(data.EventQueueOverFlowCount)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.SessionId);
+        size += RawSize(data.SubscriptionId);
+        size += RawSize(data.Priority);
+        size += RawSize(data.PublishingInterval);
+        size += RawSize(data.MaxKeepAliveCount);
+        size += RawSize(data.MaxLifetimeCount);
+        size += RawSize(data.MaxNotificationsPerPublish);
+        size += RawSize(data.PublishingEnabled);
+        size += RawSize(data.ModifyCount);
+        size += RawSize(data.EnableCount);
+        size += RawSize(data.DisableCount);
+        size += RawSize(data.RepublishRequestCount);
+        size += RawSize(data.RepublishMessageRequestCount);
+        size += RawSize(data.RepublishMessageCount);
+        size += RawSize(data.TransferRequestCount);
+        size += RawSize(data.TransferredToAltClientCount);
+        size += RawSize(data.TransferredToSameClientCount);
+        size += RawSize(data.PublishRequestCount);
+        size += RawSize(data.DataChangeNotificationsCount);
+        size += RawSize(data.EventNotificationsCount);
+        size += RawSize(data.NotificationsCount);
+        size += RawSize(data.LatePublishRequestCount);
+        size += RawSize(data.CurrentKeepAliveCount);
+        size += RawSize(data.CurrentLifetimeCount);
+        size += RawSize(data.UnacknowledgedMessageCount);
+        size += RawSize(data.DiscardedMessageCount);
+        size += RawSize(data.MonitoredItemCount);
+        size += RawSize(data.DisabledMonitoredItemCount);
+        size += RawSize(data.MonitoringQueueOverflowCount);
+        size += RawSize(data.NextSequenceNumber);
+        size += RawSize(data.EventQueueOverFlowCount);
         return size;
     }
 
@@ -3846,12 +3845,12 @@ namespace OpcUa
     std::size_t RawSize<ModelChangeStructureDataType>(const ModelChangeStructureDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Affected)
-        size += RawSize(data.AffectedType)
-        size += RawSize(data.Verb)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Affected);
+        size += RawSize(data.AffectedType);
+        size += RawSize(data.Verb);
         return size;
     }
 
@@ -3860,11 +3859,11 @@ namespace OpcUa
     std::size_t RawSize<SemanticChangeStructureDataType>(const SemanticChangeStructureDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Affected)
-        size += RawSize(data.AffectedType)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Affected);
+        size += RawSize(data.AffectedType);
         return size;
     }
 
@@ -3873,11 +3872,11 @@ namespace OpcUa
     std::size_t RawSize<Range>(const Range& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Low)
-        size += RawSize(data.High)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Low);
+        size += RawSize(data.High);
         return size;
     }
 
@@ -3886,13 +3885,13 @@ namespace OpcUa
     std::size_t RawSize<EUInformation>(const EUInformation& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.NamespaceUri)
-        size += RawSize(data.UnitId)
-        size += RawSize(data.DisplayName)
-        size += RawSize(data.Description)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.NamespaceUri);
+        size += RawSize(data.UnitId);
+        size += RawSize(data.DisplayName);
+        size += RawSize(data.Description);
         return size;
     }
 
@@ -3901,11 +3900,11 @@ namespace OpcUa
     std::size_t RawSize<ComplexNumberType>(const ComplexNumberType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Real)
-        size += RawSize(data.Imaginary)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Real);
+        size += RawSize(data.Imaginary);
         return size;
     }
 
@@ -3914,11 +3913,11 @@ namespace OpcUa
     std::size_t RawSize<DoubleComplexNumberType>(const DoubleComplexNumberType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Real)
-        size += RawSize(data.Imaginary)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Real);
+        size += RawSize(data.Imaginary);
         return size;
     }
 
@@ -3927,14 +3926,14 @@ namespace OpcUa
     std::size_t RawSize<AxisInformation>(const AxisInformation& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.EngineeringUnits)
-        size += RawSize(data.EURange)
-        size += RawSize(data.Title)
-        size += RawSize(data.AxisScaleType)
-        size += RawSizeContainer(data.AxisSteps)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.EngineeringUnits);
+        size += RawSize(data.EURange);
+        size += RawSize(data.Title);
+        size += RawSize(data.AxisScaleType);
+        size += RawSizeContainer(data.AxisSteps);
         return size;
     }
 
@@ -3943,11 +3942,11 @@ namespace OpcUa
     std::size_t RawSize<XVType>(const XVType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.X)
-        size += RawSize(data.Value)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.X);
+        size += RawSize(data.Value);
         return size;
     }
 
@@ -3956,19 +3955,19 @@ namespace OpcUa
     std::size_t RawSize<ProgramDiagnosticDataType>(const ProgramDiagnosticDataType& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.CreateSessionId)
-        size += RawSize(data.CreateClientName)
-        size += RawSize(data.InvocationCreationTime)
-        size += RawSize(data.LastTransitionTime)
-        size += RawSize(data.LastMethodCall)
-        size += RawSize(data.LastMethodSessionId)
-        size += RawSizeContainer(data.LastMethodInputArguments)
-        size += RawSizeContainer(data.LastMethodOutputArguments)
-        size += RawSize(data.LastMethodCallTime)
-        size += RawSize(data.LastMethodReturnStatus)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.CreateSessionId);
+        size += RawSize(data.CreateClientName);
+        size += RawSize(data.InvocationCreationTime);
+        size += RawSize(data.LastTransitionTime);
+        size += RawSize(data.LastMethodCall);
+        size += RawSize(data.LastMethodSessionId);
+        size += RawSizeContainer(data.LastMethodInputArguments);
+        size += RawSizeContainer(data.LastMethodOutputArguments);
+        size += RawSize(data.LastMethodCallTime);
+        size += RawSize(data.LastMethodReturnStatus);
         return size;
     }
 
@@ -3977,12 +3976,12 @@ namespace OpcUa
     std::size_t RawSize<Annotation>(const Annotation& data)
     {
         size_t size = 0;
-        size += RawSize(data.Encoding)
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId)
-        size += RawSize(data.BodyLength)
-        size += RawSize(data.Message)
-        size += RawSize(data.UserName)
-        size += RawSize(data.AnnotationTime)
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        size += RawSize(data.Message);
+        size += RawSize(data.UserName);
+        size += RawSize(data.AnnotationTime);
         return size;
     }
 

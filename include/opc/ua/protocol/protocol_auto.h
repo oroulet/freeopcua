@@ -46,7 +46,6 @@ namespace OpcUa
     {
          uint8_t Encoding;
          OpcUa::ExpandedNodeId TypeId;
-         int32_t BodyLength;
          std::vector<uint8_t> Body;
     };
 

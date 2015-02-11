@@ -240,7 +240,7 @@ def remove_vector_length(model):
     for struct in model.structs:
         new = []
         for field in struct.fields:
-            if not field.name.startswith("NoOf"):
+            if not field.name == "BodyLength" and not field.name.startswith("NoOf"):
                 new.append(field)
         struct.fields = new
 
@@ -376,8 +376,12 @@ class Parser(object):
         for name, bit in base.bits.items():
             struct.bits[name] = bit
         for idx, field in enumerate(base.fields):
-            if idx == ( len(base.fields) -1 ) and field.name == "Body":
-                continue
+            #if field.name == "Body" and idx != ( len(base.fields) -1 ):
+                #print("Field is names Body", struct.name, field.name)
+                #field.name = "BodyLength"
+                #field.uatype = "Int32"
+                #field.length = None
+                #print("Field is names Body 2", struct.name, field.name)
             field = copy(field)
             if not field.sourcetype:
                 field.sourcetype = base.name
@@ -491,9 +495,9 @@ class CodeGenerator(object):
                 if field.get_ctype() == struct.name:
                     prefix = "*"
                 if field.length:
-                    self.write_size("        {}size += RawSizeContainer({}data.{})".format(switch, prefix, field.name))
+                    self.write_size("        {}size += RawSizeContainer({}data.{});".format(switch, prefix, field.name))
                 else:
-                    self.write_size("        {}size += RawSize({}data.{})".format(switch, prefix, field.name))
+                    self.write_size("        {}size += RawSize({}data.{});".format(switch, prefix, field.name))
             self.write_size("        return size;")
         self.write_size("    }")
         self.write_size("")
@@ -506,7 +510,13 @@ class CodeGenerator(object):
         if type(struct) == Enum:
             self.write_ser("        *this << static_cast<{}>(data);".format(struct.get_ctype()))
         else:
-            for field in struct.fields:
+            for idx, field in enumerate(struct.fields):
+                if field.name == "Body" and idx != (len(struct.fields) - 1):
+                    self.write_ser("        int32_t bodylength = RawSize(data) - RawSize(data.Encoding);")
+                    self.write_ser("        if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);")
+                    self.write_ser("        *this << bodylength;")
+                    continue
+
                 switch = ""
                 if field.switchfield:
                     if field.switchvalue:
@@ -536,7 +546,11 @@ class CodeGenerator(object):
             #self.write_deser("        data = static_cast<{}>(tmp);".format(struct.get_ctype()))
             self.write_deser("        data = static_cast<{}>(tmp);".format(struct.name))
         else:
-            for field in struct.fields:
+            for idx, field in enumerate(struct.fields):
+                if field.name == "Body" and idx != (len(struct.fields) - 1):
+                    self.write_deser("        int32_t tmp; //Not used")
+                    self.write_deser("        *this >> tmp;")
+                    continue
                 switch = ""
                 if field.switchfield:
                     if field.switchvalue:
