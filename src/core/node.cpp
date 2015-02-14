@@ -245,7 +245,7 @@ namespace OpcUa
     item.BrowseName = browsename;
     item.ParentNodeId = this->Id;
     item.RequestedNewNodeId = nodeid;
-    item.Class = NodeClass::Object;
+    item.NodeClass = NodeClass::Object;
     item.ReferenceTypeId = ReferenceID::Organizes; 
     item.TypeDefinition = ObjectId::FolderType; 
     ObjectAttributes attr;
@@ -284,7 +284,7 @@ namespace OpcUa
     item.BrowseName = browsename;
     item.ParentNodeId = this->Id;
     item.RequestedNewNodeId = nodeid;
-    item.Class = NodeClass::Object;
+    item.NodeClass = NodeClass::Object;
     item.ReferenceTypeId = ReferenceID::HasComponent; 
     item.TypeDefinition = ObjectId::BaseObjectType; 
     ObjectAttributes attr;
@@ -325,7 +325,7 @@ namespace OpcUa
     item.BrowseName = browsename;
     item.ParentNodeId = this->Id;
     item.RequestedNewNodeId = nodeid;
-    item.Class = NodeClass::Variable;
+    item.NodeClass = NodeClass::Variable;
     item.ReferenceTypeId = ReferenceID::HasComponent; 
     item.TypeDefinition = ObjectId::BaseDataVariableType; 
     VariableAttributes attr;
@@ -375,7 +375,7 @@ namespace OpcUa
     item.BrowseName = browsename;
     item.ParentNodeId = this->Id;
     item.RequestedNewNodeId = nodeid;
-    item.Class = NodeClass::Variable;
+    item.NodeClass = NodeClass::Variable;
     item.ReferenceTypeId = ReferenceID::HasProperty; 
     item.TypeDefinition = ObjectId::PropertyType; 
     VariableAttributes attr;

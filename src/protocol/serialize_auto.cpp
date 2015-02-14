@@ -212,15 +212,6 @@ namespace OpcUa
 
 
     template<>
-    void DataSerializer::Serialize<ExtensionObject>(const ExtensionObject& data)
-    {
-        *this << data.Encoding;
-        if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        SerializeContainer(*this, data.Body);
-    }
-
-
-    template<>
     void DataSerializer::Serialize<Argument>(const Argument& data)
     {
         *this << data.Encoding;

@@ -981,7 +981,7 @@ namespace
         desc.DisplayName = ref.TargetDisplayName;
         desc.IsForward = ref.IsForward;
         desc.ReferenceTypeId = ref.ID;
-        desc.TargetNodeClass = ref.TargetClass;
+        descNodeClass = ref.TargetClass;
         desc.NodeId = ref.TargetNode;
         desc.TargetNodeTypeDefinition = ref.TargetType;
         //Registry.AddReference(node.ID, desc);

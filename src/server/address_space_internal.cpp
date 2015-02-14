@@ -36,7 +36,7 @@ namespace OpcUa
 
       AddNodesItem rootNode;
       rootNode.BrowseName = QualifiedName(0, OpcUa::Names::Root);
-      rootNode.Class = NodeClass::Object;
+      rootNode.NodeClass = NodeClass::Object;
       rootNode.RequestedNewNodeId = ObjectId::RootFolder;
       rootNode.TypeDefinition = ObjectId::FolderType;
       rootNode.Attributes = attrs;
@@ -331,7 +331,7 @@ namespace OpcUa
         if (Debug) std::cout << "AddressSpaceInternal | Reference has wrong type." << std::endl;
         return false;
       }
-      if (desc.NodeClassMask && (desc.NodeClassMask & static_cast<int32_t>(reference.TargetNodeClass)) == 0)
+      if (desc.NodeClassMask && (desc.NodeClassMask & static_cast<int32_t>(referenceNodeClass)) == 0)
       {
         if (Debug) std::cout << "AddressSpaceInternal | Reference has wrong class." << std::endl;
         return false;
@@ -404,7 +404,7 @@ namespace OpcUa
       //Add Common attributes
       nodestruct.Attributes[AttributeID::NodeId].Value = resultID;
       nodestruct.Attributes[AttributeID::BrowseName].Value = item.BrowseName;
-      nodestruct.Attributes[AttributeID::NodeClass].Value = static_cast<int32_t>(item.Class);
+      nodestruct.Attributes[AttributeID::NodeClass].Value = static_cast<int32_t>(item.NodeClass);
 
       // Add requested attributes
       for (const auto& attr: item.Attributes.Attributes)
@@ -423,7 +423,7 @@ namespace OpcUa
         ReferenceDescription desc;
         desc.ReferenceTypeId = item.ReferenceTypeId;
         desc.NodeId = resultID;
-        desc.TargetNodeClass = item.Class;
+        descNodeClass = item.NodeClass;
         desc.BrowseName = item.BrowseName;
         desc.DisplayName = LocalizedText(item.BrowseName.Name);
         desc.TargetNodeTypeDefinition = item.TypeDefinition;
@@ -440,7 +440,7 @@ namespace OpcUa
         typeRef.IsForward = true;
         typeRef.ReferenceTypeId = ObjectId::HasTypeDefinition;
         typeRef.NodeId = item.TypeDefinition;
-        typeRef.TargetNodeClass = NodeClass::DataType;
+        typeRefNodeClass = NodeClass::DataType;
         AddReference(typeRef);
       }
 
@@ -466,7 +466,7 @@ namespace OpcUa
       desc.ReferenceTypeId = item.ReferenceTypeId;
       desc.IsForward = item.IsForward;
       desc.NodeId = item.TargetNodeId;
-      desc.TargetNodeClass = item.TargetNodeClass;
+      descNodeClass = itemNodeClass;
       DataValue dv = GetValue(item.TargetNodeId, AttributeID::BrowseName);
       if (dv.Status == StatusCode::Good)
       {

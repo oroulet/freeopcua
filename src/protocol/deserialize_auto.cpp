@@ -260,15 +260,6 @@ namespace OpcUa
 
 
     template<>
-    void DataDeserializer::Deserialize<ExtensionObject>(ExtensionObject& data)
-    {
-        *this >> data.Encoding;
-        if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
-        DeserializeContainer(*this, data.Body);
-    }
-
-
-    template<>
     void DataDeserializer::Deserialize<Argument>(Argument& data)
     {
         *this >> data.Encoding;

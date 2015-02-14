@@ -66,7 +66,7 @@ protected:
     OpcUa::NodeManagementServices::SharedPtr nodes = Services->NodeManagement();
     OpcUa::AddNodesItem item;
     item.BrowseName = OpcUa::QualifiedName("object_type");
-    item.Class = OpcUa::NodeClass::ObjectType;
+    item.NodeClass = OpcUa::NodeClass::ObjectType;
     item.ParentNodeId = OpcUa::ObjectId::BaseObjectType;
     item.ReferenceTypeId = OpcUa::ObjectId::HasSubtype;
 
@@ -84,7 +84,7 @@ protected:
     const OpcUa::NodeId& objectID = CreateEmptyObjectType();
     OpcUa::AddNodesItem variable;
     variable.BrowseName = OpcUa::QualifiedName("variable");
-    variable.Class = OpcUa::NodeClass::Variable;
+    variable.NodeClass = OpcUa::NodeClass::Variable;
     variable.ParentNodeId = objectID;
     variable.ReferenceTypeId = OpcUa::ObjectId::HasProperty;
     OpcUa::VariableAttributes attrs;
@@ -99,7 +99,7 @@ protected:
     const OpcUa::NodeId& objectID = CreateEmptyObjectType();
     OpcUa::AddNodesItem object;
     object.BrowseName = OpcUa::QualifiedName("sub_object");
-    object.Class = OpcUa::NodeClass::Object;
+    object.NodeClass = OpcUa::NodeClass::Object;
     object.ParentNodeId = objectID;
     object.ReferenceTypeId = OpcUa::ObjectId::HasComponent;
     OpcUa::ObjectAttributes attrs;
@@ -115,7 +115,7 @@ protected:
     const OpcUa::NodeId& objectTypeWithVar = CreateObjectTypeWithOneVariable();
     OpcUa::AddNodesItem object;
     object.BrowseName = OpcUa::QualifiedName("sub_object");
-    object.Class = OpcUa::NodeClass::Object;
+    object.NodeClass = OpcUa::NodeClass::Object;
     object.ParentNodeId = resultTypeId;
     object.ReferenceTypeId = OpcUa::ObjectId::HasComponent;
     object.TypeDefinition = objectTypeWithVar;

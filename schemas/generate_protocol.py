@@ -12,10 +12,10 @@ NeedOverride = []
 NeedConstructor = ["RelativePathElement", "ReadValueId", "OpenSecureChannelParameters", "UserIdentityToken", "RequestHeader", "ResponseHeader", "ReadParameters", "UserIdentityToken", "BrowseDescription", "ReferenceDescription", "CreateSubscriptionParameters", "PublishResult", "NotificationMessage", "SetPublishingModeParameters"]
 IgnoredEnums = ["IdType", "NodeIdType"]
 #we want to implement som struct by hand, to make better interface or simply because they are too complicated 
-IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText"]
+IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText", "ExtensionObject"]
 #by default we split requests and respons in header and parameters, but some are so simple we do not split them
 NoSplitStruct = ["GetEndpointsResponse", "CloseSessionRequest", "AddNodesResponse", "BrowseResponse", "HistoryReadResponse", "HistoryUpdateResponse", "RegisterServerResponse", "CloseSecureChannelRequest", "CloseSecureChannelResponse", "CloseSessionRequest", "CloseSessionResponse", "UnregisterNodesResponse"]
-OverrideTypes = {"AttributeId": "AttributeID",  "ResultMask": "BrowseResultMask", "NodeClassMask": "NodeClass"}
+OverrideTypes = {"AttributeId": "AttributeID",  "ResultMask": "BrowseResultMask", "NodeClassMask": "NodeClass", "AccessLevel": "VariableAccessLevel", "UserAccessLevel": "VariableAccessLevel"}
 OverrideNames = {"RequestHeader": "Header", "ResponseHeader": "Header", "StatusCode": "Status", "NodesToRead": "AttributesToRead"} # "MonitoringMode": "Mode",, "NotificationMessage": "Notification", "NodeIdType": "Type"}
 
 """
@@ -54,12 +54,19 @@ class Struct(object):
         self.bits = {}
         self.needconstructor = None
         self.needoverride = False
+        self.children = []
+        self.parents = []
 
     def get_field(self, name):
         for f in self.fields:
             if f.name == name:
                 return f
         raise Exception("field not found: " + name)
+    
+    def __str__(self):
+        return "Struct {}:{}".format(self.name, self.basetype)
+
+    __repr__ = __str__
 
 
 class Field(object):
@@ -71,6 +78,11 @@ class Field(object):
         self.switchfield = None
         self.switchvalue = None
         self.bitlength = 1 
+
+    def __str__(self):
+        return "Field {}({})".format(self.name, self.uatype)
+
+    __repr__ = __str__
 
     def is_struct(self):
         if self.uatype in ("Bit", "Char", "CharArray", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "Byte"):
@@ -165,6 +177,7 @@ def reorder_structs(model):
     waiting = {}
     newstructs = []
     for s in model.structs:
+        types.append(s.name)
         s.waitingfor = []
         ok = True
         for f in s.fields:
@@ -178,7 +191,6 @@ def reorder_structs(model):
                 ok = False
         if ok:
             newstructs.append(s)
-            types.append(s.name)
             waitings = waiting.pop(s.name, None)
             if waitings:
                 for s2 in waitings:
@@ -186,7 +198,15 @@ def reorder_structs(model):
                     if not s2.waitingfor:
                         newstructs.append(s2)
     if len(model.structs) != len(newstructs):
-        print("Error while reordering structs, some structs could not be reinserted")
+        print("Error while reordering structs, some structs could not be reinserted, had {} structs, we now have {} structs".format(len(model.structs), len(newstructs)))
+        s1 = set(model.structs)
+        s2 = set(newstructs)
+        rest = s1 -s2
+        print("Variant" in types)
+        for s in s1-s2:
+            print("{} is waiting for: {}".format(s, s.waitingfor))
+        #print(s1 -s2)
+        #print(waiting)
     model.structs = newstructs
 
 def override_types(model):
@@ -212,6 +232,9 @@ def add_encoding_field(model):
         idx = 0
         for field in struct.fields:
             if field.uatype in ("UInt6", "NodeIdType"):
+                container = field.name
+                idx = 6
+            if field.uatype in ("UInt7"):
                 container = field.name
                 idx = 6
             if field.uatype == "Bit":
@@ -456,12 +479,13 @@ class CodeGenerator(object):
         base = ""
         if struct.needoverride:
             name = "_" + struct.name
-        if struct.basetype:
-            base = " : public " + struct.basetype
+        #if struct.basetype:
+            #base = " : public " + struct.basetype
         self.write_h("    struct %s %s\n    {""" % (name, base))
         for field in struct.fields: 
-            if field.sourcetype:
-                continue
+            #if field.sourcetype:
+                #continue
+            
             if field.get_ctype() == "OpcUa::" + struct.name:
                 #we have a problem selv referensing struct
                 self.write_h("         std::shared_ptr<{}> {};".format(field.get_ctype(), field.name))
@@ -476,7 +500,6 @@ class CodeGenerator(object):
         self.write_size("    template<>")
         self.write_size("    std::size_t RawSize<{}>(const {}& data)".format(struct.name, struct.name))
         self.write_size("    {")
-        #FIXME: add contional fields!! and size of Nody for Bodies!!!
 
         if type(struct) == Enum:
             self.write_size("        return sizeof({});".format(struct.get_ctype()))
@@ -587,6 +610,8 @@ class CodeGenerator(object):
         for val in enum.values:
             self.write_enum("        ", val.name, "=", val.value + ",")
         self.write_enum("    };")
+        #if enum.name.endswith("Mask"):
+        self.write_enum("    inline {name} operator|({name} a, {name} b) {{return static_cast<{name}>(static_cast<{type}>(a) | static_cast<{type}>(b));}}".format(name=enum.name, type=self.to_enum_type(enum.uatype)))
 
 
     def to_enum_type(self, val):
@@ -628,8 +653,10 @@ class CodeGenerator(object):
 #pragma once
 
 #include <opc/ua/protocol/enum_auto.h>
+#include <opc/ua/protocol/variable_access_level.h>
 #include <opc/ua/protocol/attribute_ids.h>
 #include <opc/ua/protocol/nodeid.h>
+#include <opc/ua/protocol/extension_object.h>
 #include <opc/ua/protocol/types.h>
 #include <opc/ua/protocol/variant.h>
 #include <opc/ua/protocol/data_value.h>

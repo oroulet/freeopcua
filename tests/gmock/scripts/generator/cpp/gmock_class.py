@@ -126,7 +126,7 @@ def _GenerateMocks(filename, source, ast_list, desired_class_names):
   processed_class_names = set()
   lines = []
   for node in ast_list:
-    if (isinstance(node, ast.Class) and node.body and
+    if (isinstance(node, ast.NodeClass) and node.body and
         # desired_class_names being None means that all classes are selected.
         (not desired_class_names or node.name in desired_class_names)):
       class_name = node.name

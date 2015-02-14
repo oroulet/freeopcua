@@ -49,7 +49,7 @@ protected:
     OpcUa::AddNodesItem item;
     item.Attributes = OpcUa::VariableAttributes();
     item.BrowseName = OpcUa::QualifiedName("value");
-    item.Class = OpcUa::NodeClass::Variable;
+    item.NodeClass = OpcUa::NodeClass::Variable;
     item.ParentNodeId = OpcUa::ObjectId::RootFolder;
     std::vector<OpcUa::AddNodesResult> newNodesResult = NameSpace->AddNodes({item});
     return newNodesResult[0].AddedNodeId;

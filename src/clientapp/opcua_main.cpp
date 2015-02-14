@@ -335,7 +335,7 @@ namespace
     std::cout << tabs << "Browse Name: " << desc.BrowseName.NamespaceIndex << ":" << desc.BrowseName.Name << std::endl;
     std::cout << tabs << "Is Forward: " << desc.IsForward << std::endl;
 
-    std::cout << tabs << "Target Node class: " << GetNodeClassName(static_cast<unsigned>(desc.TargetNodeClass))  << std::endl;
+    std::cout << tabs << "Target Node class: " << GetNodeClassName(static_cast<unsigned>(descNodeClass))  << std::endl;
     std::cout << tabs << "Target NodeId:" << std::endl;
     Print(desc.TargetNodeId, tabs1);
 

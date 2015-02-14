@@ -173,7 +173,7 @@ namespace
       ref.ReferenceTypeId.Encoding = OpcUa::NodeIdEncoding::EV_STRING;
       ref.ReferenceTypeId.StringData.NamespaceIndex = 2;
       ref.ReferenceTypeId.StringData.Identifier = "Identifier";
-      ref.TargetNodeClass = OpcUa::NodeClass::Variable;
+      refNodeClass = OpcUa::NodeClass::Variable;
       ref.TargetNodeId.Encoding = OpcUa::NodeIdEncoding::EV_FOUR_BYTE;
       ref.TargetNodeId.FourByteData.NamespaceIndex = 3;
       ref.TargetNodeId.FourByteData.Identifier = 4;

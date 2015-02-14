@@ -24,7 +24,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2365");
         node.BrowseName = ToQualifiedName("DataItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=63");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -41,7 +41,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2365");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2366");
         refs.push_back(ref);
         }
@@ -50,7 +50,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2365");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2367");
         refs.push_back(ref);
         }
@@ -61,7 +61,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2366");
         node.BrowseName = ToQualifiedName("Definition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2365");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -78,7 +78,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2366");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
@@ -89,7 +89,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2367");
         node.BrowseName = ToQualifiedName("ValuePrecision");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2365");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -106,7 +106,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2367");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
@@ -117,7 +117,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2368");
         node.BrowseName = ToQualifiedName("AnalogItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=2365");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -133,7 +133,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2368");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2370");
         refs.push_back(ref);
         }
@@ -142,7 +142,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2368");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2369");
         refs.push_back(ref);
         }
@@ -151,7 +151,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2368");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2371");
         refs.push_back(ref);
         }
@@ -162,7 +162,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2370");
         node.BrowseName = ToQualifiedName("InstrumentRange");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2368");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -178,7 +178,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2370");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
@@ -189,7 +189,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2369");
         node.BrowseName = ToQualifiedName("EURange");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2368");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -205,7 +205,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2369");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -216,7 +216,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2371");
         node.BrowseName = ToQualifiedName("EngineeringUnits");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2368");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -232,7 +232,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2371");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
@@ -243,7 +243,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2372");
         node.BrowseName = ToQualifiedName("DiscreteItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=2365");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -259,7 +259,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2373");
         node.BrowseName = ToQualifiedName("TwoStateDiscreteType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=2372");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -275,7 +275,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2373");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2374");
         refs.push_back(ref);
         }
@@ -284,7 +284,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2373");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2375");
         refs.push_back(ref);
         }
@@ -295,7 +295,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2374");
         node.BrowseName = ToQualifiedName("FalseState");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2373");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -311,7 +311,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2374");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -322,7 +322,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2375");
         node.BrowseName = ToQualifiedName("TrueState");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2373");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -338,7 +338,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2375");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -349,7 +349,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2376");
         node.BrowseName = ToQualifiedName("MultiStateDiscreteType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=2372");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -365,7 +365,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=2376");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=2377");
         refs.push_back(ref);
         }
@@ -376,7 +376,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2377");
         node.BrowseName = ToQualifiedName("EnumStrings");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=2376");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -392,7 +392,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=2377");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -403,7 +403,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11238");
         node.BrowseName = ToQualifiedName("MultiStateValueDiscreteType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=2372");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -419,7 +419,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11238");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=11241");
         refs.push_back(ref);
         }
@@ -428,7 +428,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11238");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=11461");
         refs.push_back(ref);
         }
@@ -439,7 +439,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11241");
         node.BrowseName = ToQualifiedName("EnumValues");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=11238");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -455,7 +455,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11241");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -466,7 +466,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11461");
         node.BrowseName = ToQualifiedName("ValueAsText");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=11238");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -482,7 +482,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11461");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -493,7 +493,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12021");
         node.BrowseName = ToQualifiedName("ArrayItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=2365");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -509,7 +509,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12021");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12024");
         refs.push_back(ref);
         }
@@ -518,7 +518,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12021");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12025");
         refs.push_back(ref);
         }
@@ -527,7 +527,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12021");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12026");
         refs.push_back(ref);
         }
@@ -536,7 +536,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12021");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12027");
         refs.push_back(ref);
         }
@@ -545,7 +545,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12021");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12028");
         refs.push_back(ref);
         }
@@ -556,7 +556,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12024");
         node.BrowseName = ToQualifiedName("InstrumentRange");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -572,7 +572,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12024");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=80");
         refs.push_back(ref);
         }
@@ -583,7 +583,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12025");
         node.BrowseName = ToQualifiedName("EURange");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -599,7 +599,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12025");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -610,7 +610,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12026");
         node.BrowseName = ToQualifiedName("EngineeringUnits");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -626,7 +626,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12026");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -637,7 +637,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12027");
         node.BrowseName = ToQualifiedName("Title");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -653,7 +653,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12027");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -664,7 +664,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12028");
         node.BrowseName = ToQualifiedName("AxisScaleType");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -680,7 +680,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12028");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -691,7 +691,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12029");
         node.BrowseName = ToQualifiedName("YArrayItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -708,7 +708,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12029");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12037");
         refs.push_back(ref);
         }
@@ -719,7 +719,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12037");
         node.BrowseName = ToQualifiedName("XAxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12029");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -735,7 +735,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12037");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -746,7 +746,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12038");
         node.BrowseName = ToQualifiedName("XYArrayItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -763,7 +763,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12038");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12046");
         refs.push_back(ref);
         }
@@ -774,7 +774,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12046");
         node.BrowseName = ToQualifiedName("XAxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12038");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -790,7 +790,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12046");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -801,7 +801,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12047");
         node.BrowseName = ToQualifiedName("ImageItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -818,7 +818,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12047");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12055");
         refs.push_back(ref);
         }
@@ -827,7 +827,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12047");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12056");
         refs.push_back(ref);
         }
@@ -838,7 +838,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12055");
         node.BrowseName = ToQualifiedName("XAxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12047");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -854,7 +854,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12055");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -865,7 +865,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12056");
         node.BrowseName = ToQualifiedName("YAxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12047");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -881,7 +881,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12056");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -892,7 +892,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12057");
         node.BrowseName = ToQualifiedName("CubeItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -909,7 +909,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12057");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12065");
         refs.push_back(ref);
         }
@@ -918,7 +918,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12057");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12066");
         refs.push_back(ref);
         }
@@ -927,7 +927,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12057");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12067");
         refs.push_back(ref);
         }
@@ -938,7 +938,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12065");
         node.BrowseName = ToQualifiedName("XAxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12057");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -954,7 +954,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12065");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -965,7 +965,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12066");
         node.BrowseName = ToQualifiedName("YAxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12057");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -981,7 +981,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12066");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -992,7 +992,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12067");
         node.BrowseName = ToQualifiedName("ZAxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12057");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -1008,7 +1008,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12067");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -1019,7 +1019,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12068");
         node.BrowseName = ToQualifiedName("NDimensionArrayItemType");
-        node.Class = NodeClass::VariableType;
+        node.NodeClass = NodeClass::VariableType;
         node.ParentNodeId = ToNodeId("i=12021");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         VariableTypeAttributes attrs;
@@ -1035,7 +1035,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12068");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12076");
         refs.push_back(ref);
         }
@@ -1046,7 +1046,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12076");
         node.BrowseName = ToQualifiedName("AxisDefinition");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12068");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -1062,7 +1062,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12076");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -1073,7 +1073,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=884");
         node.BrowseName = ToQualifiedName("Range");
-        node.Class = NodeClass::DataType;
+        node.NodeClass = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=22");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
@@ -1087,7 +1087,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=887");
         node.BrowseName = ToQualifiedName("EUInformation");
-        node.Class = NodeClass::DataType;
+        node.NodeClass = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=22");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
@@ -1101,7 +1101,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12077");
         node.BrowseName = ToQualifiedName("AxisScaleEnumeration");
-        node.Class = NodeClass::DataType;
+        node.NodeClass = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=29");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
@@ -1115,7 +1115,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=12077");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12078");
         refs.push_back(ref);
         }
@@ -1126,7 +1126,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12078");
         node.BrowseName = ToQualifiedName("EnumStrings");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=12077");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -1142,7 +1142,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=12078");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -1153,7 +1153,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12171");
         node.BrowseName = ToQualifiedName("ComplexNumberType");
-        node.Class = NodeClass::DataType;
+        node.NodeClass = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=22");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
@@ -1167,7 +1167,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12172");
         node.BrowseName = ToQualifiedName("DoubleComplexNumberType");
-        node.Class = NodeClass::DataType;
+        node.NodeClass = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=22");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
@@ -1181,7 +1181,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12079");
         node.BrowseName = ToQualifiedName("AxisInformation");
-        node.Class = NodeClass::DataType;
+        node.NodeClass = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=22");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
@@ -1195,7 +1195,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12080");
         node.BrowseName = ToQualifiedName("XVType");
-        node.Class = NodeClass::DataType;
+        node.NodeClass = NodeClass::DataType;
         node.ParentNodeId = ToNodeId("i=22");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         DataTypeAttributes attrs;
@@ -1209,7 +1209,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=885");
         node.BrowseName = ToQualifiedName("Default XML");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=884");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1224,7 +1224,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=885");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=8873");
         refs.push_back(ref);
         }
@@ -1235,7 +1235,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=888");
         node.BrowseName = ToQualifiedName("Default XML");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=887");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1250,7 +1250,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=888");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=8876");
         refs.push_back(ref);
         }
@@ -1261,7 +1261,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12173");
         node.BrowseName = ToQualifiedName("Default XML");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12171");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1276,7 +1276,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12173");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12175");
         refs.push_back(ref);
         }
@@ -1287,7 +1287,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12174");
         node.BrowseName = ToQualifiedName("Default XML");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12172");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1302,7 +1302,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12174");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12178");
         refs.push_back(ref);
         }
@@ -1313,7 +1313,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12081");
         node.BrowseName = ToQualifiedName("Default XML");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12079");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1328,7 +1328,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12081");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12083");
         refs.push_back(ref);
         }
@@ -1339,7 +1339,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12082");
         node.BrowseName = ToQualifiedName("Default XML");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12080");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1354,7 +1354,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12082");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12086");
         refs.push_back(ref);
         }
@@ -1365,7 +1365,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=886");
         node.BrowseName = ToQualifiedName("Default Binary");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=884");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1380,7 +1380,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=886");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=8238");
         refs.push_back(ref);
         }
@@ -1391,7 +1391,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=889");
         node.BrowseName = ToQualifiedName("Default Binary");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=887");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1406,7 +1406,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=889");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=8241");
         refs.push_back(ref);
         }
@@ -1417,7 +1417,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12181");
         node.BrowseName = ToQualifiedName("Default Binary");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12171");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1432,7 +1432,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12181");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12183");
         refs.push_back(ref);
         }
@@ -1443,7 +1443,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12182");
         node.BrowseName = ToQualifiedName("Default Binary");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12172");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1458,7 +1458,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12182");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12186");
         refs.push_back(ref);
         }
@@ -1469,7 +1469,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12089");
         node.BrowseName = ToQualifiedName("Default Binary");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12079");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1484,7 +1484,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12089");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12091");
         refs.push_back(ref);
         }
@@ -1495,7 +1495,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=12090");
         node.BrowseName = ToQualifiedName("Default Binary");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.ParentNodeId = ToNodeId("i=12080");
         node.ReferenceTypeId = ReferenceID::HasEncoding;
         node.TypeDefinition = ToNodeId("i=76");
@@ -1510,7 +1510,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasDescription;
         ref.SourceNodeId = ToNodeId("i=12090");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=12094");
         refs.push_back(ref);
         }

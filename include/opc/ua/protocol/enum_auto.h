@@ -31,6 +31,7 @@ namespace OpcUa
          EraseExisiting = 4,
          Append = 8,
     };
+    inline OpenFileMode operator|(OpenFileMode a, OpenFileMode b) {return static_cast<OpenFileMode>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // A mask specifying the class of the node.
@@ -46,6 +47,7 @@ namespace OpcUa
          DataType = 64,
          View = 128,
     };
+    inline NodeClass operator|(NodeClass a, NodeClass b) {return static_cast<NodeClass>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // The types of applications.
@@ -56,6 +58,7 @@ namespace OpcUa
          ClientAndServer = 2,
          DiscoveryServer = 3,
     };
+    inline ApplicationType operator|(ApplicationType a, ApplicationType b) {return static_cast<ApplicationType>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // The type of security to use on a message.
@@ -66,6 +69,7 @@ namespace OpcUa
          Sign = 2,
          SignAndEncrypt = 3,
     };
+    inline MessageSecurityMode operator|(MessageSecurityMode a, MessageSecurityMode b) {return static_cast<MessageSecurityMode>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // The possible user token types.
@@ -76,6 +80,7 @@ namespace OpcUa
          Certificate = 2,
          IssuedToken = 3,
     };
+    inline UserTokenType operator|(UserTokenType a, UserTokenType b) {return static_cast<UserTokenType>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // Indicates whether a token if being created or renewed.
@@ -84,6 +89,7 @@ namespace OpcUa
          Issue = 0,
          Renew = 1,
     };
+    inline SecurityTokenRequestType operator|(SecurityTokenRequestType a, SecurityTokenRequestType b) {return static_cast<SecurityTokenRequestType>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // The bits used to specify default attributes for a new node.
@@ -122,6 +128,7 @@ namespace OpcUa
          ReferenceType = 1371236,
          View = 1335532,
     };
+    inline NodeAttributesMask operator|(NodeAttributesMask a, NodeAttributesMask b) {return static_cast<NodeAttributesMask>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // Define bits used to indicate which attributes are writeable.
@@ -151,6 +158,7 @@ namespace OpcUa
          WriteMask = 1048576,
          ValueForVariableType = 2097152,
     };
+    inline AttributeWriteMask operator|(AttributeWriteMask a, AttributeWriteMask b) {return static_cast<AttributeWriteMask>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // The directions of the references to return.
@@ -160,6 +168,7 @@ namespace OpcUa
          Inverse = 1,
          Both = 2,
     };
+    inline BrowseDirection operator|(BrowseDirection a, BrowseDirection b) {return static_cast<BrowseDirection>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // A bit mask which specifies what should be returned in a browse response.
@@ -176,6 +185,7 @@ namespace OpcUa
          ReferenceTypeInfo = 3,
          TargetInfo = 60,
     };
+    inline BrowseResultMask operator|(BrowseResultMask a, BrowseResultMask b) {return static_cast<BrowseResultMask>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class ComplianceLevel : uint32_t
@@ -185,6 +195,7 @@ namespace OpcUa
          SelfTested = 2,
          Certified = 3,
     };
+    inline ComplianceLevel operator|(ComplianceLevel a, ComplianceLevel b) {return static_cast<ComplianceLevel>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class FilterOperator : uint32_t
@@ -208,6 +219,7 @@ namespace OpcUa
          BitwiseAnd = 16,
          BitwiseOr = 17,
     };
+    inline FilterOperator operator|(FilterOperator a, FilterOperator b) {return static_cast<FilterOperator>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class TimestampsToReturn : uint32_t
@@ -217,6 +229,7 @@ namespace OpcUa
          Both = 2,
          Neither = 3,
     };
+    inline TimestampsToReturn operator|(TimestampsToReturn a, TimestampsToReturn b) {return static_cast<TimestampsToReturn>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class HistoryUpdateType : uint32_t
@@ -226,6 +239,7 @@ namespace OpcUa
          Update = 3,
          Delete = 4,
     };
+    inline HistoryUpdateType operator|(HistoryUpdateType a, HistoryUpdateType b) {return static_cast<HistoryUpdateType>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class PerformUpdateType : uint32_t
@@ -235,6 +249,7 @@ namespace OpcUa
          Update = 3,
          Remove = 4,
     };
+    inline PerformUpdateType operator|(PerformUpdateType a, PerformUpdateType b) {return static_cast<PerformUpdateType>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class MonitoringMode : uint32_t
@@ -243,6 +258,7 @@ namespace OpcUa
          Sampling = 1,
          Reporting = 2,
     };
+    inline MonitoringMode operator|(MonitoringMode a, MonitoringMode b) {return static_cast<MonitoringMode>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class DataChangeTrigger : uint32_t
@@ -251,6 +267,7 @@ namespace OpcUa
          StatusValue = 1,
          StatusValueTimestamp = 2,
     };
+    inline DataChangeTrigger operator|(DataChangeTrigger a, DataChangeTrigger b) {return static_cast<DataChangeTrigger>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class DeadbandType : uint32_t
@@ -259,6 +276,7 @@ namespace OpcUa
          Absolute = 1,
          Percent = 2,
     };
+    inline DeadbandType operator|(DeadbandType a, DeadbandType b) {return static_cast<DeadbandType>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     // A simple enumerated type used for testing.
@@ -268,6 +286,7 @@ namespace OpcUa
          Yellow = 4,
          Green = 5,
     };
+    inline EnumeratedTestType operator|(EnumeratedTestType a, EnumeratedTestType b) {return static_cast<EnumeratedTestType>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class RedundancySupport : uint32_t
@@ -279,6 +298,7 @@ namespace OpcUa
          Transparent = 4,
          HotAndMirrored = 5,
     };
+    inline RedundancySupport operator|(RedundancySupport a, RedundancySupport b) {return static_cast<RedundancySupport>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class ServerState : uint32_t
@@ -292,6 +312,7 @@ namespace OpcUa
          CommunicationFault = 6,
          Unknown = 7,
     };
+    inline ServerState operator|(ServerState a, ServerState b) {return static_cast<ServerState>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class ModelChangeStructureVerbMask : uint32_t
@@ -302,6 +323,7 @@ namespace OpcUa
          ReferenceDeleted = 8,
          DataTypeChanged = 16,
     };
+    inline ModelChangeStructureVerbMask operator|(ModelChangeStructureVerbMask a, ModelChangeStructureVerbMask b) {return static_cast<ModelChangeStructureVerbMask>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class AxisScaleEnumeration : uint32_t
@@ -310,6 +332,7 @@ namespace OpcUa
          Log = 1,
          Ln = 2,
     };
+    inline AxisScaleEnumeration operator|(AxisScaleEnumeration a, AxisScaleEnumeration b) {return static_cast<AxisScaleEnumeration>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 
     enum class ExceptionDeviationFormat : uint32_t
@@ -320,6 +343,7 @@ namespace OpcUa
          PercentOfEURange = 3,
          Unknown = 4,
     };
+    inline ExceptionDeviationFormat operator|(ExceptionDeviationFormat a, ExceptionDeviationFormat b) {return static_cast<ExceptionDeviationFormat>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));}
 
 } // namespace
     

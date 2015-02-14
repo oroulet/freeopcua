@@ -24,7 +24,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11187");
         node.BrowseName = ToQualifiedName("AggregateConfigurationType");
-        node.Class = NodeClass::ObjectType;
+        node.NodeClass = NodeClass::ObjectType;
         node.ParentNodeId = ToNodeId("i=58");
         node.ReferenceTypeId = ReferenceID::HasSubtype;
         ObjectTypeAttributes attrs;
@@ -38,7 +38,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11187");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=11188");
         refs.push_back(ref);
         }
@@ -47,7 +47,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11187");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=11189");
         refs.push_back(ref);
         }
@@ -56,7 +56,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11187");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=11190");
         refs.push_back(ref);
         }
@@ -65,7 +65,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasProperty;
         ref.SourceNodeId = ToNodeId("i=11187");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=11191");
         refs.push_back(ref);
         }
@@ -76,7 +76,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11188");
         node.BrowseName = ToQualifiedName("TreatUncertainAsBad");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=11187");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -92,7 +92,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11188");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -103,7 +103,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11189");
         node.BrowseName = ToQualifiedName("PercentDataBad");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=11187");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -119,7 +119,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11189");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -130,7 +130,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11190");
         node.BrowseName = ToQualifiedName("PercentDataGood");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=11187");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -146,7 +146,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11190");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -157,7 +157,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11191");
         node.BrowseName = ToQualifiedName("UseSlopedExtrapolation");
-        node.Class = NodeClass::Variable;
+        node.NodeClass = NodeClass::Variable;
         node.ParentNodeId = ToNodeId("i=11187");
         node.ReferenceTypeId = ReferenceID::HasProperty;
         node.TypeDefinition = ToNodeId("i=68");
@@ -173,7 +173,7 @@ namespace OpcUa
         ref.IsForward = true;
         ref.ReferenceTypeId = ReferenceID::HasModellingRule;
         ref.SourceNodeId = ToNodeId("i=11191");
-        ref.TargetNodeClass = NodeClass::DataType;
+        refNodeClass = NodeClass::DataType;
         ref.NodeId = ToNodeId("i=78");
         refs.push_back(ref);
         }
@@ -184,7 +184,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2341");
         node.BrowseName = ToQualifiedName("Interpolative");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("At the beginning of each interval, retrieve the calculated value from the data points on either side of the requested timestamp.");
@@ -198,7 +198,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2342");
         node.BrowseName = ToQualifiedName("Average");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the average value of the data over the interval.");
@@ -212,7 +212,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2343");
         node.BrowseName = ToQualifiedName("TimeAverage");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the time weighted average data over the interval using Interpolated Bounding Values.");
@@ -226,7 +226,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11285");
         node.BrowseName = ToQualifiedName("TimeAverage2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the time weighted average data over the interval using Simple Bounding Values.");
@@ -240,7 +240,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2344");
         node.BrowseName = ToQualifiedName("Total");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the total (time integral) of the data over the interval using Interpolated Bounding Values.");
@@ -254,7 +254,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11304");
         node.BrowseName = ToQualifiedName("Total2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the total (time integral) of the data over the interval using Simple Bounding Values.");
@@ -268,7 +268,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2346");
         node.BrowseName = ToQualifiedName("Minimum");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the minimum raw value in the interval with the timestamp of the start of the interval.");
@@ -282,7 +282,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2347");
         node.BrowseName = ToQualifiedName("Maximum");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the maximum raw value in the interval with the timestamp of the start of the interval.");
@@ -296,7 +296,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2348");
         node.BrowseName = ToQualifiedName("MinimumActualTime");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the minimum value in the interval and the Timestamp of the minimum value.");
@@ -310,7 +310,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2349");
         node.BrowseName = ToQualifiedName("MaximumActualTime");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the maximum value in the interval and the Timestamp of the maximum value.");
@@ -324,7 +324,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2350");
         node.BrowseName = ToQualifiedName("Range");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the difference between the minimum and maximum Value over the interval.");
@@ -338,7 +338,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11286");
         node.BrowseName = ToQualifiedName("Minimum2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the minimum value in the interval including the Simple Bounding Values.");
@@ -352,7 +352,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11287");
         node.BrowseName = ToQualifiedName("Maximum2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the maximum value in the interval including the Simple Bounding Values.");
@@ -366,7 +366,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11305");
         node.BrowseName = ToQualifiedName("MinimumActualTime2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the minimum value with the actual timestamp including the Simple Bounding Values.");
@@ -380,7 +380,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11306");
         node.BrowseName = ToQualifiedName("MaximumActualTime2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the maximum value with the actual timestamp including the Simple Bounding Values.");
@@ -394,7 +394,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11288");
         node.BrowseName = ToQualifiedName("Range2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the difference between the Minimum2 and Maximum2 value over the interval.");
@@ -408,7 +408,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2351");
         node.BrowseName = ToQualifiedName("AnnotationCount");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the number of Annotations in the interval.");
@@ -422,7 +422,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2352");
         node.BrowseName = ToQualifiedName("Count");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the number of raw values over the interval.");
@@ -436,7 +436,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11307");
         node.BrowseName = ToQualifiedName("DurationInStateZero");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the time a Boolean or numeric was in a zero state using Simple Bounding Values.");
@@ -450,7 +450,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11308");
         node.BrowseName = ToQualifiedName("DurationInStateNonZero");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the time a Boolean or numeric was in a non-zero state using Simple Bounding Values.");
@@ -464,7 +464,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2355");
         node.BrowseName = ToQualifiedName("NumberOfTransitions");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the number of changes between zero and non-zero that a Boolean or Numeric value experienced in the interval.");
@@ -478,7 +478,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2357");
         node.BrowseName = ToQualifiedName("Start");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the value at the beginning of the interval using Interpolated Bounding Values.");
@@ -492,7 +492,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2358");
         node.BrowseName = ToQualifiedName("End");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the value at the end of the interval using Interpolated Bounding Values.");
@@ -506,7 +506,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2359");
         node.BrowseName = ToQualifiedName("Delta");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the difference between the Start and End value in the interval.");
@@ -520,7 +520,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11505");
         node.BrowseName = ToQualifiedName("StartBound");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the value at the beginning of the interval using Simple Bounding Values.");
@@ -534,7 +534,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11506");
         node.BrowseName = ToQualifiedName("EndBound");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the value at the end of the interval using Simple Bounding Values.");
@@ -548,7 +548,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11507");
         node.BrowseName = ToQualifiedName("DeltaBounds");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the difference between the StartBound and EndBound value in the interval.");
@@ -562,7 +562,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2360");
         node.BrowseName = ToQualifiedName("DurationGood");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the total duration of time in the interval during which the data is good.");
@@ -576,7 +576,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2361");
         node.BrowseName = ToQualifiedName("DurationBad");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the total duration of time in the interval during which the data is bad.");
@@ -590,7 +590,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2362");
         node.BrowseName = ToQualifiedName("PercentGood");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the percent of data (0 to 100) in the interval which has a good StatusCode.");
@@ -604,7 +604,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2363");
         node.BrowseName = ToQualifiedName("PercentBad");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the percent of data (0 to 100) in the interval which has a bad StatusCode.");
@@ -618,7 +618,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=2364");
         node.BrowseName = ToQualifiedName("WorstQuality");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the worst StatusCode of data in the interval.");
@@ -632,7 +632,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11292");
         node.BrowseName = ToQualifiedName("WorstQuality2");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the worst StatusCode of data in the interval including the Simple Bounding Values.");
@@ -646,7 +646,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11426");
         node.BrowseName = ToQualifiedName("StandardDeviationSample");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the standard deviation for the interval for a sample of the population (n-1).");
@@ -660,7 +660,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11427");
         node.BrowseName = ToQualifiedName("StandardDeviationPopulation");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the standard deviation for the interval for a complete population (n) which includes Simple Bounding Values.");
@@ -674,7 +674,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11428");
         node.BrowseName = ToQualifiedName("VarianceSample");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the variance for the interval as calculated by the StandardDeviationSample.");
@@ -688,7 +688,7 @@ namespace OpcUa
         AddNodesItem node;
         node.RequestedNewNodeId = ToNodeId("i=11429");
         node.BrowseName = ToQualifiedName("VariancePopulation");
-        node.Class = NodeClass::Object;
+        node.NodeClass = NodeClass::Object;
         node.TypeDefinition = ToNodeId("i=2340");
         ObjectAttributes attrs;
         attrs.Description = LocalizedText("Retrieve the variance for the interval as calculated by the StandardDeviationPopulation which includes Simple Bounding Values.");

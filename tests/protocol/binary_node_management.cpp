@@ -42,7 +42,7 @@ TEST_F(AddNodesSerialization, AddNodesItem)
   item.BrowseName = OpcUa::QualifiedName("titi", 2);
   item.ParentNodeId = OpcUa::NodeId(85, 0);
   item.RequestedNewNodeId = OpcUa::NodeId(99, 3);
-  item.Class = NodeClass::Variable;
+  item.NodeClass = NodeClass::Variable;
   item.ReferenceTypeId = ReferenceID::HasComponent; 
   item.TypeDefinition = ObjectId::BaseVariableType; 
   VariableAttributes attr;

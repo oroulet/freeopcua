@@ -216,17 +216,6 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<ExtensionObject>(const ExtensionObject& data)
-    {
-        size_t size = 0;
-        size += RawSize(data.Encoding);
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
-        size += RawSizeContainer(data.Body);
-        return size;
-    }
-
-
-    template<>
     std::size_t RawSize<Argument>(const Argument& data)
     {
         size_t size = 0;
