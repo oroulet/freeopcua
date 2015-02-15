@@ -41,8 +41,10 @@ class Bit(object):
         self.name = None
         self.idx = None
         self.container = None
+        self.length = 1
+
     def __str__(self):
-        return "(Bit: {}, {}, {})".format(self.name, self.container, self.idx)
+        return "(Bit: {}, container:{}, idx:{})".format(self.name, self.container, self.idx)
     __repr__ = __str__
 
 class Struct(object):
@@ -56,6 +58,11 @@ class Struct(object):
         self.needoverride = False
         self.children = []
         self.parents = []
+
+    def is_extension_object(self):
+        if "ExtensionObject" in self.parents:
+            return True
+        return False
 
     def get_field(self, name):
         for f in self.fields:
@@ -234,9 +241,15 @@ def add_encoding_field(model):
             if field.uatype in ("UInt6", "NodeIdType"):
                 container = field.name
                 idx = 6
-            if field.uatype in ("UInt7"):
-                container = field.name
-                idx = 6
+
+                b = Bit()
+                b.name = field.name
+                b.idx = 0
+                b.container = container
+                b.length = 6 
+                struct.bits[b.name] = b
+
+
             if field.uatype == "Bit":
                 if not container or idx > 7:
                     container = "Encoding"
@@ -247,14 +260,13 @@ def add_encoding_field(model):
                     f.uatype = "UInt8"
                     newfields.append(f)
 
-                nb = field.bitlength
-                for _ in range(0, nb):
-                    b = Bit()
-                    b.name = field.name
-                    b.idx = idx
-                    b.container = container
-                    idx += 1
-                    struct.bits[b.name] = b
+                b = Bit()
+                b.name = field.name
+                b.idx = idx
+                b.container = container
+                b.length = field.bitlength
+                idx += field.bitlength
+                struct.bits[b.name] = b
             else:
                 newfields.append(field)
         struct.fields = newfields
@@ -263,9 +275,18 @@ def remove_vector_length(model):
     for struct in model.structs:
         new = []
         for field in struct.fields:
-            if not field.name == "BodyLength" and not field.name.startswith("NoOf"):
+            if not field.name.startswith("NoOf"):
                 new.append(field)
         struct.fields = new
+
+def remove_body_length(model):
+    for struct in model.structs:
+        new = []
+        for field in struct.fields:
+            if not field.name == "BodyLength":
+                new.append(field)
+        struct.fields = new
+
 
 def fix_requests(model):
     structs = []
@@ -332,6 +353,10 @@ class Parser(object):
                 if ":" in val:
                     prefix, val = val.split(":")
                 struct.basetype = val
+                tmp = struct
+                while tmp.basetype:
+                    struct.parents.append(tmp.basetype)
+                    tmp = self.model.get_struct(tmp.basetype)
                 self.add_basetype_members(struct)
             else:
                 print("Error unknown key: ", key)
@@ -838,6 +863,7 @@ if __name__ == "__main__":
     #Changes specific to our C++ implementation
     add_encoding_field(model)
     remove_vector_length(model)
+    remove_body_length(model)
     remove_duplicates(model)
     override_types(model)
     fix_requests(model)

@@ -267,126 +267,143 @@ class ExceptionDeviationFormat(object):
 class XmlElement(object):
     def __init__(self):
         self.Length = None
+        self._Length_fmt = '!i'
+        self._Length_fmt_size = 4
         self.Value = []
+        self._Value_fmt = '!c'
+        self._Value_fmt_size = 1
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!i', self.Length))
-        b.append(struct.pack('!i', len(self.Value)))
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._Length_fmt, self.Length))
+        tmp.append(struct.pack('!i', len(self.Value)))
         for i in Value:
-            b.append(struct.pack('!c', self.Value))
-        return b.join()
+            tmp.append(struct.pack(self._Value_fmt, self.Value))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Length = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.Length = struct.unpack(self._Length_fmt, data.read(self._Length_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Value = struct.unpack(c, data[:1])
-                    data = data[1:]
+                    self.Value = struct.unpack(self._Value_fmt, data.read(self._Value_fmt_size))
             return data
             
 class TwoByteNodeId(object):
     def __init__(self):
         self.Identifier = None
+        self._Identifier_fmt = '!c'
+        self._Identifier_fmt_size = 1
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!c', self.Identifier))
-        return b.join()
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._Identifier_fmt, self.Identifier))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Identifier = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.Identifier = struct.unpack(self._Identifier_fmt, data.read(self._Identifier_fmt_size))
             return data
             
 class FourByteNodeId(object):
     def __init__(self):
         self.NamespaceIndex = None
+        self._NamespaceIndex_fmt = '!c'
+        self._NamespaceIndex_fmt_size = 1
         self.Identifier = None
+        self._Identifier_fmt = '!H'
+        self._Identifier_fmt_size = 2
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!c', self.NamespaceIndex))
-        b.append(struct.pack('!H', self.Identifier))
-        return b.join()
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._NamespaceIndex_fmt, self.NamespaceIndex))
+        tmp.append(struct.pack(self._Identifier_fmt, self.Identifier))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.NamespaceIndex = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.Identifier = struct.unpack(H, data[:2])
-            data = data[2:]
+            self.NamespaceIndex = struct.unpack(self._NamespaceIndex_fmt, data.read(self._NamespaceIndex_fmt_size))
+            self.Identifier = struct.unpack(self._Identifier_fmt, data.read(self._Identifier_fmt_size))
             return data
             
 class NumericNodeId(object):
     def __init__(self):
         self.NamespaceIndex = None
+        self._NamespaceIndex_fmt = '!H'
+        self._NamespaceIndex_fmt_size = 2
         self.Identifier = None
+        self._Identifier_fmt = '!I'
+        self._Identifier_fmt_size = 4
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!H', self.NamespaceIndex))
-        b.append(struct.pack('!I', self.Identifier))
-        return b.join()
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._NamespaceIndex_fmt, self.NamespaceIndex))
+        tmp.append(struct.pack(self._Identifier_fmt, self.Identifier))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.NamespaceIndex = struct.unpack(H, data[:2])
-            data = data[2:]
-            self.Identifier = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.NamespaceIndex = struct.unpack(self._NamespaceIndex_fmt, data.read(self._NamespaceIndex_fmt_size))
+            self.Identifier = struct.unpack(self._Identifier_fmt, data.read(self._Identifier_fmt_size))
             return data
             
 class StringNodeId(object):
     def __init__(self):
         self.NamespaceIndex = None
+        self._NamespaceIndex_fmt = '!H'
+        self._NamespaceIndex_fmt_size = 2
         self.Identifier = None
+        self._Identifier_fmt = '!s'
+        self._Identifier_fmt_size = 1
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!H', self.NamespaceIndex))
-        b.append(struct.pack('!s', self.Identifier))
-        return b.join()
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._NamespaceIndex_fmt, self.NamespaceIndex))
+        tmp.append(struct.pack(self._Identifier_fmt, self.Identifier))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.NamespaceIndex = struct.unpack(H, data[:2])
-            data = data[2:]
-            self.Identifier = struct.unpack(s, data[:1])
-            data = data[1:]
+            self.NamespaceIndex = struct.unpack(self._NamespaceIndex_fmt, data.read(self._NamespaceIndex_fmt_size))
+            self.Identifier = struct.unpack(self._Identifier_fmt, data.read(self._Identifier_fmt_size))
             return data
             
 class GuidNodeId(object):
     def __init__(self):
         self.NamespaceIndex = None
+        self._NamespaceIndex_fmt = '!H'
+        self._NamespaceIndex_fmt_size = 2
         self.Identifier = None
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!H', self.NamespaceIndex))
-        b.append(self.Identifier.to_binary())
-        return b.join()
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._NamespaceIndex_fmt, self.NamespaceIndex))
+        tmp.append(self.Identifier.to_binary())
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.NamespaceIndex = struct.unpack(H, data[:2])
-            data = data[2:]
+            self.NamespaceIndex = struct.unpack(self._NamespaceIndex_fmt, data.read(self._NamespaceIndex_fmt_size))
             data = self.Identifier.from_binary(data)
             return data
             
 class ByteStringNodeId(object):
     def __init__(self):
         self.NamespaceIndex = None
+        self._NamespaceIndex_fmt = '!H'
+        self._NamespaceIndex_fmt_size = 2
         self.Identifier = None
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!H', self.NamespaceIndex))
-        b.append(self.Identifier.to_binary())
-        return b.join()
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._NamespaceIndex_fmt, self.NamespaceIndex))
+        tmp.append(self.Identifier.to_binary())
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.NamespaceIndex = struct.unpack(H, data[:2])
-            data = data[2:]
+            self.NamespaceIndex = struct.unpack(self._NamespaceIndex_fmt, data.read(self._NamespaceIndex_fmt_size))
             data = self.Identifier.from_binary(data)
             return data
             
@@ -401,41 +418,54 @@ class NodeId(object):
         self.ByteString = None
     
     def to_binary(self):
-        b = []
-        if self.TwoByte: self.NodeIdType |= (value << 0)
-        if self.FourByte: self.NodeIdType |= (value << 1)
-        if self.Numeric: self.NodeIdType |= (value << 2)
-        if self.String: self.NodeIdType |= (value << 3)
-        if self.Guid: self.NodeIdType |= (value << 4)
-        if self.ByteString: self.NodeIdType |= (value << 5)
-        b.append(self.NodeIdType.to_binary())
+        packet = []
+        tmp = packet
+        others = self.NodeIdType & 0b00111111
+        if self.TwoByte: self.NodeIdType = ( 0 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.FourByte: self.NodeIdType = ( 1 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.Numeric: self.NodeIdType = ( 2 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.String: self.NodeIdType = ( 3 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.Guid: self.NodeIdType = ( 4 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.ByteString: self.NodeIdType = ( 5 | others )
+        tmp.append(self.NodeIdType.to_binary())
         if self.TwoByte: 
-            b.append(self.TwoByte.to_binary())
+            tmp.append(self.TwoByte.to_binary())
         if self.FourByte: 
-            b.append(self.FourByte.to_binary())
+            tmp.append(self.FourByte.to_binary())
         if self.Numeric: 
-            b.append(self.Numeric.to_binary())
+            tmp.append(self.Numeric.to_binary())
         if self.String: 
-            b.append(self.String.to_binary())
+            tmp.append(self.String.to_binary())
         if self.Guid: 
-            b.append(self.Guid.to_binary())
+            tmp.append(self.Guid.to_binary())
         if self.ByteString: 
-            b.append(self.ByteString.to_binary())
-        return b.join()
+            tmp.append(self.ByteString.to_binary())
+        return b''.join(packet)
         
         def from_binary(self, data):
             data = self.NodeIdType.from_binary(data)
-            if self.NodeIdType & (1 << 0):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.TwoByte.from_binary(data)
-            if self.NodeIdType & (1 << 1):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.FourByte.from_binary(data)
-            if self.NodeIdType & (1 << 2):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.Numeric.from_binary(data)
-            if self.NodeIdType & (1 << 3):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.String.from_binary(data)
-            if self.NodeIdType & (1 << 4):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.Guid.from_binary(data)
-            if self.NodeIdType & (1 << 5):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.ByteString.from_binary(data)
             return data
             
@@ -449,107 +479,128 @@ class ExpandedNodeId(object):
         self.Guid = None
         self.ByteString = None
         self.NamespaceURI = None
+        self._NamespaceURI_fmt = '!s'
+        self._NamespaceURI_fmt_size = 1
         self.ServerIndex = None
+        self._ServerIndex_fmt = '!I'
+        self._ServerIndex_fmt_size = 4
     
     def to_binary(self):
-        b = []
-        if self.TwoByte: self.NodeIdType |= (value << 0)
-        if self.FourByte: self.NodeIdType |= (value << 1)
-        if self.Numeric: self.NodeIdType |= (value << 2)
-        if self.String: self.NodeIdType |= (value << 3)
-        if self.Guid: self.NodeIdType |= (value << 4)
-        if self.ByteString: self.NodeIdType |= (value << 5)
+        packet = []
+        tmp = packet
+        others = self.NodeIdType & 0b00111111
+        if self.TwoByte: self.NodeIdType = ( 0 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.FourByte: self.NodeIdType = ( 1 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.Numeric: self.NodeIdType = ( 2 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.String: self.NodeIdType = ( 3 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.Guid: self.NodeIdType = ( 4 | others )
+        others = self.NodeIdType & 0b00111111
+        if self.ByteString: self.NodeIdType = ( 5 | others )
         if self.NamespaceURI: self.NodeIdType |= (value << 7)
         if self.ServerIndex: self.NodeIdType |= (value << 6)
-        b.append(self.NodeIdType.to_binary())
+        tmp.append(self.NodeIdType.to_binary())
         if self.TwoByte: 
-            b.append(self.TwoByte.to_binary())
+            tmp.append(self.TwoByte.to_binary())
         if self.FourByte: 
-            b.append(self.FourByte.to_binary())
+            tmp.append(self.FourByte.to_binary())
         if self.Numeric: 
-            b.append(self.Numeric.to_binary())
+            tmp.append(self.Numeric.to_binary())
         if self.String: 
-            b.append(self.String.to_binary())
+            tmp.append(self.String.to_binary())
         if self.Guid: 
-            b.append(self.Guid.to_binary())
+            tmp.append(self.Guid.to_binary())
         if self.ByteString: 
-            b.append(self.ByteString.to_binary())
+            tmp.append(self.ByteString.to_binary())
         if self.NamespaceURI: 
-            b.append(struct.pack('!s', self.NamespaceURI))
+            tmp.append(struct.pack(self._NamespaceURI_fmt, self.NamespaceURI))
         if self.ServerIndex: 
-            b.append(struct.pack('!I', self.ServerIndex))
-        return b.join()
+            tmp.append(struct.pack(self._ServerIndex_fmt, self.ServerIndex))
+        return b''.join(packet)
         
         def from_binary(self, data):
             data = self.NodeIdType.from_binary(data)
-            if self.NodeIdType & (1 << 0):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.TwoByte.from_binary(data)
-            if self.NodeIdType & (1 << 1):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.FourByte.from_binary(data)
-            if self.NodeIdType & (1 << 2):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.Numeric.from_binary(data)
-            if self.NodeIdType & (1 << 3):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.String.from_binary(data)
-            if self.NodeIdType & (1 << 4):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.Guid.from_binary(data)
-            if self.NodeIdType & (1 << 5):
+            val = self.NodeIdType & 0b00111111
+            if val == 0:
                 data = self.ByteString.from_binary(data)
             if self.NodeIdType & (1 << 7):
-                self.NamespaceURI = struct.unpack(s, data[:1])
-                data = data[1:]
+                self.NamespaceURI = struct.unpack(self._NamespaceURI_fmt, data.read(self._NamespaceURI_fmt_size))
             if self.NodeIdType & (1 << 6):
-                self.ServerIndex = struct.unpack(I, data[:4])
-                data = data[4:]
+                self.ServerIndex = struct.unpack(self._ServerIndex_fmt, data.read(self._ServerIndex_fmt_size))
             return data
             
 class DiagnosticInfo(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.SymbolicId = None
+        self._SymbolicId_fmt = '!i'
+        self._SymbolicId_fmt_size = 4
         self.NamespaceURI = None
+        self._NamespaceURI_fmt = '!i'
+        self._NamespaceURI_fmt_size = 4
         self.LocalizedText = None
+        self._LocalizedText_fmt = '!i'
+        self._LocalizedText_fmt_size = 4
         self.AdditionalInfo = None
+        self._AdditionalInfo_fmt = '!s'
+        self._AdditionalInfo_fmt_size = 1
         self.InnerStatusCode = None
         self.InnerDiagnosticInfo = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        tmp = packet
         if self.SymbolicId: self.Encoding |= (value << 0)
         if self.NamespaceURI: self.Encoding |= (value << 1)
         if self.LocalizedText: self.Encoding |= (value << 2)
         if self.AdditionalInfo: self.Encoding |= (value << 4)
         if self.InnerStatusCode: self.Encoding |= (value << 5)
         if self.InnerDiagnosticInfo: self.Encoding |= (value << 6)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.SymbolicId: 
-            b.append(struct.pack('!i', self.SymbolicId))
+            tmp.append(struct.pack(self._SymbolicId_fmt, self.SymbolicId))
         if self.NamespaceURI: 
-            b.append(struct.pack('!i', self.NamespaceURI))
+            tmp.append(struct.pack(self._NamespaceURI_fmt, self.NamespaceURI))
         if self.LocalizedText: 
-            b.append(struct.pack('!i', self.LocalizedText))
+            tmp.append(struct.pack(self._LocalizedText_fmt, self.LocalizedText))
         if self.AdditionalInfo: 
-            b.append(struct.pack('!s', self.AdditionalInfo))
+            tmp.append(struct.pack(self._AdditionalInfo_fmt, self.AdditionalInfo))
         if self.InnerStatusCode: 
-            b.append(self.InnerStatusCode.to_binary())
+            tmp.append(self.InnerStatusCode.to_binary())
         if self.InnerDiagnosticInfo: 
-            b.append(self.InnerDiagnosticInfo.to_binary())
-        return b.join()
+            tmp.append(self.InnerDiagnosticInfo.to_binary())
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
-                self.SymbolicId = struct.unpack(i, data[:4])
-                data = data[4:]
+                self.SymbolicId = struct.unpack(self._SymbolicId_fmt, data.read(self._SymbolicId_fmt_size))
             if self.Encoding & (1 << 1):
-                self.NamespaceURI = struct.unpack(i, data[:4])
-                data = data[4:]
+                self.NamespaceURI = struct.unpack(self._NamespaceURI_fmt, data.read(self._NamespaceURI_fmt_size))
             if self.Encoding & (1 << 2):
-                self.LocalizedText = struct.unpack(i, data[:4])
-                data = data[4:]
+                self.LocalizedText = struct.unpack(self._LocalizedText_fmt, data.read(self._LocalizedText_fmt_size))
             if self.Encoding & (1 << 4):
-                self.AdditionalInfo = struct.unpack(s, data[:1])
-                data = data[1:]
+                self.AdditionalInfo = struct.unpack(self._AdditionalInfo_fmt, data.read(self._AdditionalInfo_fmt_size))
             if self.Encoding & (1 << 5):
                 data = self.InnerStatusCode.from_binary(data)
             if self.Encoding & (1 << 6):
@@ -559,100 +610,133 @@ class DiagnosticInfo(object):
 class QualifiedName(object):
     def __init__(self):
         self.NamespaceIndex = None
+        self._NamespaceIndex_fmt = '!i'
+        self._NamespaceIndex_fmt_size = 4
         self.Name = None
+        self._Name_fmt = '!s'
+        self._Name_fmt_size = 1
     
     def to_binary(self):
-        b = []
-        b.append(struct.pack('!i', self.NamespaceIndex))
-        b.append(struct.pack('!s', self.Name))
-        return b.join()
+        packet = []
+        tmp = packet
+        tmp.append(struct.pack(self._NamespaceIndex_fmt, self.NamespaceIndex))
+        tmp.append(struct.pack(self._Name_fmt, self.Name))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.NamespaceIndex = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.Name = struct.unpack(s, data[:1])
-            data = data[1:]
+            self.NamespaceIndex = struct.unpack(self._NamespaceIndex_fmt, data.read(self._NamespaceIndex_fmt_size))
+            self.Name = struct.unpack(self._Name_fmt, data.read(self._Name_fmt_size))
             return data
             
 class LocalizedText(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.Locale = None
+        self._Locale_fmt = '!s'
+        self._Locale_fmt_size = 1
         self.Text = None
+        self._Text_fmt = '!s'
+        self._Text_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        tmp = packet
         if self.Locale: self.Encoding |= (value << 0)
         if self.Text: self.Encoding |= (value << 1)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.Locale: 
-            b.append(struct.pack('!s', self.Locale))
+            tmp.append(struct.pack(self._Locale_fmt, self.Locale))
         if self.Text: 
-            b.append(struct.pack('!s', self.Text))
-        return b.join()
+            tmp.append(struct.pack(self._Text_fmt, self.Text))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
-                self.Locale = struct.unpack(s, data[:1])
-                data = data[1:]
+                self.Locale = struct.unpack(self._Locale_fmt, data.read(self._Locale_fmt_size))
             if self.Encoding & (1 << 1):
-                self.Text = struct.unpack(s, data[:1])
-                data = data[1:]
+                self.Text = struct.unpack(self._Text_fmt, data.read(self._Text_fmt_size))
             return data
             
 class ExtensionObject(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
+            tmp.append(self.TypeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.Body)))
         for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        return b.join()
+            tmp.append(struct.pack(self._Body_fmt, self.Body))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+                    self.Body = struct.unpack(self._Body_fmt, data.read(self._Body_fmt_size))
             return data
             
 class Variant(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.ArrayLength = None
+        self._ArrayLength_fmt = '!i'
+        self._ArrayLength_fmt_size = 4
         self.Boolean = []
+        self._Boolean_fmt = '!?'
+        self._Boolean_fmt_size = 1
         self.SByte = []
+        self._SByte_fmt = '!B'
+        self._SByte_fmt_size = 1
         self.Byte = []
+        self._Byte_fmt = '!c'
+        self._Byte_fmt_size = 1
         self.Int16 = []
+        self._Int16_fmt = '!h'
+        self._Int16_fmt_size = 2
         self.UInt16 = []
+        self._UInt16_fmt = '!H'
+        self._UInt16_fmt_size = 2
         self.Int32 = []
+        self._Int32_fmt = '!i'
+        self._Int32_fmt_size = 4
         self.UInt32 = []
+        self._UInt32_fmt = '!I'
+        self._UInt32_fmt_size = 4
         self.Int64 = []
+        self._Int64_fmt = '!q'
+        self._Int64_fmt_size = 8
         self.UInt64 = []
+        self._UInt64_fmt = '!Q'
+        self._UInt64_fmt_size = 8
         self.Float = []
+        self._Float_fmt = '!f'
+        self._Float_fmt_size = 4
         self.Double = []
+        self._Double_fmt = '!d'
+        self._Double_fmt_size = 8
         self.String = []
         self.DateTime = []
+        self._DateTime_fmt = '!d'
+        self._DateTime_fmt_size = 8
         self.Guid = []
         self.ByteString = []
         self.XmlElement = []
@@ -667,303 +751,315 @@ class Variant(object):
         self.Variant = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        tmp = packet
         if self.ArrayLength: self.Encoding |= (value << 7)
-        if self.Boolean: self.VariantType |= (value << 1)
-        if self.SByte: self.VariantType |= (value << 2)
-        if self.Byte: self.VariantType |= (value << 3)
-        if self.Int16: self.VariantType |= (value << 4)
-        if self.UInt16: self.VariantType |= (value << 5)
-        if self.Int32: self.VariantType |= (value << 6)
-        if self.UInt32: self.VariantType |= (value << 7)
-        if self.Int64: self.VariantType |= (value << 8)
-        if self.UInt64: self.VariantType |= (value << 9)
-        if self.Float: self.VariantType |= (value << 10)
-        if self.Double: self.VariantType |= (value << 11)
-        if self.String: self.VariantType |= (value << 12)
-        if self.DateTime: self.VariantType |= (value << 13)
-        if self.Guid: self.VariantType |= (value << 14)
-        if self.ByteString: self.VariantType |= (value << 15)
-        if self.XmlElement: self.VariantType |= (value << 16)
-        if self.NodeId: self.VariantType |= (value << 17)
-        if self.ExpandedNodeId: self.VariantType |= (value << 18)
-        if self.StatusCode: self.VariantType |= (value << 19)
-        if self.DiagnosticInfo: self.VariantType |= (value << 20)
-        if self.QualifiedName: self.VariantType |= (value << 21)
-        if self.LocalizedText: self.VariantType |= (value << 22)
-        if self.ExtensionObject: self.VariantType |= (value << 23)
-        if self.DataValue: self.VariantType |= (value << 24)
-        if self.Variant: self.VariantType |= (value << 25)
-        b.append(struct.pack('!B', self.Encoding))
+        others = self.Encoding & 0b01111111
+        if self.Boolean: self.Encoding = ( 1 | others )
+        others = self.Encoding & 0b01111111
+        if self.SByte: self.Encoding = ( 2 | others )
+        others = self.Encoding & 0b01111111
+        if self.Byte: self.Encoding = ( 3 | others )
+        others = self.Encoding & 0b01111111
+        if self.Int16: self.Encoding = ( 4 | others )
+        others = self.Encoding & 0b01111111
+        if self.UInt16: self.Encoding = ( 5 | others )
+        others = self.Encoding & 0b01111111
+        if self.Int32: self.Encoding = ( 6 | others )
+        others = self.Encoding & 0b01111111
+        if self.UInt32: self.Encoding = ( 7 | others )
+        others = self.Encoding & 0b01111111
+        if self.Int64: self.Encoding = ( 8 | others )
+        others = self.Encoding & 0b01111111
+        if self.UInt64: self.Encoding = ( 9 | others )
+        others = self.Encoding & 0b01111111
+        if self.Float: self.Encoding = ( 10 | others )
+        others = self.Encoding & 0b01111111
+        if self.Double: self.Encoding = ( 11 | others )
+        others = self.Encoding & 0b01111111
+        if self.String: self.Encoding = ( 12 | others )
+        others = self.Encoding & 0b01111111
+        if self.DateTime: self.Encoding = ( 13 | others )
+        others = self.Encoding & 0b01111111
+        if self.Guid: self.Encoding = ( 14 | others )
+        others = self.Encoding & 0b01111111
+        if self.ByteString: self.Encoding = ( 15 | others )
+        others = self.Encoding & 0b01111111
+        if self.XmlElement: self.Encoding = ( 16 | others )
+        others = self.Encoding & 0b01111111
+        if self.NodeId: self.Encoding = ( 17 | others )
+        others = self.Encoding & 0b01111111
+        if self.ExpandedNodeId: self.Encoding = ( 18 | others )
+        others = self.Encoding & 0b01111111
+        if self.StatusCode: self.Encoding = ( 19 | others )
+        others = self.Encoding & 0b01111111
+        if self.DiagnosticInfo: self.Encoding = ( 20 | others )
+        others = self.Encoding & 0b01111111
+        if self.QualifiedName: self.Encoding = ( 21 | others )
+        others = self.Encoding & 0b01111111
+        if self.LocalizedText: self.Encoding = ( 22 | others )
+        others = self.Encoding & 0b01111111
+        if self.ExtensionObject: self.Encoding = ( 23 | others )
+        others = self.Encoding & 0b01111111
+        if self.DataValue: self.Encoding = ( 24 | others )
+        others = self.Encoding & 0b01111111
+        if self.Variant: self.Encoding = ( 25 | others )
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.ArrayLength: 
-            b.append(struct.pack('!i', self.ArrayLength))
+            tmp.append(struct.pack(self._ArrayLength_fmt, self.ArrayLength))
         if self.Boolean: 
-            b.append(struct.pack('!i', len(self.Boolean)))
+            tmp.append(struct.pack('!i', len(self.Boolean)))
             for i in Boolean:
-                b.append(struct.pack('!?', self.Boolean))
+                tmp.append(struct.pack(self._Boolean_fmt, self.Boolean))
         if self.SByte: 
-            b.append(struct.pack('!i', len(self.SByte)))
+            tmp.append(struct.pack('!i', len(self.SByte)))
             for i in SByte:
-                b.append(struct.pack('!B', self.SByte))
+                tmp.append(struct.pack(self._SByte_fmt, self.SByte))
         if self.Byte: 
-            b.append(struct.pack('!i', len(self.Byte)))
+            tmp.append(struct.pack('!i', len(self.Byte)))
             for i in Byte:
-                b.append(struct.pack('!c', self.Byte))
+                tmp.append(struct.pack(self._Byte_fmt, self.Byte))
         if self.Int16: 
-            b.append(struct.pack('!i', len(self.Int16)))
+            tmp.append(struct.pack('!i', len(self.Int16)))
             for i in Int16:
-                b.append(struct.pack('!h', self.Int16))
+                tmp.append(struct.pack(self._Int16_fmt, self.Int16))
         if self.UInt16: 
-            b.append(struct.pack('!i', len(self.UInt16)))
+            tmp.append(struct.pack('!i', len(self.UInt16)))
             for i in UInt16:
-                b.append(struct.pack('!H', self.UInt16))
+                tmp.append(struct.pack(self._UInt16_fmt, self.UInt16))
         if self.Int32: 
-            b.append(struct.pack('!i', len(self.Int32)))
+            tmp.append(struct.pack('!i', len(self.Int32)))
             for i in Int32:
-                b.append(struct.pack('!i', self.Int32))
+                tmp.append(struct.pack(self._Int32_fmt, self.Int32))
         if self.UInt32: 
-            b.append(struct.pack('!i', len(self.UInt32)))
+            tmp.append(struct.pack('!i', len(self.UInt32)))
             for i in UInt32:
-                b.append(struct.pack('!I', self.UInt32))
+                tmp.append(struct.pack(self._UInt32_fmt, self.UInt32))
         if self.Int64: 
-            b.append(struct.pack('!i', len(self.Int64)))
+            tmp.append(struct.pack('!i', len(self.Int64)))
             for i in Int64:
-                b.append(struct.pack('!q', self.Int64))
+                tmp.append(struct.pack(self._Int64_fmt, self.Int64))
         if self.UInt64: 
-            b.append(struct.pack('!i', len(self.UInt64)))
+            tmp.append(struct.pack('!i', len(self.UInt64)))
             for i in UInt64:
-                b.append(struct.pack('!Q', self.UInt64))
+                tmp.append(struct.pack(self._UInt64_fmt, self.UInt64))
         if self.Float: 
-            b.append(struct.pack('!i', len(self.Float)))
+            tmp.append(struct.pack('!i', len(self.Float)))
             for i in Float:
-                b.append(struct.pack('!f', self.Float))
+                tmp.append(struct.pack(self._Float_fmt, self.Float))
         if self.Double: 
-            b.append(struct.pack('!i', len(self.Double)))
+            tmp.append(struct.pack('!i', len(self.Double)))
             for i in Double:
-                b.append(struct.pack('!d', self.Double))
+                tmp.append(struct.pack(self._Double_fmt, self.Double))
         if self.String: 
-            b.append(struct.pack('!i', len(self.String)))
+            tmp.append(struct.pack('!i', len(self.String)))
             for i in String:
-                b.append(self.String.to_binary())
+                tmp.append(self.String.to_binary())
         if self.DateTime: 
-            b.append(struct.pack('!i', len(self.DateTime)))
+            tmp.append(struct.pack('!i', len(self.DateTime)))
             for i in DateTime:
-                b.append(struct.pack('!d', self.DateTime))
+                tmp.append(struct.pack(self._DateTime_fmt, self.DateTime))
         if self.Guid: 
-            b.append(struct.pack('!i', len(self.Guid)))
+            tmp.append(struct.pack('!i', len(self.Guid)))
             for i in Guid:
-                b.append(self.Guid.to_binary())
+                tmp.append(self.Guid.to_binary())
         if self.ByteString: 
-            b.append(struct.pack('!i', len(self.ByteString)))
+            tmp.append(struct.pack('!i', len(self.ByteString)))
             for i in ByteString:
-                b.append(self.ByteString.to_binary())
+                tmp.append(self.ByteString.to_binary())
         if self.XmlElement: 
-            b.append(struct.pack('!i', len(self.XmlElement)))
+            tmp.append(struct.pack('!i', len(self.XmlElement)))
             for i in XmlElement:
-                b.append(self.XmlElement.to_binary())
+                tmp.append(self.XmlElement.to_binary())
         if self.NodeId: 
-            b.append(struct.pack('!i', len(self.NodeId)))
+            tmp.append(struct.pack('!i', len(self.NodeId)))
             for i in NodeId:
-                b.append(self.NodeId.to_binary())
+                tmp.append(self.NodeId.to_binary())
         if self.ExpandedNodeId: 
-            b.append(struct.pack('!i', len(self.ExpandedNodeId)))
+            tmp.append(struct.pack('!i', len(self.ExpandedNodeId)))
             for i in ExpandedNodeId:
-                b.append(self.ExpandedNodeId.to_binary())
+                tmp.append(self.ExpandedNodeId.to_binary())
         if self.StatusCode: 
-            b.append(struct.pack('!i', len(self.StatusCode)))
+            tmp.append(struct.pack('!i', len(self.StatusCode)))
             for i in StatusCode:
-                b.append(self.StatusCode.to_binary())
+                tmp.append(self.StatusCode.to_binary())
         if self.DiagnosticInfo: 
-            b.append(struct.pack('!i', len(self.DiagnosticInfo)))
+            tmp.append(struct.pack('!i', len(self.DiagnosticInfo)))
             for i in DiagnosticInfo:
-                b.append(self.DiagnosticInfo.to_binary())
+                tmp.append(self.DiagnosticInfo.to_binary())
         if self.QualifiedName: 
-            b.append(struct.pack('!i', len(self.QualifiedName)))
+            tmp.append(struct.pack('!i', len(self.QualifiedName)))
             for i in QualifiedName:
-                b.append(self.QualifiedName.to_binary())
+                tmp.append(self.QualifiedName.to_binary())
         if self.LocalizedText: 
-            b.append(struct.pack('!i', len(self.LocalizedText)))
+            tmp.append(struct.pack('!i', len(self.LocalizedText)))
             for i in LocalizedText:
-                b.append(self.LocalizedText.to_binary())
+                tmp.append(self.LocalizedText.to_binary())
         if self.ExtensionObject: 
-            b.append(struct.pack('!i', len(self.ExtensionObject)))
+            tmp.append(struct.pack('!i', len(self.ExtensionObject)))
             for i in ExtensionObject:
-                b.append(self.ExtensionObject.to_binary())
+                tmp.append(self.ExtensionObject.to_binary())
         if self.DataValue: 
-            b.append(struct.pack('!i', len(self.DataValue)))
+            tmp.append(struct.pack('!i', len(self.DataValue)))
             for i in DataValue:
-                b.append(self.DataValue.to_binary())
+                tmp.append(self.DataValue.to_binary())
         if self.Variant: 
-            b.append(struct.pack('!i', len(self.Variant)))
+            tmp.append(struct.pack('!i', len(self.Variant)))
             for i in Variant:
-                b.append(self.Variant.to_binary())
-        return b.join()
+                tmp.append(self.Variant.to_binary())
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 7):
-                self.ArrayLength = struct.unpack(i, data[:4])
-                data = data[4:]
-            if self.VariantType & (1 << 1):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                self.ArrayLength = struct.unpack(self._ArrayLength_fmt, data.read(self._ArrayLength_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.Boolean = struct.unpack(?, data[:1])
-                        data = data[1:]
-            if self.VariantType & (1 << 2):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.Boolean = struct.unpack(self._Boolean_fmt, data.read(self._Boolean_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.SByte = struct.unpack(B, data[:1])
-                        data = data[1:]
-            if self.VariantType & (1 << 3):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.SByte = struct.unpack(self._SByte_fmt, data.read(self._SByte_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.Byte = struct.unpack(c, data[:1])
-                        data = data[1:]
-            if self.VariantType & (1 << 4):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.Byte = struct.unpack(self._Byte_fmt, data.read(self._Byte_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.Int16 = struct.unpack(h, data[:2])
-                        data = data[2:]
-            if self.VariantType & (1 << 5):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.Int16 = struct.unpack(self._Int16_fmt, data.read(self._Int16_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.UInt16 = struct.unpack(H, data[:2])
-                        data = data[2:]
-            if self.VariantType & (1 << 6):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.UInt16 = struct.unpack(self._UInt16_fmt, data.read(self._UInt16_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.Int32 = struct.unpack(i, data[:4])
-                        data = data[4:]
-            if self.VariantType & (1 << 7):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.Int32 = struct.unpack(self._Int32_fmt, data.read(self._Int32_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.UInt32 = struct.unpack(I, data[:4])
-                        data = data[4:]
-            if self.VariantType & (1 << 8):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.UInt32 = struct.unpack(self._UInt32_fmt, data.read(self._UInt32_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.Int64 = struct.unpack(q, data[:8])
-                        data = data[8:]
-            if self.VariantType & (1 << 9):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.Int64 = struct.unpack(self._Int64_fmt, data.read(self._Int64_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.UInt64 = struct.unpack(Q, data[:8])
-                        data = data[8:]
-            if self.VariantType & (1 << 10):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.UInt64 = struct.unpack(self._UInt64_fmt, data.read(self._UInt64_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.Float = struct.unpack(f, data[:4])
-                        data = data[4:]
-            if self.VariantType & (1 << 11):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.Float = struct.unpack(self._Float_fmt, data.read(self._Float_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.Double = struct.unpack(d, data[:8])
-                        data = data[8:]
-            if self.VariantType & (1 << 12):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.Double = struct.unpack(self._Double_fmt, data.read(self._Double_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.String.from_binary(data)
-            if self.VariantType & (1 << 13):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
-                        self.DateTime = struct.unpack(d, data[:8])
-                        data = data[8:]
-            if self.VariantType & (1 << 14):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+                        self.DateTime = struct.unpack(self._DateTime_fmt, data.read(self._DateTime_fmt_size))
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.Guid.from_binary(data)
-            if self.VariantType & (1 << 15):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.ByteString.from_binary(data)
-            if self.VariantType & (1 << 16):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.XmlElement.from_binary(data)
-            if self.VariantType & (1 << 17):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.NodeId.from_binary(data)
-            if self.VariantType & (1 << 18):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.ExpandedNodeId.from_binary(data)
-            if self.VariantType & (1 << 19):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.StatusCode.from_binary(data)
-            if self.VariantType & (1 << 20):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.DiagnosticInfo.from_binary(data)
-            if self.VariantType & (1 << 21):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.QualifiedName.from_binary(data)
-            if self.VariantType & (1 << 22):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.LocalizedText.from_binary(data)
-            if self.VariantType & (1 << 23):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.ExtensionObject.from_binary(data)
-            if self.VariantType & (1 << 24):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.DataValue.from_binary(data)
-            if self.VariantType & (1 << 25):
-                length = struct.unpack('!i', data[:4])
-                data = data[4:]
+            val = self.Encoding & 0b01111111
+            if val == 0:
+                length = struct.unpack('!i', data.read(4))
                 if length != -1:
                     for i in range(0, length):
                         data = self.Variant.from_binary(data)
@@ -972,166 +1068,164 @@ class Variant(object):
 class DataValue(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.Value = None
         self.StatusCode = None
         self.SourceTimestamp = None
+        self._SourceTimestamp_fmt = '!d'
+        self._SourceTimestamp_fmt_size = 8
         self.SourcePicoseconds = None
+        self._SourcePicoseconds_fmt = '!H'
+        self._SourcePicoseconds_fmt_size = 2
         self.ServerTimestamp = None
+        self._ServerTimestamp_fmt = '!d'
+        self._ServerTimestamp_fmt_size = 8
         self.ServerPicoseconds = None
+        self._ServerPicoseconds_fmt = '!H'
+        self._ServerPicoseconds_fmt_size = 2
     
     def to_binary(self):
-        b = []
+        packet = []
+        tmp = packet
         if self.Value: self.Encoding |= (value << 0)
         if self.StatusCode: self.Encoding |= (value << 1)
         if self.SourceTimestamp: self.Encoding |= (value << 2)
         if self.SourcePicoseconds: self.Encoding |= (value << 3)
         if self.ServerTimestamp: self.Encoding |= (value << 4)
         if self.ServerPicoseconds: self.Encoding |= (value << 5)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.Value: 
-            b.append(self.Value.to_binary())
+            tmp.append(self.Value.to_binary())
         if self.StatusCode: 
-            b.append(self.StatusCode.to_binary())
+            tmp.append(self.StatusCode.to_binary())
         if self.SourceTimestamp: 
-            b.append(struct.pack('!d', self.SourceTimestamp))
+            tmp.append(struct.pack(self._SourceTimestamp_fmt, self.SourceTimestamp))
         if self.SourcePicoseconds: 
-            b.append(struct.pack('!H', self.SourcePicoseconds))
+            tmp.append(struct.pack(self._SourcePicoseconds_fmt, self.SourcePicoseconds))
         if self.ServerTimestamp: 
-            b.append(struct.pack('!d', self.ServerTimestamp))
+            tmp.append(struct.pack(self._ServerTimestamp_fmt, self.ServerTimestamp))
         if self.ServerPicoseconds: 
-            b.append(struct.pack('!H', self.ServerPicoseconds))
-        return b.join()
+            tmp.append(struct.pack(self._ServerPicoseconds_fmt, self.ServerPicoseconds))
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.Value.from_binary(data)
             if self.Encoding & (1 << 1):
                 data = self.StatusCode.from_binary(data)
             if self.Encoding & (1 << 2):
-                self.SourceTimestamp = struct.unpack(d, data[:8])
-                data = data[8:]
+                self.SourceTimestamp = struct.unpack(self._SourceTimestamp_fmt, data.read(self._SourceTimestamp_fmt_size))
             if self.Encoding & (1 << 3):
-                self.SourcePicoseconds = struct.unpack(H, data[:2])
-                data = data[2:]
+                self.SourcePicoseconds = struct.unpack(self._SourcePicoseconds_fmt, data.read(self._SourcePicoseconds_fmt_size))
             if self.Encoding & (1 << 4):
-                self.ServerTimestamp = struct.unpack(d, data[:8])
-                data = data[8:]
+                self.ServerTimestamp = struct.unpack(self._ServerTimestamp_fmt, data.read(self._ServerTimestamp_fmt_size))
             if self.Encoding & (1 << 5):
-                self.ServerPicoseconds = struct.unpack(H, data[:2])
-                data = data[2:]
+                self.ServerPicoseconds = struct.unpack(self._ServerPicoseconds_fmt, data.read(self._ServerPicoseconds_fmt_size))
             return data
             
 class ReferenceNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ReferenceTypeId = None
         self.IsInverse = None
+        self._IsInverse_fmt = '!?'
+        self._IsInverse_fmt_size = 1
         self.TargetId = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(struct.pack('!?', self.IsInverse))
-        b.append(self.TargetId.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(struct.pack(self._IsInverse_fmt, self.IsInverse))
+        tmp.append(self.TargetId.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ReferenceTypeId.from_binary(data)
-            self.IsInverse = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsInverse = struct.unpack(self._IsInverse_fmt, data.read(self._IsInverse_fmt_size))
             data = self.TargetId.from_binary(data)
             return data
             
 class Node(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        return b.join()
+            tmp.append(self.References.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
@@ -1140,68 +1234,62 @@ class Node(object):
 class InstanceNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        return b.join()
+            tmp.append(self.References.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
@@ -1210,68 +1298,62 @@ class InstanceNode(object):
 class TypeNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        return b.join()
+            tmp.append(self.References.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
@@ -1280,771 +1362,723 @@ class TypeNode(object):
 class ObjectNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.EventNotifier = None
+        self._EventNotifier_fmt = '!c'
+        self._EventNotifier_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(struct.pack('!c', self.EventNotifier))
-        return b.join()
+            tmp.append(self.References.to_binary())
+        tmp.append(struct.pack(self._EventNotifier_fmt, self.EventNotifier))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
-            self.EventNotifier = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.EventNotifier = struct.unpack(self._EventNotifier_fmt, data.read(self._EventNotifier_fmt_size))
             return data
             
 class ObjectTypeNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(struct.pack('!?', self.IsAbstract))
-        return b.join()
+            tmp.append(self.References.to_binary())
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
             return data
             
 class VariableNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.Value = None
         self.DataType = None
         self.ValueRank = None
-        self.NoOfArrayDimensions = None
+        self._ValueRank_fmt = '!i'
+        self._ValueRank_fmt_size = 4
         self.ArrayDimensions = []
+        self._ArrayDimensions_fmt = '!I'
+        self._ArrayDimensions_fmt_size = 4
         self.AccessLevel = None
+        self._AccessLevel_fmt = '!c'
+        self._AccessLevel_fmt_size = 1
         self.UserAccessLevel = None
+        self._UserAccessLevel_fmt = '!c'
+        self._UserAccessLevel_fmt_size = 1
         self.MinimumSamplingInterval = None
+        self._MinimumSamplingInterval_fmt = '!d'
+        self._MinimumSamplingInterval_fmt_size = 8
         self.Historizing = None
+        self._Historizing_fmt = '!?'
+        self._Historizing_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(self.Value.to_binary())
-        b.append(self.DataType.to_binary())
-        b.append(struct.pack('!i', self.ValueRank))
-        b.append(struct.pack('!i', self.NoOfArrayDimensions))
-        b.append(struct.pack('!i', len(self.ArrayDimensions)))
+            tmp.append(self.References.to_binary())
+        tmp.append(self.Value.to_binary())
+        tmp.append(self.DataType.to_binary())
+        tmp.append(struct.pack(self._ValueRank_fmt, self.ValueRank))
+        tmp.append(struct.pack('!i', len(self.ArrayDimensions)))
         for i in ArrayDimensions:
-            b.append(struct.pack('!I', self.ArrayDimensions))
-        b.append(struct.pack('!c', self.AccessLevel))
-        b.append(struct.pack('!c', self.UserAccessLevel))
-        b.append(struct.pack('!d', self.MinimumSamplingInterval))
-        b.append(struct.pack('!?', self.Historizing))
-        return b.join()
+            tmp.append(struct.pack(self._ArrayDimensions_fmt, self.ArrayDimensions))
+        tmp.append(struct.pack(self._AccessLevel_fmt, self.AccessLevel))
+        tmp.append(struct.pack(self._UserAccessLevel_fmt, self.UserAccessLevel))
+        tmp.append(struct.pack(self._MinimumSamplingInterval_fmt, self.MinimumSamplingInterval))
+        tmp.append(struct.pack(self._Historizing_fmt, self.Historizing))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
             data = self.Value.from_binary(data)
             data = self.DataType.from_binary(data)
-            self.ValueRank = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.NoOfArrayDimensions = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.ValueRank = struct.unpack(self._ValueRank_fmt, data.read(self._ValueRank_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.ArrayDimensions = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.AccessLevel = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.UserAccessLevel = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.MinimumSamplingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.Historizing = struct.unpack(?, data[:1])
-            data = data[1:]
+                    self.ArrayDimensions = struct.unpack(self._ArrayDimensions_fmt, data.read(self._ArrayDimensions_fmt_size))
+            self.AccessLevel = struct.unpack(self._AccessLevel_fmt, data.read(self._AccessLevel_fmt_size))
+            self.UserAccessLevel = struct.unpack(self._UserAccessLevel_fmt, data.read(self._UserAccessLevel_fmt_size))
+            self.MinimumSamplingInterval = struct.unpack(self._MinimumSamplingInterval_fmt, data.read(self._MinimumSamplingInterval_fmt_size))
+            self.Historizing = struct.unpack(self._Historizing_fmt, data.read(self._Historizing_fmt_size))
             return data
             
 class VariableTypeNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.Value = None
         self.DataType = None
         self.ValueRank = None
-        self.NoOfArrayDimensions = None
+        self._ValueRank_fmt = '!i'
+        self._ValueRank_fmt_size = 4
         self.ArrayDimensions = []
+        self._ArrayDimensions_fmt = '!I'
+        self._ArrayDimensions_fmt_size = 4
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(self.Value.to_binary())
-        b.append(self.DataType.to_binary())
-        b.append(struct.pack('!i', self.ValueRank))
-        b.append(struct.pack('!i', self.NoOfArrayDimensions))
-        b.append(struct.pack('!i', len(self.ArrayDimensions)))
+            tmp.append(self.References.to_binary())
+        tmp.append(self.Value.to_binary())
+        tmp.append(self.DataType.to_binary())
+        tmp.append(struct.pack(self._ValueRank_fmt, self.ValueRank))
+        tmp.append(struct.pack('!i', len(self.ArrayDimensions)))
         for i in ArrayDimensions:
-            b.append(struct.pack('!I', self.ArrayDimensions))
-        b.append(struct.pack('!?', self.IsAbstract))
-        return b.join()
+            tmp.append(struct.pack(self._ArrayDimensions_fmt, self.ArrayDimensions))
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
             data = self.Value.from_binary(data)
             data = self.DataType.from_binary(data)
-            self.ValueRank = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.NoOfArrayDimensions = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.ValueRank = struct.unpack(self._ValueRank_fmt, data.read(self._ValueRank_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.ArrayDimensions = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
+                    self.ArrayDimensions = struct.unpack(self._ArrayDimensions_fmt, data.read(self._ArrayDimensions_fmt_size))
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
             return data
             
 class ReferenceTypeNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
         self.Symmetric = None
+        self._Symmetric_fmt = '!?'
+        self._Symmetric_fmt_size = 1
         self.InverseName = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(struct.pack('!?', self.IsAbstract))
-        b.append(struct.pack('!?', self.Symmetric))
-        b.append(self.InverseName.to_binary())
-        return b.join()
+            tmp.append(self.References.to_binary())
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        tmp.append(struct.pack(self._Symmetric_fmt, self.Symmetric))
+        tmp.append(self.InverseName.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.Symmetric = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
+            self.Symmetric = struct.unpack(self._Symmetric_fmt, data.read(self._Symmetric_fmt_size))
             data = self.InverseName.from_binary(data)
             return data
             
 class MethodNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.Executable = None
+        self._Executable_fmt = '!?'
+        self._Executable_fmt_size = 1
         self.UserExecutable = None
+        self._UserExecutable_fmt = '!?'
+        self._UserExecutable_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(struct.pack('!?', self.Executable))
-        b.append(struct.pack('!?', self.UserExecutable))
-        return b.join()
+            tmp.append(self.References.to_binary())
+        tmp.append(struct.pack(self._Executable_fmt, self.Executable))
+        tmp.append(struct.pack(self._UserExecutable_fmt, self.UserExecutable))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
-            self.Executable = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.UserExecutable = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.Executable = struct.unpack(self._Executable_fmt, data.read(self._Executable_fmt_size))
+            self.UserExecutable = struct.unpack(self._UserExecutable_fmt, data.read(self._UserExecutable_fmt_size))
             return data
             
 class ViewNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.ContainsNoLoops = None
+        self._ContainsNoLoops_fmt = '!?'
+        self._ContainsNoLoops_fmt_size = 1
         self.EventNotifier = None
+        self._EventNotifier_fmt = '!c'
+        self._EventNotifier_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(struct.pack('!?', self.ContainsNoLoops))
-        b.append(struct.pack('!c', self.EventNotifier))
-        return b.join()
+            tmp.append(self.References.to_binary())
+        tmp.append(struct.pack(self._ContainsNoLoops_fmt, self.ContainsNoLoops))
+        tmp.append(struct.pack(self._EventNotifier_fmt, self.EventNotifier))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
-            self.ContainsNoLoops = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.EventNotifier = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.ContainsNoLoops = struct.unpack(self._ContainsNoLoops_fmt, data.read(self._ContainsNoLoops_fmt_size))
+            self.EventNotifier = struct.unpack(self._EventNotifier_fmt, data.read(self._EventNotifier_fmt_size))
             return data
             
 class DataTypeNode(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.NodeClass = None
         self.BrowseName = None
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
-        self.NoOfReferences = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.References = []
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        b.append(struct.pack('!?', self.IsAbstract))
-        return b.join()
+            tmp.append(self.References.to_binary())
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.NodeClass.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
             return data
             
 class Argument(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Name = None
         self.DataType = None
         self.ValueRank = None
-        self.NoOfArrayDimensions = None
+        self._ValueRank_fmt = '!i'
+        self._ValueRank_fmt_size = 4
         self.ArrayDimensions = []
+        self._ArrayDimensions_fmt = '!I'
+        self._ArrayDimensions_fmt_size = 4
         self.Description = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Name.to_binary())
-        b.append(self.DataType.to_binary())
-        b.append(struct.pack('!i', self.ValueRank))
-        b.append(struct.pack('!i', self.NoOfArrayDimensions))
-        b.append(struct.pack('!i', len(self.ArrayDimensions)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Name.to_binary())
+        tmp.append(self.DataType.to_binary())
+        tmp.append(struct.pack(self._ValueRank_fmt, self.ValueRank))
+        tmp.append(struct.pack('!i', len(self.ArrayDimensions)))
         for i in ArrayDimensions:
-            b.append(struct.pack('!I', self.ArrayDimensions))
-        b.append(self.Description.to_binary())
-        return b.join()
+            tmp.append(struct.pack(self._ArrayDimensions_fmt, self.ArrayDimensions))
+        tmp.append(self.Description.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Name.from_binary(data)
             data = self.DataType.from_binary(data)
-            self.ValueRank = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.NoOfArrayDimensions = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.ValueRank = struct.unpack(self._ValueRank_fmt, data.read(self._ValueRank_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.ArrayDimensions = struct.unpack(I, data[:4])
-                    data = data[4:]
+                    self.ArrayDimensions = struct.unpack(self._ArrayDimensions_fmt, data.read(self._ArrayDimensions_fmt_size))
             data = self.Description.from_binary(data)
             return data
             
 class EnumValueType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Value = None
+        self._Value_fmt = '!q'
+        self._Value_fmt_size = 8
         self.DisplayName = None
         self.Description = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!q', self.Value))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Value_fmt, self.Value))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Value = struct.unpack(q, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Value = struct.unpack(self._Value_fmt, data.read(self._Value_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
             return data
@@ -2052,105 +2086,96 @@ class EnumValueType(object):
 class TimeZoneDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Offset = None
+        self._Offset_fmt = '!h'
+        self._Offset_fmt_size = 2
         self.DaylightSavingInOffset = None
+        self._DaylightSavingInOffset_fmt = '!?'
+        self._DaylightSavingInOffset_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!h', self.Offset))
-        b.append(struct.pack('!?', self.DaylightSavingInOffset))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Offset_fmt, self.Offset))
+        tmp.append(struct.pack(self._DaylightSavingInOffset_fmt, self.DaylightSavingInOffset))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Offset = struct.unpack(h, data[:2])
-            data = data[2:]
-            self.DaylightSavingInOffset = struct.unpack(?, data[:1])
-            data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Offset = struct.unpack(self._Offset_fmt, data.read(self._Offset_fmt_size))
+            self.DaylightSavingInOffset = struct.unpack(self._DaylightSavingInOffset_fmt, data.read(self._DaylightSavingInOffset_fmt_size))
             return data
             
 class ApplicationDescription(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ApplicationUri = None
         self.ProductUri = None
         self.ApplicationName = None
         self.ApplicationType = None
         self.GatewayServerUri = None
         self.DiscoveryProfileUri = None
-        self.NoOfDiscoveryUrls = None
         self.DiscoveryUrls = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ApplicationUri.to_binary())
-        b.append(self.ProductUri.to_binary())
-        b.append(self.ApplicationName.to_binary())
-        b.append(self.ApplicationType.to_binary())
-        b.append(self.GatewayServerUri.to_binary())
-        b.append(self.DiscoveryProfileUri.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiscoveryUrls))
-        b.append(struct.pack('!i', len(self.DiscoveryUrls)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ApplicationUri.to_binary())
+        tmp.append(self.ProductUri.to_binary())
+        tmp.append(self.ApplicationName.to_binary())
+        tmp.append(self.ApplicationType.to_binary())
+        tmp.append(self.GatewayServerUri.to_binary())
+        tmp.append(self.DiscoveryProfileUri.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiscoveryUrls)))
         for i in DiscoveryUrls:
-            b.append(self.DiscoveryUrls.to_binary())
-        return b.join()
+            tmp.append(self.DiscoveryUrls.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ApplicationUri.from_binary(data)
             data = self.ProductUri.from_binary(data)
             data = self.ApplicationName.from_binary(data)
             data = self.ApplicationType.from_binary(data)
             data = self.GatewayServerUri.from_binary(data)
             data = self.DiscoveryProfileUri.from_binary(data)
-            self.NoOfDiscoveryUrls = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiscoveryUrls.from_binary(data)
@@ -2159,120 +2184,115 @@ class ApplicationDescription(object):
 class RequestHeader(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.AuthenticationToken = None
         self.Timestamp = None
+        self._Timestamp_fmt = '!d'
+        self._Timestamp_fmt_size = 8
         self.RequestHandle = None
+        self._RequestHandle_fmt = '!I'
+        self._RequestHandle_fmt_size = 4
         self.ReturnDiagnostics = None
+        self._ReturnDiagnostics_fmt = '!I'
+        self._ReturnDiagnostics_fmt_size = 4
         self.AuditEntryId = None
         self.TimeoutHint = None
+        self._TimeoutHint_fmt = '!I'
+        self._TimeoutHint_fmt_size = 4
         self.AdditionalHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.AuthenticationToken.to_binary())
-        b.append(struct.pack('!d', self.Timestamp))
-        b.append(struct.pack('!I', self.RequestHandle))
-        b.append(struct.pack('!I', self.ReturnDiagnostics))
-        b.append(self.AuditEntryId.to_binary())
-        b.append(struct.pack('!I', self.TimeoutHint))
-        b.append(self.AdditionalHeader.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.AuthenticationToken.to_binary())
+        tmp.append(struct.pack(self._Timestamp_fmt, self.Timestamp))
+        tmp.append(struct.pack(self._RequestHandle_fmt, self.RequestHandle))
+        tmp.append(struct.pack(self._ReturnDiagnostics_fmt, self.ReturnDiagnostics))
+        tmp.append(self.AuditEntryId.to_binary())
+        tmp.append(struct.pack(self._TimeoutHint_fmt, self.TimeoutHint))
+        tmp.append(self.AdditionalHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.AuthenticationToken.from_binary(data)
-            self.Timestamp = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RequestHandle = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.ReturnDiagnostics = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.Timestamp = struct.unpack(self._Timestamp_fmt, data.read(self._Timestamp_fmt_size))
+            self.RequestHandle = struct.unpack(self._RequestHandle_fmt, data.read(self._RequestHandle_fmt_size))
+            self.ReturnDiagnostics = struct.unpack(self._ReturnDiagnostics_fmt, data.read(self._ReturnDiagnostics_fmt_size))
             data = self.AuditEntryId.from_binary(data)
-            self.TimeoutHint = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.TimeoutHint = struct.unpack(self._TimeoutHint_fmt, data.read(self._TimeoutHint_fmt_size))
             data = self.AdditionalHeader.from_binary(data)
             return data
             
 class ResponseHeader(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Timestamp = None
+        self._Timestamp_fmt = '!d'
+        self._Timestamp_fmt_size = 8
         self.RequestHandle = None
+        self._RequestHandle_fmt = '!I'
+        self._RequestHandle_fmt_size = 4
         self.ServiceResult = None
         self.ServiceDiagnostics = None
-        self.NoOfStringTable = None
         self.StringTable = []
         self.AdditionalHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.Timestamp))
-        b.append(struct.pack('!I', self.RequestHandle))
-        b.append(self.ServiceResult.to_binary())
-        b.append(self.ServiceDiagnostics.to_binary())
-        b.append(struct.pack('!i', self.NoOfStringTable))
-        b.append(struct.pack('!i', len(self.StringTable)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Timestamp_fmt, self.Timestamp))
+        tmp.append(struct.pack(self._RequestHandle_fmt, self.RequestHandle))
+        tmp.append(self.ServiceResult.to_binary())
+        tmp.append(self.ServiceDiagnostics.to_binary())
+        tmp.append(struct.pack('!i', len(self.StringTable)))
         for i in StringTable:
-            b.append(self.StringTable.to_binary())
-        b.append(self.AdditionalHeader.to_binary())
-        return b.join()
+            tmp.append(self.StringTable.to_binary())
+        tmp.append(self.AdditionalHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Timestamp = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RequestHandle = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Timestamp = struct.unpack(self._Timestamp_fmt, data.read(self._Timestamp_fmt_size))
+            self.RequestHandle = struct.unpack(self._RequestHandle_fmt, data.read(self._RequestHandle_fmt_size))
             data = self.ServiceResult.from_binary(data)
             data = self.ServiceDiagnostics.from_binary(data)
-            self.NoOfStringTable = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.StringTable.from_binary(data)
@@ -2282,101 +2302,85 @@ class ResponseHeader(object):
 class ServiceFault(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             return data
             
 class FindServersRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.EndpointUrl = None
-        self.NoOfLocaleIds = None
         self.LocaleIds = []
-        self.NoOfServerUris = None
         self.ServerUris = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.EndpointUrl.to_binary())
-        b.append(struct.pack('!i', self.NoOfLocaleIds))
-        b.append(struct.pack('!i', len(self.LocaleIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.EndpointUrl.to_binary())
+        tmp.append(struct.pack('!i', len(self.LocaleIds)))
         for i in LocaleIds:
-            b.append(self.LocaleIds.to_binary())
-        b.append(struct.pack('!i', self.NoOfServerUris))
-        b.append(struct.pack('!i', len(self.ServerUris)))
+            tmp.append(self.LocaleIds.to_binary())
+        tmp.append(struct.pack('!i', len(self.ServerUris)))
         for i in ServerUris:
-            b.append(self.ServerUris.to_binary())
-        return b.join()
+            tmp.append(self.ServerUris.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.EndpointUrl.from_binary(data)
-            self.NoOfLocaleIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.LocaleIds.from_binary(data)
-            self.NoOfServerUris = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ServerUris.from_binary(data)
@@ -2385,48 +2389,40 @@ class FindServersRequest(object):
 class FindServersResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfServers = None
         self.Servers = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfServers))
-        b.append(struct.pack('!i', len(self.Servers)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Servers)))
         for i in Servers:
-            b.append(self.Servers.to_binary())
-        return b.join()
+            tmp.append(self.Servers.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfServers = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Servers.from_binary(data)
@@ -2435,9 +2431,12 @@ class FindServersResponse(object):
 class UserTokenPolicy(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.PolicyId = None
         self.TokenType = None
         self.IssuedTokenType = None
@@ -2445,35 +2444,29 @@ class UserTokenPolicy(object):
         self.SecurityPolicyUri = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.PolicyId.to_binary())
-        b.append(self.TokenType.to_binary())
-        b.append(self.IssuedTokenType.to_binary())
-        b.append(self.IssuerEndpointUrl.to_binary())
-        b.append(self.SecurityPolicyUri.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.PolicyId.to_binary())
+        tmp.append(self.TokenType.to_binary())
+        tmp.append(self.IssuedTokenType.to_binary())
+        tmp.append(self.IssuerEndpointUrl.to_binary())
+        tmp.append(self.SecurityPolicyUri.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.PolicyId.from_binary(data)
             data = self.TokenType.from_binary(data)
             data = self.IssuedTokenType.from_binary(data)
@@ -2484,133 +2477,113 @@ class UserTokenPolicy(object):
 class EndpointDescription(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.EndpointUrl = None
         self.Server = None
         self.ServerCertificate = None
         self.SecurityMode = None
         self.SecurityPolicyUri = None
-        self.NoOfUserIdentityTokens = None
         self.UserIdentityTokens = []
         self.TransportProfileUri = None
         self.SecurityLevel = None
+        self._SecurityLevel_fmt = '!c'
+        self._SecurityLevel_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.EndpointUrl.to_binary())
-        b.append(self.Server.to_binary())
-        b.append(self.ServerCertificate.to_binary())
-        b.append(self.SecurityMode.to_binary())
-        b.append(self.SecurityPolicyUri.to_binary())
-        b.append(struct.pack('!i', self.NoOfUserIdentityTokens))
-        b.append(struct.pack('!i', len(self.UserIdentityTokens)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.EndpointUrl.to_binary())
+        tmp.append(self.Server.to_binary())
+        tmp.append(self.ServerCertificate.to_binary())
+        tmp.append(self.SecurityMode.to_binary())
+        tmp.append(self.SecurityPolicyUri.to_binary())
+        tmp.append(struct.pack('!i', len(self.UserIdentityTokens)))
         for i in UserIdentityTokens:
-            b.append(self.UserIdentityTokens.to_binary())
-        b.append(self.TransportProfileUri.to_binary())
-        b.append(struct.pack('!c', self.SecurityLevel))
-        return b.join()
+            tmp.append(self.UserIdentityTokens.to_binary())
+        tmp.append(self.TransportProfileUri.to_binary())
+        tmp.append(struct.pack(self._SecurityLevel_fmt, self.SecurityLevel))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.EndpointUrl.from_binary(data)
             data = self.Server.from_binary(data)
             data = self.ServerCertificate.from_binary(data)
             data = self.SecurityMode.from_binary(data)
             data = self.SecurityPolicyUri.from_binary(data)
-            self.NoOfUserIdentityTokens = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.UserIdentityTokens.from_binary(data)
             data = self.TransportProfileUri.from_binary(data)
-            self.SecurityLevel = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.SecurityLevel = struct.unpack(self._SecurityLevel_fmt, data.read(self._SecurityLevel_fmt_size))
             return data
             
 class GetEndpointsRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.EndpointUrl = None
-        self.NoOfLocaleIds = None
         self.LocaleIds = []
-        self.NoOfProfileUris = None
         self.ProfileUris = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.EndpointUrl.to_binary())
-        b.append(struct.pack('!i', self.NoOfLocaleIds))
-        b.append(struct.pack('!i', len(self.LocaleIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.EndpointUrl.to_binary())
+        tmp.append(struct.pack('!i', len(self.LocaleIds)))
         for i in LocaleIds:
-            b.append(self.LocaleIds.to_binary())
-        b.append(struct.pack('!i', self.NoOfProfileUris))
-        b.append(struct.pack('!i', len(self.ProfileUris)))
+            tmp.append(self.LocaleIds.to_binary())
+        tmp.append(struct.pack('!i', len(self.ProfileUris)))
         for i in ProfileUris:
-            b.append(self.ProfileUris.to_binary())
-        return b.join()
+            tmp.append(self.ProfileUris.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.EndpointUrl.from_binary(data)
-            self.NoOfLocaleIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.LocaleIds.from_binary(data)
-            self.NoOfProfileUris = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ProfileUris.from_binary(data)
@@ -2619,48 +2592,40 @@ class GetEndpointsRequest(object):
 class GetEndpointsResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfEndpoints = None
         self.Endpoints = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfEndpoints))
-        b.append(struct.pack('!i', len(self.Endpoints)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Endpoints)))
         for i in Endpoints:
-            b.append(self.Endpoints.to_binary())
-        return b.join()
+            tmp.append(self.Endpoints.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfEndpoints = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Endpoints.from_binary(data)
@@ -2669,118 +2634,103 @@ class GetEndpointsResponse(object):
 class RegisteredServer(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ServerUri = None
         self.ProductUri = None
-        self.NoOfServerNames = None
         self.ServerNames = []
         self.ServerType = None
         self.GatewayServerUri = None
-        self.NoOfDiscoveryUrls = None
         self.DiscoveryUrls = []
         self.SemaphoreFilePath = None
         self.IsOnline = None
+        self._IsOnline_fmt = '!?'
+        self._IsOnline_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ServerUri.to_binary())
-        b.append(self.ProductUri.to_binary())
-        b.append(struct.pack('!i', self.NoOfServerNames))
-        b.append(struct.pack('!i', len(self.ServerNames)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ServerUri.to_binary())
+        tmp.append(self.ProductUri.to_binary())
+        tmp.append(struct.pack('!i', len(self.ServerNames)))
         for i in ServerNames:
-            b.append(self.ServerNames.to_binary())
-        b.append(self.ServerType.to_binary())
-        b.append(self.GatewayServerUri.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiscoveryUrls))
-        b.append(struct.pack('!i', len(self.DiscoveryUrls)))
+            tmp.append(self.ServerNames.to_binary())
+        tmp.append(self.ServerType.to_binary())
+        tmp.append(self.GatewayServerUri.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiscoveryUrls)))
         for i in DiscoveryUrls:
-            b.append(self.DiscoveryUrls.to_binary())
-        b.append(self.SemaphoreFilePath.to_binary())
-        b.append(struct.pack('!?', self.IsOnline))
-        return b.join()
+            tmp.append(self.DiscoveryUrls.to_binary())
+        tmp.append(self.SemaphoreFilePath.to_binary())
+        tmp.append(struct.pack(self._IsOnline_fmt, self.IsOnline))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ServerUri.from_binary(data)
             data = self.ProductUri.from_binary(data)
-            self.NoOfServerNames = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ServerNames.from_binary(data)
             data = self.ServerType.from_binary(data)
             data = self.GatewayServerUri.from_binary(data)
-            self.NoOfDiscoveryUrls = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiscoveryUrls.from_binary(data)
             data = self.SemaphoreFilePath.from_binary(data)
-            self.IsOnline = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsOnline = struct.unpack(self._IsOnline_fmt, data.read(self._IsOnline_fmt_size))
             return data
             
 class RegisterServerRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.Server = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.Server.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.Server.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.Server.from_binary(data)
             return data
@@ -2788,187 +2738,182 @@ class RegisterServerRequest(object):
 class RegisterServerResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             return data
             
 class ChannelSecurityToken(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ChannelId = None
+        self._ChannelId_fmt = '!I'
+        self._ChannelId_fmt_size = 4
         self.TokenId = None
+        self._TokenId_fmt = '!I'
+        self._TokenId_fmt_size = 4
         self.CreatedAt = None
+        self._CreatedAt_fmt = '!d'
+        self._CreatedAt_fmt_size = 8
         self.RevisedLifetime = None
+        self._RevisedLifetime_fmt = '!I'
+        self._RevisedLifetime_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.ChannelId))
-        b.append(struct.pack('!I', self.TokenId))
-        b.append(struct.pack('!d', self.CreatedAt))
-        b.append(struct.pack('!I', self.RevisedLifetime))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._ChannelId_fmt, self.ChannelId))
+        tmp.append(struct.pack(self._TokenId_fmt, self.TokenId))
+        tmp.append(struct.pack(self._CreatedAt_fmt, self.CreatedAt))
+        tmp.append(struct.pack(self._RevisedLifetime_fmt, self.RevisedLifetime))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.ChannelId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.TokenId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CreatedAt = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RevisedLifetime = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.ChannelId = struct.unpack(self._ChannelId_fmt, data.read(self._ChannelId_fmt_size))
+            self.TokenId = struct.unpack(self._TokenId_fmt, data.read(self._TokenId_fmt_size))
+            self.CreatedAt = struct.unpack(self._CreatedAt_fmt, data.read(self._CreatedAt_fmt_size))
+            self.RevisedLifetime = struct.unpack(self._RevisedLifetime_fmt, data.read(self._RevisedLifetime_fmt_size))
             return data
             
 class OpenSecureChannelRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.ClientProtocolVersion = None
+        self._ClientProtocolVersion_fmt = '!I'
+        self._ClientProtocolVersion_fmt_size = 4
         self.RequestType = None
         self.SecurityMode = None
         self.ClientNonce = None
         self.RequestedLifetime = None
+        self._RequestedLifetime_fmt = '!I'
+        self._RequestedLifetime_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.ClientProtocolVersion))
-        b.append(self.RequestType.to_binary())
-        b.append(self.SecurityMode.to_binary())
-        b.append(self.ClientNonce.to_binary())
-        b.append(struct.pack('!I', self.RequestedLifetime))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._ClientProtocolVersion_fmt, self.ClientProtocolVersion))
+        tmp.append(self.RequestType.to_binary())
+        tmp.append(self.SecurityMode.to_binary())
+        tmp.append(self.ClientNonce.to_binary())
+        tmp.append(struct.pack(self._RequestedLifetime_fmt, self.RequestedLifetime))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.ClientProtocolVersion = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.ClientProtocolVersion = struct.unpack(self._ClientProtocolVersion_fmt, data.read(self._ClientProtocolVersion_fmt_size))
             data = self.RequestType.from_binary(data)
             data = self.SecurityMode.from_binary(data)
             data = self.ClientNonce.from_binary(data)
-            self.RequestedLifetime = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.RequestedLifetime = struct.unpack(self._RequestedLifetime_fmt, data.read(self._RequestedLifetime_fmt_size))
             return data
             
 class OpenSecureChannelResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.ServerProtocolVersion = None
+        self._ServerProtocolVersion_fmt = '!I'
+        self._ServerProtocolVersion_fmt_size = 4
         self.SecurityToken = None
         self.ServerNonce = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!I', self.ServerProtocolVersion))
-        b.append(self.SecurityToken.to_binary())
-        b.append(self.ServerNonce.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack(self._ServerProtocolVersion_fmt, self.ServerProtocolVersion))
+        tmp.append(self.SecurityToken.to_binary())
+        tmp.append(self.ServerNonce.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.ServerProtocolVersion = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.ServerProtocolVersion = struct.unpack(self._ServerProtocolVersion_fmt, data.read(self._ServerProtocolVersion_fmt_size))
             data = self.SecurityToken.from_binary(data)
             data = self.ServerNonce.from_binary(data)
             return data
@@ -2976,113 +2921,104 @@ class OpenSecureChannelResponse(object):
 class CloseSecureChannelRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             return data
             
 class CloseSecureChannelResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             return data
             
 class SignedSoftwareCertificate(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.CertificateData = None
         self.Signature = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.CertificateData.to_binary())
-        b.append(self.Signature.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.CertificateData.to_binary())
+        tmp.append(self.Signature.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.CertificateData.from_binary(data)
             data = self.Signature.from_binary(data)
             return data
@@ -3090,39 +3026,36 @@ class SignedSoftwareCertificate(object):
 class SignatureData(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Algorithm = None
         self.Signature = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Algorithm.to_binary())
-        b.append(self.Signature.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Algorithm.to_binary())
+        tmp.append(self.Signature.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Algorithm.from_binary(data)
             data = self.Signature.from_binary(data)
             return data
@@ -3130,9 +3063,12 @@ class SignatureData(object):
 class CreateSessionRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.ClientDescription = None
         self.ServerUri = None
@@ -3141,42 +3077,40 @@ class CreateSessionRequest(object):
         self.ClientNonce = None
         self.ClientCertificate = None
         self.RequestedSessionTimeout = None
+        self._RequestedSessionTimeout_fmt = '!d'
+        self._RequestedSessionTimeout_fmt_size = 8
         self.MaxResponseMessageSize = None
+        self._MaxResponseMessageSize_fmt = '!I'
+        self._MaxResponseMessageSize_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.ClientDescription.to_binary())
-        b.append(self.ServerUri.to_binary())
-        b.append(self.EndpointUrl.to_binary())
-        b.append(self.SessionName.to_binary())
-        b.append(self.ClientNonce.to_binary())
-        b.append(self.ClientCertificate.to_binary())
-        b.append(struct.pack('!d', self.RequestedSessionTimeout))
-        b.append(struct.pack('!I', self.MaxResponseMessageSize))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.ClientDescription.to_binary())
+        tmp.append(self.ServerUri.to_binary())
+        tmp.append(self.EndpointUrl.to_binary())
+        tmp.append(self.SessionName.to_binary())
+        tmp.append(self.ClientNonce.to_binary())
+        tmp.append(self.ClientCertificate.to_binary())
+        tmp.append(struct.pack(self._RequestedSessionTimeout_fmt, self.RequestedSessionTimeout))
+        tmp.append(struct.pack(self._MaxResponseMessageSize_fmt, self.MaxResponseMessageSize))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.ClientDescription.from_binary(data)
             data = self.ServerUri.from_binary(data)
@@ -3184,212 +3118,190 @@ class CreateSessionRequest(object):
             data = self.SessionName.from_binary(data)
             data = self.ClientNonce.from_binary(data)
             data = self.ClientCertificate.from_binary(data)
-            self.RequestedSessionTimeout = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.MaxResponseMessageSize = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.RequestedSessionTimeout = struct.unpack(self._RequestedSessionTimeout_fmt, data.read(self._RequestedSessionTimeout_fmt_size))
+            self.MaxResponseMessageSize = struct.unpack(self._MaxResponseMessageSize_fmt, data.read(self._MaxResponseMessageSize_fmt_size))
             return data
             
 class CreateSessionResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.SessionId = None
         self.AuthenticationToken = None
         self.RevisedSessionTimeout = None
+        self._RevisedSessionTimeout_fmt = '!d'
+        self._RevisedSessionTimeout_fmt_size = 8
         self.ServerNonce = None
         self.ServerCertificate = None
-        self.NoOfServerEndpoints = None
         self.ServerEndpoints = []
-        self.NoOfServerSoftwareCertificates = None
         self.ServerSoftwareCertificates = []
         self.ServerSignature = None
         self.MaxRequestMessageSize = None
+        self._MaxRequestMessageSize_fmt = '!I'
+        self._MaxRequestMessageSize_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(self.SessionId.to_binary())
-        b.append(self.AuthenticationToken.to_binary())
-        b.append(struct.pack('!d', self.RevisedSessionTimeout))
-        b.append(self.ServerNonce.to_binary())
-        b.append(self.ServerCertificate.to_binary())
-        b.append(struct.pack('!i', self.NoOfServerEndpoints))
-        b.append(struct.pack('!i', len(self.ServerEndpoints)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(self.SessionId.to_binary())
+        tmp.append(self.AuthenticationToken.to_binary())
+        tmp.append(struct.pack(self._RevisedSessionTimeout_fmt, self.RevisedSessionTimeout))
+        tmp.append(self.ServerNonce.to_binary())
+        tmp.append(self.ServerCertificate.to_binary())
+        tmp.append(struct.pack('!i', len(self.ServerEndpoints)))
         for i in ServerEndpoints:
-            b.append(self.ServerEndpoints.to_binary())
-        b.append(struct.pack('!i', self.NoOfServerSoftwareCertificates))
-        b.append(struct.pack('!i', len(self.ServerSoftwareCertificates)))
+            tmp.append(self.ServerEndpoints.to_binary())
+        tmp.append(struct.pack('!i', len(self.ServerSoftwareCertificates)))
         for i in ServerSoftwareCertificates:
-            b.append(self.ServerSoftwareCertificates.to_binary())
-        b.append(self.ServerSignature.to_binary())
-        b.append(struct.pack('!I', self.MaxRequestMessageSize))
-        return b.join()
+            tmp.append(self.ServerSoftwareCertificates.to_binary())
+        tmp.append(self.ServerSignature.to_binary())
+        tmp.append(struct.pack(self._MaxRequestMessageSize_fmt, self.MaxRequestMessageSize))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             data = self.SessionId.from_binary(data)
             data = self.AuthenticationToken.from_binary(data)
-            self.RevisedSessionTimeout = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.RevisedSessionTimeout = struct.unpack(self._RevisedSessionTimeout_fmt, data.read(self._RevisedSessionTimeout_fmt_size))
             data = self.ServerNonce.from_binary(data)
             data = self.ServerCertificate.from_binary(data)
-            self.NoOfServerEndpoints = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ServerEndpoints.from_binary(data)
-            self.NoOfServerSoftwareCertificates = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ServerSoftwareCertificates.from_binary(data)
             data = self.ServerSignature.from_binary(data)
-            self.MaxRequestMessageSize = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.MaxRequestMessageSize = struct.unpack(self._MaxRequestMessageSize_fmt, data.read(self._MaxRequestMessageSize_fmt_size))
             return data
             
 class UserIdentityToken(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.PolicyId = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.PolicyId.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.PolicyId.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.PolicyId.from_binary(data)
             return data
             
 class AnonymousIdentityToken(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.PolicyId = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.PolicyId.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.PolicyId.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.PolicyId.from_binary(data)
             return data
             
 class UserNameIdentityToken(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.PolicyId = None
         self.UserName = None
         self.Password = None
         self.EncryptionAlgorithm = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.PolicyId.to_binary())
-        b.append(self.UserName.to_binary())
-        b.append(self.Password.to_binary())
-        b.append(self.EncryptionAlgorithm.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.PolicyId.to_binary())
+        tmp.append(self.UserName.to_binary())
+        tmp.append(self.Password.to_binary())
+        tmp.append(self.EncryptionAlgorithm.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.PolicyId.from_binary(data)
             data = self.UserName.from_binary(data)
             data = self.Password.from_binary(data)
@@ -3399,39 +3311,36 @@ class UserNameIdentityToken(object):
 class X509IdentityToken(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.PolicyId = None
         self.CertificateData = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.PolicyId.to_binary())
-        b.append(self.CertificateData.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.PolicyId.to_binary())
+        tmp.append(self.CertificateData.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.PolicyId.from_binary(data)
             data = self.CertificateData.from_binary(data)
             return data
@@ -3439,41 +3348,38 @@ class X509IdentityToken(object):
 class IssuedIdentityToken(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.PolicyId = None
         self.TokenData = None
         self.EncryptionAlgorithm = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.PolicyId.to_binary())
-        b.append(self.TokenData.to_binary())
-        b.append(self.EncryptionAlgorithm.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.PolicyId.to_binary())
+        tmp.append(self.TokenData.to_binary())
+        tmp.append(self.EncryptionAlgorithm.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.PolicyId.from_binary(data)
             data = self.TokenData.from_binary(data)
             data = self.EncryptionAlgorithm.from_binary(data)
@@ -3482,68 +3388,55 @@ class IssuedIdentityToken(object):
 class ActivateSessionRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.ClientSignature = None
-        self.NoOfClientSoftwareCertificates = None
         self.ClientSoftwareCertificates = []
-        self.NoOfLocaleIds = None
         self.LocaleIds = []
         self.UserIdentityToken = None
         self.UserTokenSignature = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.ClientSignature.to_binary())
-        b.append(struct.pack('!i', self.NoOfClientSoftwareCertificates))
-        b.append(struct.pack('!i', len(self.ClientSoftwareCertificates)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.ClientSignature.to_binary())
+        tmp.append(struct.pack('!i', len(self.ClientSoftwareCertificates)))
         for i in ClientSoftwareCertificates:
-            b.append(self.ClientSoftwareCertificates.to_binary())
-        b.append(struct.pack('!i', self.NoOfLocaleIds))
-        b.append(struct.pack('!i', len(self.LocaleIds)))
+            tmp.append(self.ClientSoftwareCertificates.to_binary())
+        tmp.append(struct.pack('!i', len(self.LocaleIds)))
         for i in LocaleIds:
-            b.append(self.LocaleIds.to_binary())
-        b.append(self.UserIdentityToken.to_binary())
-        b.append(self.UserTokenSignature.to_binary())
-        return b.join()
+            tmp.append(self.LocaleIds.to_binary())
+        tmp.append(self.UserIdentityToken.to_binary())
+        tmp.append(self.UserTokenSignature.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.ClientSignature.from_binary(data)
-            self.NoOfClientSoftwareCertificates = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ClientSoftwareCertificates.from_binary(data)
-            self.NoOfLocaleIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.LocaleIds.from_binary(data)
@@ -3554,64 +3447,51 @@ class ActivateSessionRequest(object):
 class ActivateSessionResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.ServerNonce = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(self.ServerNonce.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(self.ServerNonce.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             data = self.ServerNonce.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -3620,744 +3500,746 @@ class ActivateSessionResponse(object):
 class CloseSessionRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.DeleteSubscriptions = None
+        self._DeleteSubscriptions_fmt = '!?'
+        self._DeleteSubscriptions_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!?', self.DeleteSubscriptions))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._DeleteSubscriptions_fmt, self.DeleteSubscriptions))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.DeleteSubscriptions = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.DeleteSubscriptions = struct.unpack(self._DeleteSubscriptions_fmt, data.read(self._DeleteSubscriptions_fmt_size))
             return data
             
 class CloseSessionResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             return data
             
 class CancelRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.RequestHandle = None
+        self._RequestHandle_fmt = '!I'
+        self._RequestHandle_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.RequestHandle))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._RequestHandle_fmt, self.RequestHandle))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.RequestHandle = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.RequestHandle = struct.unpack(self._RequestHandle_fmt, data.read(self._RequestHandle_fmt_size))
             return data
             
 class CancelResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.CancelCount = None
+        self._CancelCount_fmt = '!I'
+        self._CancelCount_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!I', self.CancelCount))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack(self._CancelCount_fmt, self.CancelCount))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.CancelCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.CancelCount = struct.unpack(self._CancelCount_fmt, data.read(self._CancelCount_fmt_size))
             return data
             
 class NodeAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
             return data
             
 class ObjectAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.EventNotifier = None
+        self._EventNotifier_fmt = '!c'
+        self._EventNotifier_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!c', self.EventNotifier))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack(self._EventNotifier_fmt, self.EventNotifier))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.EventNotifier = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            self.EventNotifier = struct.unpack(self._EventNotifier_fmt, data.read(self._EventNotifier_fmt_size))
             return data
             
 class VariableAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.Value = None
         self.DataType = None
         self.ValueRank = None
-        self.NoOfArrayDimensions = None
+        self._ValueRank_fmt = '!i'
+        self._ValueRank_fmt_size = 4
         self.ArrayDimensions = []
+        self._ArrayDimensions_fmt = '!I'
+        self._ArrayDimensions_fmt_size = 4
         self.AccessLevel = None
+        self._AccessLevel_fmt = '!c'
+        self._AccessLevel_fmt_size = 1
         self.UserAccessLevel = None
+        self._UserAccessLevel_fmt = '!c'
+        self._UserAccessLevel_fmt_size = 1
         self.MinimumSamplingInterval = None
+        self._MinimumSamplingInterval_fmt = '!d'
+        self._MinimumSamplingInterval_fmt_size = 8
         self.Historizing = None
+        self._Historizing_fmt = '!?'
+        self._Historizing_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(self.Value.to_binary())
-        b.append(self.DataType.to_binary())
-        b.append(struct.pack('!i', self.ValueRank))
-        b.append(struct.pack('!i', self.NoOfArrayDimensions))
-        b.append(struct.pack('!i', len(self.ArrayDimensions)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(self.Value.to_binary())
+        tmp.append(self.DataType.to_binary())
+        tmp.append(struct.pack(self._ValueRank_fmt, self.ValueRank))
+        tmp.append(struct.pack('!i', len(self.ArrayDimensions)))
         for i in ArrayDimensions:
-            b.append(struct.pack('!I', self.ArrayDimensions))
-        b.append(struct.pack('!c', self.AccessLevel))
-        b.append(struct.pack('!c', self.UserAccessLevel))
-        b.append(struct.pack('!d', self.MinimumSamplingInterval))
-        b.append(struct.pack('!?', self.Historizing))
-        return b.join()
+            tmp.append(struct.pack(self._ArrayDimensions_fmt, self.ArrayDimensions))
+        tmp.append(struct.pack(self._AccessLevel_fmt, self.AccessLevel))
+        tmp.append(struct.pack(self._UserAccessLevel_fmt, self.UserAccessLevel))
+        tmp.append(struct.pack(self._MinimumSamplingInterval_fmt, self.MinimumSamplingInterval))
+        tmp.append(struct.pack(self._Historizing_fmt, self.Historizing))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
             data = self.Value.from_binary(data)
             data = self.DataType.from_binary(data)
-            self.ValueRank = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.NoOfArrayDimensions = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.ValueRank = struct.unpack(self._ValueRank_fmt, data.read(self._ValueRank_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.ArrayDimensions = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.AccessLevel = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.UserAccessLevel = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.MinimumSamplingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.Historizing = struct.unpack(?, data[:1])
-            data = data[1:]
+                    self.ArrayDimensions = struct.unpack(self._ArrayDimensions_fmt, data.read(self._ArrayDimensions_fmt_size))
+            self.AccessLevel = struct.unpack(self._AccessLevel_fmt, data.read(self._AccessLevel_fmt_size))
+            self.UserAccessLevel = struct.unpack(self._UserAccessLevel_fmt, data.read(self._UserAccessLevel_fmt_size))
+            self.MinimumSamplingInterval = struct.unpack(self._MinimumSamplingInterval_fmt, data.read(self._MinimumSamplingInterval_fmt_size))
+            self.Historizing = struct.unpack(self._Historizing_fmt, data.read(self._Historizing_fmt_size))
             return data
             
 class MethodAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.Executable = None
+        self._Executable_fmt = '!?'
+        self._Executable_fmt_size = 1
         self.UserExecutable = None
+        self._UserExecutable_fmt = '!?'
+        self._UserExecutable_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!?', self.Executable))
-        b.append(struct.pack('!?', self.UserExecutable))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack(self._Executable_fmt, self.Executable))
+        tmp.append(struct.pack(self._UserExecutable_fmt, self.UserExecutable))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.Executable = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.UserExecutable = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            self.Executable = struct.unpack(self._Executable_fmt, data.read(self._Executable_fmt_size))
+            self.UserExecutable = struct.unpack(self._UserExecutable_fmt, data.read(self._UserExecutable_fmt_size))
             return data
             
 class ObjectTypeAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!?', self.IsAbstract))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
             return data
             
 class VariableTypeAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.Value = None
         self.DataType = None
         self.ValueRank = None
-        self.NoOfArrayDimensions = None
+        self._ValueRank_fmt = '!i'
+        self._ValueRank_fmt_size = 4
         self.ArrayDimensions = []
+        self._ArrayDimensions_fmt = '!I'
+        self._ArrayDimensions_fmt_size = 4
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(self.Value.to_binary())
-        b.append(self.DataType.to_binary())
-        b.append(struct.pack('!i', self.ValueRank))
-        b.append(struct.pack('!i', self.NoOfArrayDimensions))
-        b.append(struct.pack('!i', len(self.ArrayDimensions)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(self.Value.to_binary())
+        tmp.append(self.DataType.to_binary())
+        tmp.append(struct.pack(self._ValueRank_fmt, self.ValueRank))
+        tmp.append(struct.pack('!i', len(self.ArrayDimensions)))
         for i in ArrayDimensions:
-            b.append(struct.pack('!I', self.ArrayDimensions))
-        b.append(struct.pack('!?', self.IsAbstract))
-        return b.join()
+            tmp.append(struct.pack(self._ArrayDimensions_fmt, self.ArrayDimensions))
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
             data = self.Value.from_binary(data)
             data = self.DataType.from_binary(data)
-            self.ValueRank = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.NoOfArrayDimensions = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.ValueRank = struct.unpack(self._ValueRank_fmt, data.read(self._ValueRank_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.ArrayDimensions = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
+                    self.ArrayDimensions = struct.unpack(self._ArrayDimensions_fmt, data.read(self._ArrayDimensions_fmt_size))
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
             return data
             
 class ReferenceTypeAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
         self.Symmetric = None
+        self._Symmetric_fmt = '!?'
+        self._Symmetric_fmt_size = 1
         self.InverseName = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!?', self.IsAbstract))
-        b.append(struct.pack('!?', self.Symmetric))
-        b.append(self.InverseName.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        tmp.append(struct.pack(self._Symmetric_fmt, self.Symmetric))
+        tmp.append(self.InverseName.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.Symmetric = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
+            self.Symmetric = struct.unpack(self._Symmetric_fmt, data.read(self._Symmetric_fmt_size))
             data = self.InverseName.from_binary(data)
             return data
             
 class DataTypeAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.IsAbstract = None
+        self._IsAbstract_fmt = '!?'
+        self._IsAbstract_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!?', self.IsAbstract))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack(self._IsAbstract_fmt, self.IsAbstract))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.IsAbstract = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            self.IsAbstract = struct.unpack(self._IsAbstract_fmt, data.read(self._IsAbstract_fmt_size))
             return data
             
 class ViewAttributes(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SpecifiedAttributes = None
+        self._SpecifiedAttributes_fmt = '!I'
+        self._SpecifiedAttributes_fmt_size = 4
         self.DisplayName = None
         self.Description = None
         self.WriteMask = None
+        self._WriteMask_fmt = '!I'
+        self._WriteMask_fmt_size = 4
         self.UserWriteMask = None
+        self._UserWriteMask_fmt = '!I'
+        self._UserWriteMask_fmt_size = 4
         self.ContainsNoLoops = None
+        self._ContainsNoLoops_fmt = '!?'
+        self._ContainsNoLoops_fmt_size = 1
         self.EventNotifier = None
+        self._EventNotifier_fmt = '!c'
+        self._EventNotifier_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SpecifiedAttributes))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        b.append(struct.pack('!I', self.WriteMask))
-        b.append(struct.pack('!I', self.UserWriteMask))
-        b.append(struct.pack('!?', self.ContainsNoLoops))
-        b.append(struct.pack('!c', self.EventNotifier))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SpecifiedAttributes_fmt, self.SpecifiedAttributes))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        tmp.append(struct.pack(self._WriteMask_fmt, self.WriteMask))
+        tmp.append(struct.pack(self._UserWriteMask_fmt, self.UserWriteMask))
+        tmp.append(struct.pack(self._ContainsNoLoops_fmt, self.ContainsNoLoops))
+        tmp.append(struct.pack(self._EventNotifier_fmt, self.EventNotifier))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SpecifiedAttributes = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SpecifiedAttributes = struct.unpack(self._SpecifiedAttributes_fmt, data.read(self._SpecifiedAttributes_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
-            self.WriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UserWriteMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.ContainsNoLoops = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.EventNotifier = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.WriteMask = struct.unpack(self._WriteMask_fmt, data.read(self._WriteMask_fmt_size))
+            self.UserWriteMask = struct.unpack(self._UserWriteMask_fmt, data.read(self._UserWriteMask_fmt_size))
+            self.ContainsNoLoops = struct.unpack(self._ContainsNoLoops_fmt, data.read(self._ContainsNoLoops_fmt_size))
+            self.EventNotifier = struct.unpack(self._EventNotifier_fmt, data.read(self._EventNotifier_fmt_size))
             return data
             
 class AddNodesItem(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ParentNodeId = None
         self.ReferenceTypeId = None
         self.RequestedNewNodeId = None
@@ -4367,37 +4249,31 @@ class AddNodesItem(object):
         self.TypeDefinition = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ParentNodeId.to_binary())
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(self.RequestedNewNodeId.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.NodeAttributes.to_binary())
-        b.append(self.TypeDefinition.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ParentNodeId.to_binary())
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(self.RequestedNewNodeId.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.NodeAttributes.to_binary())
+        tmp.append(self.TypeDefinition.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ParentNodeId.from_binary(data)
             data = self.ReferenceTypeId.from_binary(data)
             data = self.RequestedNewNodeId.from_binary(data)
@@ -4410,39 +4286,36 @@ class AddNodesItem(object):
 class AddNodesResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
         self.AddedNodeId = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(self.AddedNodeId.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(self.AddedNodeId.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
             data = self.AddedNodeId.from_binary(data)
             return data
@@ -4450,48 +4323,40 @@ class AddNodesResult(object):
 class AddNodesRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfNodesToAdd = None
         self.NodesToAdd = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodesToAdd))
-        b.append(struct.pack('!i', len(self.NodesToAdd)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodesToAdd)))
         for i in NodesToAdd:
-            b.append(self.NodesToAdd.to_binary())
-        return b.join()
+            tmp.append(self.NodesToAdd.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfNodesToAdd = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToAdd.from_binary(data)
@@ -4500,61 +4365,48 @@ class AddNodesRequest(object):
 class AddNodesResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -4563,51 +4415,49 @@ class AddNodesResponse(object):
 class AddReferencesItem(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SourceNodeId = None
         self.ReferenceTypeId = None
         self.IsForward = None
+        self._IsForward_fmt = '!?'
+        self._IsForward_fmt_size = 1
         self.TargetServerUri = None
         self.TargetNodeId = None
         self.TargetNodeClass = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.SourceNodeId.to_binary())
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(struct.pack('!?', self.IsForward))
-        b.append(self.TargetServerUri.to_binary())
-        b.append(self.TargetNodeId.to_binary())
-        b.append(self.TargetNodeClass.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.SourceNodeId.to_binary())
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(struct.pack(self._IsForward_fmt, self.IsForward))
+        tmp.append(self.TargetServerUri.to_binary())
+        tmp.append(self.TargetNodeId.to_binary())
+        tmp.append(self.TargetNodeClass.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.SourceNodeId.from_binary(data)
             data = self.ReferenceTypeId.from_binary(data)
-            self.IsForward = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsForward = struct.unpack(self._IsForward_fmt, data.read(self._IsForward_fmt_size))
             data = self.TargetServerUri.from_binary(data)
             data = self.TargetNodeId.from_binary(data)
             data = self.TargetNodeClass.from_binary(data)
@@ -4616,48 +4466,40 @@ class AddReferencesItem(object):
 class AddReferencesRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfReferencesToAdd = None
         self.ReferencesToAdd = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfReferencesToAdd))
-        b.append(struct.pack('!i', len(self.ReferencesToAdd)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.ReferencesToAdd)))
         for i in ReferencesToAdd:
-            b.append(self.ReferencesToAdd.to_binary())
-        return b.join()
+            tmp.append(self.ReferencesToAdd.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfReferencesToAdd = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ReferencesToAdd.from_binary(data)
@@ -4666,61 +4508,48 @@ class AddReferencesRequest(object):
 class AddReferencesResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -4729,89 +4558,79 @@ class AddReferencesResponse(object):
 class DeleteNodesItem(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.DeleteTargetReferences = None
+        self._DeleteTargetReferences_fmt = '!?'
+        self._DeleteTargetReferences_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(struct.pack('!?', self.DeleteTargetReferences))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(struct.pack(self._DeleteTargetReferences_fmt, self.DeleteTargetReferences))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
-            self.DeleteTargetReferences = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.DeleteTargetReferences = struct.unpack(self._DeleteTargetReferences_fmt, data.read(self._DeleteTargetReferences_fmt_size))
             return data
             
 class DeleteNodesRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfNodesToDelete = None
         self.NodesToDelete = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodesToDelete))
-        b.append(struct.pack('!i', len(self.NodesToDelete)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodesToDelete)))
         for i in NodesToDelete:
-            b.append(self.NodesToDelete.to_binary())
-        return b.join()
+            tmp.append(self.NodesToDelete.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfNodesToDelete = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToDelete.from_binary(data)
@@ -4820,61 +4639,48 @@ class DeleteNodesRequest(object):
 class DeleteNodesResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -4883,99 +4689,90 @@ class DeleteNodesResponse(object):
 class DeleteReferencesItem(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SourceNodeId = None
         self.ReferenceTypeId = None
         self.IsForward = None
+        self._IsForward_fmt = '!?'
+        self._IsForward_fmt_size = 1
         self.TargetNodeId = None
         self.DeleteBidirectional = None
+        self._DeleteBidirectional_fmt = '!?'
+        self._DeleteBidirectional_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.SourceNodeId.to_binary())
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(struct.pack('!?', self.IsForward))
-        b.append(self.TargetNodeId.to_binary())
-        b.append(struct.pack('!?', self.DeleteBidirectional))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.SourceNodeId.to_binary())
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(struct.pack(self._IsForward_fmt, self.IsForward))
+        tmp.append(self.TargetNodeId.to_binary())
+        tmp.append(struct.pack(self._DeleteBidirectional_fmt, self.DeleteBidirectional))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.SourceNodeId.from_binary(data)
             data = self.ReferenceTypeId.from_binary(data)
-            self.IsForward = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsForward = struct.unpack(self._IsForward_fmt, data.read(self._IsForward_fmt_size))
             data = self.TargetNodeId.from_binary(data)
-            self.DeleteBidirectional = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.DeleteBidirectional = struct.unpack(self._DeleteBidirectional_fmt, data.read(self._DeleteBidirectional_fmt_size))
             return data
             
 class DeleteReferencesRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfReferencesToDelete = None
         self.ReferencesToDelete = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfReferencesToDelete))
-        b.append(struct.pack('!i', len(self.ReferencesToDelete)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.ReferencesToDelete)))
         for i in ReferencesToDelete:
-            b.append(self.ReferencesToDelete.to_binary())
-        return b.join()
+            tmp.append(self.ReferencesToDelete.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfReferencesToDelete = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ReferencesToDelete.from_binary(data)
@@ -4984,61 +4781,48 @@ class DeleteReferencesRequest(object):
 class DeleteReferencesResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -5047,111 +4831,115 @@ class DeleteReferencesResponse(object):
 class ViewDescription(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ViewId = None
         self.Timestamp = None
+        self._Timestamp_fmt = '!d'
+        self._Timestamp_fmt_size = 8
         self.ViewVersion = None
+        self._ViewVersion_fmt = '!I'
+        self._ViewVersion_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ViewId.to_binary())
-        b.append(struct.pack('!d', self.Timestamp))
-        b.append(struct.pack('!I', self.ViewVersion))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ViewId.to_binary())
+        tmp.append(struct.pack(self._Timestamp_fmt, self.Timestamp))
+        tmp.append(struct.pack(self._ViewVersion_fmt, self.ViewVersion))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ViewId.from_binary(data)
-            self.Timestamp = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.ViewVersion = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.Timestamp = struct.unpack(self._Timestamp_fmt, data.read(self._Timestamp_fmt_size))
+            self.ViewVersion = struct.unpack(self._ViewVersion_fmt, data.read(self._ViewVersion_fmt_size))
             return data
             
 class BrowseDescription(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.BrowseDirection = None
         self.ReferenceTypeId = None
         self.IncludeSubtypes = None
+        self._IncludeSubtypes_fmt = '!?'
+        self._IncludeSubtypes_fmt_size = 1
         self.NodeClassMask = None
+        self._NodeClassMask_fmt = '!I'
+        self._NodeClassMask_fmt_size = 4
         self.ResultMask = None
+        self._ResultMask_fmt = '!I'
+        self._ResultMask_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.BrowseDirection.to_binary())
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(struct.pack('!?', self.IncludeSubtypes))
-        b.append(struct.pack('!I', self.NodeClassMask))
-        b.append(struct.pack('!I', self.ResultMask))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.BrowseDirection.to_binary())
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(struct.pack(self._IncludeSubtypes_fmt, self.IncludeSubtypes))
+        tmp.append(struct.pack(self._NodeClassMask_fmt, self.NodeClassMask))
+        tmp.append(struct.pack(self._ResultMask_fmt, self.ResultMask))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.BrowseDirection.from_binary(data)
             data = self.ReferenceTypeId.from_binary(data)
-            self.IncludeSubtypes = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.NodeClassMask = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.ResultMask = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.IncludeSubtypes = struct.unpack(self._IncludeSubtypes_fmt, data.read(self._IncludeSubtypes_fmt_size))
+            self.NodeClassMask = struct.unpack(self._NodeClassMask_fmt, data.read(self._NodeClassMask_fmt_size))
+            self.ResultMask = struct.unpack(self._ResultMask_fmt, data.read(self._ResultMask_fmt_size))
             return data
             
 class ReferenceDescription(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ReferenceTypeId = None
         self.IsForward = None
+        self._IsForward_fmt = '!?'
+        self._IsForward_fmt_size = 1
         self.NodeId = None
         self.BrowseName = None
         self.DisplayName = None
@@ -5159,40 +4947,33 @@ class ReferenceDescription(object):
         self.TypeDefinition = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(struct.pack('!?', self.IsForward))
-        b.append(self.NodeId.to_binary())
-        b.append(self.BrowseName.to_binary())
-        b.append(self.DisplayName.to_binary())
-        b.append(self.NodeClass.to_binary())
-        b.append(self.TypeDefinition.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(struct.pack(self._IsForward_fmt, self.IsForward))
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.BrowseName.to_binary())
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.NodeClass.to_binary())
+        tmp.append(self.TypeDefinition.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ReferenceTypeId.from_binary(data)
-            self.IsForward = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsForward = struct.unpack(self._IsForward_fmt, data.read(self._IsForward_fmt_size))
             data = self.NodeId.from_binary(data)
             data = self.BrowseName.from_binary(data)
             data = self.DisplayName.from_binary(data)
@@ -5203,51 +4984,43 @@ class ReferenceDescription(object):
 class BrowseResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
         self.ContinuationPoint = None
-        self.NoOfReferences = None
         self.References = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(self.ContinuationPoint.to_binary())
-        b.append(struct.pack('!i', self.NoOfReferences))
-        b.append(struct.pack('!i', len(self.References)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(self.ContinuationPoint.to_binary())
+        tmp.append(struct.pack('!i', len(self.References)))
         for i in References:
-            b.append(self.References.to_binary())
-        return b.join()
+            tmp.append(self.References.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
             data = self.ContinuationPoint.from_binary(data)
-            self.NoOfReferences = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.References.from_binary(data)
@@ -5256,55 +5029,48 @@ class BrowseResult(object):
 class BrowseRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.View = None
         self.RequestedMaxReferencesPerNode = None
-        self.NoOfNodesToBrowse = None
+        self._RequestedMaxReferencesPerNode_fmt = '!I'
+        self._RequestedMaxReferencesPerNode_fmt_size = 4
         self.NodesToBrowse = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.View.to_binary())
-        b.append(struct.pack('!I', self.RequestedMaxReferencesPerNode))
-        b.append(struct.pack('!i', self.NoOfNodesToBrowse))
-        b.append(struct.pack('!i', len(self.NodesToBrowse)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.View.to_binary())
+        tmp.append(struct.pack(self._RequestedMaxReferencesPerNode_fmt, self.RequestedMaxReferencesPerNode))
+        tmp.append(struct.pack('!i', len(self.NodesToBrowse)))
         for i in NodesToBrowse:
-            b.append(self.NodesToBrowse.to_binary())
-        return b.join()
+            tmp.append(self.NodesToBrowse.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.View.from_binary(data)
-            self.RequestedMaxReferencesPerNode = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfNodesToBrowse = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.RequestedMaxReferencesPerNode = struct.unpack(self._RequestedMaxReferencesPerNode_fmt, data.read(self._RequestedMaxReferencesPerNode_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToBrowse.from_binary(data)
@@ -5313,61 +5079,48 @@ class BrowseRequest(object):
 class BrowseResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -5376,52 +5129,45 @@ class BrowseResponse(object):
 class BrowseNextRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.ReleaseContinuationPoints = None
-        self.NoOfContinuationPoints = None
+        self._ReleaseContinuationPoints_fmt = '!?'
+        self._ReleaseContinuationPoints_fmt_size = 1
         self.ContinuationPoints = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!?', self.ReleaseContinuationPoints))
-        b.append(struct.pack('!i', self.NoOfContinuationPoints))
-        b.append(struct.pack('!i', len(self.ContinuationPoints)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._ReleaseContinuationPoints_fmt, self.ReleaseContinuationPoints))
+        tmp.append(struct.pack('!i', len(self.ContinuationPoints)))
         for i in ContinuationPoints:
-            b.append(self.ContinuationPoints.to_binary())
-        return b.join()
+            tmp.append(self.ContinuationPoints.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.ReleaseContinuationPoints = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.NoOfContinuationPoints = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.ReleaseContinuationPoints = struct.unpack(self._ReleaseContinuationPoints_fmt, data.read(self._ReleaseContinuationPoints_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ContinuationPoints.from_binary(data)
@@ -5430,61 +5176,48 @@ class BrowseNextRequest(object):
 class BrowseNextResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -5493,93 +5226,84 @@ class BrowseNextResponse(object):
 class RelativePathElement(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ReferenceTypeId = None
         self.IsInverse = None
+        self._IsInverse_fmt = '!?'
+        self._IsInverse_fmt_size = 1
         self.IncludeSubtypes = None
+        self._IncludeSubtypes_fmt = '!?'
+        self._IncludeSubtypes_fmt_size = 1
         self.TargetName = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(struct.pack('!?', self.IsInverse))
-        b.append(struct.pack('!?', self.IncludeSubtypes))
-        b.append(self.TargetName.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(struct.pack(self._IsInverse_fmt, self.IsInverse))
+        tmp.append(struct.pack(self._IncludeSubtypes_fmt, self.IncludeSubtypes))
+        tmp.append(self.TargetName.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ReferenceTypeId.from_binary(data)
-            self.IsInverse = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.IncludeSubtypes = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.IsInverse = struct.unpack(self._IsInverse_fmt, data.read(self._IsInverse_fmt_size))
+            self.IncludeSubtypes = struct.unpack(self._IncludeSubtypes_fmt, data.read(self._IncludeSubtypes_fmt_size))
             data = self.TargetName.from_binary(data)
             return data
             
 class RelativePath(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfElements = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Elements = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfElements))
-        b.append(struct.pack('!i', len(self.Elements)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.Elements)))
         for i in Elements:
-            b.append(self.Elements.to_binary())
-        return b.join()
+            tmp.append(self.Elements.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfElements = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Elements.from_binary(data)
@@ -5588,39 +5312,36 @@ class RelativePath(object):
 class BrowsePath(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StartingNode = None
         self.RelativePath = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StartingNode.to_binary())
-        b.append(self.RelativePath.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StartingNode.to_binary())
+        tmp.append(self.RelativePath.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StartingNode.from_binary(data)
             data = self.RelativePath.from_binary(data)
             return data
@@ -5628,89 +5349,79 @@ class BrowsePath(object):
 class BrowsePathTarget(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.TargetId = None
         self.RemainingPathIndex = None
+        self._RemainingPathIndex_fmt = '!I'
+        self._RemainingPathIndex_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.TargetId.to_binary())
-        b.append(struct.pack('!I', self.RemainingPathIndex))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.TargetId.to_binary())
+        tmp.append(struct.pack(self._RemainingPathIndex_fmt, self.RemainingPathIndex))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.TargetId.from_binary(data)
-            self.RemainingPathIndex = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.RemainingPathIndex = struct.unpack(self._RemainingPathIndex_fmt, data.read(self._RemainingPathIndex_fmt_size))
             return data
             
 class BrowsePathResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
-        self.NoOfTargets = None
         self.Targets = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!i', self.NoOfTargets))
-        b.append(struct.pack('!i', len(self.Targets)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack('!i', len(self.Targets)))
         for i in Targets:
-            b.append(self.Targets.to_binary())
-        return b.join()
+            tmp.append(self.Targets.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.NoOfTargets = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Targets.from_binary(data)
@@ -5719,48 +5430,40 @@ class BrowsePathResult(object):
 class TranslateBrowsePathsToNodeIdsRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfBrowsePaths = None
         self.BrowsePaths = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfBrowsePaths))
-        b.append(struct.pack('!i', len(self.BrowsePaths)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.BrowsePaths)))
         for i in BrowsePaths:
-            b.append(self.BrowsePaths.to_binary())
-        return b.join()
+            tmp.append(self.BrowsePaths.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfBrowsePaths = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.BrowsePaths.from_binary(data)
@@ -5769,61 +5472,48 @@ class TranslateBrowsePathsToNodeIdsRequest(object):
 class TranslateBrowsePathsToNodeIdsResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -5832,48 +5522,40 @@ class TranslateBrowsePathsToNodeIdsResponse(object):
 class RegisterNodesRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfNodesToRegister = None
         self.NodesToRegister = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodesToRegister))
-        b.append(struct.pack('!i', len(self.NodesToRegister)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodesToRegister)))
         for i in NodesToRegister:
-            b.append(self.NodesToRegister.to_binary())
-        return b.join()
+            tmp.append(self.NodesToRegister.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfNodesToRegister = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToRegister.from_binary(data)
@@ -5882,48 +5564,40 @@ class RegisterNodesRequest(object):
 class RegisterNodesResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfRegisteredNodeIds = None
         self.RegisteredNodeIds = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfRegisteredNodeIds))
-        b.append(struct.pack('!i', len(self.RegisteredNodeIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.RegisteredNodeIds)))
         for i in RegisteredNodeIds:
-            b.append(self.RegisteredNodeIds.to_binary())
-        return b.join()
+            tmp.append(self.RegisteredNodeIds.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfRegisteredNodeIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.RegisteredNodeIds.from_binary(data)
@@ -5932,48 +5606,40 @@ class RegisterNodesResponse(object):
 class UnregisterNodesRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfNodesToUnregister = None
         self.NodesToUnregister = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodesToUnregister))
-        b.append(struct.pack('!i', len(self.NodesToUnregister)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodesToUnregister)))
         for i in NodesToUnregister:
-            b.append(self.NodesToUnregister.to_binary())
-        return b.join()
+            tmp.append(self.NodesToUnregister.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfNodesToUnregister = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToUnregister.from_binary(data)
@@ -5982,168 +5648,164 @@ class UnregisterNodesRequest(object):
 class UnregisterNodesResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             return data
             
 class EndpointConfiguration(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.OperationTimeout = None
+        self._OperationTimeout_fmt = '!i'
+        self._OperationTimeout_fmt_size = 4
         self.UseBinaryEncoding = None
+        self._UseBinaryEncoding_fmt = '!?'
+        self._UseBinaryEncoding_fmt_size = 1
         self.MaxStringLength = None
+        self._MaxStringLength_fmt = '!i'
+        self._MaxStringLength_fmt_size = 4
         self.MaxByteStringLength = None
+        self._MaxByteStringLength_fmt = '!i'
+        self._MaxByteStringLength_fmt_size = 4
         self.MaxArrayLength = None
+        self._MaxArrayLength_fmt = '!i'
+        self._MaxArrayLength_fmt_size = 4
         self.MaxMessageSize = None
+        self._MaxMessageSize_fmt = '!i'
+        self._MaxMessageSize_fmt_size = 4
         self.MaxBufferSize = None
+        self._MaxBufferSize_fmt = '!i'
+        self._MaxBufferSize_fmt_size = 4
         self.ChannelLifetime = None
+        self._ChannelLifetime_fmt = '!i'
+        self._ChannelLifetime_fmt_size = 4
         self.SecurityTokenLifetime = None
+        self._SecurityTokenLifetime_fmt = '!i'
+        self._SecurityTokenLifetime_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.OperationTimeout))
-        b.append(struct.pack('!?', self.UseBinaryEncoding))
-        b.append(struct.pack('!i', self.MaxStringLength))
-        b.append(struct.pack('!i', self.MaxByteStringLength))
-        b.append(struct.pack('!i', self.MaxArrayLength))
-        b.append(struct.pack('!i', self.MaxMessageSize))
-        b.append(struct.pack('!i', self.MaxBufferSize))
-        b.append(struct.pack('!i', self.ChannelLifetime))
-        b.append(struct.pack('!i', self.SecurityTokenLifetime))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._OperationTimeout_fmt, self.OperationTimeout))
+        tmp.append(struct.pack(self._UseBinaryEncoding_fmt, self.UseBinaryEncoding))
+        tmp.append(struct.pack(self._MaxStringLength_fmt, self.MaxStringLength))
+        tmp.append(struct.pack(self._MaxByteStringLength_fmt, self.MaxByteStringLength))
+        tmp.append(struct.pack(self._MaxArrayLength_fmt, self.MaxArrayLength))
+        tmp.append(struct.pack(self._MaxMessageSize_fmt, self.MaxMessageSize))
+        tmp.append(struct.pack(self._MaxBufferSize_fmt, self.MaxBufferSize))
+        tmp.append(struct.pack(self._ChannelLifetime_fmt, self.ChannelLifetime))
+        tmp.append(struct.pack(self._SecurityTokenLifetime_fmt, self.SecurityTokenLifetime))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.OperationTimeout = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.UseBinaryEncoding = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.MaxStringLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.MaxByteStringLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.MaxArrayLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.MaxMessageSize = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.MaxBufferSize = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.ChannelLifetime = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.SecurityTokenLifetime = struct.unpack(i, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.OperationTimeout = struct.unpack(self._OperationTimeout_fmt, data.read(self._OperationTimeout_fmt_size))
+            self.UseBinaryEncoding = struct.unpack(self._UseBinaryEncoding_fmt, data.read(self._UseBinaryEncoding_fmt_size))
+            self.MaxStringLength = struct.unpack(self._MaxStringLength_fmt, data.read(self._MaxStringLength_fmt_size))
+            self.MaxByteStringLength = struct.unpack(self._MaxByteStringLength_fmt, data.read(self._MaxByteStringLength_fmt_size))
+            self.MaxArrayLength = struct.unpack(self._MaxArrayLength_fmt, data.read(self._MaxArrayLength_fmt_size))
+            self.MaxMessageSize = struct.unpack(self._MaxMessageSize_fmt, data.read(self._MaxMessageSize_fmt_size))
+            self.MaxBufferSize = struct.unpack(self._MaxBufferSize_fmt, data.read(self._MaxBufferSize_fmt_size))
+            self.ChannelLifetime = struct.unpack(self._ChannelLifetime_fmt, data.read(self._ChannelLifetime_fmt_size))
+            self.SecurityTokenLifetime = struct.unpack(self._SecurityTokenLifetime_fmt, data.read(self._SecurityTokenLifetime_fmt_size))
             return data
             
 class SupportedProfile(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.OrganizationUri = None
         self.ProfileId = None
         self.ComplianceTool = None
         self.ComplianceDate = None
+        self._ComplianceDate_fmt = '!d'
+        self._ComplianceDate_fmt_size = 8
         self.ComplianceLevel = None
-        self.NoOfUnsupportedUnitIds = None
         self.UnsupportedUnitIds = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.OrganizationUri.to_binary())
-        b.append(self.ProfileId.to_binary())
-        b.append(self.ComplianceTool.to_binary())
-        b.append(struct.pack('!d', self.ComplianceDate))
-        b.append(self.ComplianceLevel.to_binary())
-        b.append(struct.pack('!i', self.NoOfUnsupportedUnitIds))
-        b.append(struct.pack('!i', len(self.UnsupportedUnitIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.OrganizationUri.to_binary())
+        tmp.append(self.ProfileId.to_binary())
+        tmp.append(self.ComplianceTool.to_binary())
+        tmp.append(struct.pack(self._ComplianceDate_fmt, self.ComplianceDate))
+        tmp.append(self.ComplianceLevel.to_binary())
+        tmp.append(struct.pack('!i', len(self.UnsupportedUnitIds)))
         for i in UnsupportedUnitIds:
-            b.append(self.UnsupportedUnitIds.to_binary())
-        return b.join()
+            tmp.append(self.UnsupportedUnitIds.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.OrganizationUri.from_binary(data)
             data = self.ProfileId.from_binary(data)
             data = self.ComplianceTool.from_binary(data)
-            self.ComplianceDate = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.ComplianceDate = struct.unpack(self._ComplianceDate_fmt, data.read(self._ComplianceDate_fmt_size))
             data = self.ComplianceLevel.from_binary(data)
-            self.NoOfUnsupportedUnitIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.UnsupportedUnitIds.from_binary(data)
@@ -6152,9 +5814,12 @@ class SupportedProfile(object):
 class SoftwareCertificate(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ProductName = None
         self.ProductUri = None
         self.VendorName = None
@@ -6162,64 +5827,55 @@ class SoftwareCertificate(object):
         self.SoftwareVersion = None
         self.BuildNumber = None
         self.BuildDate = None
+        self._BuildDate_fmt = '!d'
+        self._BuildDate_fmt_size = 8
         self.IssuedBy = None
         self.IssueDate = None
-        self.NoOfSupportedProfiles = None
+        self._IssueDate_fmt = '!d'
+        self._IssueDate_fmt_size = 8
         self.SupportedProfiles = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ProductName.to_binary())
-        b.append(self.ProductUri.to_binary())
-        b.append(self.VendorName.to_binary())
-        b.append(self.VendorProductCertificate.to_binary())
-        b.append(self.SoftwareVersion.to_binary())
-        b.append(self.BuildNumber.to_binary())
-        b.append(struct.pack('!d', self.BuildDate))
-        b.append(self.IssuedBy.to_binary())
-        b.append(struct.pack('!d', self.IssueDate))
-        b.append(struct.pack('!i', self.NoOfSupportedProfiles))
-        b.append(struct.pack('!i', len(self.SupportedProfiles)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ProductName.to_binary())
+        tmp.append(self.ProductUri.to_binary())
+        tmp.append(self.VendorName.to_binary())
+        tmp.append(self.VendorProductCertificate.to_binary())
+        tmp.append(self.SoftwareVersion.to_binary())
+        tmp.append(self.BuildNumber.to_binary())
+        tmp.append(struct.pack(self._BuildDate_fmt, self.BuildDate))
+        tmp.append(self.IssuedBy.to_binary())
+        tmp.append(struct.pack(self._IssueDate_fmt, self.IssueDate))
+        tmp.append(struct.pack('!i', len(self.SupportedProfiles)))
         for i in SupportedProfiles:
-            b.append(self.SupportedProfiles.to_binary())
-        return b.join()
+            tmp.append(self.SupportedProfiles.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ProductName.from_binary(data)
             data = self.ProductUri.from_binary(data)
             data = self.VendorName.from_binary(data)
             data = self.VendorProductCertificate.from_binary(data)
             data = self.SoftwareVersion.from_binary(data)
             data = self.BuildNumber.from_binary(data)
-            self.BuildDate = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.BuildDate = struct.unpack(self._BuildDate_fmt, data.read(self._BuildDate_fmt_size))
             data = self.IssuedBy.from_binary(data)
-            self.IssueDate = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.NoOfSupportedProfiles = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.IssueDate = struct.unpack(self._IssueDate_fmt, data.read(self._IssueDate_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.SupportedProfiles.from_binary(data)
@@ -6228,96 +5884,87 @@ class SoftwareCertificate(object):
 class QueryDataDescription(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RelativePath = None
         self.AttributeId = None
+        self._AttributeId_fmt = '!I'
+        self._AttributeId_fmt_size = 4
         self.IndexRange = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RelativePath.to_binary())
-        b.append(struct.pack('!I', self.AttributeId))
-        b.append(self.IndexRange.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RelativePath.to_binary())
+        tmp.append(struct.pack(self._AttributeId_fmt, self.AttributeId))
+        tmp.append(self.IndexRange.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RelativePath.from_binary(data)
-            self.AttributeId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.AttributeId = struct.unpack(self._AttributeId_fmt, data.read(self._AttributeId_fmt_size))
             data = self.IndexRange.from_binary(data)
             return data
             
 class NodeTypeDescription(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.TypeDefinitionNode = None
         self.IncludeSubTypes = None
-        self.NoOfDataToReturn = None
+        self._IncludeSubTypes_fmt = '!?'
+        self._IncludeSubTypes_fmt_size = 1
         self.DataToReturn = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.TypeDefinitionNode.to_binary())
-        b.append(struct.pack('!?', self.IncludeSubTypes))
-        b.append(struct.pack('!i', self.NoOfDataToReturn))
-        b.append(struct.pack('!i', len(self.DataToReturn)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.TypeDefinitionNode.to_binary())
+        tmp.append(struct.pack(self._IncludeSubTypes_fmt, self.IncludeSubTypes))
+        tmp.append(struct.pack('!i', len(self.DataToReturn)))
         for i in DataToReturn:
-            b.append(self.DataToReturn.to_binary())
-        return b.join()
+            tmp.append(self.DataToReturn.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.TypeDefinitionNode.from_binary(data)
-            self.IncludeSubTypes = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.NoOfDataToReturn = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.IncludeSubTypes = struct.unpack(self._IncludeSubTypes_fmt, data.read(self._IncludeSubTypes_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DataToReturn.from_binary(data)
@@ -6326,51 +5973,43 @@ class NodeTypeDescription(object):
 class QueryDataSet(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.TypeDefinitionNode = None
-        self.NoOfValues = None
         self.Values = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.TypeDefinitionNode.to_binary())
-        b.append(struct.pack('!i', self.NoOfValues))
-        b.append(struct.pack('!i', len(self.Values)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.TypeDefinitionNode.to_binary())
+        tmp.append(struct.pack('!i', len(self.Values)))
         for i in Values:
-            b.append(self.Values.to_binary())
-        return b.join()
+            tmp.append(self.Values.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.TypeDefinitionNode.from_binary(data)
-            self.NoOfValues = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Values.from_binary(data)
@@ -6379,55 +6018,48 @@ class QueryDataSet(object):
 class NodeReference(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.ReferenceTypeId = None
         self.IsForward = None
-        self.NoOfReferencedNodeIds = None
+        self._IsForward_fmt = '!?'
+        self._IsForward_fmt_size = 1
         self.ReferencedNodeIds = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.ReferenceTypeId.to_binary())
-        b.append(struct.pack('!?', self.IsForward))
-        b.append(struct.pack('!i', self.NoOfReferencedNodeIds))
-        b.append(struct.pack('!i', len(self.ReferencedNodeIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.ReferenceTypeId.to_binary())
+        tmp.append(struct.pack(self._IsForward_fmt, self.IsForward))
+        tmp.append(struct.pack('!i', len(self.ReferencedNodeIds)))
         for i in ReferencedNodeIds:
-            b.append(self.ReferencedNodeIds.to_binary())
-        return b.join()
+            tmp.append(self.ReferencedNodeIds.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.ReferenceTypeId.from_binary(data)
-            self.IsForward = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.NoOfReferencedNodeIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.IsForward = struct.unpack(self._IsForward_fmt, data.read(self._IsForward_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ReferencedNodeIds.from_binary(data)
@@ -6436,48 +6068,40 @@ class NodeReference(object):
 class ContentFilterElement(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.FilterOperator = None
-        self.NoOfFilterOperands = None
         self.FilterOperands = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.FilterOperator.to_binary())
-        b.append(struct.pack('!i', self.NoOfFilterOperands))
-        b.append(struct.pack('!i', len(self.FilterOperands)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.FilterOperator.to_binary())
+        tmp.append(struct.pack('!i', len(self.FilterOperands)))
         for i in FilterOperands:
-            b.append(self.FilterOperands.to_binary())
-        return b.join()
+            tmp.append(self.FilterOperands.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.FilterOperator.from_binary(data)
-            self.NoOfFilterOperands = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.FilterOperands.from_binary(data)
@@ -6486,45 +6110,37 @@ class ContentFilterElement(object):
 class ContentFilter(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfElements = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Elements = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfElements))
-        b.append(struct.pack('!i', len(self.Elements)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.Elements)))
         for i in Elements:
-            b.append(self.Elements.to_binary())
-        return b.join()
+            tmp.append(self.Elements.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfElements = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Elements.from_binary(data)
@@ -6533,277 +6149,252 @@ class ContentFilter(object):
 class FilterOperand(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
+            tmp.append(self.TypeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.Body)))
         for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        return b.join()
+            tmp.append(struct.pack(self._Body_fmt, self.Body))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+                    self.Body = struct.unpack(self._Body_fmt, data.read(self._Body_fmt_size))
             return data
             
 class ElementOperand(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Index = None
+        self._Index_fmt = '!I'
+        self._Index_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.Index))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Index_fmt, self.Index))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Index = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Index = struct.unpack(self._Index_fmt, data.read(self._Index_fmt_size))
             return data
             
 class LiteralOperand(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Value = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Value.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Value.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Value.from_binary(data)
             return data
             
 class AttributeOperand(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.Alias = None
         self.BrowsePath = None
         self.AttributeId = None
+        self._AttributeId_fmt = '!I'
+        self._AttributeId_fmt_size = 4
         self.IndexRange = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.Alias.to_binary())
-        b.append(self.BrowsePath.to_binary())
-        b.append(struct.pack('!I', self.AttributeId))
-        b.append(self.IndexRange.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.Alias.to_binary())
+        tmp.append(self.BrowsePath.to_binary())
+        tmp.append(struct.pack(self._AttributeId_fmt, self.AttributeId))
+        tmp.append(self.IndexRange.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.Alias.from_binary(data)
             data = self.BrowsePath.from_binary(data)
-            self.AttributeId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.AttributeId = struct.unpack(self._AttributeId_fmt, data.read(self._AttributeId_fmt_size))
             data = self.IndexRange.from_binary(data)
             return data
             
 class SimpleAttributeOperand(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.TypeDefinitionId = None
-        self.NoOfBrowsePath = None
         self.BrowsePath = []
         self.AttributeId = None
+        self._AttributeId_fmt = '!I'
+        self._AttributeId_fmt_size = 4
         self.IndexRange = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.TypeDefinitionId.to_binary())
-        b.append(struct.pack('!i', self.NoOfBrowsePath))
-        b.append(struct.pack('!i', len(self.BrowsePath)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.TypeDefinitionId.to_binary())
+        tmp.append(struct.pack('!i', len(self.BrowsePath)))
         for i in BrowsePath:
-            b.append(self.BrowsePath.to_binary())
-        b.append(struct.pack('!I', self.AttributeId))
-        b.append(self.IndexRange.to_binary())
-        return b.join()
+            tmp.append(self.BrowsePath.to_binary())
+        tmp.append(struct.pack(self._AttributeId_fmt, self.AttributeId))
+        tmp.append(self.IndexRange.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.TypeDefinitionId.from_binary(data)
-            self.NoOfBrowsePath = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.BrowsePath.from_binary(data)
-            self.AttributeId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.AttributeId = struct.unpack(self._AttributeId_fmt, data.read(self._AttributeId_fmt_size))
             data = self.IndexRange.from_binary(data)
             return data
             
 class ContentFilterElementResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
-        self.NoOfOperandStatusCodes = None
         self.OperandStatusCodes = []
-        self.NoOfOperandDiagnosticInfos = None
         self.OperandDiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!i', self.NoOfOperandStatusCodes))
-        b.append(struct.pack('!i', len(self.OperandStatusCodes)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack('!i', len(self.OperandStatusCodes)))
         for i in OperandStatusCodes:
-            b.append(self.OperandStatusCodes.to_binary())
-        b.append(struct.pack('!i', self.NoOfOperandDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.OperandDiagnosticInfos)))
+            tmp.append(self.OperandStatusCodes.to_binary())
+        tmp.append(struct.pack('!i', len(self.OperandDiagnosticInfos)))
         for i in OperandDiagnosticInfos:
-            b.append(self.OperandDiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.OperandDiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.NoOfOperandStatusCodes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.OperandStatusCodes.from_binary(data)
-            self.NoOfOperandDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.OperandDiagnosticInfos.from_binary(data)
@@ -6812,58 +6403,45 @@ class ContentFilterElementResult(object):
 class ContentFilterResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfElementResults = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ElementResults = []
-        self.NoOfElementDiagnosticInfos = None
         self.ElementDiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfElementResults))
-        b.append(struct.pack('!i', len(self.ElementResults)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.ElementResults)))
         for i in ElementResults:
-            b.append(self.ElementResults.to_binary())
-        b.append(struct.pack('!i', self.NoOfElementDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.ElementDiagnosticInfos)))
+            tmp.append(self.ElementResults.to_binary())
+        tmp.append(struct.pack('!i', len(self.ElementDiagnosticInfos)))
         for i in ElementDiagnosticInfos:
-            b.append(self.ElementDiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.ElementDiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfElementResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ElementResults.from_binary(data)
-            self.NoOfElementDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ElementDiagnosticInfos.from_binary(data)
@@ -6872,61 +6450,48 @@ class ContentFilterResult(object):
 class ParsingResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
-        self.NoOfDataStatusCodes = None
         self.DataStatusCodes = []
-        self.NoOfDataDiagnosticInfos = None
         self.DataDiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!i', self.NoOfDataStatusCodes))
-        b.append(struct.pack('!i', len(self.DataStatusCodes)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack('!i', len(self.DataStatusCodes)))
         for i in DataStatusCodes:
-            b.append(self.DataStatusCodes.to_binary())
-        b.append(struct.pack('!i', self.NoOfDataDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DataDiagnosticInfos)))
+            tmp.append(self.DataStatusCodes.to_binary())
+        tmp.append(struct.pack('!i', len(self.DataDiagnosticInfos)))
         for i in DataDiagnosticInfos:
-            b.append(self.DataDiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DataDiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.NoOfDataStatusCodes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DataStatusCodes.from_binary(data)
-            self.NoOfDataDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DataDiagnosticInfos.from_binary(data)
@@ -6935,143 +6500,119 @@ class ParsingResult(object):
 class QueryFirstRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.View = None
-        self.NoOfNodeTypes = None
         self.NodeTypes = []
         self.Filter = None
         self.MaxDataSetsToReturn = None
+        self._MaxDataSetsToReturn_fmt = '!I'
+        self._MaxDataSetsToReturn_fmt_size = 4
         self.MaxReferencesToReturn = None
+        self._MaxReferencesToReturn_fmt = '!I'
+        self._MaxReferencesToReturn_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.View.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodeTypes))
-        b.append(struct.pack('!i', len(self.NodeTypes)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.View.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodeTypes)))
         for i in NodeTypes:
-            b.append(self.NodeTypes.to_binary())
-        b.append(self.Filter.to_binary())
-        b.append(struct.pack('!I', self.MaxDataSetsToReturn))
-        b.append(struct.pack('!I', self.MaxReferencesToReturn))
-        return b.join()
+            tmp.append(self.NodeTypes.to_binary())
+        tmp.append(self.Filter.to_binary())
+        tmp.append(struct.pack(self._MaxDataSetsToReturn_fmt, self.MaxDataSetsToReturn))
+        tmp.append(struct.pack(self._MaxReferencesToReturn_fmt, self.MaxReferencesToReturn))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.View.from_binary(data)
-            self.NoOfNodeTypes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodeTypes.from_binary(data)
             data = self.Filter.from_binary(data)
-            self.MaxDataSetsToReturn = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MaxReferencesToReturn = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.MaxDataSetsToReturn = struct.unpack(self._MaxDataSetsToReturn_fmt, data.read(self._MaxDataSetsToReturn_fmt_size))
+            self.MaxReferencesToReturn = struct.unpack(self._MaxReferencesToReturn_fmt, data.read(self._MaxReferencesToReturn_fmt_size))
             return data
             
 class QueryFirstResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfQueryDataSets = None
         self.QueryDataSets = []
         self.ContinuationPoint = None
-        self.NoOfParsingResults = None
         self.ParsingResults = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
         self.FilterResult = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfQueryDataSets))
-        b.append(struct.pack('!i', len(self.QueryDataSets)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.QueryDataSets)))
         for i in QueryDataSets:
-            b.append(self.QueryDataSets.to_binary())
-        b.append(self.ContinuationPoint.to_binary())
-        b.append(struct.pack('!i', self.NoOfParsingResults))
-        b.append(struct.pack('!i', len(self.ParsingResults)))
+            tmp.append(self.QueryDataSets.to_binary())
+        tmp.append(self.ContinuationPoint.to_binary())
+        tmp.append(struct.pack('!i', len(self.ParsingResults)))
         for i in ParsingResults:
-            b.append(self.ParsingResults.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.ParsingResults.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        b.append(self.FilterResult.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        tmp.append(self.FilterResult.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfQueryDataSets = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.QueryDataSets.from_binary(data)
             data = self.ContinuationPoint.from_binary(data)
-            self.NoOfParsingResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ParsingResults.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -7081,94 +6622,84 @@ class QueryFirstResponse(object):
 class QueryNextRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.ReleaseContinuationPoint = None
+        self._ReleaseContinuationPoint_fmt = '!?'
+        self._ReleaseContinuationPoint_fmt_size = 1
         self.ContinuationPoint = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!?', self.ReleaseContinuationPoint))
-        b.append(self.ContinuationPoint.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._ReleaseContinuationPoint_fmt, self.ReleaseContinuationPoint))
+        tmp.append(self.ContinuationPoint.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.ReleaseContinuationPoint = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.ReleaseContinuationPoint = struct.unpack(self._ReleaseContinuationPoint_fmt, data.read(self._ReleaseContinuationPoint_fmt_size))
             data = self.ContinuationPoint.from_binary(data)
             return data
             
 class QueryNextResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfQueryDataSets = None
         self.QueryDataSets = []
         self.RevisedContinuationPoint = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfQueryDataSets))
-        b.append(struct.pack('!i', len(self.QueryDataSets)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.QueryDataSets)))
         for i in QueryDataSets:
-            b.append(self.QueryDataSets.to_binary())
-        b.append(self.RevisedContinuationPoint.to_binary())
-        return b.join()
+            tmp.append(self.QueryDataSets.to_binary())
+        tmp.append(self.RevisedContinuationPoint.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfQueryDataSets = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.QueryDataSets.from_binary(data)
@@ -7178,46 +6709,44 @@ class QueryNextResponse(object):
 class ReadValueId(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.AttributeId = None
+        self._AttributeId_fmt = '!I'
+        self._AttributeId_fmt_size = 4
         self.IndexRange = None
         self.DataEncoding = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(struct.pack('!I', self.AttributeId))
-        b.append(self.IndexRange.to_binary())
-        b.append(self.DataEncoding.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(struct.pack(self._AttributeId_fmt, self.AttributeId))
+        tmp.append(self.IndexRange.to_binary())
+        tmp.append(self.DataEncoding.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
-            self.AttributeId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.AttributeId = struct.unpack(self._AttributeId_fmt, data.read(self._AttributeId_fmt_size))
             data = self.IndexRange.from_binary(data)
             data = self.DataEncoding.from_binary(data)
             return data
@@ -7225,55 +6754,48 @@ class ReadValueId(object):
 class ReadRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.MaxAge = None
+        self._MaxAge_fmt = '!d'
+        self._MaxAge_fmt_size = 8
         self.TimestampsToReturn = None
-        self.NoOfNodesToRead = None
         self.NodesToRead = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!d', self.MaxAge))
-        b.append(self.TimestampsToReturn.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodesToRead))
-        b.append(struct.pack('!i', len(self.NodesToRead)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._MaxAge_fmt, self.MaxAge))
+        tmp.append(self.TimestampsToReturn.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodesToRead)))
         for i in NodesToRead:
-            b.append(self.NodesToRead.to_binary())
-        return b.join()
+            tmp.append(self.NodesToRead.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.MaxAge = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.MaxAge = struct.unpack(self._MaxAge_fmt, data.read(self._MaxAge_fmt_size))
             data = self.TimestampsToReturn.from_binary(data)
-            self.NoOfNodesToRead = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToRead.from_binary(data)
@@ -7282,61 +6804,48 @@ class ReadRequest(object):
 class ReadResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -7345,43 +6854,40 @@ class ReadResponse(object):
 class HistoryReadValueId(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.IndexRange = None
         self.DataEncoding = None
         self.ContinuationPoint = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.IndexRange.to_binary())
-        b.append(self.DataEncoding.to_binary())
-        b.append(self.ContinuationPoint.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.IndexRange.to_binary())
+        tmp.append(self.DataEncoding.to_binary())
+        tmp.append(self.ContinuationPoint.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.IndexRange.from_binary(data)
             data = self.DataEncoding.from_binary(data)
@@ -7391,41 +6897,38 @@ class HistoryReadValueId(object):
 class HistoryReadResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
         self.ContinuationPoint = None
         self.HistoryData = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(self.ContinuationPoint.to_binary())
-        b.append(self.HistoryData.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(self.ContinuationPoint.to_binary())
+        tmp.append(self.HistoryData.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
             data = self.ContinuationPoint.from_binary(data)
             data = self.HistoryData.from_binary(data)
@@ -7434,185 +6937,175 @@ class HistoryReadResult(object):
 class HistoryReadDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
+            tmp.append(self.TypeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.Body)))
         for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        return b.join()
+            tmp.append(struct.pack(self._Body_fmt, self.Body))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+                    self.Body = struct.unpack(self._Body_fmt, data.read(self._Body_fmt_size))
             return data
             
 class ReadRawModifiedDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.IsReadModified = None
+        self._IsReadModified_fmt = '!?'
+        self._IsReadModified_fmt_size = 1
         self.StartTime = None
+        self._StartTime_fmt = '!d'
+        self._StartTime_fmt_size = 8
         self.EndTime = None
+        self._EndTime_fmt = '!d'
+        self._EndTime_fmt_size = 8
         self.NumValuesPerNode = None
+        self._NumValuesPerNode_fmt = '!I'
+        self._NumValuesPerNode_fmt_size = 4
         self.ReturnBounds = None
+        self._ReturnBounds_fmt = '!?'
+        self._ReturnBounds_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!?', self.IsReadModified))
-        b.append(struct.pack('!d', self.StartTime))
-        b.append(struct.pack('!d', self.EndTime))
-        b.append(struct.pack('!I', self.NumValuesPerNode))
-        b.append(struct.pack('!?', self.ReturnBounds))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._IsReadModified_fmt, self.IsReadModified))
+        tmp.append(struct.pack(self._StartTime_fmt, self.StartTime))
+        tmp.append(struct.pack(self._EndTime_fmt, self.EndTime))
+        tmp.append(struct.pack(self._NumValuesPerNode_fmt, self.NumValuesPerNode))
+        tmp.append(struct.pack(self._ReturnBounds_fmt, self.ReturnBounds))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.IsReadModified = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.StartTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.EndTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.NumValuesPerNode = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.ReturnBounds = struct.unpack(?, data[:1])
-            data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.IsReadModified = struct.unpack(self._IsReadModified_fmt, data.read(self._IsReadModified_fmt_size))
+            self.StartTime = struct.unpack(self._StartTime_fmt, data.read(self._StartTime_fmt_size))
+            self.EndTime = struct.unpack(self._EndTime_fmt, data.read(self._EndTime_fmt_size))
+            self.NumValuesPerNode = struct.unpack(self._NumValuesPerNode_fmt, data.read(self._NumValuesPerNode_fmt_size))
+            self.ReturnBounds = struct.unpack(self._ReturnBounds_fmt, data.read(self._ReturnBounds_fmt_size))
             return data
             
 class ReadAtTimeDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfReqTimes = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ReqTimes = []
+        self._ReqTimes_fmt = '!d'
+        self._ReqTimes_fmt_size = 8
         self.UseSimpleBounds = None
+        self._UseSimpleBounds_fmt = '!?'
+        self._UseSimpleBounds_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfReqTimes))
-        b.append(struct.pack('!i', len(self.ReqTimes)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.ReqTimes)))
         for i in ReqTimes:
-            b.append(struct.pack('!d', self.ReqTimes))
-        b.append(struct.pack('!?', self.UseSimpleBounds))
-        return b.join()
+            tmp.append(struct.pack(self._ReqTimes_fmt, self.ReqTimes))
+        tmp.append(struct.pack(self._UseSimpleBounds_fmt, self.UseSimpleBounds))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfReqTimes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.ReqTimes = struct.unpack(d, data[:8])
-                    data = data[8:]
-            self.UseSimpleBounds = struct.unpack(?, data[:1])
-            data = data[1:]
+                    self.ReqTimes = struct.unpack(self._ReqTimes_fmt, data.read(self._ReqTimes_fmt_size))
+            self.UseSimpleBounds = struct.unpack(self._UseSimpleBounds_fmt, data.read(self._UseSimpleBounds_fmt_size))
             return data
             
 class HistoryData(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfDataValues = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.DataValues = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfDataValues))
-        b.append(struct.pack('!i', len(self.DataValues)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.DataValues)))
         for i in DataValues:
-            b.append(self.DataValues.to_binary())
-        return b.join()
+            tmp.append(self.DataValues.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfDataValues = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DataValues.from_binary(data)
@@ -7621,43 +7114,41 @@ class HistoryData(object):
 class ModificationInfo(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ModificationTime = None
+        self._ModificationTime_fmt = '!d'
+        self._ModificationTime_fmt_size = 8
         self.UpdateType = None
         self.UserName = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.ModificationTime))
-        b.append(self.UpdateType.to_binary())
-        b.append(self.UserName.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._ModificationTime_fmt, self.ModificationTime))
+        tmp.append(self.UpdateType.to_binary())
+        tmp.append(self.UserName.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.ModificationTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.ModificationTime = struct.unpack(self._ModificationTime_fmt, data.read(self._ModificationTime_fmt_size))
             data = self.UpdateType.from_binary(data)
             data = self.UserName.from_binary(data)
             return data
@@ -7665,58 +7156,45 @@ class ModificationInfo(object):
 class HistoryModifiedData(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfDataValues = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.DataValues = []
-        self.NoOfModificationInfos = None
         self.ModificationInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfDataValues))
-        b.append(struct.pack('!i', len(self.DataValues)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.DataValues)))
         for i in DataValues:
-            b.append(self.DataValues.to_binary())
-        b.append(struct.pack('!i', self.NoOfModificationInfos))
-        b.append(struct.pack('!i', len(self.ModificationInfos)))
+            tmp.append(self.DataValues.to_binary())
+        tmp.append(struct.pack('!i', len(self.ModificationInfos)))
         for i in ModificationInfos:
-            b.append(self.ModificationInfos.to_binary())
-        return b.join()
+            tmp.append(self.ModificationInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfDataValues = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DataValues.from_binary(data)
-            self.NoOfModificationInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ModificationInfos.from_binary(data)
@@ -7725,58 +7203,51 @@ class HistoryModifiedData(object):
 class HistoryReadRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.HistoryReadDetails = None
         self.TimestampsToReturn = None
         self.ReleaseContinuationPoints = None
-        self.NoOfNodesToRead = None
+        self._ReleaseContinuationPoints_fmt = '!?'
+        self._ReleaseContinuationPoints_fmt_size = 1
         self.NodesToRead = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(self.HistoryReadDetails.to_binary())
-        b.append(self.TimestampsToReturn.to_binary())
-        b.append(struct.pack('!?', self.ReleaseContinuationPoints))
-        b.append(struct.pack('!i', self.NoOfNodesToRead))
-        b.append(struct.pack('!i', len(self.NodesToRead)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(self.HistoryReadDetails.to_binary())
+        tmp.append(self.TimestampsToReturn.to_binary())
+        tmp.append(struct.pack(self._ReleaseContinuationPoints_fmt, self.ReleaseContinuationPoints))
+        tmp.append(struct.pack('!i', len(self.NodesToRead)))
         for i in NodesToRead:
-            b.append(self.NodesToRead.to_binary())
-        return b.join()
+            tmp.append(self.NodesToRead.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
             data = self.HistoryReadDetails.from_binary(data)
             data = self.TimestampsToReturn.from_binary(data)
-            self.ReleaseContinuationPoints = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.NoOfNodesToRead = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.ReleaseContinuationPoints = struct.unpack(self._ReleaseContinuationPoints_fmt, data.read(self._ReleaseContinuationPoints_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToRead.from_binary(data)
@@ -7785,61 +7256,48 @@ class HistoryReadRequest(object):
 class HistoryReadResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -7848,46 +7306,44 @@ class HistoryReadResponse(object):
 class WriteValue(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.AttributeId = None
+        self._AttributeId_fmt = '!I'
+        self._AttributeId_fmt_size = 4
         self.IndexRange = None
         self.Value = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(struct.pack('!I', self.AttributeId))
-        b.append(self.IndexRange.to_binary())
-        b.append(self.Value.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(struct.pack(self._AttributeId_fmt, self.AttributeId))
+        tmp.append(self.IndexRange.to_binary())
+        tmp.append(self.Value.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
-            self.AttributeId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.AttributeId = struct.unpack(self._AttributeId_fmt, data.read(self._AttributeId_fmt_size))
             data = self.IndexRange.from_binary(data)
             data = self.Value.from_binary(data)
             return data
@@ -7895,48 +7351,40 @@ class WriteValue(object):
 class WriteRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfNodesToWrite = None
         self.NodesToWrite = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodesToWrite))
-        b.append(struct.pack('!i', len(self.NodesToWrite)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodesToWrite)))
         for i in NodesToWrite:
-            b.append(self.NodesToWrite.to_binary())
-        return b.join()
+            tmp.append(self.NodesToWrite.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfNodesToWrite = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodesToWrite.from_binary(data)
@@ -7945,61 +7393,48 @@ class WriteRequest(object):
 class WriteResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -8008,88 +7443,77 @@ class WriteResponse(object):
 class HistoryUpdateDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             return data
             
 class UpdateDataDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.PerformInsertReplace = None
-        self.NoOfUpdateValues = None
         self.UpdateValues = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.PerformInsertReplace.to_binary())
-        b.append(struct.pack('!i', self.NoOfUpdateValues))
-        b.append(struct.pack('!i', len(self.UpdateValues)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.PerformInsertReplace.to_binary())
+        tmp.append(struct.pack('!i', len(self.UpdateValues)))
         for i in UpdateValues:
-            b.append(self.UpdateValues.to_binary())
-        return b.join()
+            tmp.append(self.UpdateValues.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.PerformInsertReplace.from_binary(data)
-            self.NoOfUpdateValues = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.UpdateValues.from_binary(data)
@@ -8098,51 +7522,43 @@ class UpdateDataDetails(object):
 class UpdateStructureDataDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.PerformInsertReplace = None
-        self.NoOfUpdateValues = None
         self.UpdateValues = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.PerformInsertReplace.to_binary())
-        b.append(struct.pack('!i', self.NoOfUpdateValues))
-        b.append(struct.pack('!i', len(self.UpdateValues)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.PerformInsertReplace.to_binary())
+        tmp.append(struct.pack('!i', len(self.UpdateValues)))
         for i in UpdateValues:
-            b.append(self.UpdateValues.to_binary())
-        return b.join()
+            tmp.append(self.UpdateValues.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.PerformInsertReplace.from_binary(data)
-            self.NoOfUpdateValues = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.UpdateValues.from_binary(data)
@@ -8151,148 +7567,133 @@ class UpdateStructureDataDetails(object):
 class DeleteRawModifiedDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.IsDeleteModified = None
+        self._IsDeleteModified_fmt = '!?'
+        self._IsDeleteModified_fmt_size = 1
         self.StartTime = None
+        self._StartTime_fmt = '!d'
+        self._StartTime_fmt_size = 8
         self.EndTime = None
+        self._EndTime_fmt = '!d'
+        self._EndTime_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(struct.pack('!?', self.IsDeleteModified))
-        b.append(struct.pack('!d', self.StartTime))
-        b.append(struct.pack('!d', self.EndTime))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(struct.pack(self._IsDeleteModified_fmt, self.IsDeleteModified))
+        tmp.append(struct.pack(self._StartTime_fmt, self.StartTime))
+        tmp.append(struct.pack(self._EndTime_fmt, self.EndTime))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
-            self.IsDeleteModified = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.StartTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.EndTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.IsDeleteModified = struct.unpack(self._IsDeleteModified_fmt, data.read(self._IsDeleteModified_fmt_size))
+            self.StartTime = struct.unpack(self._StartTime_fmt, data.read(self._StartTime_fmt_size))
+            self.EndTime = struct.unpack(self._EndTime_fmt, data.read(self._EndTime_fmt_size))
             return data
             
 class DeleteAtTimeDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
-        self.NoOfReqTimes = None
         self.ReqTimes = []
+        self._ReqTimes_fmt = '!d'
+        self._ReqTimes_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(struct.pack('!i', self.NoOfReqTimes))
-        b.append(struct.pack('!i', len(self.ReqTimes)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.ReqTimes)))
         for i in ReqTimes:
-            b.append(struct.pack('!d', self.ReqTimes))
-        return b.join()
+            tmp.append(struct.pack(self._ReqTimes_fmt, self.ReqTimes))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
-            self.NoOfReqTimes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.ReqTimes = struct.unpack(d, data[:8])
-                    data = data[8:]
+                    self.ReqTimes = struct.unpack(self._ReqTimes_fmt, data.read(self._ReqTimes_fmt_size))
             return data
             
 class DeleteEventDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
-        self.NoOfEventIds = None
         self.EventIds = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(struct.pack('!i', self.NoOfEventIds))
-        b.append(struct.pack('!i', len(self.EventIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.EventIds)))
         for i in EventIds:
-            b.append(self.EventIds.to_binary())
-        return b.join()
+            tmp.append(self.EventIds.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
-            self.NoOfEventIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.EventIds.from_binary(data)
@@ -8301,61 +7702,48 @@ class DeleteEventDetails(object):
 class HistoryUpdateResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
-        self.NoOfOperationResults = None
         self.OperationResults = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!i', self.NoOfOperationResults))
-        b.append(struct.pack('!i', len(self.OperationResults)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack('!i', len(self.OperationResults)))
         for i in OperationResults:
-            b.append(self.OperationResults.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.OperationResults.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.NoOfOperationResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.OperationResults.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -8364,48 +7752,40 @@ class HistoryUpdateResult(object):
 class HistoryUpdateRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfHistoryUpdateDetails = None
         self.HistoryUpdateDetails = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfHistoryUpdateDetails))
-        b.append(struct.pack('!i', len(self.HistoryUpdateDetails)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.HistoryUpdateDetails)))
         for i in HistoryUpdateDetails:
-            b.append(self.HistoryUpdateDetails.to_binary())
-        return b.join()
+            tmp.append(self.HistoryUpdateDetails.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfHistoryUpdateDetails = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.HistoryUpdateDetails.from_binary(data)
@@ -8414,61 +7794,48 @@ class HistoryUpdateRequest(object):
 class HistoryUpdateResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -8477,51 +7844,43 @@ class HistoryUpdateResponse(object):
 class CallMethodRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ObjectId = None
         self.MethodId = None
-        self.NoOfInputArguments = None
         self.InputArguments = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ObjectId.to_binary())
-        b.append(self.MethodId.to_binary())
-        b.append(struct.pack('!i', self.NoOfInputArguments))
-        b.append(struct.pack('!i', len(self.InputArguments)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ObjectId.to_binary())
+        tmp.append(self.MethodId.to_binary())
+        tmp.append(struct.pack('!i', len(self.InputArguments)))
         for i in InputArguments:
-            b.append(self.InputArguments.to_binary())
-        return b.join()
+            tmp.append(self.InputArguments.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ObjectId.from_binary(data)
             data = self.MethodId.from_binary(data)
-            self.NoOfInputArguments = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.InputArguments.from_binary(data)
@@ -8530,74 +7889,56 @@ class CallMethodRequest(object):
 class CallMethodResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
-        self.NoOfInputArgumentResults = None
         self.InputArgumentResults = []
-        self.NoOfInputArgumentDiagnosticInfos = None
         self.InputArgumentDiagnosticInfos = []
-        self.NoOfOutputArguments = None
         self.OutputArguments = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!i', self.NoOfInputArgumentResults))
-        b.append(struct.pack('!i', len(self.InputArgumentResults)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack('!i', len(self.InputArgumentResults)))
         for i in InputArgumentResults:
-            b.append(self.InputArgumentResults.to_binary())
-        b.append(struct.pack('!i', self.NoOfInputArgumentDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.InputArgumentDiagnosticInfos)))
+            tmp.append(self.InputArgumentResults.to_binary())
+        tmp.append(struct.pack('!i', len(self.InputArgumentDiagnosticInfos)))
         for i in InputArgumentDiagnosticInfos:
-            b.append(self.InputArgumentDiagnosticInfos.to_binary())
-        b.append(struct.pack('!i', self.NoOfOutputArguments))
-        b.append(struct.pack('!i', len(self.OutputArguments)))
+            tmp.append(self.InputArgumentDiagnosticInfos.to_binary())
+        tmp.append(struct.pack('!i', len(self.OutputArguments)))
         for i in OutputArguments:
-            b.append(self.OutputArguments.to_binary())
-        return b.join()
+            tmp.append(self.OutputArguments.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.NoOfInputArgumentResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.InputArgumentResults.from_binary(data)
-            self.NoOfInputArgumentDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.InputArgumentDiagnosticInfos.from_binary(data)
-            self.NoOfOutputArguments = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.OutputArguments.from_binary(data)
@@ -8606,48 +7947,40 @@ class CallMethodResult(object):
 class CallRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfMethodsToCall = None
         self.MethodsToCall = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfMethodsToCall))
-        b.append(struct.pack('!i', len(self.MethodsToCall)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.MethodsToCall)))
         for i in MethodsToCall:
-            b.append(self.MethodsToCall.to_binary())
-        return b.join()
+            tmp.append(self.MethodsToCall.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfMethodsToCall = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.MethodsToCall.from_binary(data)
@@ -8656,61 +7989,48 @@ class CallRequest(object):
 class CallResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -8719,126 +8039,119 @@ class CallResponse(object):
 class MonitoringFilter(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
+            tmp.append(self.TypeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.Body)))
         for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        return b.join()
+            tmp.append(struct.pack(self._Body_fmt, self.Body))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+                    self.Body = struct.unpack(self._Body_fmt, data.read(self._Body_fmt_size))
             return data
             
 class DataChangeFilter(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Trigger = None
         self.DeadbandType = None
+        self._DeadbandType_fmt = '!I'
+        self._DeadbandType_fmt_size = 4
         self.DeadbandValue = None
+        self._DeadbandValue_fmt = '!d'
+        self._DeadbandValue_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Trigger.to_binary())
-        b.append(struct.pack('!I', self.DeadbandType))
-        b.append(struct.pack('!d', self.DeadbandValue))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Trigger.to_binary())
+        tmp.append(struct.pack(self._DeadbandType_fmt, self.DeadbandType))
+        tmp.append(struct.pack(self._DeadbandValue_fmt, self.DeadbandValue))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Trigger.from_binary(data)
-            self.DeadbandType = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.DeadbandValue = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.DeadbandType = struct.unpack(self._DeadbandType_fmt, data.read(self._DeadbandType_fmt_size))
+            self.DeadbandValue = struct.unpack(self._DeadbandValue_fmt, data.read(self._DeadbandValue_fmt_size))
             return data
             
 class EventFilter(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfSelectClauses = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SelectClauses = []
         self.WhereClause = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfSelectClauses))
-        b.append(struct.pack('!i', len(self.SelectClauses)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.SelectClauses)))
         for i in SelectClauses:
-            b.append(self.SelectClauses.to_binary())
-        b.append(self.WhereClause.to_binary())
-        return b.join()
+            tmp.append(self.SelectClauses.to_binary())
+        tmp.append(self.WhereClause.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfSelectClauses = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.SelectClauses.from_binary(data)
@@ -8848,162 +8161,159 @@ class EventFilter(object):
 class ReadEventDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NumValuesPerNode = None
+        self._NumValuesPerNode_fmt = '!I'
+        self._NumValuesPerNode_fmt_size = 4
         self.StartTime = None
+        self._StartTime_fmt = '!d'
+        self._StartTime_fmt_size = 8
         self.EndTime = None
+        self._EndTime_fmt = '!d'
+        self._EndTime_fmt_size = 8
         self.Filter = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.NumValuesPerNode))
-        b.append(struct.pack('!d', self.StartTime))
-        b.append(struct.pack('!d', self.EndTime))
-        b.append(self.Filter.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._NumValuesPerNode_fmt, self.NumValuesPerNode))
+        tmp.append(struct.pack(self._StartTime_fmt, self.StartTime))
+        tmp.append(struct.pack(self._EndTime_fmt, self.EndTime))
+        tmp.append(self.Filter.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NumValuesPerNode = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.StartTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.EndTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.NumValuesPerNode = struct.unpack(self._NumValuesPerNode_fmt, data.read(self._NumValuesPerNode_fmt_size))
+            self.StartTime = struct.unpack(self._StartTime_fmt, data.read(self._StartTime_fmt_size))
+            self.EndTime = struct.unpack(self._EndTime_fmt, data.read(self._EndTime_fmt_size))
             data = self.Filter.from_binary(data)
             return data
             
 class AggregateConfiguration(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.UseServerCapabilitiesDefaults = None
+        self._UseServerCapabilitiesDefaults_fmt = '!?'
+        self._UseServerCapabilitiesDefaults_fmt_size = 1
         self.TreatUncertainAsBad = None
+        self._TreatUncertainAsBad_fmt = '!?'
+        self._TreatUncertainAsBad_fmt_size = 1
         self.PercentDataBad = None
+        self._PercentDataBad_fmt = '!c'
+        self._PercentDataBad_fmt_size = 1
         self.PercentDataGood = None
+        self._PercentDataGood_fmt = '!c'
+        self._PercentDataGood_fmt_size = 1
         self.UseSlopedExtrapolation = None
+        self._UseSlopedExtrapolation_fmt = '!?'
+        self._UseSlopedExtrapolation_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!?', self.UseServerCapabilitiesDefaults))
-        b.append(struct.pack('!?', self.TreatUncertainAsBad))
-        b.append(struct.pack('!c', self.PercentDataBad))
-        b.append(struct.pack('!c', self.PercentDataGood))
-        b.append(struct.pack('!?', self.UseSlopedExtrapolation))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._UseServerCapabilitiesDefaults_fmt, self.UseServerCapabilitiesDefaults))
+        tmp.append(struct.pack(self._TreatUncertainAsBad_fmt, self.TreatUncertainAsBad))
+        tmp.append(struct.pack(self._PercentDataBad_fmt, self.PercentDataBad))
+        tmp.append(struct.pack(self._PercentDataGood_fmt, self.PercentDataGood))
+        tmp.append(struct.pack(self._UseSlopedExtrapolation_fmt, self.UseSlopedExtrapolation))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.UseServerCapabilitiesDefaults = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.TreatUncertainAsBad = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.PercentDataBad = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.PercentDataGood = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.UseSlopedExtrapolation = struct.unpack(?, data[:1])
-            data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.UseServerCapabilitiesDefaults = struct.unpack(self._UseServerCapabilitiesDefaults_fmt, data.read(self._UseServerCapabilitiesDefaults_fmt_size))
+            self.TreatUncertainAsBad = struct.unpack(self._TreatUncertainAsBad_fmt, data.read(self._TreatUncertainAsBad_fmt_size))
+            self.PercentDataBad = struct.unpack(self._PercentDataBad_fmt, data.read(self._PercentDataBad_fmt_size))
+            self.PercentDataGood = struct.unpack(self._PercentDataGood_fmt, data.read(self._PercentDataGood_fmt_size))
+            self.UseSlopedExtrapolation = struct.unpack(self._UseSlopedExtrapolation_fmt, data.read(self._UseSlopedExtrapolation_fmt_size))
             return data
             
 class ReadProcessedDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StartTime = None
+        self._StartTime_fmt = '!d'
+        self._StartTime_fmt_size = 8
         self.EndTime = None
+        self._EndTime_fmt = '!d'
+        self._EndTime_fmt_size = 8
         self.ProcessingInterval = None
-        self.NoOfAggregateType = None
+        self._ProcessingInterval_fmt = '!d'
+        self._ProcessingInterval_fmt_size = 8
         self.AggregateType = []
         self.AggregateConfiguration = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.StartTime))
-        b.append(struct.pack('!d', self.EndTime))
-        b.append(struct.pack('!d', self.ProcessingInterval))
-        b.append(struct.pack('!i', self.NoOfAggregateType))
-        b.append(struct.pack('!i', len(self.AggregateType)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._StartTime_fmt, self.StartTime))
+        tmp.append(struct.pack(self._EndTime_fmt, self.EndTime))
+        tmp.append(struct.pack(self._ProcessingInterval_fmt, self.ProcessingInterval))
+        tmp.append(struct.pack('!i', len(self.AggregateType)))
         for i in AggregateType:
-            b.append(self.AggregateType.to_binary())
-        b.append(self.AggregateConfiguration.to_binary())
-        return b.join()
+            tmp.append(self.AggregateType.to_binary())
+        tmp.append(self.AggregateConfiguration.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.StartTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.EndTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.ProcessingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.NoOfAggregateType = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.StartTime = struct.unpack(self._StartTime_fmt, data.read(self._StartTime_fmt_size))
+            self.EndTime = struct.unpack(self._EndTime_fmt, data.read(self._EndTime_fmt_size))
+            self.ProcessingInterval = struct.unpack(self._ProcessingInterval_fmt, data.read(self._ProcessingInterval_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.AggregateType.from_binary(data)
@@ -9013,142 +8323,130 @@ class ReadProcessedDetails(object):
 class AggregateFilter(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StartTime = None
+        self._StartTime_fmt = '!d'
+        self._StartTime_fmt_size = 8
         self.AggregateType = None
         self.ProcessingInterval = None
+        self._ProcessingInterval_fmt = '!d'
+        self._ProcessingInterval_fmt_size = 8
         self.AggregateConfiguration = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.StartTime))
-        b.append(self.AggregateType.to_binary())
-        b.append(struct.pack('!d', self.ProcessingInterval))
-        b.append(self.AggregateConfiguration.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._StartTime_fmt, self.StartTime))
+        tmp.append(self.AggregateType.to_binary())
+        tmp.append(struct.pack(self._ProcessingInterval_fmt, self.ProcessingInterval))
+        tmp.append(self.AggregateConfiguration.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.StartTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.StartTime = struct.unpack(self._StartTime_fmt, data.read(self._StartTime_fmt_size))
             data = self.AggregateType.from_binary(data)
-            self.ProcessingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.ProcessingInterval = struct.unpack(self._ProcessingInterval_fmt, data.read(self._ProcessingInterval_fmt_size))
             data = self.AggregateConfiguration.from_binary(data)
             return data
             
 class MonitoringFilterResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
+            tmp.append(self.TypeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.Body)))
         for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        return b.join()
+            tmp.append(struct.pack(self._Body_fmt, self.Body))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+                    self.Body = struct.unpack(self._Body_fmt, data.read(self._Body_fmt_size))
             return data
             
 class EventFilterResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfSelectClauseResults = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SelectClauseResults = []
-        self.NoOfSelectClauseDiagnosticInfos = None
         self.SelectClauseDiagnosticInfos = []
         self.WhereClauseResult = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfSelectClauseResults))
-        b.append(struct.pack('!i', len(self.SelectClauseResults)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.SelectClauseResults)))
         for i in SelectClauseResults:
-            b.append(self.SelectClauseResults.to_binary())
-        b.append(struct.pack('!i', self.NoOfSelectClauseDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.SelectClauseDiagnosticInfos)))
+            tmp.append(self.SelectClauseResults.to_binary())
+        tmp.append(struct.pack('!i', len(self.SelectClauseDiagnosticInfos)))
         for i in SelectClauseDiagnosticInfos:
-            b.append(self.SelectClauseDiagnosticInfos.to_binary())
-        b.append(self.WhereClauseResult.to_binary())
-        return b.join()
+            tmp.append(self.SelectClauseDiagnosticInfos.to_binary())
+        tmp.append(self.WhereClauseResult.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfSelectClauseResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.SelectClauseResults.from_binary(data)
-            self.NoOfSelectClauseDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.SelectClauseDiagnosticInfos.from_binary(data)
@@ -9158,39 +8456,36 @@ class EventFilterResult(object):
 class HistoryUpdateEventResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
         self.EventFilterResult = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(self.EventFilterResult.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(self.EventFilterResult.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
             data = self.EventFilterResult.from_binary(data)
             return data
@@ -9198,139 +8493,136 @@ class HistoryUpdateEventResult(object):
 class AggregateFilterResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RevisedStartTime = None
+        self._RevisedStartTime_fmt = '!d'
+        self._RevisedStartTime_fmt_size = 8
         self.RevisedProcessingInterval = None
+        self._RevisedProcessingInterval_fmt = '!d'
+        self._RevisedProcessingInterval_fmt_size = 8
         self.RevisedAggregateConfiguration = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.RevisedStartTime))
-        b.append(struct.pack('!d', self.RevisedProcessingInterval))
-        b.append(self.RevisedAggregateConfiguration.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._RevisedStartTime_fmt, self.RevisedStartTime))
+        tmp.append(struct.pack(self._RevisedProcessingInterval_fmt, self.RevisedProcessingInterval))
+        tmp.append(self.RevisedAggregateConfiguration.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.RevisedStartTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RevisedProcessingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.RevisedStartTime = struct.unpack(self._RevisedStartTime_fmt, data.read(self._RevisedStartTime_fmt_size))
+            self.RevisedProcessingInterval = struct.unpack(self._RevisedProcessingInterval_fmt, data.read(self._RevisedProcessingInterval_fmt_size))
             data = self.RevisedAggregateConfiguration.from_binary(data)
             return data
             
 class MonitoringParameters(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ClientHandle = None
+        self._ClientHandle_fmt = '!I'
+        self._ClientHandle_fmt_size = 4
         self.SamplingInterval = None
+        self._SamplingInterval_fmt = '!d'
+        self._SamplingInterval_fmt_size = 8
         self.Filter = None
         self.QueueSize = None
+        self._QueueSize_fmt = '!I'
+        self._QueueSize_fmt_size = 4
         self.DiscardOldest = None
+        self._DiscardOldest_fmt = '!?'
+        self._DiscardOldest_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.ClientHandle))
-        b.append(struct.pack('!d', self.SamplingInterval))
-        b.append(self.Filter.to_binary())
-        b.append(struct.pack('!I', self.QueueSize))
-        b.append(struct.pack('!?', self.DiscardOldest))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._ClientHandle_fmt, self.ClientHandle))
+        tmp.append(struct.pack(self._SamplingInterval_fmt, self.SamplingInterval))
+        tmp.append(self.Filter.to_binary())
+        tmp.append(struct.pack(self._QueueSize_fmt, self.QueueSize))
+        tmp.append(struct.pack(self._DiscardOldest_fmt, self.DiscardOldest))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.ClientHandle = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.SamplingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.ClientHandle = struct.unpack(self._ClientHandle_fmt, data.read(self._ClientHandle_fmt_size))
+            self.SamplingInterval = struct.unpack(self._SamplingInterval_fmt, data.read(self._SamplingInterval_fmt_size))
             data = self.Filter.from_binary(data)
-            self.QueueSize = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.DiscardOldest = struct.unpack(?, data[:1])
-            data = data[1:]
+            self.QueueSize = struct.unpack(self._QueueSize_fmt, data.read(self._QueueSize_fmt_size))
+            self.DiscardOldest = struct.unpack(self._DiscardOldest_fmt, data.read(self._DiscardOldest_fmt_size))
             return data
             
 class MonitoredItemCreateRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ItemToMonitor = None
         self.MonitoringMode = None
         self.RequestedParameters = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ItemToMonitor.to_binary())
-        b.append(self.MonitoringMode.to_binary())
-        b.append(self.RequestedParameters.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ItemToMonitor.to_binary())
+        tmp.append(self.MonitoringMode.to_binary())
+        tmp.append(self.RequestedParameters.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ItemToMonitor.from_binary(data)
             data = self.MonitoringMode.from_binary(data)
             data = self.RequestedParameters.from_binary(data)
@@ -9339,107 +8631,100 @@ class MonitoredItemCreateRequest(object):
 class MonitoredItemCreateResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
         self.MonitoredItemId = None
+        self._MonitoredItemId_fmt = '!I'
+        self._MonitoredItemId_fmt_size = 4
         self.RevisedSamplingInterval = None
+        self._RevisedSamplingInterval_fmt = '!d'
+        self._RevisedSamplingInterval_fmt_size = 8
         self.RevisedQueueSize = None
+        self._RevisedQueueSize_fmt = '!I'
+        self._RevisedQueueSize_fmt_size = 4
         self.FilterResult = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!I', self.MonitoredItemId))
-        b.append(struct.pack('!d', self.RevisedSamplingInterval))
-        b.append(struct.pack('!I', self.RevisedQueueSize))
-        b.append(self.FilterResult.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack(self._MonitoredItemId_fmt, self.MonitoredItemId))
+        tmp.append(struct.pack(self._RevisedSamplingInterval_fmt, self.RevisedSamplingInterval))
+        tmp.append(struct.pack(self._RevisedQueueSize_fmt, self.RevisedQueueSize))
+        tmp.append(self.FilterResult.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.MonitoredItemId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RevisedSamplingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RevisedQueueSize = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.MonitoredItemId = struct.unpack(self._MonitoredItemId_fmt, data.read(self._MonitoredItemId_fmt_size))
+            self.RevisedSamplingInterval = struct.unpack(self._RevisedSamplingInterval_fmt, data.read(self._RevisedSamplingInterval_fmt_size))
+            self.RevisedQueueSize = struct.unpack(self._RevisedQueueSize_fmt, data.read(self._RevisedQueueSize_fmt_size))
             data = self.FilterResult.from_binary(data)
             return data
             
 class CreateMonitoredItemsRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.TimestampsToReturn = None
-        self.NoOfItemsToCreate = None
         self.ItemsToCreate = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(self.TimestampsToReturn.to_binary())
-        b.append(struct.pack('!i', self.NoOfItemsToCreate))
-        b.append(struct.pack('!i', len(self.ItemsToCreate)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(self.TimestampsToReturn.to_binary())
+        tmp.append(struct.pack('!i', len(self.ItemsToCreate)))
         for i in ItemsToCreate:
-            b.append(self.ItemsToCreate.to_binary())
-        return b.join()
+            tmp.append(self.ItemsToCreate.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
             data = self.TimestampsToReturn.from_binary(data)
-            self.NoOfItemsToCreate = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ItemsToCreate.from_binary(data)
@@ -9448,61 +8733,48 @@ class CreateMonitoredItemsRequest(object):
 class CreateMonitoredItemsResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -9511,144 +8783,134 @@ class CreateMonitoredItemsResponse(object):
 class MonitoredItemModifyRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.MonitoredItemId = None
+        self._MonitoredItemId_fmt = '!I'
+        self._MonitoredItemId_fmt_size = 4
         self.RequestedParameters = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.MonitoredItemId))
-        b.append(self.RequestedParameters.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._MonitoredItemId_fmt, self.MonitoredItemId))
+        tmp.append(self.RequestedParameters.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.MonitoredItemId = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.MonitoredItemId = struct.unpack(self._MonitoredItemId_fmt, data.read(self._MonitoredItemId_fmt_size))
             data = self.RequestedParameters.from_binary(data)
             return data
             
 class MonitoredItemModifyResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
         self.RevisedSamplingInterval = None
+        self._RevisedSamplingInterval_fmt = '!d'
+        self._RevisedSamplingInterval_fmt_size = 8
         self.RevisedQueueSize = None
+        self._RevisedQueueSize_fmt = '!I'
+        self._RevisedQueueSize_fmt_size = 4
         self.FilterResult = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!d', self.RevisedSamplingInterval))
-        b.append(struct.pack('!I', self.RevisedQueueSize))
-        b.append(self.FilterResult.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack(self._RevisedSamplingInterval_fmt, self.RevisedSamplingInterval))
+        tmp.append(struct.pack(self._RevisedQueueSize_fmt, self.RevisedQueueSize))
+        tmp.append(self.FilterResult.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.RevisedSamplingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RevisedQueueSize = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.RevisedSamplingInterval = struct.unpack(self._RevisedSamplingInterval_fmt, data.read(self._RevisedSamplingInterval_fmt_size))
+            self.RevisedQueueSize = struct.unpack(self._RevisedQueueSize_fmt, data.read(self._RevisedQueueSize_fmt_size))
             data = self.FilterResult.from_binary(data)
             return data
             
 class ModifyMonitoredItemsRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.TimestampsToReturn = None
-        self.NoOfItemsToModify = None
         self.ItemsToModify = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(self.TimestampsToReturn.to_binary())
-        b.append(struct.pack('!i', self.NoOfItemsToModify))
-        b.append(struct.pack('!i', len(self.ItemsToModify)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(self.TimestampsToReturn.to_binary())
+        tmp.append(struct.pack('!i', len(self.ItemsToModify)))
         for i in ItemsToModify:
-            b.append(self.ItemsToModify.to_binary())
-        return b.join()
+            tmp.append(self.ItemsToModify.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
             data = self.TimestampsToReturn.from_binary(data)
-            self.NoOfItemsToModify = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ItemsToModify.from_binary(data)
@@ -9657,61 +8919,48 @@ class ModifyMonitoredItemsRequest(object):
 class ModifyMonitoredItemsResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -9720,119 +8969,100 @@ class ModifyMonitoredItemsResponse(object):
 class SetMonitoringModeRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.MonitoringMode = None
-        self.NoOfMonitoredItemIds = None
         self.MonitoredItemIds = []
+        self._MonitoredItemIds_fmt = '!I'
+        self._MonitoredItemIds_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(self.MonitoringMode.to_binary())
-        b.append(struct.pack('!i', self.NoOfMonitoredItemIds))
-        b.append(struct.pack('!i', len(self.MonitoredItemIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(self.MonitoringMode.to_binary())
+        tmp.append(struct.pack('!i', len(self.MonitoredItemIds)))
         for i in MonitoredItemIds:
-            b.append(struct.pack('!I', self.MonitoredItemIds))
-        return b.join()
+            tmp.append(struct.pack(self._MonitoredItemIds_fmt, self.MonitoredItemIds))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
             data = self.MonitoringMode.from_binary(data)
-            self.NoOfMonitoredItemIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.MonitoredItemIds = struct.unpack(I, data[:4])
-                    data = data[4:]
+                    self.MonitoredItemIds = struct.unpack(self._MonitoredItemIds_fmt, data.read(self._MonitoredItemIds_fmt_size))
             return data
             
 class SetMonitoringModeResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -9841,160 +9071,128 @@ class SetMonitoringModeResponse(object):
 class SetTriggeringRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.TriggeringItemId = None
-        self.NoOfLinksToAdd = None
+        self._TriggeringItemId_fmt = '!I'
+        self._TriggeringItemId_fmt_size = 4
         self.LinksToAdd = []
-        self.NoOfLinksToRemove = None
+        self._LinksToAdd_fmt = '!I'
+        self._LinksToAdd_fmt_size = 4
         self.LinksToRemove = []
+        self._LinksToRemove_fmt = '!I'
+        self._LinksToRemove_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!I', self.TriggeringItemId))
-        b.append(struct.pack('!i', self.NoOfLinksToAdd))
-        b.append(struct.pack('!i', len(self.LinksToAdd)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack(self._TriggeringItemId_fmt, self.TriggeringItemId))
+        tmp.append(struct.pack('!i', len(self.LinksToAdd)))
         for i in LinksToAdd:
-            b.append(struct.pack('!I', self.LinksToAdd))
-        b.append(struct.pack('!i', self.NoOfLinksToRemove))
-        b.append(struct.pack('!i', len(self.LinksToRemove)))
+            tmp.append(struct.pack(self._LinksToAdd_fmt, self.LinksToAdd))
+        tmp.append(struct.pack('!i', len(self.LinksToRemove)))
         for i in LinksToRemove:
-            b.append(struct.pack('!I', self.LinksToRemove))
-        return b.join()
+            tmp.append(struct.pack(self._LinksToRemove_fmt, self.LinksToRemove))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.TriggeringItemId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfLinksToAdd = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            self.TriggeringItemId = struct.unpack(self._TriggeringItemId_fmt, data.read(self._TriggeringItemId_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.LinksToAdd = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.NoOfLinksToRemove = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.LinksToAdd = struct.unpack(self._LinksToAdd_fmt, data.read(self._LinksToAdd_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.LinksToRemove = struct.unpack(I, data[:4])
-                    data = data[4:]
+                    self.LinksToRemove = struct.unpack(self._LinksToRemove_fmt, data.read(self._LinksToRemove_fmt_size))
             return data
             
 class SetTriggeringResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfAddResults = None
         self.AddResults = []
-        self.NoOfAddDiagnosticInfos = None
         self.AddDiagnosticInfos = []
-        self.NoOfRemoveResults = None
         self.RemoveResults = []
-        self.NoOfRemoveDiagnosticInfos = None
         self.RemoveDiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfAddResults))
-        b.append(struct.pack('!i', len(self.AddResults)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.AddResults)))
         for i in AddResults:
-            b.append(self.AddResults.to_binary())
-        b.append(struct.pack('!i', self.NoOfAddDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.AddDiagnosticInfos)))
+            tmp.append(self.AddResults.to_binary())
+        tmp.append(struct.pack('!i', len(self.AddDiagnosticInfos)))
         for i in AddDiagnosticInfos:
-            b.append(self.AddDiagnosticInfos.to_binary())
-        b.append(struct.pack('!i', self.NoOfRemoveResults))
-        b.append(struct.pack('!i', len(self.RemoveResults)))
+            tmp.append(self.AddDiagnosticInfos.to_binary())
+        tmp.append(struct.pack('!i', len(self.RemoveResults)))
         for i in RemoveResults:
-            b.append(self.RemoveResults.to_binary())
-        b.append(struct.pack('!i', self.NoOfRemoveDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.RemoveDiagnosticInfos)))
+            tmp.append(self.RemoveResults.to_binary())
+        tmp.append(struct.pack('!i', len(self.RemoveDiagnosticInfos)))
         for i in RemoveDiagnosticInfos:
-            b.append(self.RemoveDiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.RemoveDiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfAddResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.AddResults.from_binary(data)
-            self.NoOfAddDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.AddDiagnosticInfos.from_binary(data)
-            self.NoOfRemoveResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.RemoveResults.from_binary(data)
-            self.NoOfRemoveDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.RemoveDiagnosticInfos.from_binary(data)
@@ -10003,116 +9201,97 @@ class SetTriggeringResponse(object):
 class DeleteMonitoredItemsRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.SubscriptionId = None
-        self.NoOfMonitoredItemIds = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.MonitoredItemIds = []
+        self._MonitoredItemIds_fmt = '!I'
+        self._MonitoredItemIds_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!i', self.NoOfMonitoredItemIds))
-        b.append(struct.pack('!i', len(self.MonitoredItemIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack('!i', len(self.MonitoredItemIds)))
         for i in MonitoredItemIds:
-            b.append(struct.pack('!I', self.MonitoredItemIds))
-        return b.join()
+            tmp.append(struct.pack(self._MonitoredItemIds_fmt, self.MonitoredItemIds))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfMonitoredItemIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.MonitoredItemIds = struct.unpack(I, data[:4])
-                    data = data[4:]
+                    self.MonitoredItemIds = struct.unpack(self._MonitoredItemIds_fmt, data.read(self._MonitoredItemIds_fmt_size))
             return data
             
 class DeleteMonitoredItemsResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -10121,340 +9300,328 @@ class DeleteMonitoredItemsResponse(object):
 class CreateSubscriptionRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.RequestedPublishingInterval = None
+        self._RequestedPublishingInterval_fmt = '!d'
+        self._RequestedPublishingInterval_fmt_size = 8
         self.RequestedLifetimeCount = None
+        self._RequestedLifetimeCount_fmt = '!I'
+        self._RequestedLifetimeCount_fmt_size = 4
         self.RequestedMaxKeepAliveCount = None
+        self._RequestedMaxKeepAliveCount_fmt = '!I'
+        self._RequestedMaxKeepAliveCount_fmt_size = 4
         self.MaxNotificationsPerPublish = None
+        self._MaxNotificationsPerPublish_fmt = '!I'
+        self._MaxNotificationsPerPublish_fmt_size = 4
         self.PublishingEnabled = None
+        self._PublishingEnabled_fmt = '!?'
+        self._PublishingEnabled_fmt_size = 1
         self.Priority = None
+        self._Priority_fmt = '!c'
+        self._Priority_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!d', self.RequestedPublishingInterval))
-        b.append(struct.pack('!I', self.RequestedLifetimeCount))
-        b.append(struct.pack('!I', self.RequestedMaxKeepAliveCount))
-        b.append(struct.pack('!I', self.MaxNotificationsPerPublish))
-        b.append(struct.pack('!?', self.PublishingEnabled))
-        b.append(struct.pack('!c', self.Priority))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._RequestedPublishingInterval_fmt, self.RequestedPublishingInterval))
+        tmp.append(struct.pack(self._RequestedLifetimeCount_fmt, self.RequestedLifetimeCount))
+        tmp.append(struct.pack(self._RequestedMaxKeepAliveCount_fmt, self.RequestedMaxKeepAliveCount))
+        tmp.append(struct.pack(self._MaxNotificationsPerPublish_fmt, self.MaxNotificationsPerPublish))
+        tmp.append(struct.pack(self._PublishingEnabled_fmt, self.PublishingEnabled))
+        tmp.append(struct.pack(self._Priority_fmt, self.Priority))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.RequestedPublishingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RequestedLifetimeCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RequestedMaxKeepAliveCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MaxNotificationsPerPublish = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.PublishingEnabled = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.Priority = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.RequestedPublishingInterval = struct.unpack(self._RequestedPublishingInterval_fmt, data.read(self._RequestedPublishingInterval_fmt_size))
+            self.RequestedLifetimeCount = struct.unpack(self._RequestedLifetimeCount_fmt, data.read(self._RequestedLifetimeCount_fmt_size))
+            self.RequestedMaxKeepAliveCount = struct.unpack(self._RequestedMaxKeepAliveCount_fmt, data.read(self._RequestedMaxKeepAliveCount_fmt_size))
+            self.MaxNotificationsPerPublish = struct.unpack(self._MaxNotificationsPerPublish_fmt, data.read(self._MaxNotificationsPerPublish_fmt_size))
+            self.PublishingEnabled = struct.unpack(self._PublishingEnabled_fmt, data.read(self._PublishingEnabled_fmt_size))
+            self.Priority = struct.unpack(self._Priority_fmt, data.read(self._Priority_fmt_size))
             return data
             
 class CreateSubscriptionResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.RevisedPublishingInterval = None
+        self._RevisedPublishingInterval_fmt = '!d'
+        self._RevisedPublishingInterval_fmt_size = 8
         self.RevisedLifetimeCount = None
+        self._RevisedLifetimeCount_fmt = '!I'
+        self._RevisedLifetimeCount_fmt_size = 4
         self.RevisedMaxKeepAliveCount = None
+        self._RevisedMaxKeepAliveCount_fmt = '!I'
+        self._RevisedMaxKeepAliveCount_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!d', self.RevisedPublishingInterval))
-        b.append(struct.pack('!I', self.RevisedLifetimeCount))
-        b.append(struct.pack('!I', self.RevisedMaxKeepAliveCount))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack(self._RevisedPublishingInterval_fmt, self.RevisedPublishingInterval))
+        tmp.append(struct.pack(self._RevisedLifetimeCount_fmt, self.RevisedLifetimeCount))
+        tmp.append(struct.pack(self._RevisedMaxKeepAliveCount_fmt, self.RevisedMaxKeepAliveCount))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RevisedPublishingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RevisedLifetimeCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RevisedMaxKeepAliveCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            self.RevisedPublishingInterval = struct.unpack(self._RevisedPublishingInterval_fmt, data.read(self._RevisedPublishingInterval_fmt_size))
+            self.RevisedLifetimeCount = struct.unpack(self._RevisedLifetimeCount_fmt, data.read(self._RevisedLifetimeCount_fmt_size))
+            self.RevisedMaxKeepAliveCount = struct.unpack(self._RevisedMaxKeepAliveCount_fmt, data.read(self._RevisedMaxKeepAliveCount_fmt_size))
             return data
             
 class ModifySubscriptionRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.RequestedPublishingInterval = None
+        self._RequestedPublishingInterval_fmt = '!d'
+        self._RequestedPublishingInterval_fmt_size = 8
         self.RequestedLifetimeCount = None
+        self._RequestedLifetimeCount_fmt = '!I'
+        self._RequestedLifetimeCount_fmt_size = 4
         self.RequestedMaxKeepAliveCount = None
+        self._RequestedMaxKeepAliveCount_fmt = '!I'
+        self._RequestedMaxKeepAliveCount_fmt_size = 4
         self.MaxNotificationsPerPublish = None
+        self._MaxNotificationsPerPublish_fmt = '!I'
+        self._MaxNotificationsPerPublish_fmt_size = 4
         self.Priority = None
+        self._Priority_fmt = '!c'
+        self._Priority_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!d', self.RequestedPublishingInterval))
-        b.append(struct.pack('!I', self.RequestedLifetimeCount))
-        b.append(struct.pack('!I', self.RequestedMaxKeepAliveCount))
-        b.append(struct.pack('!I', self.MaxNotificationsPerPublish))
-        b.append(struct.pack('!c', self.Priority))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack(self._RequestedPublishingInterval_fmt, self.RequestedPublishingInterval))
+        tmp.append(struct.pack(self._RequestedLifetimeCount_fmt, self.RequestedLifetimeCount))
+        tmp.append(struct.pack(self._RequestedMaxKeepAliveCount_fmt, self.RequestedMaxKeepAliveCount))
+        tmp.append(struct.pack(self._MaxNotificationsPerPublish_fmt, self.MaxNotificationsPerPublish))
+        tmp.append(struct.pack(self._Priority_fmt, self.Priority))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RequestedPublishingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RequestedLifetimeCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RequestedMaxKeepAliveCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MaxNotificationsPerPublish = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.Priority = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            self.RequestedPublishingInterval = struct.unpack(self._RequestedPublishingInterval_fmt, data.read(self._RequestedPublishingInterval_fmt_size))
+            self.RequestedLifetimeCount = struct.unpack(self._RequestedLifetimeCount_fmt, data.read(self._RequestedLifetimeCount_fmt_size))
+            self.RequestedMaxKeepAliveCount = struct.unpack(self._RequestedMaxKeepAliveCount_fmt, data.read(self._RequestedMaxKeepAliveCount_fmt_size))
+            self.MaxNotificationsPerPublish = struct.unpack(self._MaxNotificationsPerPublish_fmt, data.read(self._MaxNotificationsPerPublish_fmt_size))
+            self.Priority = struct.unpack(self._Priority_fmt, data.read(self._Priority_fmt_size))
             return data
             
 class ModifySubscriptionResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.RevisedPublishingInterval = None
+        self._RevisedPublishingInterval_fmt = '!d'
+        self._RevisedPublishingInterval_fmt_size = 8
         self.RevisedLifetimeCount = None
+        self._RevisedLifetimeCount_fmt = '!I'
+        self._RevisedLifetimeCount_fmt_size = 4
         self.RevisedMaxKeepAliveCount = None
+        self._RevisedMaxKeepAliveCount_fmt = '!I'
+        self._RevisedMaxKeepAliveCount_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!d', self.RevisedPublishingInterval))
-        b.append(struct.pack('!I', self.RevisedLifetimeCount))
-        b.append(struct.pack('!I', self.RevisedMaxKeepAliveCount))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack(self._RevisedPublishingInterval_fmt, self.RevisedPublishingInterval))
+        tmp.append(struct.pack(self._RevisedLifetimeCount_fmt, self.RevisedLifetimeCount))
+        tmp.append(struct.pack(self._RevisedMaxKeepAliveCount_fmt, self.RevisedMaxKeepAliveCount))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.RevisedPublishingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.RevisedLifetimeCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RevisedMaxKeepAliveCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.RevisedPublishingInterval = struct.unpack(self._RevisedPublishingInterval_fmt, data.read(self._RevisedPublishingInterval_fmt_size))
+            self.RevisedLifetimeCount = struct.unpack(self._RevisedLifetimeCount_fmt, data.read(self._RevisedLifetimeCount_fmt_size))
+            self.RevisedMaxKeepAliveCount = struct.unpack(self._RevisedMaxKeepAliveCount_fmt, data.read(self._RevisedMaxKeepAliveCount_fmt_size))
             return data
             
 class SetPublishingModeRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.PublishingEnabled = None
-        self.NoOfSubscriptionIds = None
+        self._PublishingEnabled_fmt = '!?'
+        self._PublishingEnabled_fmt_size = 1
         self.SubscriptionIds = []
+        self._SubscriptionIds_fmt = '!I'
+        self._SubscriptionIds_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!?', self.PublishingEnabled))
-        b.append(struct.pack('!i', self.NoOfSubscriptionIds))
-        b.append(struct.pack('!i', len(self.SubscriptionIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._PublishingEnabled_fmt, self.PublishingEnabled))
+        tmp.append(struct.pack('!i', len(self.SubscriptionIds)))
         for i in SubscriptionIds:
-            b.append(struct.pack('!I', self.SubscriptionIds))
-        return b.join()
+            tmp.append(struct.pack(self._SubscriptionIds_fmt, self.SubscriptionIds))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.PublishingEnabled = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.NoOfSubscriptionIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.PublishingEnabled = struct.unpack(self._PublishingEnabled_fmt, data.read(self._PublishingEnabled_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.SubscriptionIds = struct.unpack(I, data[:4])
-                    data = data[4:]
+                    self.SubscriptionIds = struct.unpack(self._SubscriptionIds_fmt, data.read(self._SubscriptionIds_fmt_size))
             return data
             
 class SetPublishingModeResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -10463,53 +9630,47 @@ class SetPublishingModeResponse(object):
 class NotificationMessage(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SequenceNumber = None
+        self._SequenceNumber_fmt = '!I'
+        self._SequenceNumber_fmt_size = 4
         self.PublishTime = None
-        self.NoOfNotificationData = None
+        self._PublishTime_fmt = '!d'
+        self._PublishTime_fmt_size = 8
         self.NotificationData = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SequenceNumber))
-        b.append(struct.pack('!d', self.PublishTime))
-        b.append(struct.pack('!i', self.NoOfNotificationData))
-        b.append(struct.pack('!i', len(self.NotificationData)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SequenceNumber_fmt, self.SequenceNumber))
+        tmp.append(struct.pack(self._PublishTime_fmt, self.PublishTime))
+        tmp.append(struct.pack('!i', len(self.NotificationData)))
         for i in NotificationData:
-            b.append(self.NotificationData.to_binary())
-        return b.join()
+            tmp.append(self.NotificationData.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SequenceNumber = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.PublishTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.NoOfNotificationData = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SequenceNumber = struct.unpack(self._SequenceNumber_fmt, data.read(self._SequenceNumber_fmt_size))
+            self.PublishTime = struct.unpack(self._PublishTime_fmt, data.read(self._PublishTime_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NotificationData.from_binary(data)
@@ -10518,133 +9679,120 @@ class NotificationMessage(object):
 class NotificationData(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
+            tmp.append(self.TypeId.to_binary())
+        tmp.append(struct.pack('!i', len(self.Body)))
         for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        return b.join()
+            tmp.append(struct.pack(self._Body_fmt, self.Body))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+                    self.Body = struct.unpack(self._Body_fmt, data.read(self._Body_fmt_size))
             return data
             
 class MonitoredItemNotification(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ClientHandle = None
+        self._ClientHandle_fmt = '!I'
+        self._ClientHandle_fmt_size = 4
         self.Value = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.ClientHandle))
-        b.append(self.Value.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._ClientHandle_fmt, self.ClientHandle))
+        tmp.append(self.Value.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.ClientHandle = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.ClientHandle = struct.unpack(self._ClientHandle_fmt, data.read(self._ClientHandle_fmt_size))
             data = self.Value.from_binary(data)
             return data
             
 class DataChangeNotification(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfMonitoredItems = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.MonitoredItems = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfMonitoredItems))
-        b.append(struct.pack('!i', len(self.MonitoredItems)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.MonitoredItems)))
         for i in MonitoredItems:
-            b.append(self.MonitoredItems.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.MonitoredItems.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfMonitoredItems = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.MonitoredItems.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -10653,49 +9801,42 @@ class DataChangeNotification(object):
 class EventFieldList(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ClientHandle = None
-        self.NoOfEventFields = None
+        self._ClientHandle_fmt = '!I'
+        self._ClientHandle_fmt_size = 4
         self.EventFields = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.ClientHandle))
-        b.append(struct.pack('!i', self.NoOfEventFields))
-        b.append(struct.pack('!i', len(self.EventFields)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._ClientHandle_fmt, self.ClientHandle))
+        tmp.append(struct.pack('!i', len(self.EventFields)))
         for i in EventFields:
-            b.append(self.EventFields.to_binary())
-        return b.join()
+            tmp.append(self.EventFields.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.ClientHandle = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfEventFields = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.ClientHandle = struct.unpack(self._ClientHandle_fmt, data.read(self._ClientHandle_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.EventFields.from_binary(data)
@@ -10704,45 +9845,37 @@ class EventFieldList(object):
 class EventNotificationList(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfEvents = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Events = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfEvents))
-        b.append(struct.pack('!i', len(self.Events)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.Events)))
         for i in Events:
-            b.append(self.Events.to_binary())
-        return b.join()
+            tmp.append(self.Events.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfEvents = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Events.from_binary(data)
@@ -10751,45 +9884,37 @@ class EventNotificationList(object):
 class HistoryEventFieldList(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfEventFields = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.EventFields = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfEventFields))
-        b.append(struct.pack('!i', len(self.EventFields)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.EventFields)))
         for i in EventFields:
-            b.append(self.EventFields.to_binary())
-        return b.join()
+            tmp.append(self.EventFields.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfEventFields = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.EventFields.from_binary(data)
@@ -10798,45 +9923,37 @@ class HistoryEventFieldList(object):
 class HistoryEvent(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfEvents = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Events = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfEvents))
-        b.append(struct.pack('!i', len(self.Events)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.Events)))
         for i in Events:
-            b.append(self.Events.to_binary())
-        return b.join()
+            tmp.append(self.Events.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfEvents = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Events.from_binary(data)
@@ -10845,54 +9962,46 @@ class HistoryEvent(object):
 class UpdateEventDetails(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NodeId = None
         self.PerformInsertReplace = None
         self.Filter = None
-        self.NoOfEventData = None
         self.EventData = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NodeId.to_binary())
-        b.append(self.PerformInsertReplace.to_binary())
-        b.append(self.Filter.to_binary())
-        b.append(struct.pack('!i', self.NoOfEventData))
-        b.append(struct.pack('!i', len(self.EventData)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.PerformInsertReplace.to_binary())
+        tmp.append(self.Filter.to_binary())
+        tmp.append(struct.pack('!i', len(self.EventData)))
         for i in EventData:
-            b.append(self.EventData.to_binary())
-        return b.join()
+            tmp.append(self.EventData.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NodeId.from_binary(data)
             data = self.PerformInsertReplace.from_binary(data)
             data = self.Filter.from_binary(data)
-            self.NoOfEventData = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.EventData.from_binary(data)
@@ -10901,39 +10010,36 @@ class UpdateEventDetails(object):
 class StatusChangeNotification(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Status = None
         self.DiagnosticInfo = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Status.to_binary())
-        b.append(self.DiagnosticInfo.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Status.to_binary())
+        tmp.append(self.DiagnosticInfo.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Status.from_binary(data)
             data = self.DiagnosticInfo.from_binary(data)
             return data
@@ -10941,90 +10047,81 @@ class StatusChangeNotification(object):
 class SubscriptionAcknowledgement(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.SequenceNumber = None
+        self._SequenceNumber_fmt = '!I'
+        self._SequenceNumber_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!I', self.SequenceNumber))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack(self._SequenceNumber_fmt, self.SequenceNumber))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.SequenceNumber = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            self.SequenceNumber = struct.unpack(self._SequenceNumber_fmt, data.read(self._SequenceNumber_fmt_size))
             return data
             
 class PublishRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfSubscriptionAcknowledgements = None
         self.SubscriptionAcknowledgements = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfSubscriptionAcknowledgements))
-        b.append(struct.pack('!i', len(self.SubscriptionAcknowledgements)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.SubscriptionAcknowledgements)))
         for i in SubscriptionAcknowledgements:
-            b.append(self.SubscriptionAcknowledgements.to_binary())
-        return b.join()
+            tmp.append(self.SubscriptionAcknowledgements.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfSubscriptionAcknowledgements = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.SubscriptionAcknowledgements.from_binary(data)
@@ -11033,86 +10130,71 @@ class PublishRequest(object):
 class PublishResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.SubscriptionId = None
-        self.NoOfAvailableSequenceNumbers = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.AvailableSequenceNumbers = []
+        self._AvailableSequenceNumbers_fmt = '!I'
+        self._AvailableSequenceNumbers_fmt_size = 4
         self.MoreNotifications = None
+        self._MoreNotifications_fmt = '!?'
+        self._MoreNotifications_fmt_size = 1
         self.NotificationMessage = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!i', self.NoOfAvailableSequenceNumbers))
-        b.append(struct.pack('!i', len(self.AvailableSequenceNumbers)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack('!i', len(self.AvailableSequenceNumbers)))
         for i in AvailableSequenceNumbers:
-            b.append(struct.pack('!I', self.AvailableSequenceNumbers))
-        b.append(struct.pack('!?', self.MoreNotifications))
-        b.append(self.NotificationMessage.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(struct.pack(self._AvailableSequenceNumbers_fmt, self.AvailableSequenceNumbers))
+        tmp.append(struct.pack(self._MoreNotifications_fmt, self.MoreNotifications))
+        tmp.append(self.NotificationMessage.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NoOfAvailableSequenceNumbers = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.AvailableSequenceNumbers = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.MoreNotifications = struct.unpack(?, data[:1])
-            data = data[1:]
+                    self.AvailableSequenceNumbers = struct.unpack(self._AvailableSequenceNumbers_fmt, data.read(self._AvailableSequenceNumbers_fmt_size))
+            self.MoreNotifications = struct.unpack(self._MoreNotifications_fmt, data.read(self._MoreNotifications_fmt_size))
             data = self.NotificationMessage.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -11121,84 +10203,80 @@ class PublishResponse(object):
 class RepublishRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.RetransmitSequenceNumber = None
+        self._RetransmitSequenceNumber_fmt = '!I'
+        self._RetransmitSequenceNumber_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!I', self.RetransmitSequenceNumber))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack(self._RetransmitSequenceNumber_fmt, self.RetransmitSequenceNumber))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RetransmitSequenceNumber = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            self.RetransmitSequenceNumber = struct.unpack(self._RetransmitSequenceNumber_fmt, data.read(self._RetransmitSequenceNumber_fmt_size))
             return data
             
 class RepublishResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.NotificationMessage = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(self.NotificationMessage.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(self.NotificationMessage.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             data = self.NotificationMessage.from_binary(data)
             return data
@@ -11206,167 +10284,141 @@ class RepublishResponse(object):
 class TransferResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
-        self.NoOfAvailableSequenceNumbers = None
         self.AvailableSequenceNumbers = []
+        self._AvailableSequenceNumbers_fmt = '!I'
+        self._AvailableSequenceNumbers_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(struct.pack('!i', self.NoOfAvailableSequenceNumbers))
-        b.append(struct.pack('!i', len(self.AvailableSequenceNumbers)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(struct.pack('!i', len(self.AvailableSequenceNumbers)))
         for i in AvailableSequenceNumbers:
-            b.append(struct.pack('!I', self.AvailableSequenceNumbers))
-        return b.join()
+            tmp.append(struct.pack(self._AvailableSequenceNumbers_fmt, self.AvailableSequenceNumbers))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
-            self.NoOfAvailableSequenceNumbers = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.AvailableSequenceNumbers = struct.unpack(I, data[:4])
-                    data = data[4:]
+                    self.AvailableSequenceNumbers = struct.unpack(self._AvailableSequenceNumbers_fmt, data.read(self._AvailableSequenceNumbers_fmt_size))
             return data
             
 class TransferSubscriptionsRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfSubscriptionIds = None
         self.SubscriptionIds = []
+        self._SubscriptionIds_fmt = '!I'
+        self._SubscriptionIds_fmt_size = 4
         self.SendInitialValues = None
+        self._SendInitialValues_fmt = '!?'
+        self._SendInitialValues_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfSubscriptionIds))
-        b.append(struct.pack('!i', len(self.SubscriptionIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.SubscriptionIds)))
         for i in SubscriptionIds:
-            b.append(struct.pack('!I', self.SubscriptionIds))
-        b.append(struct.pack('!?', self.SendInitialValues))
-        return b.join()
+            tmp.append(struct.pack(self._SubscriptionIds_fmt, self.SubscriptionIds))
+        tmp.append(struct.pack(self._SendInitialValues_fmt, self.SendInitialValues))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfSubscriptionIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.SubscriptionIds = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.SendInitialValues = struct.unpack(?, data[:1])
-            data = data[1:]
+                    self.SubscriptionIds = struct.unpack(self._SubscriptionIds_fmt, data.read(self._SubscriptionIds_fmt_size))
+            self.SendInitialValues = struct.unpack(self._SendInitialValues_fmt, data.read(self._SendInitialValues_fmt_size))
             return data
             
 class TransferSubscriptionsResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -11375,112 +10427,92 @@ class TransferSubscriptionsResponse(object):
 class DeleteSubscriptionsRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
-        self.NoOfSubscriptionIds = None
         self.SubscriptionIds = []
+        self._SubscriptionIds_fmt = '!I'
+        self._SubscriptionIds_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfSubscriptionIds))
-        b.append(struct.pack('!i', len(self.SubscriptionIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.SubscriptionIds)))
         for i in SubscriptionIds:
-            b.append(struct.pack('!I', self.SubscriptionIds))
-        return b.join()
+            tmp.append(struct.pack(self._SubscriptionIds_fmt, self.SubscriptionIds))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.NoOfSubscriptionIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.SubscriptionIds = struct.unpack(I, data[:4])
-                    data = data[4:]
+                    self.SubscriptionIds = struct.unpack(self._SubscriptionIds_fmt, data.read(self._SubscriptionIds_fmt_size))
             return data
             
 class DeleteSubscriptionsResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
-        self.NoOfResults = None
         self.Results = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(struct.pack('!i', self.NoOfResults))
-        b.append(struct.pack('!i', len(self.Results)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(struct.pack('!i', len(self.Results)))
         for i in Results:
-            b.append(self.Results.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.Results.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        return b.join()
+            tmp.append(self.DiagnosticInfos.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
-            self.NoOfResults = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Results.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
@@ -11489,22 +10521,49 @@ class DeleteSubscriptionsResponse(object):
 class ScalarTestType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Boolean = None
+        self._Boolean_fmt = '!?'
+        self._Boolean_fmt_size = 1
         self.SByte = None
+        self._SByte_fmt = '!B'
+        self._SByte_fmt_size = 1
         self.Byte = None
+        self._Byte_fmt = '!c'
+        self._Byte_fmt_size = 1
         self.Int16 = None
+        self._Int16_fmt = '!h'
+        self._Int16_fmt_size = 2
         self.UInt16 = None
+        self._UInt16_fmt = '!H'
+        self._UInt16_fmt_size = 2
         self.Int32 = None
+        self._Int32_fmt = '!i'
+        self._Int32_fmt_size = 4
         self.UInt32 = None
+        self._UInt32_fmt = '!I'
+        self._UInt32_fmt_size = 4
         self.Int64 = None
+        self._Int64_fmt = '!q'
+        self._Int64_fmt_size = 8
         self.UInt64 = None
+        self._UInt64_fmt = '!Q'
+        self._UInt64_fmt_size = 8
         self.Float = None
+        self._Float_fmt = '!f'
+        self._Float_fmt_size = 4
         self.Double = None
+        self._Double_fmt = '!d'
+        self._Double_fmt_size = 8
         self.String = None
         self.DateTime = None
+        self._DateTime_fmt = '!d'
+        self._DateTime_fmt_size = 8
         self.Guid = None
         self.ByteString = None
         self.XmlElement = None
@@ -11519,80 +10578,62 @@ class ScalarTestType(object):
         self.EnumeratedValue = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!?', self.Boolean))
-        b.append(struct.pack('!B', self.SByte))
-        b.append(struct.pack('!c', self.Byte))
-        b.append(struct.pack('!h', self.Int16))
-        b.append(struct.pack('!H', self.UInt16))
-        b.append(struct.pack('!i', self.Int32))
-        b.append(struct.pack('!I', self.UInt32))
-        b.append(struct.pack('!q', self.Int64))
-        b.append(struct.pack('!Q', self.UInt64))
-        b.append(struct.pack('!f', self.Float))
-        b.append(struct.pack('!d', self.Double))
-        b.append(self.String.to_binary())
-        b.append(struct.pack('!d', self.DateTime))
-        b.append(self.Guid.to_binary())
-        b.append(self.ByteString.to_binary())
-        b.append(self.XmlElement.to_binary())
-        b.append(self.NodeId.to_binary())
-        b.append(self.ExpandedNodeId.to_binary())
-        b.append(self.StatusCode.to_binary())
-        b.append(self.DiagnosticInfo.to_binary())
-        b.append(self.QualifiedName.to_binary())
-        b.append(self.LocalizedText.to_binary())
-        b.append(self.ExtensionObject.to_binary())
-        b.append(self.DataValue.to_binary())
-        b.append(self.EnumeratedValue.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Boolean_fmt, self.Boolean))
+        tmp.append(struct.pack(self._SByte_fmt, self.SByte))
+        tmp.append(struct.pack(self._Byte_fmt, self.Byte))
+        tmp.append(struct.pack(self._Int16_fmt, self.Int16))
+        tmp.append(struct.pack(self._UInt16_fmt, self.UInt16))
+        tmp.append(struct.pack(self._Int32_fmt, self.Int32))
+        tmp.append(struct.pack(self._UInt32_fmt, self.UInt32))
+        tmp.append(struct.pack(self._Int64_fmt, self.Int64))
+        tmp.append(struct.pack(self._UInt64_fmt, self.UInt64))
+        tmp.append(struct.pack(self._Float_fmt, self.Float))
+        tmp.append(struct.pack(self._Double_fmt, self.Double))
+        tmp.append(self.String.to_binary())
+        tmp.append(struct.pack(self._DateTime_fmt, self.DateTime))
+        tmp.append(self.Guid.to_binary())
+        tmp.append(self.ByteString.to_binary())
+        tmp.append(self.XmlElement.to_binary())
+        tmp.append(self.NodeId.to_binary())
+        tmp.append(self.ExpandedNodeId.to_binary())
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(self.DiagnosticInfo.to_binary())
+        tmp.append(self.QualifiedName.to_binary())
+        tmp.append(self.LocalizedText.to_binary())
+        tmp.append(self.ExtensionObject.to_binary())
+        tmp.append(self.DataValue.to_binary())
+        tmp.append(self.EnumeratedValue.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Boolean = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.SByte = struct.unpack(B, data[:1])
-            data = data[1:]
-            self.Byte = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.Int16 = struct.unpack(h, data[:2])
-            data = data[2:]
-            self.UInt16 = struct.unpack(H, data[:2])
-            data = data[2:]
-            self.Int32 = struct.unpack(i, data[:4])
-            data = data[4:]
-            self.UInt32 = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.Int64 = struct.unpack(q, data[:8])
-            data = data[8:]
-            self.UInt64 = struct.unpack(Q, data[:8])
-            data = data[8:]
-            self.Float = struct.unpack(f, data[:4])
-            data = data[4:]
-            self.Double = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Boolean = struct.unpack(self._Boolean_fmt, data.read(self._Boolean_fmt_size))
+            self.SByte = struct.unpack(self._SByte_fmt, data.read(self._SByte_fmt_size))
+            self.Byte = struct.unpack(self._Byte_fmt, data.read(self._Byte_fmt_size))
+            self.Int16 = struct.unpack(self._Int16_fmt, data.read(self._Int16_fmt_size))
+            self.UInt16 = struct.unpack(self._UInt16_fmt, data.read(self._UInt16_fmt_size))
+            self.Int32 = struct.unpack(self._Int32_fmt, data.read(self._Int32_fmt_size))
+            self.UInt32 = struct.unpack(self._UInt32_fmt, data.read(self._UInt32_fmt_size))
+            self.Int64 = struct.unpack(self._Int64_fmt, data.read(self._Int64_fmt_size))
+            self.UInt64 = struct.unpack(self._UInt64_fmt, data.read(self._UInt64_fmt_size))
+            self.Float = struct.unpack(self._Float_fmt, data.read(self._Float_fmt_size))
+            self.Double = struct.unpack(self._Double_fmt, data.read(self._Double_fmt_size))
             data = self.String.from_binary(data)
-            self.DateTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.DateTime = struct.unpack(self._DateTime_fmt, data.read(self._DateTime_fmt_size))
             data = self.Guid.from_binary(data)
             data = self.ByteString.from_binary(data)
             data = self.XmlElement.from_binary(data)
@@ -11610,368 +10651,251 @@ class ScalarTestType(object):
 class ArrayTestType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfBooleans = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Booleans = []
-        self.NoOfSBytes = None
+        self._Booleans_fmt = '!?'
+        self._Booleans_fmt_size = 1
         self.SBytes = []
-        self.NoOfInt16s = None
+        self._SBytes_fmt = '!B'
+        self._SBytes_fmt_size = 1
         self.Int16s = []
-        self.NoOfUInt16s = None
+        self._Int16s_fmt = '!h'
+        self._Int16s_fmt_size = 2
         self.UInt16s = []
-        self.NoOfInt32s = None
+        self._UInt16s_fmt = '!H'
+        self._UInt16s_fmt_size = 2
         self.Int32s = []
-        self.NoOfUInt32s = None
+        self._Int32s_fmt = '!i'
+        self._Int32s_fmt_size = 4
         self.UInt32s = []
-        self.NoOfInt64s = None
+        self._UInt32s_fmt = '!I'
+        self._UInt32s_fmt_size = 4
         self.Int64s = []
-        self.NoOfUInt64s = None
+        self._Int64s_fmt = '!q'
+        self._Int64s_fmt_size = 8
         self.UInt64s = []
-        self.NoOfFloats = None
+        self._UInt64s_fmt = '!Q'
+        self._UInt64s_fmt_size = 8
         self.Floats = []
-        self.NoOfDoubles = None
+        self._Floats_fmt = '!f'
+        self._Floats_fmt_size = 4
         self.Doubles = []
-        self.NoOfStrings = None
+        self._Doubles_fmt = '!d'
+        self._Doubles_fmt_size = 8
         self.Strings = []
-        self.NoOfDateTimes = None
         self.DateTimes = []
-        self.NoOfGuids = None
+        self._DateTimes_fmt = '!d'
+        self._DateTimes_fmt_size = 8
         self.Guids = []
-        self.NoOfByteStrings = None
         self.ByteStrings = []
-        self.NoOfXmlElements = None
         self.XmlElements = []
-        self.NoOfNodeIds = None
         self.NodeIds = []
-        self.NoOfExpandedNodeIds = None
         self.ExpandedNodeIds = []
-        self.NoOfStatusCodes = None
         self.StatusCodes = []
-        self.NoOfDiagnosticInfos = None
         self.DiagnosticInfos = []
-        self.NoOfQualifiedNames = None
         self.QualifiedNames = []
-        self.NoOfLocalizedTexts = None
         self.LocalizedTexts = []
-        self.NoOfExtensionObjects = None
         self.ExtensionObjects = []
-        self.NoOfDataValues = None
         self.DataValues = []
-        self.NoOfVariants = None
         self.Variants = []
-        self.NoOfEnumeratedValues = None
         self.EnumeratedValues = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfBooleans))
-        b.append(struct.pack('!i', len(self.Booleans)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.Booleans)))
         for i in Booleans:
-            b.append(struct.pack('!?', self.Booleans))
-        b.append(struct.pack('!i', self.NoOfSBytes))
-        b.append(struct.pack('!i', len(self.SBytes)))
+            tmp.append(struct.pack(self._Booleans_fmt, self.Booleans))
+        tmp.append(struct.pack('!i', len(self.SBytes)))
         for i in SBytes:
-            b.append(struct.pack('!B', self.SBytes))
-        b.append(struct.pack('!i', self.NoOfInt16s))
-        b.append(struct.pack('!i', len(self.Int16s)))
+            tmp.append(struct.pack(self._SBytes_fmt, self.SBytes))
+        tmp.append(struct.pack('!i', len(self.Int16s)))
         for i in Int16s:
-            b.append(struct.pack('!h', self.Int16s))
-        b.append(struct.pack('!i', self.NoOfUInt16s))
-        b.append(struct.pack('!i', len(self.UInt16s)))
+            tmp.append(struct.pack(self._Int16s_fmt, self.Int16s))
+        tmp.append(struct.pack('!i', len(self.UInt16s)))
         for i in UInt16s:
-            b.append(struct.pack('!H', self.UInt16s))
-        b.append(struct.pack('!i', self.NoOfInt32s))
-        b.append(struct.pack('!i', len(self.Int32s)))
+            tmp.append(struct.pack(self._UInt16s_fmt, self.UInt16s))
+        tmp.append(struct.pack('!i', len(self.Int32s)))
         for i in Int32s:
-            b.append(struct.pack('!i', self.Int32s))
-        b.append(struct.pack('!i', self.NoOfUInt32s))
-        b.append(struct.pack('!i', len(self.UInt32s)))
+            tmp.append(struct.pack(self._Int32s_fmt, self.Int32s))
+        tmp.append(struct.pack('!i', len(self.UInt32s)))
         for i in UInt32s:
-            b.append(struct.pack('!I', self.UInt32s))
-        b.append(struct.pack('!i', self.NoOfInt64s))
-        b.append(struct.pack('!i', len(self.Int64s)))
+            tmp.append(struct.pack(self._UInt32s_fmt, self.UInt32s))
+        tmp.append(struct.pack('!i', len(self.Int64s)))
         for i in Int64s:
-            b.append(struct.pack('!q', self.Int64s))
-        b.append(struct.pack('!i', self.NoOfUInt64s))
-        b.append(struct.pack('!i', len(self.UInt64s)))
+            tmp.append(struct.pack(self._Int64s_fmt, self.Int64s))
+        tmp.append(struct.pack('!i', len(self.UInt64s)))
         for i in UInt64s:
-            b.append(struct.pack('!Q', self.UInt64s))
-        b.append(struct.pack('!i', self.NoOfFloats))
-        b.append(struct.pack('!i', len(self.Floats)))
+            tmp.append(struct.pack(self._UInt64s_fmt, self.UInt64s))
+        tmp.append(struct.pack('!i', len(self.Floats)))
         for i in Floats:
-            b.append(struct.pack('!f', self.Floats))
-        b.append(struct.pack('!i', self.NoOfDoubles))
-        b.append(struct.pack('!i', len(self.Doubles)))
+            tmp.append(struct.pack(self._Floats_fmt, self.Floats))
+        tmp.append(struct.pack('!i', len(self.Doubles)))
         for i in Doubles:
-            b.append(struct.pack('!d', self.Doubles))
-        b.append(struct.pack('!i', self.NoOfStrings))
-        b.append(struct.pack('!i', len(self.Strings)))
+            tmp.append(struct.pack(self._Doubles_fmt, self.Doubles))
+        tmp.append(struct.pack('!i', len(self.Strings)))
         for i in Strings:
-            b.append(self.Strings.to_binary())
-        b.append(struct.pack('!i', self.NoOfDateTimes))
-        b.append(struct.pack('!i', len(self.DateTimes)))
+            tmp.append(self.Strings.to_binary())
+        tmp.append(struct.pack('!i', len(self.DateTimes)))
         for i in DateTimes:
-            b.append(struct.pack('!d', self.DateTimes))
-        b.append(struct.pack('!i', self.NoOfGuids))
-        b.append(struct.pack('!i', len(self.Guids)))
+            tmp.append(struct.pack(self._DateTimes_fmt, self.DateTimes))
+        tmp.append(struct.pack('!i', len(self.Guids)))
         for i in Guids:
-            b.append(self.Guids.to_binary())
-        b.append(struct.pack('!i', self.NoOfByteStrings))
-        b.append(struct.pack('!i', len(self.ByteStrings)))
+            tmp.append(self.Guids.to_binary())
+        tmp.append(struct.pack('!i', len(self.ByteStrings)))
         for i in ByteStrings:
-            b.append(self.ByteStrings.to_binary())
-        b.append(struct.pack('!i', self.NoOfXmlElements))
-        b.append(struct.pack('!i', len(self.XmlElements)))
+            tmp.append(self.ByteStrings.to_binary())
+        tmp.append(struct.pack('!i', len(self.XmlElements)))
         for i in XmlElements:
-            b.append(self.XmlElements.to_binary())
-        b.append(struct.pack('!i', self.NoOfNodeIds))
-        b.append(struct.pack('!i', len(self.NodeIds)))
+            tmp.append(self.XmlElements.to_binary())
+        tmp.append(struct.pack('!i', len(self.NodeIds)))
         for i in NodeIds:
-            b.append(self.NodeIds.to_binary())
-        b.append(struct.pack('!i', self.NoOfExpandedNodeIds))
-        b.append(struct.pack('!i', len(self.ExpandedNodeIds)))
+            tmp.append(self.NodeIds.to_binary())
+        tmp.append(struct.pack('!i', len(self.ExpandedNodeIds)))
         for i in ExpandedNodeIds:
-            b.append(self.ExpandedNodeIds.to_binary())
-        b.append(struct.pack('!i', self.NoOfStatusCodes))
-        b.append(struct.pack('!i', len(self.StatusCodes)))
+            tmp.append(self.ExpandedNodeIds.to_binary())
+        tmp.append(struct.pack('!i', len(self.StatusCodes)))
         for i in StatusCodes:
-            b.append(self.StatusCodes.to_binary())
-        b.append(struct.pack('!i', self.NoOfDiagnosticInfos))
-        b.append(struct.pack('!i', len(self.DiagnosticInfos)))
+            tmp.append(self.StatusCodes.to_binary())
+        tmp.append(struct.pack('!i', len(self.DiagnosticInfos)))
         for i in DiagnosticInfos:
-            b.append(self.DiagnosticInfos.to_binary())
-        b.append(struct.pack('!i', self.NoOfQualifiedNames))
-        b.append(struct.pack('!i', len(self.QualifiedNames)))
+            tmp.append(self.DiagnosticInfos.to_binary())
+        tmp.append(struct.pack('!i', len(self.QualifiedNames)))
         for i in QualifiedNames:
-            b.append(self.QualifiedNames.to_binary())
-        b.append(struct.pack('!i', self.NoOfLocalizedTexts))
-        b.append(struct.pack('!i', len(self.LocalizedTexts)))
+            tmp.append(self.QualifiedNames.to_binary())
+        tmp.append(struct.pack('!i', len(self.LocalizedTexts)))
         for i in LocalizedTexts:
-            b.append(self.LocalizedTexts.to_binary())
-        b.append(struct.pack('!i', self.NoOfExtensionObjects))
-        b.append(struct.pack('!i', len(self.ExtensionObjects)))
+            tmp.append(self.LocalizedTexts.to_binary())
+        tmp.append(struct.pack('!i', len(self.ExtensionObjects)))
         for i in ExtensionObjects:
-            b.append(self.ExtensionObjects.to_binary())
-        b.append(struct.pack('!i', self.NoOfDataValues))
-        b.append(struct.pack('!i', len(self.DataValues)))
+            tmp.append(self.ExtensionObjects.to_binary())
+        tmp.append(struct.pack('!i', len(self.DataValues)))
         for i in DataValues:
-            b.append(self.DataValues.to_binary())
-        b.append(struct.pack('!i', self.NoOfVariants))
-        b.append(struct.pack('!i', len(self.Variants)))
+            tmp.append(self.DataValues.to_binary())
+        tmp.append(struct.pack('!i', len(self.Variants)))
         for i in Variants:
-            b.append(self.Variants.to_binary())
-        b.append(struct.pack('!i', self.NoOfEnumeratedValues))
-        b.append(struct.pack('!i', len(self.EnumeratedValues)))
+            tmp.append(self.Variants.to_binary())
+        tmp.append(struct.pack('!i', len(self.EnumeratedValues)))
         for i in EnumeratedValues:
-            b.append(self.EnumeratedValues.to_binary())
-        return b.join()
+            tmp.append(self.EnumeratedValues.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfBooleans = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.Booleans = struct.unpack(self._Booleans_fmt, data.read(self._Booleans_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Booleans = struct.unpack(?, data[:1])
-                    data = data[1:]
-            self.NoOfSBytes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.SBytes = struct.unpack(self._SBytes_fmt, data.read(self._SBytes_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.SBytes = struct.unpack(B, data[:1])
-                    data = data[1:]
-            self.NoOfInt16s = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.Int16s = struct.unpack(self._Int16s_fmt, data.read(self._Int16s_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Int16s = struct.unpack(h, data[:2])
-                    data = data[2:]
-            self.NoOfUInt16s = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.UInt16s = struct.unpack(self._UInt16s_fmt, data.read(self._UInt16s_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.UInt16s = struct.unpack(H, data[:2])
-                    data = data[2:]
-            self.NoOfInt32s = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.Int32s = struct.unpack(self._Int32s_fmt, data.read(self._Int32s_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Int32s = struct.unpack(i, data[:4])
-                    data = data[4:]
-            self.NoOfUInt32s = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.UInt32s = struct.unpack(self._UInt32s_fmt, data.read(self._UInt32s_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.UInt32s = struct.unpack(I, data[:4])
-                    data = data[4:]
-            self.NoOfInt64s = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.Int64s = struct.unpack(self._Int64s_fmt, data.read(self._Int64s_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Int64s = struct.unpack(q, data[:8])
-                    data = data[8:]
-            self.NoOfUInt64s = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.UInt64s = struct.unpack(self._UInt64s_fmt, data.read(self._UInt64s_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.UInt64s = struct.unpack(Q, data[:8])
-                    data = data[8:]
-            self.NoOfFloats = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.Floats = struct.unpack(self._Floats_fmt, data.read(self._Floats_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.Floats = struct.unpack(f, data[:4])
-                    data = data[4:]
-            self.NoOfDoubles = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Doubles = struct.unpack(d, data[:8])
-                    data = data[8:]
-            self.NoOfStrings = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.Doubles = struct.unpack(self._Doubles_fmt, data.read(self._Doubles_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Strings.from_binary(data)
-            self.NoOfDateTimes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.DateTimes = struct.unpack(d, data[:8])
-                    data = data[8:]
-            self.NoOfGuids = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+                    self.DateTimes = struct.unpack(self._DateTimes_fmt, data.read(self._DateTimes_fmt_size))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Guids.from_binary(data)
-            self.NoOfByteStrings = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ByteStrings.from_binary(data)
-            self.NoOfXmlElements = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.XmlElements.from_binary(data)
-            self.NoOfNodeIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NodeIds.from_binary(data)
-            self.NoOfExpandedNodeIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ExpandedNodeIds.from_binary(data)
-            self.NoOfStatusCodes = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.StatusCodes.from_binary(data)
-            self.NoOfDiagnosticInfos = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DiagnosticInfos.from_binary(data)
-            self.NoOfQualifiedNames = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.QualifiedNames.from_binary(data)
-            self.NoOfLocalizedTexts = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.LocalizedTexts.from_binary(data)
-            self.NoOfExtensionObjects = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ExtensionObjects.from_binary(data)
-            self.NoOfDataValues = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.DataValues.from_binary(data)
-            self.NoOfVariants = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.Variants.from_binary(data)
-            self.NoOfEnumeratedValues = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.EnumeratedValues.from_binary(data)
@@ -11980,39 +10904,36 @@ class ArrayTestType(object):
 class CompositeTestType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Field1 = None
         self.Field2 = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Field1.to_binary())
-        b.append(self.Field2.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Field1.to_binary())
+        tmp.append(self.Field2.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Field1.from_binary(data)
             data = self.Field2.from_binary(data)
             return data
@@ -12020,87 +10941,83 @@ class CompositeTestType(object):
 class TestStackRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.TestId = None
+        self._TestId_fmt = '!I'
+        self._TestId_fmt_size = 4
         self.Iteration = None
+        self._Iteration_fmt = '!i'
+        self._Iteration_fmt_size = 4
         self.Input = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.TestId))
-        b.append(struct.pack('!i', self.Iteration))
-        b.append(self.Input.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._TestId_fmt, self.TestId))
+        tmp.append(struct.pack(self._Iteration_fmt, self.Iteration))
+        tmp.append(self.Input.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.TestId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.Iteration = struct.unpack(i, data[:4])
-            data = data[4:]
+            self.TestId = struct.unpack(self._TestId_fmt, data.read(self._TestId_fmt_size))
+            self.Iteration = struct.unpack(self._Iteration_fmt, data.read(self._Iteration_fmt_size))
             data = self.Input.from_binary(data)
             return data
             
 class TestStackResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.Output = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(self.Output.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(self.Output.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             data = self.Output.from_binary(data)
             return data
@@ -12108,87 +11025,83 @@ class TestStackResponse(object):
 class TestStackExRequest(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.RequestHeader = None
         self.TestId = None
+        self._TestId_fmt = '!I'
+        self._TestId_fmt_size = 4
         self.Iteration = None
+        self._Iteration_fmt = '!i'
+        self._Iteration_fmt_size = 4
         self.Input = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.RequestHeader.to_binary())
-        b.append(struct.pack('!I', self.TestId))
-        b.append(struct.pack('!i', self.Iteration))
-        b.append(self.Input.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.RequestHeader.to_binary())
+        tmp.append(struct.pack(self._TestId_fmt, self.TestId))
+        tmp.append(struct.pack(self._Iteration_fmt, self.Iteration))
+        tmp.append(self.Input.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.RequestHeader.from_binary(data)
-            self.TestId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.Iteration = struct.unpack(i, data[:4])
-            data = data[4:]
+            self.TestId = struct.unpack(self._TestId_fmt, data.read(self._TestId_fmt_size))
+            self.Iteration = struct.unpack(self._Iteration_fmt, data.read(self._Iteration_fmt_size))
             data = self.Input.from_binary(data)
             return data
             
 class TestStackExResponse(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ResponseHeader = None
         self.Output = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ResponseHeader.to_binary())
-        b.append(self.Output.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ResponseHeader.to_binary())
+        tmp.append(self.Output.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ResponseHeader.from_binary(data)
             data = self.Output.from_binary(data)
             return data
@@ -12196,142 +11109,130 @@ class TestStackExResponse(object):
 class BuildInfo(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ProductUri = None
         self.ManufacturerName = None
         self.ProductName = None
         self.SoftwareVersion = None
         self.BuildNumber = None
         self.BuildDate = None
+        self._BuildDate_fmt = '!d'
+        self._BuildDate_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ProductUri.to_binary())
-        b.append(self.ManufacturerName.to_binary())
-        b.append(self.ProductName.to_binary())
-        b.append(self.SoftwareVersion.to_binary())
-        b.append(self.BuildNumber.to_binary())
-        b.append(struct.pack('!d', self.BuildDate))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ProductUri.to_binary())
+        tmp.append(self.ManufacturerName.to_binary())
+        tmp.append(self.ProductName.to_binary())
+        tmp.append(self.SoftwareVersion.to_binary())
+        tmp.append(self.BuildNumber.to_binary())
+        tmp.append(struct.pack(self._BuildDate_fmt, self.BuildDate))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ProductUri.from_binary(data)
             data = self.ManufacturerName.from_binary(data)
             data = self.ProductName.from_binary(data)
             data = self.SoftwareVersion.from_binary(data)
             data = self.BuildNumber.from_binary(data)
-            self.BuildDate = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.BuildDate = struct.unpack(self._BuildDate_fmt, data.read(self._BuildDate_fmt_size))
             return data
             
 class RedundantServerDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ServerId = None
         self.ServiceLevel = None
+        self._ServiceLevel_fmt = '!c'
+        self._ServiceLevel_fmt_size = 1
         self.ServerState = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ServerId.to_binary())
-        b.append(struct.pack('!c', self.ServiceLevel))
-        b.append(self.ServerState.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ServerId.to_binary())
+        tmp.append(struct.pack(self._ServiceLevel_fmt, self.ServiceLevel))
+        tmp.append(self.ServerState.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ServerId.from_binary(data)
-            self.ServiceLevel = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.ServiceLevel = struct.unpack(self._ServiceLevel_fmt, data.read(self._ServiceLevel_fmt_size))
             data = self.ServerState.from_binary(data)
             return data
             
 class EndpointUrlListDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
-        self.NoOfEndpointUrlList = None
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.EndpointUrlList = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!i', self.NoOfEndpointUrlList))
-        b.append(struct.pack('!i', len(self.EndpointUrlList)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack('!i', len(self.EndpointUrlList)))
         for i in EndpointUrlList:
-            b.append(self.EndpointUrlList.to_binary())
-        return b.join()
+            tmp.append(self.EndpointUrlList.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.NoOfEndpointUrlList = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.EndpointUrlList.from_binary(data)
@@ -12340,48 +11241,40 @@ class EndpointUrlListDataType(object):
 class NetworkGroupDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ServerUri = None
-        self.NoOfNetworkPaths = None
         self.NetworkPaths = []
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.ServerUri.to_binary())
-        b.append(struct.pack('!i', self.NoOfNetworkPaths))
-        b.append(struct.pack('!i', len(self.NetworkPaths)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.ServerUri.to_binary())
+        tmp.append(struct.pack('!i', len(self.NetworkPaths)))
         for i in NetworkPaths:
-            b.append(self.NetworkPaths.to_binary())
-        return b.join()
+            tmp.append(self.NetworkPaths.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.ServerUri.from_binary(data)
-            self.NoOfNetworkPaths = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.NetworkPaths.from_binary(data)
@@ -12390,199 +11283,211 @@ class NetworkGroupDataType(object):
 class SamplingIntervalDiagnosticsDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SamplingInterval = None
+        self._SamplingInterval_fmt = '!d'
+        self._SamplingInterval_fmt_size = 8
         self.MonitoredItemCount = None
+        self._MonitoredItemCount_fmt = '!I'
+        self._MonitoredItemCount_fmt_size = 4
         self.MaxMonitoredItemCount = None
+        self._MaxMonitoredItemCount_fmt = '!I'
+        self._MaxMonitoredItemCount_fmt_size = 4
         self.DisabledMonitoredItemCount = None
+        self._DisabledMonitoredItemCount_fmt = '!I'
+        self._DisabledMonitoredItemCount_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.SamplingInterval))
-        b.append(struct.pack('!I', self.MonitoredItemCount))
-        b.append(struct.pack('!I', self.MaxMonitoredItemCount))
-        b.append(struct.pack('!I', self.DisabledMonitoredItemCount))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._SamplingInterval_fmt, self.SamplingInterval))
+        tmp.append(struct.pack(self._MonitoredItemCount_fmt, self.MonitoredItemCount))
+        tmp.append(struct.pack(self._MaxMonitoredItemCount_fmt, self.MaxMonitoredItemCount))
+        tmp.append(struct.pack(self._DisabledMonitoredItemCount_fmt, self.DisabledMonitoredItemCount))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.SamplingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.MonitoredItemCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MaxMonitoredItemCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.DisabledMonitoredItemCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.SamplingInterval = struct.unpack(self._SamplingInterval_fmt, data.read(self._SamplingInterval_fmt_size))
+            self.MonitoredItemCount = struct.unpack(self._MonitoredItemCount_fmt, data.read(self._MonitoredItemCount_fmt_size))
+            self.MaxMonitoredItemCount = struct.unpack(self._MaxMonitoredItemCount_fmt, data.read(self._MaxMonitoredItemCount_fmt_size))
+            self.DisabledMonitoredItemCount = struct.unpack(self._DisabledMonitoredItemCount_fmt, data.read(self._DisabledMonitoredItemCount_fmt_size))
             return data
             
 class ServerDiagnosticsSummaryDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.ServerViewCount = None
+        self._ServerViewCount_fmt = '!I'
+        self._ServerViewCount_fmt_size = 4
         self.CurrentSessionCount = None
+        self._CurrentSessionCount_fmt = '!I'
+        self._CurrentSessionCount_fmt_size = 4
         self.CumulatedSessionCount = None
+        self._CumulatedSessionCount_fmt = '!I'
+        self._CumulatedSessionCount_fmt_size = 4
         self.SecurityRejectedSessionCount = None
+        self._SecurityRejectedSessionCount_fmt = '!I'
+        self._SecurityRejectedSessionCount_fmt_size = 4
         self.RejectedSessionCount = None
+        self._RejectedSessionCount_fmt = '!I'
+        self._RejectedSessionCount_fmt_size = 4
         self.SessionTimeoutCount = None
+        self._SessionTimeoutCount_fmt = '!I'
+        self._SessionTimeoutCount_fmt_size = 4
         self.SessionAbortCount = None
+        self._SessionAbortCount_fmt = '!I'
+        self._SessionAbortCount_fmt_size = 4
         self.CurrentSubscriptionCount = None
+        self._CurrentSubscriptionCount_fmt = '!I'
+        self._CurrentSubscriptionCount_fmt_size = 4
         self.CumulatedSubscriptionCount = None
+        self._CumulatedSubscriptionCount_fmt = '!I'
+        self._CumulatedSubscriptionCount_fmt_size = 4
         self.PublishingIntervalCount = None
+        self._PublishingIntervalCount_fmt = '!I'
+        self._PublishingIntervalCount_fmt_size = 4
         self.SecurityRejectedRequestsCount = None
+        self._SecurityRejectedRequestsCount_fmt = '!I'
+        self._SecurityRejectedRequestsCount_fmt_size = 4
         self.RejectedRequestsCount = None
+        self._RejectedRequestsCount_fmt = '!I'
+        self._RejectedRequestsCount_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.ServerViewCount))
-        b.append(struct.pack('!I', self.CurrentSessionCount))
-        b.append(struct.pack('!I', self.CumulatedSessionCount))
-        b.append(struct.pack('!I', self.SecurityRejectedSessionCount))
-        b.append(struct.pack('!I', self.RejectedSessionCount))
-        b.append(struct.pack('!I', self.SessionTimeoutCount))
-        b.append(struct.pack('!I', self.SessionAbortCount))
-        b.append(struct.pack('!I', self.CurrentSubscriptionCount))
-        b.append(struct.pack('!I', self.CumulatedSubscriptionCount))
-        b.append(struct.pack('!I', self.PublishingIntervalCount))
-        b.append(struct.pack('!I', self.SecurityRejectedRequestsCount))
-        b.append(struct.pack('!I', self.RejectedRequestsCount))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._ServerViewCount_fmt, self.ServerViewCount))
+        tmp.append(struct.pack(self._CurrentSessionCount_fmt, self.CurrentSessionCount))
+        tmp.append(struct.pack(self._CumulatedSessionCount_fmt, self.CumulatedSessionCount))
+        tmp.append(struct.pack(self._SecurityRejectedSessionCount_fmt, self.SecurityRejectedSessionCount))
+        tmp.append(struct.pack(self._RejectedSessionCount_fmt, self.RejectedSessionCount))
+        tmp.append(struct.pack(self._SessionTimeoutCount_fmt, self.SessionTimeoutCount))
+        tmp.append(struct.pack(self._SessionAbortCount_fmt, self.SessionAbortCount))
+        tmp.append(struct.pack(self._CurrentSubscriptionCount_fmt, self.CurrentSubscriptionCount))
+        tmp.append(struct.pack(self._CumulatedSubscriptionCount_fmt, self.CumulatedSubscriptionCount))
+        tmp.append(struct.pack(self._PublishingIntervalCount_fmt, self.PublishingIntervalCount))
+        tmp.append(struct.pack(self._SecurityRejectedRequestsCount_fmt, self.SecurityRejectedRequestsCount))
+        tmp.append(struct.pack(self._RejectedRequestsCount_fmt, self.RejectedRequestsCount))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.ServerViewCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CurrentSessionCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CumulatedSessionCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.SecurityRejectedSessionCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RejectedSessionCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.SessionTimeoutCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.SessionAbortCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CurrentSubscriptionCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CumulatedSubscriptionCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.PublishingIntervalCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.SecurityRejectedRequestsCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RejectedRequestsCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.ServerViewCount = struct.unpack(self._ServerViewCount_fmt, data.read(self._ServerViewCount_fmt_size))
+            self.CurrentSessionCount = struct.unpack(self._CurrentSessionCount_fmt, data.read(self._CurrentSessionCount_fmt_size))
+            self.CumulatedSessionCount = struct.unpack(self._CumulatedSessionCount_fmt, data.read(self._CumulatedSessionCount_fmt_size))
+            self.SecurityRejectedSessionCount = struct.unpack(self._SecurityRejectedSessionCount_fmt, data.read(self._SecurityRejectedSessionCount_fmt_size))
+            self.RejectedSessionCount = struct.unpack(self._RejectedSessionCount_fmt, data.read(self._RejectedSessionCount_fmt_size))
+            self.SessionTimeoutCount = struct.unpack(self._SessionTimeoutCount_fmt, data.read(self._SessionTimeoutCount_fmt_size))
+            self.SessionAbortCount = struct.unpack(self._SessionAbortCount_fmt, data.read(self._SessionAbortCount_fmt_size))
+            self.CurrentSubscriptionCount = struct.unpack(self._CurrentSubscriptionCount_fmt, data.read(self._CurrentSubscriptionCount_fmt_size))
+            self.CumulatedSubscriptionCount = struct.unpack(self._CumulatedSubscriptionCount_fmt, data.read(self._CumulatedSubscriptionCount_fmt_size))
+            self.PublishingIntervalCount = struct.unpack(self._PublishingIntervalCount_fmt, data.read(self._PublishingIntervalCount_fmt_size))
+            self.SecurityRejectedRequestsCount = struct.unpack(self._SecurityRejectedRequestsCount_fmt, data.read(self._SecurityRejectedRequestsCount_fmt_size))
+            self.RejectedRequestsCount = struct.unpack(self._RejectedRequestsCount_fmt, data.read(self._RejectedRequestsCount_fmt_size))
             return data
             
 class ServerStatusDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StartTime = None
+        self._StartTime_fmt = '!d'
+        self._StartTime_fmt_size = 8
         self.CurrentTime = None
+        self._CurrentTime_fmt = '!d'
+        self._CurrentTime_fmt_size = 8
         self.State = None
         self.BuildInfo = None
         self.SecondsTillShutdown = None
+        self._SecondsTillShutdown_fmt = '!I'
+        self._SecondsTillShutdown_fmt_size = 4
         self.ShutdownReason = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.StartTime))
-        b.append(struct.pack('!d', self.CurrentTime))
-        b.append(self.State.to_binary())
-        b.append(self.BuildInfo.to_binary())
-        b.append(struct.pack('!I', self.SecondsTillShutdown))
-        b.append(self.ShutdownReason.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._StartTime_fmt, self.StartTime))
+        tmp.append(struct.pack(self._CurrentTime_fmt, self.CurrentTime))
+        tmp.append(self.State.to_binary())
+        tmp.append(self.BuildInfo.to_binary())
+        tmp.append(struct.pack(self._SecondsTillShutdown_fmt, self.SecondsTillShutdown))
+        tmp.append(self.ShutdownReason.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.StartTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.CurrentTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.StartTime = struct.unpack(self._StartTime_fmt, data.read(self._StartTime_fmt_size))
+            self.CurrentTime = struct.unpack(self._CurrentTime_fmt, data.read(self._CurrentTime_fmt_size))
             data = self.State.from_binary(data)
             data = self.BuildInfo.from_binary(data)
-            self.SecondsTillShutdown = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.SecondsTillShutdown = struct.unpack(self._SecondsTillShutdown_fmt, data.read(self._SecondsTillShutdown_fmt_size))
             data = self.ShutdownReason.from_binary(data)
             return data
             
 class SessionSecurityDiagnosticsDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SessionId = None
         self.ClientUserIdOfSession = None
-        self.NoOfClientUserIdHistory = None
         self.ClientUserIdHistory = []
         self.AuthenticationMechanism = None
         self.TransportProtocol = None
@@ -12591,47 +11496,37 @@ class SessionSecurityDiagnosticsDataType(object):
         self.ClientCertificate = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.SessionId.to_binary())
-        b.append(self.ClientUserIdOfSession.to_binary())
-        b.append(struct.pack('!i', self.NoOfClientUserIdHistory))
-        b.append(struct.pack('!i', len(self.ClientUserIdHistory)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.SessionId.to_binary())
+        tmp.append(self.ClientUserIdOfSession.to_binary())
+        tmp.append(struct.pack('!i', len(self.ClientUserIdHistory)))
         for i in ClientUserIdHistory:
-            b.append(self.ClientUserIdHistory.to_binary())
-        b.append(self.AuthenticationMechanism.to_binary())
-        b.append(self.TransportProtocol.to_binary())
-        b.append(self.SecurityMode.to_binary())
-        b.append(self.SecurityPolicyUri.to_binary())
-        b.append(self.ClientCertificate.to_binary())
-        return b.join()
+            tmp.append(self.ClientUserIdHistory.to_binary())
+        tmp.append(self.AuthenticationMechanism.to_binary())
+        tmp.append(self.TransportProtocol.to_binary())
+        tmp.append(self.SecurityMode.to_binary())
+        tmp.append(self.SecurityPolicyUri.to_binary())
+        tmp.append(self.ClientCertificate.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.SessionId.from_binary(data)
             data = self.ClientUserIdOfSession.from_binary(data)
-            self.NoOfClientUserIdHistory = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.ClientUserIdHistory.from_binary(data)
@@ -12645,67 +11540,84 @@ class SessionSecurityDiagnosticsDataType(object):
 class ServiceCounterDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.TotalCount = None
+        self._TotalCount_fmt = '!I'
+        self._TotalCount_fmt_size = 4
         self.ErrorCount = None
+        self._ErrorCount_fmt = '!I'
+        self._ErrorCount_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!I', self.TotalCount))
-        b.append(struct.pack('!I', self.ErrorCount))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._TotalCount_fmt, self.TotalCount))
+        tmp.append(struct.pack(self._ErrorCount_fmt, self.ErrorCount))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.TotalCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.ErrorCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.TotalCount = struct.unpack(self._TotalCount_fmt, data.read(self._TotalCount_fmt_size))
+            self.ErrorCount = struct.unpack(self._ErrorCount_fmt, data.read(self._ErrorCount_fmt_size))
             return data
             
 class SessionDiagnosticsDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SessionId = None
         self.SessionName = None
         self.ClientDescription = None
         self.ServerUri = None
         self.EndpointUrl = None
-        self.NoOfLocaleIds = None
         self.LocaleIds = []
         self.ActualSessionTimeout = None
+        self._ActualSessionTimeout_fmt = '!d'
+        self._ActualSessionTimeout_fmt_size = 8
         self.MaxResponseMessageSize = None
+        self._MaxResponseMessageSize_fmt = '!I'
+        self._MaxResponseMessageSize_fmt_size = 4
         self.ClientConnectionTime = None
+        self._ClientConnectionTime_fmt = '!d'
+        self._ClientConnectionTime_fmt_size = 8
         self.ClientLastContactTime = None
+        self._ClientLastContactTime_fmt = '!d'
+        self._ClientLastContactTime_fmt_size = 8
         self.CurrentSubscriptionsCount = None
+        self._CurrentSubscriptionsCount_fmt = '!I'
+        self._CurrentSubscriptionsCount_fmt_size = 4
         self.CurrentMonitoredItemsCount = None
+        self._CurrentMonitoredItemsCount_fmt = '!I'
+        self._CurrentMonitoredItemsCount_fmt_size = 4
         self.CurrentPublishRequestsInQueue = None
+        self._CurrentPublishRequestsInQueue_fmt = '!I'
+        self._CurrentPublishRequestsInQueue_fmt_size = 4
         self.TotalRequestCount = None
         self.UnauthorizedRequestCount = None
+        self._UnauthorizedRequestCount_fmt = '!I'
+        self._UnauthorizedRequestCount_fmt_size = 4
         self.ReadCount = None
         self.HistoryReadCount = None
         self.WriteCount = None
@@ -12736,105 +11648,87 @@ class SessionDiagnosticsDataType(object):
         self.UnregisterNodesCount = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.SessionId.to_binary())
-        b.append(self.SessionName.to_binary())
-        b.append(self.ClientDescription.to_binary())
-        b.append(self.ServerUri.to_binary())
-        b.append(self.EndpointUrl.to_binary())
-        b.append(struct.pack('!i', self.NoOfLocaleIds))
-        b.append(struct.pack('!i', len(self.LocaleIds)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.SessionId.to_binary())
+        tmp.append(self.SessionName.to_binary())
+        tmp.append(self.ClientDescription.to_binary())
+        tmp.append(self.ServerUri.to_binary())
+        tmp.append(self.EndpointUrl.to_binary())
+        tmp.append(struct.pack('!i', len(self.LocaleIds)))
         for i in LocaleIds:
-            b.append(self.LocaleIds.to_binary())
-        b.append(struct.pack('!d', self.ActualSessionTimeout))
-        b.append(struct.pack('!I', self.MaxResponseMessageSize))
-        b.append(struct.pack('!d', self.ClientConnectionTime))
-        b.append(struct.pack('!d', self.ClientLastContactTime))
-        b.append(struct.pack('!I', self.CurrentSubscriptionsCount))
-        b.append(struct.pack('!I', self.CurrentMonitoredItemsCount))
-        b.append(struct.pack('!I', self.CurrentPublishRequestsInQueue))
-        b.append(self.TotalRequestCount.to_binary())
-        b.append(struct.pack('!I', self.UnauthorizedRequestCount))
-        b.append(self.ReadCount.to_binary())
-        b.append(self.HistoryReadCount.to_binary())
-        b.append(self.WriteCount.to_binary())
-        b.append(self.HistoryUpdateCount.to_binary())
-        b.append(self.CallCount.to_binary())
-        b.append(self.CreateMonitoredItemsCount.to_binary())
-        b.append(self.ModifyMonitoredItemsCount.to_binary())
-        b.append(self.SetMonitoringModeCount.to_binary())
-        b.append(self.SetTriggeringCount.to_binary())
-        b.append(self.DeleteMonitoredItemsCount.to_binary())
-        b.append(self.CreateSubscriptionCount.to_binary())
-        b.append(self.ModifySubscriptionCount.to_binary())
-        b.append(self.SetPublishingModeCount.to_binary())
-        b.append(self.PublishCount.to_binary())
-        b.append(self.RepublishCount.to_binary())
-        b.append(self.TransferSubscriptionsCount.to_binary())
-        b.append(self.DeleteSubscriptionsCount.to_binary())
-        b.append(self.AddNodesCount.to_binary())
-        b.append(self.AddReferencesCount.to_binary())
-        b.append(self.DeleteNodesCount.to_binary())
-        b.append(self.DeleteReferencesCount.to_binary())
-        b.append(self.BrowseCount.to_binary())
-        b.append(self.BrowseNextCount.to_binary())
-        b.append(self.TranslateBrowsePathsToNodeIdsCount.to_binary())
-        b.append(self.QueryFirstCount.to_binary())
-        b.append(self.QueryNextCount.to_binary())
-        b.append(self.RegisterNodesCount.to_binary())
-        b.append(self.UnregisterNodesCount.to_binary())
-        return b.join()
+            tmp.append(self.LocaleIds.to_binary())
+        tmp.append(struct.pack(self._ActualSessionTimeout_fmt, self.ActualSessionTimeout))
+        tmp.append(struct.pack(self._MaxResponseMessageSize_fmt, self.MaxResponseMessageSize))
+        tmp.append(struct.pack(self._ClientConnectionTime_fmt, self.ClientConnectionTime))
+        tmp.append(struct.pack(self._ClientLastContactTime_fmt, self.ClientLastContactTime))
+        tmp.append(struct.pack(self._CurrentSubscriptionsCount_fmt, self.CurrentSubscriptionsCount))
+        tmp.append(struct.pack(self._CurrentMonitoredItemsCount_fmt, self.CurrentMonitoredItemsCount))
+        tmp.append(struct.pack(self._CurrentPublishRequestsInQueue_fmt, self.CurrentPublishRequestsInQueue))
+        tmp.append(self.TotalRequestCount.to_binary())
+        tmp.append(struct.pack(self._UnauthorizedRequestCount_fmt, self.UnauthorizedRequestCount))
+        tmp.append(self.ReadCount.to_binary())
+        tmp.append(self.HistoryReadCount.to_binary())
+        tmp.append(self.WriteCount.to_binary())
+        tmp.append(self.HistoryUpdateCount.to_binary())
+        tmp.append(self.CallCount.to_binary())
+        tmp.append(self.CreateMonitoredItemsCount.to_binary())
+        tmp.append(self.ModifyMonitoredItemsCount.to_binary())
+        tmp.append(self.SetMonitoringModeCount.to_binary())
+        tmp.append(self.SetTriggeringCount.to_binary())
+        tmp.append(self.DeleteMonitoredItemsCount.to_binary())
+        tmp.append(self.CreateSubscriptionCount.to_binary())
+        tmp.append(self.ModifySubscriptionCount.to_binary())
+        tmp.append(self.SetPublishingModeCount.to_binary())
+        tmp.append(self.PublishCount.to_binary())
+        tmp.append(self.RepublishCount.to_binary())
+        tmp.append(self.TransferSubscriptionsCount.to_binary())
+        tmp.append(self.DeleteSubscriptionsCount.to_binary())
+        tmp.append(self.AddNodesCount.to_binary())
+        tmp.append(self.AddReferencesCount.to_binary())
+        tmp.append(self.DeleteNodesCount.to_binary())
+        tmp.append(self.DeleteReferencesCount.to_binary())
+        tmp.append(self.BrowseCount.to_binary())
+        tmp.append(self.BrowseNextCount.to_binary())
+        tmp.append(self.TranslateBrowsePathsToNodeIdsCount.to_binary())
+        tmp.append(self.QueryFirstCount.to_binary())
+        tmp.append(self.QueryNextCount.to_binary())
+        tmp.append(self.RegisterNodesCount.to_binary())
+        tmp.append(self.UnregisterNodesCount.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.SessionId.from_binary(data)
             data = self.SessionName.from_binary(data)
             data = self.ClientDescription.from_binary(data)
             data = self.ServerUri.from_binary(data)
             data = self.EndpointUrl.from_binary(data)
-            self.NoOfLocaleIds = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.LocaleIds.from_binary(data)
-            self.ActualSessionTimeout = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.MaxResponseMessageSize = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.ClientConnectionTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.ClientLastContactTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.CurrentSubscriptionsCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CurrentMonitoredItemsCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CurrentPublishRequestsInQueue = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.ActualSessionTimeout = struct.unpack(self._ActualSessionTimeout_fmt, data.read(self._ActualSessionTimeout_fmt_size))
+            self.MaxResponseMessageSize = struct.unpack(self._MaxResponseMessageSize_fmt, data.read(self._MaxResponseMessageSize_fmt_size))
+            self.ClientConnectionTime = struct.unpack(self._ClientConnectionTime_fmt, data.read(self._ClientConnectionTime_fmt_size))
+            self.ClientLastContactTime = struct.unpack(self._ClientLastContactTime_fmt, data.read(self._ClientLastContactTime_fmt_size))
+            self.CurrentSubscriptionsCount = struct.unpack(self._CurrentSubscriptionsCount_fmt, data.read(self._CurrentSubscriptionsCount_fmt_size))
+            self.CurrentMonitoredItemsCount = struct.unpack(self._CurrentMonitoredItemsCount_fmt, data.read(self._CurrentMonitoredItemsCount_fmt_size))
+            self.CurrentPublishRequestsInQueue = struct.unpack(self._CurrentPublishRequestsInQueue_fmt, data.read(self._CurrentPublishRequestsInQueue_fmt_size))
             data = self.TotalRequestCount.from_binary(data)
-            self.UnauthorizedRequestCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.UnauthorizedRequestCount = struct.unpack(self._UnauthorizedRequestCount_fmt, data.read(self._UnauthorizedRequestCount_fmt_size))
             data = self.ReadCount.from_binary(data)
             data = self.HistoryReadCount.from_binary(data)
             data = self.WriteCount.from_binary(data)
@@ -12868,39 +11762,36 @@ class SessionDiagnosticsDataType(object):
 class StatusResult(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.StatusCode = None
         self.DiagnosticInfo = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.StatusCode.to_binary())
-        b.append(self.DiagnosticInfo.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.StatusCode.to_binary())
+        tmp.append(self.DiagnosticInfo.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.StatusCode.from_binary(data)
             data = self.DiagnosticInfo.from_binary(data)
             return data
@@ -12908,240 +11799,262 @@ class StatusResult(object):
 class SubscriptionDiagnosticsDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.SessionId = None
         self.SubscriptionId = None
+        self._SubscriptionId_fmt = '!I'
+        self._SubscriptionId_fmt_size = 4
         self.Priority = None
+        self._Priority_fmt = '!c'
+        self._Priority_fmt_size = 1
         self.PublishingInterval = None
+        self._PublishingInterval_fmt = '!d'
+        self._PublishingInterval_fmt_size = 8
         self.MaxKeepAliveCount = None
+        self._MaxKeepAliveCount_fmt = '!I'
+        self._MaxKeepAliveCount_fmt_size = 4
         self.MaxLifetimeCount = None
+        self._MaxLifetimeCount_fmt = '!I'
+        self._MaxLifetimeCount_fmt_size = 4
         self.MaxNotificationsPerPublish = None
+        self._MaxNotificationsPerPublish_fmt = '!I'
+        self._MaxNotificationsPerPublish_fmt_size = 4
         self.PublishingEnabled = None
+        self._PublishingEnabled_fmt = '!?'
+        self._PublishingEnabled_fmt_size = 1
         self.ModifyCount = None
+        self._ModifyCount_fmt = '!I'
+        self._ModifyCount_fmt_size = 4
         self.EnableCount = None
+        self._EnableCount_fmt = '!I'
+        self._EnableCount_fmt_size = 4
         self.DisableCount = None
+        self._DisableCount_fmt = '!I'
+        self._DisableCount_fmt_size = 4
         self.RepublishRequestCount = None
+        self._RepublishRequestCount_fmt = '!I'
+        self._RepublishRequestCount_fmt_size = 4
         self.RepublishMessageRequestCount = None
+        self._RepublishMessageRequestCount_fmt = '!I'
+        self._RepublishMessageRequestCount_fmt_size = 4
         self.RepublishMessageCount = None
+        self._RepublishMessageCount_fmt = '!I'
+        self._RepublishMessageCount_fmt_size = 4
         self.TransferRequestCount = None
+        self._TransferRequestCount_fmt = '!I'
+        self._TransferRequestCount_fmt_size = 4
         self.TransferredToAltClientCount = None
+        self._TransferredToAltClientCount_fmt = '!I'
+        self._TransferredToAltClientCount_fmt_size = 4
         self.TransferredToSameClientCount = None
+        self._TransferredToSameClientCount_fmt = '!I'
+        self._TransferredToSameClientCount_fmt_size = 4
         self.PublishRequestCount = None
+        self._PublishRequestCount_fmt = '!I'
+        self._PublishRequestCount_fmt_size = 4
         self.DataChangeNotificationsCount = None
+        self._DataChangeNotificationsCount_fmt = '!I'
+        self._DataChangeNotificationsCount_fmt_size = 4
         self.EventNotificationsCount = None
+        self._EventNotificationsCount_fmt = '!I'
+        self._EventNotificationsCount_fmt_size = 4
         self.NotificationsCount = None
+        self._NotificationsCount_fmt = '!I'
+        self._NotificationsCount_fmt_size = 4
         self.LatePublishRequestCount = None
+        self._LatePublishRequestCount_fmt = '!I'
+        self._LatePublishRequestCount_fmt_size = 4
         self.CurrentKeepAliveCount = None
+        self._CurrentKeepAliveCount_fmt = '!I'
+        self._CurrentKeepAliveCount_fmt_size = 4
         self.CurrentLifetimeCount = None
+        self._CurrentLifetimeCount_fmt = '!I'
+        self._CurrentLifetimeCount_fmt_size = 4
         self.UnacknowledgedMessageCount = None
+        self._UnacknowledgedMessageCount_fmt = '!I'
+        self._UnacknowledgedMessageCount_fmt_size = 4
         self.DiscardedMessageCount = None
+        self._DiscardedMessageCount_fmt = '!I'
+        self._DiscardedMessageCount_fmt_size = 4
         self.MonitoredItemCount = None
+        self._MonitoredItemCount_fmt = '!I'
+        self._MonitoredItemCount_fmt_size = 4
         self.DisabledMonitoredItemCount = None
+        self._DisabledMonitoredItemCount_fmt = '!I'
+        self._DisabledMonitoredItemCount_fmt_size = 4
         self.MonitoringQueueOverflowCount = None
+        self._MonitoringQueueOverflowCount_fmt = '!I'
+        self._MonitoringQueueOverflowCount_fmt_size = 4
         self.NextSequenceNumber = None
+        self._NextSequenceNumber_fmt = '!I'
+        self._NextSequenceNumber_fmt_size = 4
         self.EventQueueOverFlowCount = None
+        self._EventQueueOverFlowCount_fmt = '!I'
+        self._EventQueueOverFlowCount_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.SessionId.to_binary())
-        b.append(struct.pack('!I', self.SubscriptionId))
-        b.append(struct.pack('!c', self.Priority))
-        b.append(struct.pack('!d', self.PublishingInterval))
-        b.append(struct.pack('!I', self.MaxKeepAliveCount))
-        b.append(struct.pack('!I', self.MaxLifetimeCount))
-        b.append(struct.pack('!I', self.MaxNotificationsPerPublish))
-        b.append(struct.pack('!?', self.PublishingEnabled))
-        b.append(struct.pack('!I', self.ModifyCount))
-        b.append(struct.pack('!I', self.EnableCount))
-        b.append(struct.pack('!I', self.DisableCount))
-        b.append(struct.pack('!I', self.RepublishRequestCount))
-        b.append(struct.pack('!I', self.RepublishMessageRequestCount))
-        b.append(struct.pack('!I', self.RepublishMessageCount))
-        b.append(struct.pack('!I', self.TransferRequestCount))
-        b.append(struct.pack('!I', self.TransferredToAltClientCount))
-        b.append(struct.pack('!I', self.TransferredToSameClientCount))
-        b.append(struct.pack('!I', self.PublishRequestCount))
-        b.append(struct.pack('!I', self.DataChangeNotificationsCount))
-        b.append(struct.pack('!I', self.EventNotificationsCount))
-        b.append(struct.pack('!I', self.NotificationsCount))
-        b.append(struct.pack('!I', self.LatePublishRequestCount))
-        b.append(struct.pack('!I', self.CurrentKeepAliveCount))
-        b.append(struct.pack('!I', self.CurrentLifetimeCount))
-        b.append(struct.pack('!I', self.UnacknowledgedMessageCount))
-        b.append(struct.pack('!I', self.DiscardedMessageCount))
-        b.append(struct.pack('!I', self.MonitoredItemCount))
-        b.append(struct.pack('!I', self.DisabledMonitoredItemCount))
-        b.append(struct.pack('!I', self.MonitoringQueueOverflowCount))
-        b.append(struct.pack('!I', self.NextSequenceNumber))
-        b.append(struct.pack('!I', self.EventQueueOverFlowCount))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.SessionId.to_binary())
+        tmp.append(struct.pack(self._SubscriptionId_fmt, self.SubscriptionId))
+        tmp.append(struct.pack(self._Priority_fmt, self.Priority))
+        tmp.append(struct.pack(self._PublishingInterval_fmt, self.PublishingInterval))
+        tmp.append(struct.pack(self._MaxKeepAliveCount_fmt, self.MaxKeepAliveCount))
+        tmp.append(struct.pack(self._MaxLifetimeCount_fmt, self.MaxLifetimeCount))
+        tmp.append(struct.pack(self._MaxNotificationsPerPublish_fmt, self.MaxNotificationsPerPublish))
+        tmp.append(struct.pack(self._PublishingEnabled_fmt, self.PublishingEnabled))
+        tmp.append(struct.pack(self._ModifyCount_fmt, self.ModifyCount))
+        tmp.append(struct.pack(self._EnableCount_fmt, self.EnableCount))
+        tmp.append(struct.pack(self._DisableCount_fmt, self.DisableCount))
+        tmp.append(struct.pack(self._RepublishRequestCount_fmt, self.RepublishRequestCount))
+        tmp.append(struct.pack(self._RepublishMessageRequestCount_fmt, self.RepublishMessageRequestCount))
+        tmp.append(struct.pack(self._RepublishMessageCount_fmt, self.RepublishMessageCount))
+        tmp.append(struct.pack(self._TransferRequestCount_fmt, self.TransferRequestCount))
+        tmp.append(struct.pack(self._TransferredToAltClientCount_fmt, self.TransferredToAltClientCount))
+        tmp.append(struct.pack(self._TransferredToSameClientCount_fmt, self.TransferredToSameClientCount))
+        tmp.append(struct.pack(self._PublishRequestCount_fmt, self.PublishRequestCount))
+        tmp.append(struct.pack(self._DataChangeNotificationsCount_fmt, self.DataChangeNotificationsCount))
+        tmp.append(struct.pack(self._EventNotificationsCount_fmt, self.EventNotificationsCount))
+        tmp.append(struct.pack(self._NotificationsCount_fmt, self.NotificationsCount))
+        tmp.append(struct.pack(self._LatePublishRequestCount_fmt, self.LatePublishRequestCount))
+        tmp.append(struct.pack(self._CurrentKeepAliveCount_fmt, self.CurrentKeepAliveCount))
+        tmp.append(struct.pack(self._CurrentLifetimeCount_fmt, self.CurrentLifetimeCount))
+        tmp.append(struct.pack(self._UnacknowledgedMessageCount_fmt, self.UnacknowledgedMessageCount))
+        tmp.append(struct.pack(self._DiscardedMessageCount_fmt, self.DiscardedMessageCount))
+        tmp.append(struct.pack(self._MonitoredItemCount_fmt, self.MonitoredItemCount))
+        tmp.append(struct.pack(self._DisabledMonitoredItemCount_fmt, self.DisabledMonitoredItemCount))
+        tmp.append(struct.pack(self._MonitoringQueueOverflowCount_fmt, self.MonitoringQueueOverflowCount))
+        tmp.append(struct.pack(self._NextSequenceNumber_fmt, self.NextSequenceNumber))
+        tmp.append(struct.pack(self._EventQueueOverFlowCount_fmt, self.EventQueueOverFlowCount))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.SessionId.from_binary(data)
-            self.SubscriptionId = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.Priority = struct.unpack(c, data[:1])
-            data = data[1:]
-            self.PublishingInterval = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.MaxKeepAliveCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MaxLifetimeCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MaxNotificationsPerPublish = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.PublishingEnabled = struct.unpack(?, data[:1])
-            data = data[1:]
-            self.ModifyCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.EnableCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.DisableCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RepublishRequestCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RepublishMessageRequestCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.RepublishMessageCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.TransferRequestCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.TransferredToAltClientCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.TransferredToSameClientCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.PublishRequestCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.DataChangeNotificationsCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.EventNotificationsCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NotificationsCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.LatePublishRequestCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CurrentKeepAliveCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.CurrentLifetimeCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.UnacknowledgedMessageCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.DiscardedMessageCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MonitoredItemCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.DisabledMonitoredItemCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.MonitoringQueueOverflowCount = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.NextSequenceNumber = struct.unpack(I, data[:4])
-            data = data[4:]
-            self.EventQueueOverFlowCount = struct.unpack(I, data[:4])
-            data = data[4:]
+            self.SubscriptionId = struct.unpack(self._SubscriptionId_fmt, data.read(self._SubscriptionId_fmt_size))
+            self.Priority = struct.unpack(self._Priority_fmt, data.read(self._Priority_fmt_size))
+            self.PublishingInterval = struct.unpack(self._PublishingInterval_fmt, data.read(self._PublishingInterval_fmt_size))
+            self.MaxKeepAliveCount = struct.unpack(self._MaxKeepAliveCount_fmt, data.read(self._MaxKeepAliveCount_fmt_size))
+            self.MaxLifetimeCount = struct.unpack(self._MaxLifetimeCount_fmt, data.read(self._MaxLifetimeCount_fmt_size))
+            self.MaxNotificationsPerPublish = struct.unpack(self._MaxNotificationsPerPublish_fmt, data.read(self._MaxNotificationsPerPublish_fmt_size))
+            self.PublishingEnabled = struct.unpack(self._PublishingEnabled_fmt, data.read(self._PublishingEnabled_fmt_size))
+            self.ModifyCount = struct.unpack(self._ModifyCount_fmt, data.read(self._ModifyCount_fmt_size))
+            self.EnableCount = struct.unpack(self._EnableCount_fmt, data.read(self._EnableCount_fmt_size))
+            self.DisableCount = struct.unpack(self._DisableCount_fmt, data.read(self._DisableCount_fmt_size))
+            self.RepublishRequestCount = struct.unpack(self._RepublishRequestCount_fmt, data.read(self._RepublishRequestCount_fmt_size))
+            self.RepublishMessageRequestCount = struct.unpack(self._RepublishMessageRequestCount_fmt, data.read(self._RepublishMessageRequestCount_fmt_size))
+            self.RepublishMessageCount = struct.unpack(self._RepublishMessageCount_fmt, data.read(self._RepublishMessageCount_fmt_size))
+            self.TransferRequestCount = struct.unpack(self._TransferRequestCount_fmt, data.read(self._TransferRequestCount_fmt_size))
+            self.TransferredToAltClientCount = struct.unpack(self._TransferredToAltClientCount_fmt, data.read(self._TransferredToAltClientCount_fmt_size))
+            self.TransferredToSameClientCount = struct.unpack(self._TransferredToSameClientCount_fmt, data.read(self._TransferredToSameClientCount_fmt_size))
+            self.PublishRequestCount = struct.unpack(self._PublishRequestCount_fmt, data.read(self._PublishRequestCount_fmt_size))
+            self.DataChangeNotificationsCount = struct.unpack(self._DataChangeNotificationsCount_fmt, data.read(self._DataChangeNotificationsCount_fmt_size))
+            self.EventNotificationsCount = struct.unpack(self._EventNotificationsCount_fmt, data.read(self._EventNotificationsCount_fmt_size))
+            self.NotificationsCount = struct.unpack(self._NotificationsCount_fmt, data.read(self._NotificationsCount_fmt_size))
+            self.LatePublishRequestCount = struct.unpack(self._LatePublishRequestCount_fmt, data.read(self._LatePublishRequestCount_fmt_size))
+            self.CurrentKeepAliveCount = struct.unpack(self._CurrentKeepAliveCount_fmt, data.read(self._CurrentKeepAliveCount_fmt_size))
+            self.CurrentLifetimeCount = struct.unpack(self._CurrentLifetimeCount_fmt, data.read(self._CurrentLifetimeCount_fmt_size))
+            self.UnacknowledgedMessageCount = struct.unpack(self._UnacknowledgedMessageCount_fmt, data.read(self._UnacknowledgedMessageCount_fmt_size))
+            self.DiscardedMessageCount = struct.unpack(self._DiscardedMessageCount_fmt, data.read(self._DiscardedMessageCount_fmt_size))
+            self.MonitoredItemCount = struct.unpack(self._MonitoredItemCount_fmt, data.read(self._MonitoredItemCount_fmt_size))
+            self.DisabledMonitoredItemCount = struct.unpack(self._DisabledMonitoredItemCount_fmt, data.read(self._DisabledMonitoredItemCount_fmt_size))
+            self.MonitoringQueueOverflowCount = struct.unpack(self._MonitoringQueueOverflowCount_fmt, data.read(self._MonitoringQueueOverflowCount_fmt_size))
+            self.NextSequenceNumber = struct.unpack(self._NextSequenceNumber_fmt, data.read(self._NextSequenceNumber_fmt_size))
+            self.EventQueueOverFlowCount = struct.unpack(self._EventQueueOverFlowCount_fmt, data.read(self._EventQueueOverFlowCount_fmt_size))
             return data
             
 class ModelChangeStructureDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Affected = None
         self.AffectedType = None
         self.Verb = None
+        self._Verb_fmt = '!c'
+        self._Verb_fmt_size = 1
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Affected.to_binary())
-        b.append(self.AffectedType.to_binary())
-        b.append(struct.pack('!c', self.Verb))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Affected.to_binary())
+        tmp.append(self.AffectedType.to_binary())
+        tmp.append(struct.pack(self._Verb_fmt, self.Verb))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Affected.from_binary(data)
             data = self.AffectedType.from_binary(data)
-            self.Verb = struct.unpack(c, data[:1])
-            data = data[1:]
+            self.Verb = struct.unpack(self._Verb_fmt, data.read(self._Verb_fmt_size))
             return data
             
 class SemanticChangeStructureDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Affected = None
         self.AffectedType = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Affected.to_binary())
-        b.append(self.AffectedType.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Affected.to_binary())
+        tmp.append(self.AffectedType.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Affected.from_binary(data)
             data = self.AffectedType.from_binary(data)
             return data
@@ -13149,88 +12062,85 @@ class SemanticChangeStructureDataType(object):
 class Range(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Low = None
+        self._Low_fmt = '!d'
+        self._Low_fmt_size = 8
         self.High = None
+        self._High_fmt = '!d'
+        self._High_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.Low))
-        b.append(struct.pack('!d', self.High))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Low_fmt, self.Low))
+        tmp.append(struct.pack(self._High_fmt, self.High))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Low = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.High = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Low = struct.unpack(self._Low_fmt, data.read(self._Low_fmt_size))
+            self.High = struct.unpack(self._High_fmt, data.read(self._High_fmt_size))
             return data
             
 class EUInformation(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.NamespaceUri = None
         self.UnitId = None
+        self._UnitId_fmt = '!i'
+        self._UnitId_fmt_size = 4
         self.DisplayName = None
         self.Description = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.NamespaceUri.to_binary())
-        b.append(struct.pack('!i', self.UnitId))
-        b.append(self.DisplayName.to_binary())
-        b.append(self.Description.to_binary())
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.NamespaceUri.to_binary())
+        tmp.append(struct.pack(self._UnitId_fmt, self.UnitId))
+        tmp.append(self.DisplayName.to_binary())
+        tmp.append(self.Description.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.NamespaceUri.from_binary(data)
-            self.UnitId = struct.unpack(i, data[:4])
-            data = data[4:]
+            self.UnitId = struct.unpack(self._UnitId_fmt, data.read(self._UnitId_fmt_size))
             data = self.DisplayName.from_binary(data)
             data = self.Description.from_binary(data)
             return data
@@ -13238,316 +12148,294 @@ class EUInformation(object):
 class ComplexNumberType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Real = None
+        self._Real_fmt = '!f'
+        self._Real_fmt_size = 4
         self.Imaginary = None
+        self._Imaginary_fmt = '!f'
+        self._Imaginary_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!f', self.Real))
-        b.append(struct.pack('!f', self.Imaginary))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Real_fmt, self.Real))
+        tmp.append(struct.pack(self._Imaginary_fmt, self.Imaginary))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Real = struct.unpack(f, data[:4])
-            data = data[4:]
-            self.Imaginary = struct.unpack(f, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Real = struct.unpack(self._Real_fmt, data.read(self._Real_fmt_size))
+            self.Imaginary = struct.unpack(self._Imaginary_fmt, data.read(self._Imaginary_fmt_size))
             return data
             
 class DoubleComplexNumberType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Real = None
+        self._Real_fmt = '!d'
+        self._Real_fmt_size = 8
         self.Imaginary = None
+        self._Imaginary_fmt = '!d'
+        self._Imaginary_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.Real))
-        b.append(struct.pack('!d', self.Imaginary))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._Real_fmt, self.Real))
+        tmp.append(struct.pack(self._Imaginary_fmt, self.Imaginary))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.Real = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.Imaginary = struct.unpack(d, data[:8])
-            data = data[8:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.Real = struct.unpack(self._Real_fmt, data.read(self._Real_fmt_size))
+            self.Imaginary = struct.unpack(self._Imaginary_fmt, data.read(self._Imaginary_fmt_size))
             return data
             
 class AxisInformation(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.EngineeringUnits = None
         self.EURange = None
         self.Title = None
         self.AxisScaleType = None
-        self.NoOfAxisSteps = None
         self.AxisSteps = []
+        self._AxisSteps_fmt = '!d'
+        self._AxisSteps_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.EngineeringUnits.to_binary())
-        b.append(self.EURange.to_binary())
-        b.append(self.Title.to_binary())
-        b.append(self.AxisScaleType.to_binary())
-        b.append(struct.pack('!i', self.NoOfAxisSteps))
-        b.append(struct.pack('!i', len(self.AxisSteps)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.EngineeringUnits.to_binary())
+        tmp.append(self.EURange.to_binary())
+        tmp.append(self.Title.to_binary())
+        tmp.append(self.AxisScaleType.to_binary())
+        tmp.append(struct.pack('!i', len(self.AxisSteps)))
         for i in AxisSteps:
-            b.append(struct.pack('!d', self.AxisSteps))
-        return b.join()
+            tmp.append(struct.pack(self._AxisSteps_fmt, self.AxisSteps))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.EngineeringUnits.from_binary(data)
             data = self.EURange.from_binary(data)
             data = self.Title.from_binary(data)
             data = self.AxisScaleType.from_binary(data)
-            self.NoOfAxisSteps = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
-                    self.AxisSteps = struct.unpack(d, data[:8])
-                    data = data[8:]
+                    self.AxisSteps = struct.unpack(self._AxisSteps_fmt, data.read(self._AxisSteps_fmt_size))
             return data
             
 class XVType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.X = None
+        self._X_fmt = '!d'
+        self._X_fmt_size = 8
         self.Value = None
+        self._Value_fmt = '!f'
+        self._Value_fmt_size = 4
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(struct.pack('!d', self.X))
-        b.append(struct.pack('!f', self.Value))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(struct.pack(self._X_fmt, self.X))
+        tmp.append(struct.pack(self._Value_fmt, self.Value))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
-            self.X = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.Value = struct.unpack(f, data[:4])
-            data = data[4:]
+            bodylength = struct.unpack('!i', data.read(4))
+            self.X = struct.unpack(self._X_fmt, data.read(self._X_fmt_size))
+            self.Value = struct.unpack(self._Value_fmt, data.read(self._Value_fmt_size))
             return data
             
 class ProgramDiagnosticDataType(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.CreateSessionId = None
         self.CreateClientName = None
         self.InvocationCreationTime = None
+        self._InvocationCreationTime_fmt = '!d'
+        self._InvocationCreationTime_fmt_size = 8
         self.LastTransitionTime = None
+        self._LastTransitionTime_fmt = '!d'
+        self._LastTransitionTime_fmt_size = 8
         self.LastMethodCall = None
         self.LastMethodSessionId = None
-        self.NoOfLastMethodInputArguments = None
         self.LastMethodInputArguments = []
-        self.NoOfLastMethodOutputArguments = None
         self.LastMethodOutputArguments = []
         self.LastMethodCallTime = None
+        self._LastMethodCallTime_fmt = '!d'
+        self._LastMethodCallTime_fmt_size = 8
         self.LastMethodReturnStatus = None
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.CreateSessionId.to_binary())
-        b.append(self.CreateClientName.to_binary())
-        b.append(struct.pack('!d', self.InvocationCreationTime))
-        b.append(struct.pack('!d', self.LastTransitionTime))
-        b.append(self.LastMethodCall.to_binary())
-        b.append(self.LastMethodSessionId.to_binary())
-        b.append(struct.pack('!i', self.NoOfLastMethodInputArguments))
-        b.append(struct.pack('!i', len(self.LastMethodInputArguments)))
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.CreateSessionId.to_binary())
+        tmp.append(self.CreateClientName.to_binary())
+        tmp.append(struct.pack(self._InvocationCreationTime_fmt, self.InvocationCreationTime))
+        tmp.append(struct.pack(self._LastTransitionTime_fmt, self.LastTransitionTime))
+        tmp.append(self.LastMethodCall.to_binary())
+        tmp.append(self.LastMethodSessionId.to_binary())
+        tmp.append(struct.pack('!i', len(self.LastMethodInputArguments)))
         for i in LastMethodInputArguments:
-            b.append(self.LastMethodInputArguments.to_binary())
-        b.append(struct.pack('!i', self.NoOfLastMethodOutputArguments))
-        b.append(struct.pack('!i', len(self.LastMethodOutputArguments)))
+            tmp.append(self.LastMethodInputArguments.to_binary())
+        tmp.append(struct.pack('!i', len(self.LastMethodOutputArguments)))
         for i in LastMethodOutputArguments:
-            b.append(self.LastMethodOutputArguments.to_binary())
-        b.append(struct.pack('!d', self.LastMethodCallTime))
-        b.append(self.LastMethodReturnStatus.to_binary())
-        return b.join()
+            tmp.append(self.LastMethodOutputArguments.to_binary())
+        tmp.append(struct.pack(self._LastMethodCallTime_fmt, self.LastMethodCallTime))
+        tmp.append(self.LastMethodReturnStatus.to_binary())
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.CreateSessionId.from_binary(data)
             data = self.CreateClientName.from_binary(data)
-            self.InvocationCreationTime = struct.unpack(d, data[:8])
-            data = data[8:]
-            self.LastTransitionTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.InvocationCreationTime = struct.unpack(self._InvocationCreationTime_fmt, data.read(self._InvocationCreationTime_fmt_size))
+            self.LastTransitionTime = struct.unpack(self._LastTransitionTime_fmt, data.read(self._LastTransitionTime_fmt_size))
             data = self.LastMethodCall.from_binary(data)
             data = self.LastMethodSessionId.from_binary(data)
-            self.NoOfLastMethodInputArguments = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.LastMethodInputArguments.from_binary(data)
-            self.NoOfLastMethodOutputArguments = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
+            length = struct.unpack('!i', data.read(4))
             if length != -1:
                 for i in range(0, length):
                     data = self.LastMethodOutputArguments.from_binary(data)
-            self.LastMethodCallTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.LastMethodCallTime = struct.unpack(self._LastMethodCallTime_fmt, data.read(self._LastMethodCallTime_fmt_size))
             data = self.LastMethodReturnStatus.from_binary(data)
             return data
             
 class Annotation(object):
     def __init__(self):
         self.Encoding = None
+        self._Encoding_fmt = '!B'
+        self._Encoding_fmt_size = 1
         self.TypeId = None
-        self.BodyLength = None
         self.Body = []
+        self._Body_fmt = '!c'
+        self._Body_fmt_size = 1
         self.Message = None
         self.UserName = None
         self.AnnotationTime = None
+        self._AnnotationTime_fmt = '!d'
+        self._AnnotationTime_fmt_size = 8
     
     def to_binary(self):
-        b = []
+        packet = []
+        body = []
+        tmp = packet
         if self.TypeId: self.Encoding |= (value << 0)
-        b.append(struct.pack('!B', self.Encoding))
+        tmp.append(struct.pack(self._Encoding_fmt, self.Encoding))
         if self.TypeId: 
-            b.append(self.TypeId.to_binary())
-        b.append(struct.pack('!i', self.BodyLength))
-        b.append(struct.pack('!i', len(self.Body)))
-        for i in Body:
-            b.append(struct.pack('!c', self.Body))
-        b.append(self.Message.to_binary())
-        b.append(self.UserName.to_binary())
-        b.append(struct.pack('!d', self.AnnotationTime))
-        return b.join()
+            tmp.append(self.TypeId.to_binary())
+            tmp = packet
+        tmp.append(self.Message.to_binary())
+        tmp.append(self.UserName.to_binary())
+        tmp.append(struct.pack(self._AnnotationTime_fmt, self.AnnotationTime))
+        body = b''.join(tmp)
+        packet.append(struct.pack('!i', struct.calcsize(body)))
+        packet.append(body)
+        return b''.join(packet)
         
         def from_binary(self, data):
-            self.Encoding = struct.unpack(B, data[:1])
-            data = data[1:]
+            self.Encoding = struct.unpack(self._Encoding_fmt, data.read(self._Encoding_fmt_size))
             if self.Encoding & (1 << 0):
                 data = self.TypeId.from_binary(data)
-            self.BodyLength = struct.unpack(i, data[:4])
-            data = data[4:]
-            length = struct.unpack('!i', data[:4])
-            data = data[4:]
-            if length != -1:
-                for i in range(0, length):
-                    self.Body = struct.unpack(c, data[:1])
-                    data = data[1:]
+            bodylength = struct.unpack('!i', data.read(4))
             data = self.Message.from_binary(data)
             data = self.UserName.from_binary(data)
-            self.AnnotationTime = struct.unpack(d, data[:8])
-            data = data[8:]
+            self.AnnotationTime = struct.unpack(self._AnnotationTime_fmt, data.read(self._AnnotationTime_fmt_size))
             return data

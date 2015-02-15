@@ -53,57 +53,80 @@ class CodeGenerator(object):
         self.iidx += 1
         for field in obj.fields:
             self.write("self.{} = {}".format(field.name, "[]" if field.length else "None"))
+            if not field.is_struct():
+                fmt = "!" + str(self.to_fmt(field.uatype))
+                self.write("self._{}_fmt = '{}'".format(field.name, fmt))
+                self.write("self._{}_fmt_size = {}".format(field.name, struct.calcsize(fmt)))
         self.iidx = 1
 
         #serialize code
         self.write("")
         self.write("def to_binary(self):")
         self.iidx += 1
-        self.write("b = []")
+        self.write("packet = []")
+        if obj.is_extension_object():
+            self.write("body = []")
+        self.write("tmp = packet")
         for field in obj.fields:
             if field.switchfield:
                 if field.switchvalue:
-                    self.write("if self.{}: self.{} |= (value << {})".format(field.name, field.switchfield, field.switchvalue))
+                    bit = obj.bits[field.switchfield]
+                    #self.write("if self.{}: self.{} |= (value << {})".format(field.name, field.switchfield, field.switchvalue))
+                    mask = '0b' + '0' *(8-bit.length) + '1' * bit.length
+                    self.write("others = self.{} & {}".format(bit.container, mask))
+                    self.write("if self.{}: self.{} = ( {} | others )".format(field.name, bit.container, field.switchvalue))
                 else:
                     bit = obj.bits[field.switchfield]
                     self.write("if self.{}: self.{} |= (value << {})".format(field.name, bit.container, bit.idx))
         iidx = self.iidx
-        for field in obj.fields:
+        for idx, field in enumerate(obj.fields):
+            if field.name == "Body" and idx != (len(obj.fields)-1):
+                self.write("tmp = packet")
+                continue
             self.iidx = iidx
             switch = ""
             if field.switchfield:
                 self.write("if self.{}: ".format(field.name))
                 self.iidx += 1
             if field.length:
-                self.write("b.append(struct.pack('!i', len(self.{})))".format(field.name))
+                self.write("tmp.append(struct.pack('!i', len(self.{})))".format(field.name))
                 self.write("for i in {}:".format(field.name))
                 self.iidx += 1
             if field.is_struct():
-                self.write("b.append(self.{}.to_binary())".format(field.name))
+                self.write("tmp.append(self.{}.to_binary())".format(field.name))
             else:
-                self.write("b.append(struct.pack('!{}', self.{}))".format(self.to_fmt(field.uatype), field.name))
+                self.write("tmp.append(struct.pack(self._{name}_fmt, self.{name}))".format(name=field.name))
             if field.length:
                 self.iidx -= 1
         self.iidx = 2
-        self.write("return b"".join()")
+        if obj.is_extension_object():
+            self.write("body = b''.join(tmp)")
+            self.write("packet.append(struct.pack('!i', struct.calcsize(body)))")
+            self.write("packet.append(body)")
+        self.write("return b''.join(packet)")
         self.write("")
 
         #deserialize
         self.write("def from_binary(self, data):")
         self.iidx += 1 
         iidx = self.iidx
-        for field in obj.fields:
+        for idx, field in enumerate(obj.fields):
             self.iidx = iidx
+            if field.name == "Body" and idx != (len(obj.fields)-1):
+                self.write("bodylength = struct.unpack('!i', data.read(4))")
+                continue
             if field.switchfield:
+                bit = obj.bits[field.switchfield]
                 if field.switchvalue:
-                    self.write("if self.{} & (1 << {}):".format(field.switchfield, field.switchvalue))
+                    mask = '0b' + '0' *(8-bit.length) + '1' * bit.length
+                    self.write("val = self.{} & {}".format(bit.container, mask))
+                    self.write("if val == {}:".format(bit.idx))
+                    #self.write("if self.{} & (1 << {}):".format(field.switchfield, field.switchvalue))
                 else:
-                    bit = obj.bits[field.switchfield]
                     self.write("if self.{} & (1 << {}):".format(bit.container, bit.idx))
                 self.iidx += 1
             if field.length:
-                self.write("length = struct.unpack('!i', data[:4])")
-                self.write("data = data[4:]")
+                self.write("length = struct.unpack('!i', data.read(4))")
                 self.write("if length != -1:")
                 self.iidx += 1
                 self.write("for i in range(0, length):")
@@ -111,10 +134,7 @@ class CodeGenerator(object):
             if field.is_struct():
                 self.write("data = self.{}.from_binary(data)".format(field.name))
             else:
-                fmt = self.to_fmt(field.uatype)
-                size = struct.calcsize(fmt)
-                self.write("self.{} = struct.unpack({}, data[:{}])".format(field.name, fmt, size))
-                self.write("data = data[{}:]".format(size))
+                self.write("self.{name} = struct.unpack(self._{name}_fmt, data.read(self._{name}_fmt_size))".format(name=field.name))
         self.iidx = 3
         self.write("return data")
         self.iix = 0
@@ -177,6 +197,8 @@ if __name__ == "__main__":
     model = p.parse()
     gp.add_encoding_field(model)
     gp.remove_duplicates(model)
+    gp.remove_vector_length(model)
+    gp.remove_body_length(model)
     fix_names(model)
     c = CodeGenerator(model, protocolpath)
     c.run()
