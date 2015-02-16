@@ -336,14 +336,14 @@ namespace OpcUa
 
     AddNodesItem Object::CreateObjectCopy(const NodeId& parentID, const ReferenceDescription& ref)
     {
-      const NodeId& nodeID = ref.TargetNodeId;
+      const NodeId& nodeID = ref.NodeId;
 
       ReadParameters readParams;
-      readParams.AttributesToRead.push_back({nodeID, AttributeID::DisplayName});
-      readParams.AttributesToRead.push_back({nodeID, AttributeID::Description});
-      readParams.AttributesToRead.push_back({nodeID, AttributeID::WriteMask});
-      readParams.AttributesToRead.push_back({nodeID, AttributeID::UserWriteMask});
-      readParams.AttributesToRead.push_back({nodeID, AttributeID::BrowseName});
+      readParams.AttributesToRead.push_back(MakeReadValueId(nodeID, AttributeID::DisplayName));
+      readParams.AttributesToRead.push_back(MakeReadValueId(nodeID, AttributeID::Description));
+      readParams.AttributesToRead.push_back(MakeReadValueId(nodeID, AttributeID::WriteMask));
+      readParams.AttributesToRead.push_back(MakeReadValueId(nodeID, AttributeID::UserWriteMask));
+      readParams.AttributesToRead.push_back(MakeReadValueId(nodeID, AttributeID::BrowseName));
       std::vector<DataValue> values = GetServices()->Attributes()->Read(readParams);
 
       ObjectAttributes attrs;
@@ -357,8 +357,8 @@ namespace OpcUa
       newNode.NodeClass = NodeClass::Object;
       newNode.ParentNodeId = parentID;
       newNode.ReferenceTypeId = ref.ReferenceTypeId;
-      newNode.TypeDefinition = ref.TargetNodeTypeDefinition;
-      newNode.Attributes = attrs;
+      newNode.TypeDefinition = ref.TypeDefinition;
+      newNode.NodeAttributes = attrs;
       return newNode;
     }
 

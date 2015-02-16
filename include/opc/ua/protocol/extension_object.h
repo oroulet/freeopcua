@@ -25,9 +25,11 @@ namespace OpcUa
     {
      //if (obj.Encoding != Binary)
         //throw "Not implemented.";
-     InputFromBuffer input(obj.Body);
+     InputFromBuffer input(Body, Body.size());
      OpcUa::Binary::IStream<T> stream(input);
-     stream >> *this;
+     stream >> obj;
+     obj.Encoding = Encoding;
+     obj.TypeId = 
      //return *this;
     }
     
@@ -48,18 +50,20 @@ namespace OpcUa
      };
 
      OutToBuffer receiver;
-     OpcUa::Binary::OStream<T> stream(receiver);
+     OpcUa::Binary::OStream<OutToBuffer> stream(receiver);
+    
+     stream << obj << Binary::flush;
+     Body = std::move(receiver.Buffer);
+     Encoding = obj.Encoding;
+     TypeId = obj.TypeId;
 
-     stream << obj << std::flush;
-     *this << stream;
-     //Body = std::move(receiver.Buffer)
-     //BodyLength = Body.size; // Do we need this field at all?
     }
 
     template <typename T> 
-    ExtensionObject& operator = (const T& obj)
+    ExtensionObject& operator= (const T& obj)
     {
      *this << obj;
+     return *this;
     }
 
   };

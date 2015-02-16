@@ -57,7 +57,7 @@ namespace OpcUa
 
     std::vector<ObjectType> ObjectType::SubTypes() const
     {
-      return Browse<ObjectType>(GetID(), NodeClass::Object_TYPE, GetServices());
+      return Browse<ObjectType>(GetID(), NodeClass::ObjectType, GetServices());
     }
 
     ObjectType ObjectType::Parent() const

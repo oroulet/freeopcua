@@ -61,9 +61,9 @@ namespace OpcUa
     void Variable::SetValue(const DataValue& value)
     {
       WriteValue writeValue;
-      writeValue.Attribute = AttributeID::Value;
-      writeValue.Data = value;
-      writeValue.Node = Id;
+      writeValue.AttributeId = AttributeID::Value;
+      writeValue.Value = value;
+      writeValue.NodeId = Id;
       std::vector<StatusCode> result = GetServices()->Attributes()->Write({writeValue});
       if (result.size() != 1)
       {

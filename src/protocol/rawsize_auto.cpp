@@ -216,6 +216,17 @@ namespace OpcUa
 
 
     template<>
+    std::size_t RawSize<ExtensionObject>(const ExtensionObject& data)
+    {
+        size_t size = 0;
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        return size;
+    }
+
+
+    template<>
     std::size_t RawSize<Argument>(const Argument& data)
     {
         size_t size = 0;
@@ -2687,15 +2698,6 @@ namespace OpcUa
 
 
     template<>
-    std::size_t RawSize<MonitoredItemModifyParameters>(const MonitoredItemModifyParameters& data)
-    {
-        size_t size = 0;
-        size += RawSize(data.RequestedParameters);
-        return size;
-    }
-
-
-    template<>
     std::size_t RawSize<MonitoredItemModifyRequest>(const MonitoredItemModifyRequest& data)
     {
         size_t size = 0;
@@ -2703,7 +2705,7 @@ namespace OpcUa
         if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
         size += RawSizeContainer(data.Body);
         size += RawSize(data.MonitoredItemId);
-        size += RawSize(data.Parameters);
+        size += RawSize(data.RequestedParameters);
         return size;
     }
 
@@ -3063,6 +3065,17 @@ namespace OpcUa
 
 
     template<>
+    std::size_t RawSize<NotificationData>(const NotificationData& data)
+    {
+        size_t size = 0;
+        size += RawSize(data.Encoding);
+        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
+        size += RawSizeContainer(data.Body);
+        return size;
+    }
+
+
+    template<>
     std::size_t RawSize<NotificationMessage>(const NotificationMessage& data)
     {
         size_t size = 0;
@@ -3072,17 +3085,6 @@ namespace OpcUa
         size += RawSize(data.SequenceNumber);
         size += RawSize(data.PublishTime);
         size += RawSizeContainer(data.NotificationData);
-        return size;
-    }
-
-
-    template<>
-    std::size_t RawSize<NotificationData>(const NotificationData& data)
-    {
-        size_t size = 0;
-        size += RawSize(data.Encoding);
-        if ((data.Encoding) & (1<<(0))) size += RawSize(data.TypeId);
-        size += RawSizeContainer(data.Body);
         return size;
     }
 

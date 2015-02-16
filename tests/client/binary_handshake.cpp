@@ -327,8 +327,8 @@ TEST_F(OpcBinaryHandshake, Browse)
   desc.ReferenceTypeId.Encoding = EV_TWO_BYTE;
   desc.ReferenceTypeId.TwoByteData.Identifier = 33;
   desc.IncludeSubtypes = true;
-  desc.NodeClassMask = NODE_CLASS_ALL;
-  desc.ResultMask = REFERENCE_ALL;
+  desc.NodeClassMask = NodeClass::Unspecified;
+  desc.ResultMask = BrowseResultMask::All;
   browse.NodesToBrowse.push_back(desc);
   
   stream << browse << flush;

@@ -26,7 +26,7 @@
 
 namespace OpcUa
 {
-  Subscription::Subscription(Services::SharedPtr server, const SubscriptionParameters& params, SubscriptionHandler& callback, bool debug)
+  Subscription::Subscription(Services::SharedPtr server, const CreateSubscriptionParameters& params, SubscriptionHandler& callback, bool debug)
     : Server(server), Client(callback), Debug(debug)
   {
     CreateSubscriptionRequest request;
@@ -40,7 +40,7 @@ namespace OpcUa
 
   void Subscription::Delete()
   {
-    std::vector<StatusCode> results = Server->Subscriptions()->DeleteSubscriptions(std::vector<IntegerId>({Data.ID}));
+    std::vector<StatusCode> results = Server->Subscriptions()->DeleteSubscriptions(std::vector<IntegerId>({Data.SubscriptionId}));
     for (auto res: results)
     {
       CheckStatusCode(res);
@@ -50,40 +50,43 @@ namespace OpcUa
   void Subscription::PublishCallback(Services::SharedPtr server, const PublishResult result)
   {
 
-    if (Debug){ std::cout << "Subscription | Suscription::PublishCallback called with " <<result.Message.Data.size() << " notifications " << std::endl; }
-    for (const NotificationData& data: result.Message.Data )
+    if (Debug){ std::cout << "Subscription | Suscription::PublishCallback called with " << result.NotificationMessage.NotificationData.size() << " notifications " << std::endl; }
+    for (const NotificationData& data: result.NotificationMessage.NotificationData )
     {
-      if (data.Header.TypeId == ExpandedObjectId::DataChangeNotification)
+      if (data.TypeId == ExpandedObjectId::DataChangeNotification)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type DataChange\n"; }
-        CallDataChangeCallback(data);
+        DataChangeNotification cdata = *(DataChangeNotification*) &data;
+        CallDataChangeCallback(cdata);
       }
-      else if (data.Header.TypeId == ExpandedObjectId::EventNotificationList)
+      else if (data.TypeId == ExpandedObjectId::EventNotificationList)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type Event\n"; }
-        CallEventCallback(data);
+        EventNotificationList cdata = *(EventNotificationList*) &data;
+        CallEventCallback(cdata);
       }
-      else if (data.Header.TypeId == ExpandedObjectId::StatusChangeNotification)
+      else if (data.TypeId == ExpandedObjectId::StatusChangeNotification)
       {
         if (Debug) { std::cout << "Subscription | Notification is of type StatusChange\n"; }
-        CallStatusChangeCallback(data);
+        StatusChangeNotification cdata = *(StatusChangeNotification*) &data;
+        CallStatusChangeCallback(cdata);
       }
       else
       {
-        std::cout << "Subscription | Error unknown notficiation type received: " << data.Header.TypeId <<std::endl;
+        std::cout << "Subscription | Error unknown notficiation type received: " << data.TypeId <<std::endl;
       }
     }
     OpcUa::SubscriptionAcknowledgement ack;
-    ack.SubscriptionID = GetId();
-    ack.SequenceNumber = result.Message.SequenceID;
+    ack.SubscriptionId = GetId();
+    ack.SequenceNumber = result.NotificationMessage.SequenceNumber;
     PublishRequest request;
-    request.Parameters.Acknowledgements.push_back(ack);
+    request.Parameters.SubscriptionAcknowledgements.push_back(ack);
     server->Subscriptions()->Publish(request);
   }
 
-  void Subscription::CallDataChangeCallback(const NotificationData& data)
+  void Subscription::CallDataChangeCallback(const DataChangeNotification& data)
   {
-    for ( const MonitoredItems& item: data.DataChange.Notification)
+    for ( const MonitoredItemNotification& item: data.MonitoredItems)
     {
       std::unique_lock<std::mutex> lock(Mutex); //could used boost::shared_lock to improve perf
 
@@ -103,14 +106,14 @@ namespace OpcUa
     }
   }
 
-  void Subscription::CallStatusChangeCallback(const NotificationData& data)
+  void Subscription::CallStatusChangeCallback(const StatusChangeNotification& data)
   {
-     Client.StatusChange(data.StatusChange.Status);
+     Client.StatusChange(data.Status);
   }
 
-  void Subscription::CallEventCallback(const NotificationData& data)
+  void Subscription::CallEventCallback(const EventNotificationList& data)
   {
-    for ( EventFieldList ef :  data.Events.Events)
+    for ( EventFieldList ef :  data.Events)
     {
       std::unique_lock<std::mutex> lock(Mutex); //could used boost::shared_lock to improve perf
 
@@ -206,19 +209,19 @@ namespace OpcUa
     std::unique_lock<std::mutex> lock(Mutex); 
 
     CreateMonitoredItemsParameters itemsParams;
-    itemsParams.SubscriptionID = Data.ID;
+    itemsParams.SubscriptionId = Data.SubscriptionId;
 
     for (ReadValueId attr : attributes)
     {
-      MonitoredItemRequest req;
+      MonitoredItemCreateRequest req;
       req.ItemToMonitor = attr;
-      req.Mode = MonitoringMode::Reporting;
+      req.Parameters.MonitoringMode = MonitoringMode::Reporting;
       MonitoringParameters params;
       params.SamplingInterval = Data.RevisedPublishingInterval;
       params.QueueSize = 1;
       params.DiscardOldest = true;
       params.ClientHandle = IntegerId(++LastMonitoredItemHandle);
-      req.Parameters = params;
+      req.Parameters.RequestedParameters = params;
       itemsParams.ItemsToCreate.push_back(req);
     }
 

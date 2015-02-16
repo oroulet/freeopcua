@@ -12,10 +12,10 @@ NeedOverride = []
 NeedConstructor = ["RelativePathElement", "ReadValueId", "OpenSecureChannelParameters", "UserIdentityToken", "RequestHeader", "ResponseHeader", "ReadParameters", "UserIdentityToken", "BrowseDescription", "ReferenceDescription", "CreateSubscriptionParameters", "PublishResult", "NotificationMessage", "SetPublishingModeParameters"]
 IgnoredEnums = ["IdType", "NodeIdType"]
 #we want to implement som struct by hand, to make better interface or simply because they are too complicated 
-IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText", "ExtensionObject"]
+IgnoredStructs = ["NodeId", "ExpandedNodeId", "Variant", "QualifiedName", "DataValue", "LocalizedText"]#, "ExtensionObject"]
 #by default we split requests and respons in header and parameters, but some are so simple we do not split them
-NoSplitStruct = ["GetEndpointsResponse", "CloseSessionRequest", "AddNodesResponse", "BrowseResponse", "HistoryReadResponse", "HistoryUpdateResponse", "RegisterServerResponse", "CloseSecureChannelRequest", "CloseSecureChannelResponse", "CloseSessionRequest", "CloseSessionResponse", "UnregisterNodesResponse"]
-OverrideTypes = {"AttributeId": "AttributeID",  "ResultMask": "BrowseResultMask", "NodeClassMask": "NodeClass", "AccessLevel": "VariableAccessLevel", "UserAccessLevel": "VariableAccessLevel"}
+NoSplitStruct = ["GetEndpointsResponse", "CloseSessionRequest", "AddNodesResponse", "BrowseResponse", "HistoryReadResponse", "HistoryUpdateResponse", "RegisterServerResponse", "CloseSecureChannelRequest", "CloseSecureChannelResponse", "CloseSessionRequest", "CloseSessionResponse", "UnregisterNodesResponse", "MonitoredItemModifyRequest", "MonitoredItemsCreateRequest"]
+OverrideTypes = {"AttributeId": "AttributeID",  "ResultMask": "BrowseResultMask", "NodeClassMask": "NodeClass", "AccessLevel": "VariableAccessLevel", "UserAccessLevel": "VariableAccessLevel", "NotificationData": "NotificationData"}
 OverrideNames = {"RequestHeader": "Header", "ResponseHeader": "Header", "StatusCode": "Status", "NodesToRead": "AttributesToRead"} # "MonitoringMode": "Mode",, "NotificationMessage": "Notification", "NodeIdType": "Type"}
 
 """
@@ -180,7 +180,7 @@ class Model(object):
 
 
 def reorder_structs(model):
-    types = IgnoredStructs + IgnoredEnums + ["Bit", "Char", "CharArray", "Guid", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "ByteString", "Byte", "StatusCode", "DiagnosticInfo", "String", "AttributeID"] + [enum.name for enum in model.enums]
+    types = IgnoredStructs + IgnoredEnums + ["Bit", "Char", "CharArray", "Guid", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "ByteString", "Byte", "StatusCode", "DiagnosticInfo", "String", "AttributeID"] + [enum.name for enum in model.enums] + ["VariableAccessLevel"]
     waiting = {}
     newstructs = []
     for s in model.structs:
@@ -240,15 +240,13 @@ def add_encoding_field(model):
         for field in struct.fields:
             if field.uatype in ("UInt6", "NodeIdType"):
                 container = field.name
-                idx = 6
-
                 b = Bit()
                 b.name = field.name
                 b.idx = 0
                 b.container = container
                 b.length = 6 
+                idx = b.length
                 struct.bits[b.name] = b
-
 
             if field.uatype == "Bit":
                 if not container or idx > 7:
@@ -340,7 +338,6 @@ class Parser(object):
                 self.model.enums.append(enum)
             #else:
                 #print("Not implemented node type: " + tag + "\n")
-        reorder_structs(self.model)
         return self.model
 
     def parse_struct(self, child):
@@ -504,12 +501,12 @@ class CodeGenerator(object):
         base = ""
         if struct.needoverride:
             name = "_" + struct.name
-        #if struct.basetype:
-            #base = " : public " + struct.basetype
+        if struct.basetype:
+            base = " : public " + struct.basetype
         self.write_h("    struct %s %s\n    {""" % (name, base))
         for field in struct.fields: 
-            #if field.sourcetype:
-                #continue
+            if field.sourcetype:
+                continue
             
             if field.get_ctype() == "OpcUa::" + struct.name:
                 #we have a problem selv referensing struct
@@ -681,7 +678,7 @@ class CodeGenerator(object):
 #include <opc/ua/protocol/variable_access_level.h>
 #include <opc/ua/protocol/attribute_ids.h>
 #include <opc/ua/protocol/nodeid.h>
-#include <opc/ua/protocol/extension_object.h>
+//#include <opc/ua/protocol/extension_object.h>
 #include <opc/ua/protocol/types.h>
 #include <opc/ua/protocol/variant.h>
 #include <opc/ua/protocol/data_value.h>
@@ -867,6 +864,7 @@ if __name__ == "__main__":
     remove_duplicates(model)
     override_types(model)
     fix_requests(model)
+    reorder_structs(model)
 
     c = CodeGenerator(model, hpath, enumpath, rawsizepath, serializerpath, deserializerpath, constructorspath)
     c.run()

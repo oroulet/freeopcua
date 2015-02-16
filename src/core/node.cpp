@@ -23,7 +23,6 @@
 #include <opc/ua/node.h>
 
 #include <opc/common/object_id.h>
-#include <opc/ua/protocol/node_management.h>
 #include <opc/ua/protocol/strings.h>
 #include <opc/ua/protocol/string_utils.h>
 #include <opc/ua/protocol/variable_access_level.h>
@@ -66,8 +65,8 @@ namespace OpcUa
   {
     ReadParameters params;
     ReadValueId attribute;
-    attribute.Node = Id;
-    attribute.Attribute = attr;
+    attribute.NodeId = Id;
+    attribute.AttributeId = attr;
     params.AttributesToRead.push_back(attribute);
     std::vector<DataValue> vec =  Server->Attributes()-> Read(params); 
     if ( vec.size() > 0 )
@@ -84,9 +83,9 @@ namespace OpcUa
   void Node::SetAttribute(AttributeID attr, const DataValue &dval) const
   {
     WriteValue attribute;
-    attribute.Node = Id;
-    attribute.Attribute = attr;
-    attribute.Data = dval;
+    attribute.NodeId = Id;
+    attribute.AttributeId = attr;
+    attribute.Value = dval;
     std::vector<StatusCode> codes = Server->Attributes()->Write(std::vector<WriteValue>(1, attribute));
     CheckStatusCode(codes.front());
   }
@@ -109,13 +108,13 @@ namespace OpcUa
     description.NodeId = Id;
     description.BrowseDirection = BrowseDirection::Forward;
     description.IncludeSubtypes = true;
-    description.NodeClassMask = NODE_CLASS_ALL;
-    description.ResultMask = REFERENCE_ALL;
+    description.NodeClassMask = NodeClass::Unspecified;
+    description.ResultMask = BrowseResultMask::All;
     description.ReferenceTypeId =  refid;
 
     BrowseParameters query;
     query.NodesToBrowse.push_back(description);
-    query.MaxReferencesPerNode = 100;
+    query.RequestedMaxReferencesPerNode = 100;
     std::vector<Node> nodes;
     std::vector<BrowseResult> results = Server->Views()->Browse(query);
     if ( results.empty() )
@@ -126,7 +125,7 @@ namespace OpcUa
     {
       for (auto refIt : results[0].References)
       {
-        Node node(Server, refIt.TargetNodeId);
+        Node node(Server, refIt.NodeId);
         nodes.push_back(node);
       }
       results = Server->Views()->BrowseNext();
@@ -203,7 +202,7 @@ namespace OpcUa
       rpath.push_back(el);
     }
     BrowsePath bpath;
-    bpath.Path.Elements = rpath;
+    bpath.RelativePath.Elements = rpath;
     bpath.StartingNode = Id;
     std::vector<BrowsePath> bpaths;
     bpaths.push_back(bpath);
@@ -213,7 +212,7 @@ namespace OpcUa
     std::vector<BrowsePathResult> result = Server->Views()->TranslateBrowsePathsToNodeIds(params);
     CheckStatusCode(result.front().Status);
 
-    NodeId node =result.front().Targets.front().Node ;
+    NodeId node = result.front().Targets.front().TargetId;
     return Node(Server, node);
   }
 
@@ -254,7 +253,7 @@ namespace OpcUa
     attr.WriteMask = 0;
     attr.UserWriteMask = 0;
     attr.EventNotifier = 0;
-    item.Attributes = attr;
+    item.NodeAttributes = attr;
 
     std::vector<AddNodesResult> addnodesresults = Server->NodeManagement()->AddNodes(std::vector<AddNodesItem>({item}));
     AddNodesResult res = addnodesresults.front(); //This should always work
@@ -293,7 +292,7 @@ namespace OpcUa
     attr.WriteMask = 0;
     attr.UserWriteMask = 0;
     attr.EventNotifier = 0;
-    item.Attributes = attr;
+    item.NodeAttributes = attr;
 
     std::vector<AddNodesResult> addnodesresults = Server->NodeManagement()->AddNodes(std::vector<AddNodesItem>({item}));
 
@@ -334,14 +333,14 @@ namespace OpcUa
     attr.WriteMask = 0;
     attr.UserWriteMask = 0;
     attr.Value = val;
-    attr.Type = datatype;
-    attr.Rank  = 0;
-    attr.Dimensions = val.Dimensions;
+    attr.DataType = datatype;
+    attr.ValueRank  = 0;
+    attr.ArrayDimensions = val.Dimensions;
     attr.AccessLevel = VariableAccessLevel::CurrentRead;
     attr.UserAccessLevel = VariableAccessLevel::CurrentRead;
     attr.MinimumSamplingInterval = 1;
     attr.Historizing = 0;
-    item.Attributes = attr;
+    item.NodeAttributes = attr;
 
     std::vector<AddNodesResult> addnodesresults = Server->NodeManagement()->AddNodes(std::vector<AddNodesItem>({item}));
 
@@ -384,14 +383,14 @@ namespace OpcUa
     attr.WriteMask = 0;
     attr.UserWriteMask = 0;
     attr.Value = val;
-    attr.Type = datatype;
-    attr.Rank  = 0;
-    attr.Dimensions = val.Dimensions;
+    attr.DataType = datatype;
+    attr.ValueRank  = 0;
+    attr.ArrayDimensions = val.Dimensions;
     attr.AccessLevel = VariableAccessLevel::CurrentRead;
     attr.UserAccessLevel = VariableAccessLevel::CurrentRead;
     attr.MinimumSamplingInterval = 0;
     attr.Historizing = 0;
-    item.Attributes = attr;
+    item.NodeAttributes = attr;
 
     std::vector<AddNodesResult> addnodesresults = Server->NodeManagement()->AddNodes(std::vector<AddNodesItem>({item}));
 

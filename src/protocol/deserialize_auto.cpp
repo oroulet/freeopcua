@@ -260,6 +260,15 @@ namespace OpcUa
 
 
     template<>
+    void DataDeserializer::Deserialize<ExtensionObject>(ExtensionObject& data)
+    {
+        *this >> data.Encoding;
+        if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
+        DeserializeContainer(*this, data.Body);
+    }
+
+
+    template<>
     void DataDeserializer::Deserialize<Argument>(Argument& data)
     {
         *this >> data.Encoding;
@@ -2498,13 +2507,6 @@ namespace OpcUa
 
 
     template<>
-    void DataDeserializer::Deserialize<MonitoredItemModifyParameters>(MonitoredItemModifyParameters& data)
-    {
-        *this >> data.RequestedParameters;
-    }
-
-
-    template<>
     void DataDeserializer::Deserialize<MonitoredItemModifyRequest>(MonitoredItemModifyRequest& data)
     {
         *this >> data.Encoding;
@@ -2512,7 +2514,7 @@ namespace OpcUa
         int32_t tmp; //Not used
         *this >> tmp;
         *this >> data.MonitoredItemId;
-        *this >> data.Parameters;
+        *this >> data.RequestedParameters;
     }
 
 
@@ -2828,6 +2830,15 @@ namespace OpcUa
 
 
     template<>
+    void DataDeserializer::Deserialize<NotificationData>(NotificationData& data)
+    {
+        *this >> data.Encoding;
+        if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
+        DeserializeContainer(*this, data.Body);
+    }
+
+
+    template<>
     void DataDeserializer::Deserialize<NotificationMessage>(NotificationMessage& data)
     {
         *this >> data.Encoding;
@@ -2837,15 +2848,6 @@ namespace OpcUa
         *this >> data.SequenceNumber;
         *this >> data.PublishTime;
         DeserializeContainer(*this, data.NotificationData);
-    }
-
-
-    template<>
-    void DataDeserializer::Deserialize<NotificationData>(NotificationData& data)
-    {
-        *this >> data.Encoding;
-        if ((data.Encoding) & (1>>(0))) *this >> data.TypeId;
-        DeserializeContainer(*this, data.Body);
     }
 
 

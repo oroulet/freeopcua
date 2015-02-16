@@ -212,6 +212,15 @@ namespace OpcUa
 
 
     template<>
+    void DataSerializer::Serialize<ExtensionObject>(const ExtensionObject& data)
+    {
+        *this << data.Encoding;
+        if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
+        SerializeContainer(*this, data.Body);
+    }
+
+
+    template<>
     void DataSerializer::Serialize<Argument>(const Argument& data)
     {
         *this << data.Encoding;
@@ -2589,13 +2598,6 @@ namespace OpcUa
 
 
     template<>
-    void DataSerializer::Serialize<MonitoredItemModifyParameters>(const MonitoredItemModifyParameters& data)
-    {
-        *this << data.RequestedParameters;
-    }
-
-
-    template<>
     void DataSerializer::Serialize<MonitoredItemModifyRequest>(const MonitoredItemModifyRequest& data)
     {
         *this << data.Encoding;
@@ -2604,7 +2606,7 @@ namespace OpcUa
         if ((data.Encoding) & (1<<(0))) bodylength -= RawSize(data.TypeId);
         *this << bodylength;
         *this << data.MonitoredItemId;
-        *this << data.Parameters;
+        *this << data.RequestedParameters;
     }
 
 
@@ -2935,6 +2937,15 @@ namespace OpcUa
 
 
     template<>
+    void DataSerializer::Serialize<NotificationData>(const NotificationData& data)
+    {
+        *this << data.Encoding;
+        if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
+        SerializeContainer(*this, data.Body);
+    }
+
+
+    template<>
     void DataSerializer::Serialize<NotificationMessage>(const NotificationMessage& data)
     {
         *this << data.Encoding;
@@ -2945,15 +2956,6 @@ namespace OpcUa
         *this << data.SequenceNumber;
         *this << data.PublishTime;
         SerializeContainer(*this, data.NotificationData);
-    }
-
-
-    template<>
-    void DataSerializer::Serialize<NotificationData>(const NotificationData& data)
-    {
-        *this << data.Encoding;
-        if ((data.Encoding) & (1<<(0))) *this << data.TypeId;
-        SerializeContainer(*this, data.Body);
     }
 
 

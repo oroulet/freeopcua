@@ -21,7 +21,7 @@
 
 #include <opc/ua/node.h>
 #include <opc/ua/event.h>
-#include <opc/ua/protocol/subscriptions.h>
+#include <opc/ua/protocol/protocol.h>
 #include <opc/ua/services/subscriptions.h>
 
 #include <sstream>
@@ -40,7 +40,7 @@ namespace OpcUa
     MonitoringFilter Filter;
   };
 
-  typedef std::map<IntegerId, MonitoredItemData> AttValMap;
+  typedef std::map<uint32_t, MonitoredItemData> AttValMap;
   typedef std::map<IntegerId, EventFilter> SimpleAttOpMap;
 
   class SubscriptionHandler
@@ -64,13 +64,13 @@ namespace OpcUa
       //Alternative could be
       //AddDataChangeCallback(std::function<const Node&, const Variuant& val, AttributeID> callback);
       //AddEventCallback(std::function<std::vector<Variant>> callback);
-      Subscription(Services::SharedPtr server, const SubscriptionParameters& params, SubscriptionHandler& callback, bool debug=false); 
+      Subscription(Services::SharedPtr server, const CreateSubscriptionParameters& params, SubscriptionHandler& callback, bool debug=false); 
 
       //Delete the subscription from server
       void Delete();
 
       //Get information about the subscription
-      uint32_t GetId() const { return Data.ID; } 
+      uint32_t GetId() const { return Data.SubscriptionId; } 
       double GetPeriode() const { return Data.RevisedPublishingInterval; } 
 
       //Subscribe to a Node attribute for its value to change
@@ -103,9 +103,9 @@ namespace OpcUa
 
 
     private:
-      void CallDataChangeCallback(const NotificationData& data);
-      void CallEventCallback(const NotificationData& data);
-      void CallStatusChangeCallback(const NotificationData& data);
+      void CallDataChangeCallback(const DataChangeNotification& data);
+      void CallEventCallback(const EventNotificationList& data);
+      void CallStatusChangeCallback(const StatusChangeNotification& data);
 
       Services::SharedPtr Server;
       CreateSubscriptionResult Data;

@@ -29,8 +29,8 @@ protected:
     Query.Description.ReferenceTypeId.Encoding = EV_TWO_BYTE;
 //    Params.Description.ReferenceTypeId.TwoByteData.Identifier = 33;
     Query.Description.IncludeSubtypes = true;
-    Query.Description.NodeClassMask = NODE_CLASS_ALL;
-    Query.Description.ResultMask = REFERENCE_ALL;
+    Query.Description.NodeClassMask = NodeClass::Unspecified;
+    Query.Description.ResultMask = BrowseResultMask::All;
     Query.MaxReferencesCount = 1;
   }
 

@@ -352,8 +352,8 @@ namespace
     description.NodeId = nodeID;
     description.BrowseDirection = OpcUa::BrowseDirection::Forward;
     description.IncludeSubtypes = true;
-    description.NodeClassMask = OpcUa::NODE_CLASS_ALL;
-    description.ResultMask = OpcUa::REFERENCE_ALL;
+    description.NodeClassMask = OpcUa::NodeClass::Unspecified;
+    description.ResultMask = OpcUa::BrowseResultMask::All;
 
     OpcUa::BrowseParameters query;
     query.View.Timestamp = OpcUa::DateTime::Current();
