@@ -155,7 +155,7 @@ namespace OpcUa
       ObjectAttributes attrs;
       attrs.Description = LocalizedText(displayName);
       attrs.DisplayName = LocalizedText(displayName);
-      newNodeRequest.NodeAttributes = attrs;
+      newNodeRequest.NodeAttributes << attrs;
 
       NodeManagementServices::SharedPtr nodes = GetServices()->NodeManagement();
       std::vector<AddNodesResult> newObjectNode = nodes->AddNodes({newNodeRequest});
@@ -261,7 +261,7 @@ namespace OpcUa
       attrs.DisplayName = LocalizedText(browseName.Name);
       attrs.Value = value;
       attrs.DataType = OpcUa::VariantTypeToDataType(value.Type());
-      newNodeRequest.NodeAttributes = attrs;
+      newNodeRequest.NodeAttributes << attrs;
 
       NodeManagementServices::SharedPtr nodes = GetServices()->NodeManagement();
       std::vector<AddNodesResult> newNode = nodes->AddNodes({newNodeRequest});
@@ -330,7 +330,7 @@ namespace OpcUa
       newNode.ParentNodeId = parentID;
       newNode.ReferenceTypeId = ref.ReferenceTypeId;
       newNode.TypeDefinition = ref.TypeDefinition;
-      newNode.NodeAttributes = attrs;
+      newNode.NodeAttributes << attrs;
       return newNode;
     }
 
@@ -358,7 +358,7 @@ namespace OpcUa
       newNode.ParentNodeId = parentID;
       newNode.ReferenceTypeId = ref.ReferenceTypeId;
       newNode.TypeDefinition = ref.TypeDefinition;
-      newNode.NodeAttributes = attrs;
+      newNode.NodeAttributes << attrs;
       return newNode;
     }
 

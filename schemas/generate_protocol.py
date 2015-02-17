@@ -501,12 +501,12 @@ class CodeGenerator(object):
         base = ""
         if struct.needoverride:
             name = "_" + struct.name
-        if struct.basetype:
-            base = " : public " + struct.basetype
+        #if struct.basetype:
+            #base = " : public " + struct.basetype
         self.write_h("    struct %s %s\n    {""" % (name, base))
         for field in struct.fields: 
-            if field.sourcetype:
-                continue
+            #if field.sourcetype:
+                #continue
             
             if field.get_ctype() == "OpcUa::" + struct.name:
                 #we have a problem selv referensing struct
