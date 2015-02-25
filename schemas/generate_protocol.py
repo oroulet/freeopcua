@@ -91,13 +91,8 @@ class Field(object):
 
     __repr__ = __str__
 
-    def is_struct(self):
-        if self.uatype in ("Bit", "Char", "CharArray", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "DateTime", "Boolean", "Double", "Float", "Byte"):
-            return False
-        return True
-
     def is_native_type(self):
-        if self.uatype in ("Char", "CharArray", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "Boolean", "Double", "Float", "Byte"):
+        if self.uatype in ("Char", "CharArray", "SByte", "Int8", "Int16", "Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64", "Boolean", "Double", "Float", "Byte", "String"):
             return True
         return False
 
@@ -163,18 +158,20 @@ class Model(object):
     def __init__(self):
         self.structs = []
         self.enums = []
+        self.struct_list = []
+        self.enum_list = []
 
     def get_struct(self, name):
         for struct in self.structs:
             if name == struct.name:
                 return struct
-        raise Exception("No struct named: " + name)
+        raise Exception("No struct named: " + str(name))
 
     def get_enum(self, name):
         for s in self.enums:
             if name == s.name:
-                return name
-        raise Exception("No enum named: " + name)
+                return s
+        raise Exception("No enum named: " + str(name))
 
 
 
@@ -285,8 +282,12 @@ def remove_body_length(model):
                 new.append(field)
         struct.fields = new
 
+#def remove_extensionobject_fields(model):
+    #for obj in model.structs:
+        #if obj.name.endswith("Request") or obj.name.endswith("Response"):
+            #obj.fields = [el for el in obj.fields if el.name not in ("TypeId", "Body", "Encoding")]
 
-def fix_requests(model):
+def split_requests(model):
     structs = []
     for struct in model.structs:
         structtype = None
@@ -296,6 +297,11 @@ def fix_requests(model):
             structtype = "Response"
         if structtype:
             struct.needconstructor = True
+            field = Field()
+            field.name = "TypeId"
+            field.uatype = "NodeId"
+            struct.fields.insert(0, field)
+
         if structtype and not struct.name in NoSplitStruct:
             paramstruct = Struct()
             if structtype == "Request":
@@ -304,10 +310,10 @@ def fix_requests(model):
             else:
                 basename = struct.name.replace("Response", "") + "Result"
                 paramstruct.name = basename 
-            paramstruct.fields = struct.fields[4:]
+            paramstruct.fields = struct.fields[2:]
             paramstruct.bits = struct.bits
 
-            struct.fields = struct.fields[:4]
+            struct.fields = struct.fields[:2]
             #struct.bits = {}
             structs.append(paramstruct)
 
@@ -325,20 +331,49 @@ class Parser(object):
         self.model = None
 
     def parse(self):
+        print("Parsing: ", self.path)
         self.model = Model()
         tree = ET.parse(self.path)
         root = tree.getroot()
+        self.add_extension_object()
         for child in root:
             tag = child.tag[40:]
             if tag == "StructuredType":
                 struct = self.parse_struct(child)
-                self.model.structs.append(struct)
+                if struct.name != "ExtensionObject":
+                    self.model.structs.append(struct)
+                    self.model.struct_list.append(struct.name)
             elif tag == "EnumeratedType":
                 enum = self.parse_enum(child)
                 self.model.enums.append(enum)
+                self.model.enum_list.append(enum.name)
             #else:
                 #print("Not implemented node type: " + tag + "\n")
         return self.model
+
+    def add_extension_object(self):
+        obj = Struct()
+        obj.name = "ExtensionObject"
+        f = Field()
+        f.name = "TypeId"
+        f.uatype = "NodeId"
+        obj.fields.append(f)
+        f = Field()
+        f.name = "BinaryBody"
+        f.uatype = "Bit"
+        obj.fields.append(f)
+        f = Field()
+        f.name = "XmlBody"
+        f.uatype = "Bit"
+        obj.fields.append(f)
+        f = Field()
+        f.name = "Body"
+        f.uatype = "ByteString"
+        f.switchfield = "BinaryBody"
+        obj.fields.append(f)
+        self.model.struct_list.append(obj.name)
+
+        self.model.structs.append(obj)
 
     def parse_struct(self, child):
         tag = child.tag[40:]
@@ -354,7 +389,7 @@ class Parser(object):
                 while tmp.basetype:
                     struct.parents.append(tmp.basetype)
                     tmp = self.model.get_struct(tmp.basetype)
-                self.add_basetype_members(struct)
+                #self.add_basetype_members(struct)
             else:
                 print("Error unknown key: ", key)
         for el in child:
@@ -416,8 +451,27 @@ class Parser(object):
         return enum
 
 
-    def add_basetype_members(self, struct):
-        base = self.model.get_struct(struct.basetype)
+#"def reorder_extobjects(model):
+    #ext = model.get_struct("ExtensionObject")
+    #print(ext)
+    #typeid = ext.fields[4]
+    #ext.fields.remove(typeid)
+    #ext.fields.insert(0, typeid)
+
+def add_basetype_members(model):
+    for struct in model.structs:
+        if not struct.basetype:
+            continue
+        base = model.get_struct(struct.basetype)
+        if struct.basetype == "ExtensionObject" and len(struct.fields) != 0:
+            #if struc
+            #for f in base.fields:
+                #if f.name == "TypeId":
+                    #f2 = copy(f)
+                    #f2.switchfield = None
+                    #struct.fields.insert(0, f2)
+                    #break
+            continue
         for name, bit in base.bits.items():
             struct.bits[name] = bit
         for idx, field in enumerate(base.fields):
@@ -427,10 +481,20 @@ class Parser(object):
                 #field.uatype = "Int32"
                 #field.length = None
                 #print("Field is names Body 2", struct.name, field.name)
+            #HACK EXTENSIONOBJECT
+            #if base.name == "ExtensionObject":
+                #continue
+                #if field.uatype == "Bit":
+                    #continue
+                #if field.name == "Body":
+                    #continue
+                #if field.name == "TypeId":
+                    #field.switchfield = None
+            #END HACK
             field = copy(field)
             if not field.sourcetype:
                 field.sourcetype = base.name
-            struct.fields.append(field)
+            struct.fields.insert(idx, field)
 
 
 
@@ -858,12 +922,14 @@ if __name__ == "__main__":
     p = Parser(xmlpath)
     model = p.parse()
     #Changes specific to our C++ implementation
+    #reorder_extobjects(model)
+    add_basetype_members(model)
     add_encoding_field(model)
     remove_vector_length(model)
     remove_body_length(model)
     remove_duplicates(model)
     override_types(model)
-    fix_requests(model)
+    split_requests(model)
     reorder_structs(model)
 
     c = CodeGenerator(model, hpath, enumpath, rawsizepath, serializerpath, deserializerpath, constructorspath)
